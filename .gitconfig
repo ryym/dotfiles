@@ -1,0 +1,45 @@
+[push]
+    default = simple
+[core]
+    quotepath = false
+[alias]
+    alias = !git config --global --list | grep ^alias | cut -c7-
+    s = status
+    h = help
+    re = log --oneline -10 # show recent logs.
+    sre = !git sl -10
+    b = branch
+    a = add
+    aa = add --all
+    cm = commit
+    cmm = commit -m
+    cmam = commit -am
+    co = checkout
+    cob = checkout -b
+    chp = cherry-pick
+    f = fetch
+    fp = fetch --prune
+    rb = rebase
+    rbi = rebase -i
+    m = merge
+    mnf = merge --no-ff
+    rs = reset --mixed
+    rsh = reset --hard
+    amend = commit --amend
+    cont = rebase --continue
+    abort = rebase --abort
+    st = stash
+    sts = stash save
+    stu = stash -u
+    gconfs = config --global --list
+    sl = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    tree = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    sh = show
+    shfs = show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
+    d = diff
+    dfs = diff --name-only
+    dgvi = difftool --tool=gvimdiff
+[gui]
+    encoding = utf-8
+[include]
+    path = .gitconfig.local
