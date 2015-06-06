@@ -785,8 +785,10 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " open-browser {{{
   if nbw.tap('open-browser')
-    nmap <Leader>obb <Plug>(openbrowser-open)
+    nmap <Leader>obo <Plug>(openbrowser-open)
+    vmap <Leader>obo <Plug>(openbrowser-open)
     nmap <Leader>obs <Plug>(openbrowser-search)
+    vmap <Leader>obs <Plug>(openbrowser-search)
   endif
   " }}}
 
