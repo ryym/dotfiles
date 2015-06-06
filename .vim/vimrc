@@ -177,6 +177,8 @@ augroup END
 augroup vimrc
   autocmd FileType javascript ShortIndent
   autocmd FileType css        ShortIndent
+  autocmd FileType scss       ShortIndent
+  autocmd FileType sass       ShortIndent
   autocmd FileType haml       ShortIndent
   autocmd FileType yaml       ShortIndent
   autocmd FileType ruby       ShortIndent
