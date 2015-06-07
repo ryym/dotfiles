@@ -134,20 +134,21 @@ set nostartofline
 set title
 set wildmenu
 set list
-set listchars   =tab:>\ "
-set backspace   =indent,eol,start
-set linespace   =1
-set mouse       =a
-set clipboard   =unnamed
-set keywordprg  =:help
-set scrolloff   =3
-set textwidth   =0
-set history     =50
-set laststatus  =2
-set cmdheight   =2
-set completeopt =longest,menuone
-set whichwrap   =b,s,<,>,[,]
-set statusline  =%f%m%r%h%w\ -\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ %Y]\ [%Llines\]\ (%04l,%04v)
+set listchars     =tab:>\ "
+set backspace     =indent,eol,start
+set linespace     =1
+set mouse         =a
+set clipboard     =unnamed
+set keywordprg    =:help
+set scrolloff     =3
+set textwidth     =0
+set history       =50
+set laststatus    =2
+set cmdheight     =2
+set completeopt   =longest,menuone
+set whichwrap     =b,s,<,>,[,]
+set statusline    =%f%m%r%h%w\ -\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ %Y]\ [%Llines\]\ (%04l,%04v)
+set formatoptions =croql
 
 " Indent counts of leading backslash for line continuations in vim script.
 let g:vim_indent_cont = 2
