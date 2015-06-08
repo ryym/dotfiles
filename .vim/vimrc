@@ -8,6 +8,9 @@
 " :help no-eval-feature
 if !1 | finish | endif
 
+" 'compatible' option is disabled automatically when vimrc file is found.
+" set nocompatible
+
 " Default properties
 let g:is_windows = has('win32') || has('win64')
 let g:is_mac     = has('mac')   || has('macunix') || has('gui_macvim')
@@ -37,6 +40,7 @@ endif
 " }}}
 
   " Colorscheme {{{
+
   if has('vim_starting')
     set t_Co =256
     if &t_Co < 256
@@ -45,6 +49,7 @@ endif
       colorscheme smyck256
     endif
   endif
+
   " }}}
 
 " Commands and functions {{{
@@ -97,7 +102,6 @@ if exists('&ambiwidth')
   set ambiwidth =double
 endif
 
-set nocompatible
 filetype plugin indent on
 syntax on
 
