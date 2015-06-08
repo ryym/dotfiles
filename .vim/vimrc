@@ -264,6 +264,11 @@ inoremap <C-u> <C-g>u<C-u>
 
 " Normal mode {{{
 
+" Marks {{{
+nnoremap mm m
+nnoremap _  `
+" }}}
+
 " Fix the direction of the ', ',', 'n', 'N'. {{{
 
 " Make the ';' key always move to the right.
@@ -325,8 +330,6 @@ cnoremap <C-p> <Up>
 " TODO: Define own 'unimpaired' mappings.
 
 " Customize operations in normal mode. {{{
-nnoremap mm m
-nnoremap _  '
 nnoremap <C-h>     :<C-u>vert help<Space>
 nnoremap <Leader>h :<C-u>help<Space>
 nnoremap <Space>w  :<C-u>update<CR>
