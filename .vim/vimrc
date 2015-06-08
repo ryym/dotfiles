@@ -1,8 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: title comment
+" vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Initializing {{{
+
+" Skip initialization if '+eval' feature is disabled.
+" :help no-eval-feature
+if !1 | finish | endif
 
 " Default properties
 let g:is_windows = has('win32') || has('win64')
