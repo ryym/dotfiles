@@ -118,12 +118,19 @@ set smartcase
 " Avoid highlighting the last search pattern at reloading vimrc.
 nohlsearch
 
-" TODO: backup, swap, undo   persistent undo?
-" Disable all file backups.
+" TODO: backup, swap
+" Disable file backups.
 set nobackup
 set nowritebackup
-set noundofile
 set noswapfile
+
+if has('persistent_undo')
+  if ! isdirectory($MYVIMDIR . '/undo')
+    call mkdir($MYVIMDIR . '/undo')
+  endif
+  set undofile
+  set undodir=$MYVIMDIR/undo
+endif
 
 " Briefly jump to the matching bracket.
 set showmatch
