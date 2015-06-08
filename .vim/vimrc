@@ -24,7 +24,15 @@ augroup END
 let mapleader = "-"
 nnoremap - <Nop>
 
-" TODO: startup time.
+if has('vim_starting')
+  autocmd vimrc VimEnter * call <SID>display_startup_time()
+
+  let s:startuptime = reltime()
+  function! s:display_startup_time()
+    echomsg 'Startup time:' reltimestr( reltime(s:startuptime) )
+    unlet s:startuptime
+  endfunction
+endif
 
 " }}}
 
