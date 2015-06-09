@@ -34,6 +34,7 @@
     stu = stash -u
     stp = stash pop
     gconfs = config --global --list
+    lconfs = config --local --list
     sl = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     tree = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     sh = show
