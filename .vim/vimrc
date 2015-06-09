@@ -551,6 +551,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'nathanaelkane/vim-indent-guides'
 
+  NeoBundlewLazy 'w0ng/vim-hybrid'
+
   " }}}
 
   " Others {{{
