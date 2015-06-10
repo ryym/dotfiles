@@ -40,6 +40,7 @@
     sh = show
     shfs = show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
     d = diff
+    dc = diff --cached
     dfs = diff --name-only
     dgvi = difftool --tool=gvimdiff
 [gui]
