@@ -39,26 +39,25 @@ endif
 
 " }}}
 
-  " Colorscheme {{{
+" Colorscheme {{{
 
-  if has('vim_starting')
-    set t_Co =256
-    if &t_Co < 256
-      colorscheme smyck
-    else
-      colorscheme smyck256
-    endif
+if has('vim_starting')
+  set t_Co =256
+  if &t_Co < 256
+    colorscheme smyck
+  else
+    colorscheme smyck256
   endif
+endif
 
-  " }}}
+" }}}
 
 " Commands and functions {{{
 
 " Reload and Edit .vimrc {{{
-command!          Rv source $MYVIMRC |
-  \ if g:is_gui | source $MYGVIMRC | endif
-command! Ev  edit $MYVIMRC
-command! Evg edit $MYGVIMRC
+command! Rv  source $MYVIMRC | if g:is_gui | source $MYGVIMRC | endif
+command! Ev  edit   $MYVIMRC
+command! Evg edit   $MYGVIMRC
 " }}}
 
 " Set indent easily {{{
@@ -828,7 +827,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " restart {{{
     if nbw.try_tap('restart')
-      " This doesn't works under the terminal.
+      " This doesn't work under the terminal.
       nnoremap <Leader><Leader>r :<C-u>Restart<CR>
       nnoremap <Leader><Leader>R :<C-u>Restart!<CR>
     endif
