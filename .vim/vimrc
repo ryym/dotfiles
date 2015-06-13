@@ -200,6 +200,7 @@ augroup END
 " Indent settings {{{
 augroup vimrc
   autocmd FileType javascript ShortIndent
+  autocmd FileType coffee     ShortIndent
   autocmd FileType css        ShortIndent
   autocmd FileType scss       ShortIndent
   autocmd FileType sass       ShortIndent
@@ -541,6 +542,10 @@ function! s:declare_bundles()
     \ }
   NeoBundlewLazy 'PProvost/vim-ps1', {
     \ 'filetypes': ['ps1']
+    \ }
+
+  NeoBundlewLazy 'kchmck/vim-coffee-script', {
+    \ 'filetypes': ['coffee']
     \ }
 
   " }}}
