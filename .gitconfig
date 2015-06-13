@@ -49,3 +49,5 @@
     encoding = utf-8
 [include]
     path = .gitconfig.local
+[rebase]
+	autosquash = true
