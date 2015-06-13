@@ -22,13 +22,15 @@
     fp = fetch --prune
     rb = rebase
     rbi = rebase -i
+    fixup = commit --fixup=@
+    rb2 = !git rebase -i --autosquash @~2
+    cont = rebase --continue
+    abort = rebase --abort
     m = merge
     mnf = merge --no-ff
     rs = reset --mixed
     rsh = reset --hard
     amend = commit --amend
-    cont = rebase --continue
-    abort = rebase --abort
     st = stash
     sts = stash save
     stu = stash -u
