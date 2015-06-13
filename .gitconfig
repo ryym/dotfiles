@@ -33,6 +33,8 @@
     sts = stash save
     stu = stash -u
     stp = stash pop
+    gconf = config --global
+    lconf = config --local
     gconfs = config --global --list
     lconfs = config --local --list
     sl = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
