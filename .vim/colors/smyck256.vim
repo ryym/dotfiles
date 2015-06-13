@@ -1,6 +1,5 @@
 " ----------------------------------------------------------------------------
 " Vim color file
-" Maintainer:   John-Paul Bader <contact@smyck.org>
 " Last Change:  2015 June
 " License:      Beer Ware
 " Original:     https://github.com/stilvoid/Smyck-Color-Scheme/blob/master/smyck256.vim
