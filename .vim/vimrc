@@ -327,8 +327,27 @@ cnoremap <C-p> <Up>
 
 " Action {{{
 
-" TODO: Toggles (wrap, expandtab, relativenumber..)
 " TODO: Define own 'unimpaired' mappings.
+
+" Toggle options {{{
+
+command! -nargs=+ MapToggle call <SID>map_option_toggling(<f-args>)
+function! s:map_option_toggling(key, option)
+  let cmd = a:option . '! ' . a:option . '?'
+  let lkey = a:key
+  let ukey = toupper(a:key)
+  execute 'nnoremap \[toggle]' . lkey . ' :setlocal ' . cmd . '<CR>'
+  execute 'nnoremap \[toggle]' . ukey . ' :set '      . cmd . '<CR>'
+endfunction
+
+MakeNamedLeader toggle qo
+MapToggle r relativenumber
+MapToggle n number
+MapToggle w wrap
+MapToggle t expandtab
+MapToggle l list
+
+" }}}
 
 " Customize operations in normal mode. {{{
 nnoremap <C-h>     :<C-u>vert help<Space>
@@ -850,6 +869,8 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " indent-guides {{{
   if nbw.tap('indent-guides')
+    nmap \[toggle]i <Plug>IndentGuidesToggle
+
     function! nbw.hooks.on_source(_)
       let g:indent_guides_start_level = 2
       let g:indent_guides_guide_size  = 1
