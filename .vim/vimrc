@@ -806,6 +806,7 @@ function! s:configure_bundles(neobundle_wrapper)
   " bclose {{{
   if nbw.tap('bclose')
     nnoremap \[buffer]d :<C-u>Bclose<CR>
+    nnoremap \[buffer]D :<C-u>Bclose!<CR>
   endif
   " }}}
 
