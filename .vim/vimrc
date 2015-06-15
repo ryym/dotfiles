@@ -16,6 +16,7 @@ let g:is_windows = has('win32') || has('win64')
 let g:is_mac     = has('mac')   || has('macunix') || has('gui_macvim')
 let g:is_gui     = has('gui_running')
 let $MYVIMDIR    = expand( g:is_windows ? '~/vimfiles' : '~/.vim' )
+let $VIMLOCAL    = expand($MYVIMDIR . '/local')
 
 " Reset all autocmd defined in vimrc.
 " TODO: create ex command to define vimrc autocmd.
@@ -128,11 +129,11 @@ set nowritebackup
 set noswapfile
 
 if has('persistent_undo')
-  if ! isdirectory($MYVIMDIR . '/undo')
-    call mkdir($MYVIMDIR . '/undo')
+  if ! isdirectory($VIMLOCAL . '/undo')
+    call mkdir($VIMLOCAL . '/undo')
   endif
   set undofile
-  set undodir=$MYVIMDIR/undo
+  set undodir =$VIMLOCAL/undo
 endif
 
 " Briefly jump to the matching bracket.
@@ -896,8 +897,8 @@ endif
 
 " Local settings {{{
 
-if filereadable($MYVIMDIR . '/local.vim')
-  source $MYVIMDIR/local.vim
+if filereadable($VIMLOCAL . '/vimrc')
+  source $VIMLOCAL/vimrc
 endif
 
 " }}}

@@ -1,5 +1,3 @@
 /.vim/bundle/*
-/.vim/bundle_local/*
-/.vim/local.vim
-/.vim/undo/
+/.vim/local/*
 !.gitkeep
