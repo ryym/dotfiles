@@ -229,8 +229,9 @@ endif
 
 " Key mappings {{{
 
-" Disable the 'm' and <Space> keys to use these as the main leader keys.
+" Disable these keys to use as the main leader keys.
 nnoremap m       <Nop>
+nnoremap q       <Nop>
 nnoremap <Space> <Nop>
 
 " Motion {{{
@@ -339,6 +340,7 @@ nnoremap <Space>Q  :<C-u>quit!<CR>
 nnoremap <C-j> <C-e>gj
 nnoremap <C-k> <C-y>gk
 nnoremap Y y$
+nnoremap Q q
 " }}}
 
 " Disallow delete operations to change clipboard except 'd'. {{{
