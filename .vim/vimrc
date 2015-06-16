@@ -122,7 +122,6 @@ set smartcase
 " Avoid highlighting the last search pattern at reloading vimrc.
 nohlsearch
 
-" TODO: backup, swap
 " Disable file backups.
 set nobackup
 set nowritebackup
