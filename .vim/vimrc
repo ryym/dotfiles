@@ -422,6 +422,8 @@ nnoremap \[buffer]j :<C-u>execute 'buffer' v:count1<CR>
 " Use 't' as the prefix of tab motions.
 MakeNamedLeader tab t
 nnoremap \[tab]n :<C-u>tabnew<CR>
+nnoremap \[tab]h gT
+nnoremap \[tab]l gt
 " TODO: mappings for tab motions
 
 " }}}
