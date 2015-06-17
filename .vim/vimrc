@@ -42,10 +42,14 @@ endif
 
 " Colorscheme {{{
 
+augroup vimrc
+  autocmd ColorScheme hybrid highlight LineNr ctermfg=14 guifg=#676b41
+augroup END
+
 if has('vim_starting')
   set t_Co =256
   if &t_Co < 256
-    colorscheme smyck
+    colorscheme desert
   else
     colorscheme smyck256
   endif
@@ -576,7 +580,7 @@ function! s:declare_bundles()
 
   NeoBundlew 'nathanaelkane/vim-indent-guides'
 
-  NeoBundlewLazy 'w0ng/vim-hybrid'
+  NeoBundlew 'w0ng/vim-hybrid'
 
   " }}}
 
