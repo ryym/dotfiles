@@ -4,12 +4,16 @@
 
 " Initializing {{{
 
-" Skip initialization if '+eval' feature is disabled.
-" :help no-eval-feature
-if !1 | finish | endif
-
-" 'compatible' option is disabled automatically when vimrc file is found.
-" set nocompatible
+" Skip initialization if '+eval' feature is disabled. {{{
+" Note: (see: :help no-eval-feature)
+"   In '-eval' environment, the argument of 'if' (including '| endif')
+"   is ignored. So all lines after 'if' are ignored too. But
+"   backslashes of line-continuation are still recognized and
+"   cause errors when 'compatible' option is set. So
+"   setting 'cpoptions' to enable line-continuation before
+"   'if' statement makes sure all lines get ignored without error.
+" }}}
+set cpoptions-=C | if 0 | endif
 
 " Default properties
 let g:is_windows = has('win32') || has('win64')
