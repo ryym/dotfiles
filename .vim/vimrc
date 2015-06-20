@@ -28,10 +28,6 @@ augroup vimrc
   autocmd!
 augroup END
 
-" Define mapleader before all mappings usiing <Leader>.
-let mapleader = "-"
-nnoremap - <Nop>
-
 if has('vim_starting')
   autocmd vimrc VimEnter * call <SID>display_startup_time()
 
@@ -236,6 +232,10 @@ endif
 " }}}
 
 " Key mappings {{{
+
+" Define 'mapleader' before all mappings usiing <Leader>.
+let mapleader = "-"
+nnoremap - <Nop>
 
 " Disable these keys to use as the main leader keys.
 nnoremap m       <Nop>
