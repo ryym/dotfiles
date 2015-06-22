@@ -700,6 +700,7 @@ function! s:configure_bundles(neobundle_wrapper)
   if nbw.tap('submode')
     function! nbw.hooks.on_source(_)
       let g:submode_keep_leaving_key = 1
+      let g:submode_timeout          = 0
       let g:submode_timeoutlen       = 3000
     endfunction
 
@@ -718,6 +719,7 @@ function! s:configure_bundles(neobundle_wrapper)
       SbmScroll n <C-j> 6<C-e>j
       SbmScroll n <C-k> 6<C-y>k
       " }}}
+
       " Submode window-resize {{{
       call w#submode#define('winRes')
       SbmWinResEnter n <C-w>m
@@ -731,8 +733,8 @@ function! s:configure_bundles(neobundle_wrapper)
         \ 'w': '<C-w>>'
         \ })
         execute 'SbmWinRes n' s:k               1 . s:command
-        execute 'SbmWinRes n' toupper(s:k)      2 . s:command
-        execute 'SbmWinRes n' '<C-' . s:k . '>' 3 . s:command
+        execute 'SbmWinRes n' toupper(s:k)      3 . s:command
+        execute 'SbmWinRes n' '<C-' . s:k . '>' 5 . s:command
       endfor
       unlet s:k s:command
       " }}}
