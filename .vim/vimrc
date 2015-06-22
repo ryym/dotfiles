@@ -558,6 +558,12 @@ function! s:declare_bundles()
     \ 'filetypes': ['coffee']
     \ }
 
+  NeoBundlewLazy 'bruno-/vim-man', {
+    \ 'disabled': g:is_windows,
+    \ 'mappings': ['<Plug>(Man)', '<Plug>(Sman)', '<Plug>(Vman)'],
+    \ 'commands': ['Man', 'Sman', 'Vman']
+    \ }
+
   " }}}
 
   " UI {{{
@@ -843,6 +849,18 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " }}}
 
+  " FileType {{{
+
+  " man (man page) {{{
+  if nbw.try_tap('man')
+    NameMap man qm
+    Map n \[man]m :s:Vman
+    Remap n \[man]w <Plug>(Vman)
+  endif
+  " }}}
+
+  " }}}
+
   " UI {{{
 
   " indent-guides {{{
@@ -852,6 +870,7 @@ function! s:configure_bundles(neobundle_wrapper)
     function! nbw.hooks.on_source(_)
       let g:indent_guides_start_level = 2
       let g:indent_guides_guide_size  = 1
+      let g:indent_guides_exclude_filetypes = ['help', 'man']
       if g:is_gui
         autocmd vimrc VimEnter * IndentGuidesEnable
       endif
