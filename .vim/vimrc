@@ -335,7 +335,7 @@ Map c <C-p> <Up>
 
 " Toggle options {{{
 
-NameMap toggle qo
+MapNamedKey toggle qo
 MapToggle r relativenumber
 MapToggle n number
 MapToggle w wrap
@@ -393,7 +393,7 @@ Map c <C-v> <C-r>*
 
 " Buffers {{{
 
-NameMap buffer <Space>b
+MapNamedKey buffer <Space>b
 Map n \[buffer]a ::buffer #
 Map n \[buffer]d ::bdelete
 Map n \[buffer]l ::ls
@@ -404,7 +404,7 @@ Map n \[buffer]j ::execute 'buffer' v:count1
 " Tabs {{{
 
 " Use 't' as the prefix of tab motions.
-NameMap tab t
+MapNamedKey tab t
 Map n \[tab]n ::tabnew
 Map n \[tab]h gT
 Map n \[tab]l gt
@@ -594,8 +594,8 @@ function! s:configure_bundles(neobundle_wrapper)
 
   "   unite {{{
   if nbw.tap('unite')
-    NameMap unite   <Space>u
-    NameMap uniteNq <Space>U
+    MapNamedKey unite   <Space>u
+    MapNamedKey uniteNq <Space>U
 
     let s:mappings = [
       \   ['u', 'Unite'                    , '<Space>'],
@@ -662,7 +662,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " vimfiler {{{
   if nbw.tap('vimfiler')
-    NameMap vimfiler <Space>f
+    MapNamedKey vimfiler <Space>f
     Map n \[vimfiler]f :us:VimFiler
     Map n \[vimfiler]s :us:VimFiler -split -winwidth=60
     Map n \[vimfiler]c ::VimFilerCurrentDir
@@ -689,7 +689,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " vimshell {{{
   if nbw.tap('vimshell')
-    NameMap vimshell <Space>s
+    MapNamedKey vimshell <Space>s
     Map n \[vimshell]s :us:VimShell
     Map n \[vimshell]c ::VimShellCurrentDir
     Map n \[vimshell]d ::VimShellBufferDir
@@ -855,7 +855,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " man (man page) {{{
   if nbw.try_tap('man')
-    NameMap man qm
+    MapNamedKey man qm
     Map n \[man]m :s:Vman
     Remap n \[man]w <Plug>(Vman)
   endif

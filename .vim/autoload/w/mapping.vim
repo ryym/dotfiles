@@ -34,7 +34,7 @@
 "   Example:
 "     Map nv (buffer uniq) x "_x
 "   
-" NameMap {name} {key}
+" MapNamedKey {name} {key}
 "
 "   Define a named key by mapping \[{name}] key sequence to {key}.
 "   Named key is typically used as a prefix of other mappings.
@@ -43,7 +43,7 @@
 "   to avoid conflicting with other mappings starting with '['.
 "
 "   Example:
-"     NameMap buffer <Space>b
+"     MapNamedKey buffer <Space>b
 "     Map n \[buffer]a ::buffer #
 "     Map n \[buffer]d ::bdelete
 "
@@ -60,10 +60,10 @@ let s:current_sid = ''
 " Common {{{
 
 function! w#mapping#load(sid)
-  command! -nargs=+ Map       call w#mapping#define(0, <f-args>)
-  command! -nargs=+ Remap     call w#mapping#define(1, <f-args>)
-  command! -nargs=+ NameMap   call w#mapping#make_named_key(<f-args>)
-  command! -nargs=+ MapToggle call w#mapping#map_option_toggling(<f-args>)
+  command! -nargs=+ Map         call w#mapping#define(0, <f-args>)
+  command! -nargs=+ Remap       call w#mapping#define(1, <f-args>)
+  command! -nargs=+ MapNamedKey call w#mapping#map_named_key(<f-args>)
+  command! -nargs=+ MapToggle   call w#mapping#map_option_toggling(<f-args>)
 
   call w#mapping#set_sid(a:sid)
 endfunction
@@ -195,9 +195,9 @@ endfunction
 
 " }}}
 
-" NameMap {{{
+" MapNamedKey {{{
 
-function! w#mapping#make_named_key(name, key)
+function! w#mapping#map_named_key(name, key)
   let command_name = '\[' . a:name . ']'
   execute 'nnoremap' command_name '<Nop>'
   execute 'nmap'     a:key        command_name
