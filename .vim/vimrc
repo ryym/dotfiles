@@ -333,7 +333,17 @@ Map c <C-p> <Up>
 
 " TODO: Define own 'unimpaired' mappings.
 
-" Toggle options {{{
+" Map text objects. {{{
+
+MapTextObj d "
+MapTextObj s '
+MapTextObj m )
+MapTextObj n }
+MapTextObj y >
+
+" }}}
+
+" Toggle options. {{{
 
 MapNamedKey toggle qo
 MapToggle r relativenumber

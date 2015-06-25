@@ -52,6 +52,10 @@
 "   Define mapping for toggling {option} (:set(l) {option}!).
 "   This command prefixes '\[toggle]' to all {key}s.
 "
+" MapTextObj {lhs} {rhs}
+"
+"   Change the mapping of text object {rhs} to {lhs}.
+"
 " }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -64,6 +68,7 @@ function! w#mapping#load(sid)
   command! -nargs=+ Remap       call w#mapping#define(1, <f-args>)
   command! -nargs=+ MapNamedKey call w#mapping#map_named_key(<f-args>)
   command! -nargs=+ MapToggle   call w#mapping#map_option_toggling(<f-args>)
+  command! -nargs=+ MapTextObj  call w#mapping#map_text_object(<f-args>)
 
   call w#mapping#set_sid(a:sid)
 endfunction
@@ -218,3 +223,11 @@ endfunction
 
 " }}}
 
+" MapTextObj {{{
+
+function! w#mapping#map_text_object(lhs, rhs)
+  execute 'Map ox' 'i' . a:lhs  'i' . a:rhs
+  execute 'Map ox' 'a' . a:lhs  'a' . a:rhs
+endfunction
+
+" }}}
