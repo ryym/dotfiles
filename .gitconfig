@@ -2,54 +2,54 @@
     default = simple
 [core]
     quotepath = false
-[alias]
-    alias = !git config --global --list | grep ^alias | cut -c7-
-    s = status
-    h = help
-    re = log --oneline -10 # show recent logs.
-    sre = !git sl -10
-    b = branch
-    a = add
-    aa = add --all
-    ap = add -p
-    cm = commit
-    cmm = commit -m
-    cmam = commit -am
-    co = checkout
-    cob = checkout -b
-    chp = cherry-pick
-    f = fetch
-    fp = fetch --prune
-    rb = rebase
-    rbi = rebase -i
-    fixup = commit --fixup=@
-    rb2 = !git rebase -i --autosquash @~2
-    cont = rebase --continue
-    abort = rebase --abort
-    m = merge
-    mnf = merge --no-ff
-    rs = reset --mixed
-    rsh = reset --hard
-    amend = commit --amend
-    st = stash
-    sts = stash save
-    stu = stash -u
-    stp = stash pop
-    gconf = config --global
-    lconf = config --local
-    gconfs = config --global --list
-    lconfs = config --local --list
-    sl = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
-    tree = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    sh = show
-    shfs = show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
-    d = diff
-    dc = diff --cached
-    dfs = diff --name-only
-    dgvi = difftool --tool=gvimdiff
+[rebase]
+    autosquash = true
 [gui]
     encoding = utf-8
+[alias]
+    alias  = !git config --global --list | grep ^alias | cut -c7-
+    s      = status
+    h      = help
+    re     = log --oneline -10 # show recent logs.
+    sre    = !git sl -10
+    b      = branch
+    a      = add
+    aa     = add --all
+    ap     = add -p
+    cm     = commit
+    cmm    = commit -m
+    cmam   = commit -am
+    fixup  = commit --fixup=@
+    amend  = commit --amend
+    co     = checkout
+    cob    = checkout -b
+    chp    = cherry-pick
+    f      = fetch
+    fp     = fetch --prune
+    rb     = rebase
+    rbi    = rebase -i
+    rb2    = !git rebase -i --autosquash @~2
+    cont   = rebase --continue
+    abort  = rebase --abort
+    m      = merge
+    mnf    = merge --no-ff
+    rs     = reset --mixed
+    rsh    = reset --hard
+    st     = stash
+    sts    = stash save
+    stu    = stash -u
+    stp    = stash pop
+    gconf  = config --global
+    lconf  = config --local
+    gconfs = config --global --list
+    lconfs = config --local --list
+    sl     = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    tree   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    sh     = show
+    shfs   = show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
+    d      = diff
+    dc     = diff --cached
+    dfs    = diff --name-only
+    dgvi   = difftool --tool=gvimdiff
 [include]
     path = .gitconfig.local
-[rebase]
-	autosquash = true
