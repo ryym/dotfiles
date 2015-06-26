@@ -13,6 +13,8 @@
     re     = log --oneline -10 # show recent logs.
     sre    = !git sl -10
     b      = branch
+    bm     = branch -m
+    bd     = branch -d
     a      = add
     aa     = add --all
     ap     = add -p
