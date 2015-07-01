@@ -555,6 +555,14 @@ function! s:declare_bundles()
 
   " }}}
 
+  " VCS {{{
+
+  NeoBundlewLazy 'tpope/vim-fugitive', {
+    \ 'commands': ['Gstatus', 'Git', 'Gdiff']
+    \ }
+
+  " }}}
+
   " Filetype {{{
 
   NeoBundlewLazy 'mattn/emmet-vim', {
@@ -856,6 +864,24 @@ function! s:configure_bundles(neobundle_wrapper)
   if nbw.try_tap('macspeech')
     Map v  <Leader><Leader>q :r:MacSpeechSelected
     Map nv <Leader><Leader>Q ::MacSpeechStop
+  endif
+  " }}}
+
+  " }}}
+
+  " VCS {{{
+
+  " fugitive {{{
+  if nbw.tap('fugitive')
+    MapNamedKey git <Space>g
+    Map nv \[git]g :s:Git
+    Map nv \[git]s ::Gstatus
+    Map nv \[git]d ::Gdiff
+
+    function! nbw.hooks.on_post_source(bundle)
+      " Detect current opened file to enable fugitive.
+      call fugitive#detect(expand('#:p'))
+    endfunction
   endif
   " }}}
 
