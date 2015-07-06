@@ -352,6 +352,17 @@ MapToggle w wrap
 MapToggle t expandtab
 MapToggle l list
 
+Map n \[toggle]i :f:<SID>toggle_indent_width()
+function! s:toggle_indent_width()
+  if &tabstop <= 2
+    MediumIndent
+    echo 'Mdeium indent (4)'
+  else
+    ShortIndent
+    echo 'Short indent (2)'
+  endif
+endfunction
+
 " }}}
 
 " Customize operations in normal mode. {{{
@@ -910,7 +921,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " indent-guides {{{
   if nbw.tap('indent-guides')
-    Remap n \[toggle]i <Plug>IndentGuidesToggle
+    Remap n \[toggle]g <Plug>IndentGuidesToggle
 
     function! nbw.hooks.on_source(_)
       let g:indent_guides_start_level = 2
