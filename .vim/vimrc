@@ -937,6 +937,8 @@ call w#neobundle#execute({
   \   'declare_bundles'   : function('s:declare_bundles'),
   \   'configure_bundles' : function('s:configure_bundles')
   \ })
+delfunction s:declare_bundles
+delfunction s:configure_bundles
 
 " }}}
 
