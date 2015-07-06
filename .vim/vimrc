@@ -204,6 +204,7 @@ augroup vimrc
   autocmd FileType yaml       ShortIndent
   autocmd FileType ruby       ShortIndent
   autocmd FileType vim        ShortIndent
+  autocmd FileType vimspec    ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent
@@ -612,6 +613,8 @@ function! s:declare_bundles()
   NeoBundlew 'tpope/vim-unimpaired'
 
   " }}}
+
+  NeoBundlew 'thinca/vim-themis'
 
 endfunction " }}}
 
