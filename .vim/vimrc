@@ -673,6 +673,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
     " unite-mru {{{
     if nbw.tap('neomru')
+      call s:map_unite_commands('m', 'Unite file_mru', '<CR>')
       function! nbw.hooks.on_source(_)
         let g:unite_source_alias_aliases['fm'] = 'file_mru'
       endfunction
