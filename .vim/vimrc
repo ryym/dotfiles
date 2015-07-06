@@ -274,7 +274,7 @@ Map n mm m
 Map n _  `
 " }}}
 
-" Fix the direction of the ', ',', 'n', 'N'. {{{
+" Fix the direction of the ';', ',', 'n', 'N'. {{{
 
 " Make the ';' key always move to the right.
 " Make the ',' key always move to the left.
