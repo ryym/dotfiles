@@ -352,6 +352,8 @@ MapToggle w wrap
 MapToggle t expandtab
 MapToggle l list
 
+Map n (silent) \[toggle]h ::let v:hlsearch = !v:hlsearch
+
 Map n \[toggle]i :f:<SID>toggle_indent_width()
 function! s:toggle_indent_width()
   if &tabstop <= 2
