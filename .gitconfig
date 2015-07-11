@@ -20,7 +20,10 @@
     ap     = add -p
     cm     = commit
     cmm    = commit -m
+    cma    = commit -a
     cmam   = commit -am
+    cmw    = commit -m WIP
+    cmaw   = commit -am WIP
     fixup  = commit --fixup=@
     amend  = commit --amend
     co     = checkout
