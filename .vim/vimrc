@@ -982,6 +982,7 @@ endif
 
 if filereadable($VIMLOCAL . '/vimrc')
   source $VIMLOCAL/vimrc
+  command! Evl edit $VIMLOCAL/vimrc
 endif
 
 " }}}
