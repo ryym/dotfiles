@@ -10,8 +10,6 @@
     alias  = !git config --global --list | grep ^alias | cut -c7-
     s      = status
     h      = help
-    re     = log --oneline -10 # show recent logs.
-    sre    = !git sl -10
     b      = branch
     bm     = branch -m
     bd     = branch -d
@@ -48,7 +46,12 @@
     lconf  = config --local
     gconfs = config --global --list
     lconfs = config --local --list
+    re     = log --oneline -10 # show recent logs.
     sl     = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    slx    = log -10 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    slxx   = log -20 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    slxxx  = log -30 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    slxxxx = log -40 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     tree   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     sh     = show
     shfs   = show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
