@@ -20,9 +20,10 @@
     cmm    = commit -m
     cma    = commit -a
     cmam   = commit -am
+    cmf    = commit --amend -C HEAD # Fixup changes to HEAD commit
+    cmaf   = commit -a --amend -C HEAD
     cmw    = commit -m WIP
     cmaw   = commit -am WIP
-    fixup  = commit --fixup=@
     amend  = commit --amend
     co     = checkout
     cob    = checkout -b
@@ -31,7 +32,6 @@
     fp     = fetch --prune
     rb     = rebase
     rbi    = rebase -i
-    rb2    = !git rebase -i --autosquash @~2
     cont   = rebase --continue
     abort  = rebase --abort
     m      = merge
