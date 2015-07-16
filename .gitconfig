@@ -46,6 +46,7 @@
     lconf  = config --local
     gconfs = config --global --list
     lconfs = config --local --list
+    ls     = ls-files
     re     = log --oneline -10 # show recent logs.
     sl     = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     slx    = log -10 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
