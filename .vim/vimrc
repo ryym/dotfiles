@@ -612,11 +612,13 @@ function! s:declare_bundles()
 
   " Others {{{
 
+  NeoBundlewLazy 'thinca/vim-themis', {
+    \ 'filetypes': ['vimspec']
+    \ }
+
   NeoBundlew 'tpope/vim-unimpaired'
 
   " }}}
-
-  NeoBundlew 'thinca/vim-themis'
 
 endfunction " }}}
 
