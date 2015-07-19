@@ -994,4 +994,65 @@ endif
 
 " }}}
 
+" Experimental {{{
+
+" Line guides {{{
+
+" Highlight lines around the current line.
+" TODO: Skip folds. Is this possible?  :h foldclosed()
+
+highlight CursorLineAround1 ctermbg=238 guibg=#4f4242
+highlight CursorLineAround2 ctermbg=238 guibg=#42424f
+
+let s:highlight1_lines = [-40, -20, 20, 40]
+let s:highlight2_lines = [-30, -10, 10, 30]
+
+function! s:set_lineguides_augroup()
+  augroup vimrc-lineguides
+    autocmd CursorMoved * call <SID>highlight_around_lines()
+    autocmd InsertEnter,BufLeave * call <SID>clear_matches()
+  augroup END
+endfunction
+
+function! s:highlight_around_lines()
+  call s:clear_matches()
+  let curline = line('.')
+
+  let target_lines1 = filter(copy(s:highlight1_lines), '(curline - v:val) >= 0')
+  let target_lines1 = map(target_lines1, "'|%' . (curline - v:val) . 'l'")
+  call matchadd('CursorLineAround1', '\v' . join(target_lines1, '')[1:])
+
+  let target_lines2 = filter(copy(s:highlight2_lines), '(curline - v:val) >= 0')
+  let target_lines2 = map(target_lines2, "'|%' . (curline - v:val) . 'l'")
+  call matchadd('CursorLineAround2', '\v' . join(target_lines2, '')[1:])
+
+  let s:lineguides_highlighted = 1
+endfunction
+
+function! s:clear_matches()
+  for item in getmatches()
+    if item.group =~ 'CursorLineAround'
+      call matchdelete(item.id)
+    endif
+  endfor
+  let s:lineguides_highlighted = 0
+endfunction
+
+let s:lineguides_highlighted = 0
+function! s:toggle_highlight_lines()
+  if s:lineguides_highlighted
+    call s:clear_matches()
+    autocmd! vimrc-lineguides
+  else
+    call s:highlight_around_lines()
+    call s:set_lineguides_augroup()
+  endif
+endfunction
+
+Map nv \[toggle]c :f:<SID>toggle_highlight_lines()
+
+" }}}
+
+" }}}
+
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
