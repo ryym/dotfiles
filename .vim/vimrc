@@ -381,6 +381,7 @@ Map n <C-j> <C-e>gj
 Map n <C-k> <C-y>gk
 Map n Y y$
 Map n Q q
+Map n qp ::pwd
 " }}}
 
 " Disallow delete operations to change clipboard except 'd'. {{{
