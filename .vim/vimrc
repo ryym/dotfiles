@@ -617,6 +617,8 @@ function! s:declare_bundles()
     \ 'filetypes': ['vimspec']
     \ }
 
+  NeoBundlew 'kana/vim-vspec'
+
   NeoBundlew 'vim-jp/vimdoc-ja'
 
   NeoBundlew 'tpope/vim-unimpaired'
