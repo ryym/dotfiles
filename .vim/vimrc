@@ -205,6 +205,7 @@ augroup vimrc
   autocmd FileType ruby       ShortIndent
   autocmd FileType vim        ShortIndent
   autocmd FileType vimspec    ShortIndent
+  autocmd FileType scala      ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent
@@ -597,6 +598,10 @@ function! s:declare_bundles()
     \ 'disabled': g:is_windows,
     \ 'mappings': ['<Plug>(Man)', '<Plug>(Sman)', '<Plug>(Vman)'],
     \ 'commands': ['Man', 'Sman', 'Vman']
+    \ }
+
+  NeoBundleLazy 'derekwyatt/vim-scala', {
+    \ 'filetypes': ['scala']
     \ }
 
   " }}}
