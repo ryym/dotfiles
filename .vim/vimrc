@@ -992,24 +992,15 @@ endif
 
 " }}}
 
-" Local settings {{{
-
-if filereadable($VIMLOCAL . '/vimrc')
-  source $VIMLOCAL/vimrc
-  command! Evl edit $VIMLOCAL/vimrc
-endif
-
-" }}}
-
-" Experimental {{{
+" Other customizing {{{
 
 " Line guides {{{
 
 " Highlight lines around the current line.
-" TODO: Skip folds. Is this possible?  :h foldclosed()
+" XXX: This doesn't skip folds.
 
-highlight CursorLineAround1 ctermbg=238 guibg=#4f4242
-highlight CursorLineAround2 ctermbg=238 guibg=#42424f
+highlight CursorLineAround1 ctermbg=238 guibg=#424242
+highlight CursorLineAround2 ctermbg=238 guibg=#424242
 
 let s:highlight1_lines = [-40, -20, 20, 40]
 let s:highlight2_lines = [-30, -10, 10, 30]
@@ -1059,6 +1050,15 @@ endfunction
 Map nv \[toggle]c :f:<SID>toggle_highlight_lines()
 
 " }}}
+
+" }}}
+
+" Local settings {{{
+
+if filereadable($VIMLOCAL . '/vimrc')
+  source $VIMLOCAL/vimrc
+  command! Evl edit $VIMLOCAL/vimrc
+endif
 
 " }}}
 
