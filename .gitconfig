@@ -39,6 +39,7 @@
     rs     = reset --mixed
     rsh    = reset --hard
     st     = stash
+    stl    = stash list
     sts    = stash save
     stu    = stash -u
     stp    = stash pop
