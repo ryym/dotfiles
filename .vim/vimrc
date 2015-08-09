@@ -84,6 +84,27 @@ function! s:set_indent(n_space, expand_tab)
 endfunction
 " }}}
 
+" QuickfixDo {{{
+
+command! -nargs=+ QfDo call <SID>quickfix_do(<q-args>)
+
+" Execute the specified command for each buffer in the quickfix list.
+" From: http://stackoverflow.com/questions/4792561/how-to-do-search-replace-with-ack-in-vim/4793316#4793316
+function! s:quickfix_do(command)
+    let buffer_numbers = {}
+    for fixlist_entry in getqflist()
+        let buffer_numbers[ fixlist_entry['bufnr'] ] = 1
+    endfor
+    let buffer_number_list = keys(buffer_numbers)
+
+    for bufnr in buffer_number_list
+        execute 'buffer' bufnr
+        execute a:command
+    endfor
+endfunction
+
+" }}}
+
 " }}}
 
 " Basic options {{{
