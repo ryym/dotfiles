@@ -317,11 +317,11 @@ Map nvo (expr) N <SID>search_pattern_to_fixed_direction('N', 'n')
 
 function! s:map_repeat_keys_and_move_to_occurrence(direct_to_right, command)
   if a:direct_to_right
-    Map n ; ;
-    Map n , ,
+    Map nvo ; ;
+    Map nvo , ,
   else
-    Map n ; ,
-    Map n , ;
+    Map nvo ; ,
+    Map nvo , ;
   endif
   return a:command
 endfunction
