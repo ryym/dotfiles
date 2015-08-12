@@ -206,6 +206,7 @@ augroup vimrc
   autocmd FileType vim        ShortIndent
   autocmd FileType vimspec    ShortIndent
   autocmd FileType scala      ShortIndent
+  autocmd FileType sql        ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent
