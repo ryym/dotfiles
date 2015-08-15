@@ -4,6 +4,8 @@
     quotepath = false
 [rebase]
     autosquash = true
+[merge]
+    defaultToUpstream = true
 [gui]
     encoding = utf-8
 [alias]
