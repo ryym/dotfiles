@@ -1,6 +1,48 @@
 #!/bin/sh
 
-ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/.ideavimrc ~/.ideavimrc
-ln -s ~/dotfiles/.vim ~/.vim
-ln -s ~/dotfiles/.vimperatorrc ~/.vimperatorrc
+while getopts t opt
+do
+  case $opt in
+    t) readonly DRY_RUN=1
+      ;;
+  esac
+done
+
+# Check if the dotfiles can be linked.
+validate() {
+  if [ -z "$dotfile" ]; then
+    echo "dotfile name is empty." >&2
+    exit 1
+  fi
+
+  if [ ! -e "$srcfile" ]; then
+    echo "$srcfile doesn't exist." >&2
+    exit 1
+  fi
+
+  if [ ! -L "$lnkfile" ]; then
+    echo "$lnkfile exists but is not a symlnk." >&2
+    exit 1
+  fi
+}
+
+# Create or update symbolic links in $HOME.
+link_dotfile() {
+  ln -nsf "$srcfile" "$lnkfile"
+  echo "-- $dotfile is linked. --"
+}
+
+# The files to be linked.
+dotfiles=(
+  '.gitconfig'
+  '.ideavimrc'
+  '.vimperatorrc'
+  '.vim'
+)
+
+for dotfile in "${dotfiles[@]}"; do
+  srcfile=~/dotfiles/$dotfile
+  lnkfile=~/$dotfile
+
+  validate && [ ${DRY_RUN:-0} -eq 0 ] && link_dotfile
+done
