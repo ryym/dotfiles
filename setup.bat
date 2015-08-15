@@ -13,6 +13,7 @@ pushd "%0\.."
 mklink ..\.gitconfig dotfiles\.gitconfig
 mklink /d ..\vimfiles dotfiles\.vim
 mklink ..\.ideavimrc dotfiles\.ideavimrc
+mklink ..\.vimperatorrc dotfiles\.vimperatorrc
 
 echo Installed.
 pause
