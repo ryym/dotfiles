@@ -16,6 +16,12 @@ hi ErrorMsg color:white; background-color: #ec6aa1;
 
 " }}}
 
+" Ignore pages {{{
+
+ignorekeys add docs.google.com
+
+" }}}
+
 set hintchars=ifjklastdhgurwcyz
 
 nmap t <Nop>
