@@ -1029,10 +1029,6 @@ runtime macros/matchit.vim
 
 " }}}
 
-if ! has('vim-starting')
-  " Todo: neobundle call on_source
-endif
-
 " }}}
 
 " Other customizing {{{
