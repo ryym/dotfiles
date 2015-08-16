@@ -68,7 +68,9 @@ endfunction
 " Reload and Edit .vimrc {{{
 command! Rv  source $MYVIMRC | if g:is_gui | source $MYGVIMRC | endif
 command! Ev  edit   $MYVIMRC
-command! Evg edit   $MYGVIMRC
+if g:is_gui
+ command! Evg edit $MYGVIMRC
+endif
 " }}}
 
 " Set indent easily {{{
