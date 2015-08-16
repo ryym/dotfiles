@@ -105,6 +105,18 @@ endfunction
 
 " }}}
 
+" Restore last cursor position {{{
+
+command! RestoreCursorPosition call s:restore_cursor_position()
+
+function! s:restore_cursor_position()
+  if line("'\"") > 1 && line("'\"") <= line("$")
+    execute 'normal! g`"'
+  endif
+endfunction
+
+" }}}
+
 " }}}
 
 " Basic options {{{
@@ -193,8 +205,13 @@ set formatoptions =croql
 " Indent counts of leading backslash for line continuations in vim script.
 let g:vim_indent_cont = 2
 
+" }}}
+
+" Default events {{{
+
 augroup vimrc
   autocmd WinEnter * checktime
+  autocmd BufReadPost * RestoreCursorPosition
 augroup END
 
 " }}}
