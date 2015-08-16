@@ -203,6 +203,7 @@ set completeopt =longest,menuone
 set whichwrap   =b,s,<,>,[,]
 set statusline  =%f%m%r%h%w\ -\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ %Y]\ [%Llines\]\ (%04l,%04v)
 set formatoptions =croql
+set fileignorecase
 
 " Indent counts of leading backslash for line continuations in vim script.
 let g:vim_indent_cont = 2
