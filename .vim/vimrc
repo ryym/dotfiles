@@ -577,7 +577,7 @@ function! s:declare_bundles()
 
   " Motion {{{
 
-  NeoBundlewLazy 'Lokaltog/vim-easymotion', {
+  NeoBundlewLazy 'easymotion/vim-easymotion', {
     \ 'mappings': '<Plug>'
     \ }
 
