@@ -119,6 +119,90 @@ endfunction
 
 " }}}
 
+" Grep by external programs {{{
+
+if ! exists('s:grepprgs')
+  " Setup {{{
+
+  " Helper functions {{{
+
+  function! s:make_grepprg_obj(program, command, grepprg)
+    return {
+      \ 'program' : a:program,
+      \ 'command' : a:command,
+      \ 'grepprg' : a:grepprg,
+      \ 'executable' : a:program !=# 'vim' ? executable(a:program) : 1
+      \ }
+  endfunction
+
+  function! s:select_executable_programs()
+    return filter(copy(s:grepprgs.order), "s:grepprgs.prgs[v:val].executable")
+  endfunction
+
+  function! s:select_first_executable_grepprg()
+    let executables = s:select_executable_programs()
+    return s:grepprgs.prgs[ executables[0] ]
+  endfunction
+
+  " Run grep by the specified program.
+  function! s:grep_by(program, args)
+    let save_grepprg = &grepprg
+
+    let config = s:grepprgs.prgs[a:program]
+    let &grepprg = config.grepprg
+
+    silent execute 'grep' a:args '| cwindow'
+    echo len(getqflist()) "matches."
+    let &grepprg = save_grepprg
+  endfunction
+
+  " Change the current grep program.
+  function! s:change_grep_program(program) abort
+    if ! has_key(s:grepprgs.prgs, a:program)
+      echoerr a:program 'is unknown as a grep command.'
+      return
+    endif
+
+    let config = s:grepprgs.prgs[a:program]
+    if ! config.executable
+      echoerr a:program 'can not be executed.'
+      return
+    endif
+
+    let s:grepprgs.current = config
+    echo 'Grep is set to:' a:program
+  endfunction
+
+  " }}}
+
+  " The dictionary which stores some information about grep commands.
+  let s:grepprgs = {
+    \ 'order' : ['ag', 'pt', 'vim'],
+    \ 'prgs' : {
+    \   'ag'  : s:make_grepprg_obj('ag', 'AgGrep',  'ag --nocolor --nogroup'),
+    \   'pt'  : s:make_grepprg_obj('pt', 'PtGrep',  'pt --nocolor --nogroup'),
+    \   'vim' : s:make_grepprg_obj('vim', 'VimGrep',  'internal')
+    \  }
+    \ }
+  " Set the first executable command to the current grep program.
+  let s:grepprgs.current = s:select_first_executable_grepprg()
+
+  " }}}
+endif
+
+" Define the custom grep commands.
+for [s:program, s:config] in items(s:grepprgs.prgs)
+  execute printf(
+    \ "command! -nargs=+ -complete=file %s call <SID>grep_by('%s', <q-args>)",
+    \ s:config.command, s:program)
+endfor
+unlet s:program s:config
+
+command! -nargs=1 ChangeGrep call <SID>change_grep_program(<q-args>)
+command! ShowGreps echo 'Available greps: ' <SID>select_executable_programs()
+
+" }}}
+
 " }}}
 
 " Basic options {{{
@@ -458,6 +542,30 @@ Map n <Leader><Space> a<Space><Esc>
 " Paste texts smartly. {{{
 Map i (silent) <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
 Map c <C-v> <C-r>*
+" }}}
+
+" Grep by external programs. {{{
+
+" Toggle the current grep program.
+let s:grep_mappings = {
+  \ 'a' : 'ag',
+  \ 'p' : 'pt',
+  \ 'v' : 'vim'
+  \ }
+for [s:key, s:program] in items(s:grep_mappings)
+  execute printf("Map n \\[grep]%s ::ChangeGrep %s", s:key, s:program)
+endfor
+unlet s:grep_mappings s:key s:program
+
+" Start grep using the current program.
+function! s:grep_by_current_program()
+  return ':' . s:grepprgs.current.command . ' '
+endfunction
+
+MapNamedKey grep <Space>s
+Map n (expr) \[grep]s <SID>grep_by_current_program()
+Map n \[grep]l ::ShowGreps
+
 " }}}
 
 " }}}
