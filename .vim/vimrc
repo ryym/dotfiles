@@ -789,8 +789,8 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " vimshell {{{
   if nbw.tap('vimshell')
-    MapNamedKey vimshell <Space>s
-    Map n \[vimshell]s :us:VimShell
+    MapNamedKey vimshell <Space>t
+    Map n \[vimshell]t :us:VimShell
     Map n \[vimshell]c ::VimShellCurrentDir
     Map n \[vimshell]d ::VimShellBufferDir
   endif
