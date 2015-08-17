@@ -583,6 +583,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'nelstrom/vim-visual-star-search'
 
+  NeoBundlew 'haya14busa/incsearch.vim'
+
   " }}}
 
   " Utility {{{
@@ -904,6 +906,25 @@ function! s:configure_bundles(neobundle_wrapper)
       highlight link EasyMotionTarget       ErrorMsg
       highlight link EasyMotionShade        Comment
       highlight link EasyMotionTarget2First Todo
+    endfunction
+  endif
+  " }}}
+
+  " incsearch {{{
+  if nbw.tap('incsearch')
+    Remap nvo /  <Plug>(incsearch-forward)
+    Remap nvo ?  <Plug>(incsearch-backward)
+    Remap nvo g/ <Plug>(incsearch-stay)
+    Remap nvo n  <Plug>(incsearch-nohl-n)
+    Remap nvo N  <Plug>(incsearch-nohl-N)
+    Remap nvo *  <Plug>(incsearch-nohl-*)
+    Remap nvo #  <Plug>(incsearch-nohl-#)
+    Remap nvo g* <Plug>(incsearch-nohl-g*)
+    Remap nvo g# <Plug>(incsearch-nohl-g#)
+
+    function! nbw.hooks.on_source(_)
+      let g:incsearch#consistent_n_direction = 1
+      let g:incsearch#magic = '\v'
     endfunction
   endif
   " }}}
