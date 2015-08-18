@@ -923,6 +923,7 @@ function! s:configure_bundles(neobundle_wrapper)
     Remap nvo g# <Plug>(incsearch-nohl-g#)
 
     function! nbw.hooks.on_source(_)
+      let g:incsearch#auto_nohlsearch = 1
       let g:incsearch#consistent_n_direction = 1
       let g:incsearch#magic = '\v'
     endfunction
