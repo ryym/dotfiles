@@ -158,7 +158,7 @@ if ! exists('s:grepprgs')
     let &grepprg = config.grepprg
 
     let grep = 'grep' . (a:is_append_mode ? 'add' : '')
-    silent execute grep a:args '| cwindow'
+    silent execute grep a:args '| cwindow | redraw!'
     echo len(getqflist()) "matches."
     let &grepprg = save_grepprg
   endfunction
