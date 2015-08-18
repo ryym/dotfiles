@@ -20,7 +20,7 @@ validate() {
     exit 1
   fi
 
-  if [ ! -L "$lnkfile" ]; then
+  if [ -e "$lnkfile" ] && [ ! -L "$lnkfile" ]; then
     echo "$lnkfile exists but is not a symlnk." >&2
     exit 1
   fi
