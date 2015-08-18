@@ -144,6 +144,12 @@ if ! exists('s:grepprgs')
     return s:grepprgs.prgs[ executables[0] ]
   endfunction
 
+  function! s:display_available_greps()
+    let greps = s:select_executable_programs()
+    let current = s:grepprgs.current.program
+    return join( map(greps, "v:val ==# current ? '['.v:val.']' : v:val "), ' ' )
+  endfunction
+
   " Run grep by the specified program.
   function! s:grep_by(is_append_mode, program, args)
     let save_grepprg = &grepprg
@@ -206,7 +212,7 @@ endfor
 unlet s:program s:config
 
 command! -nargs=1 ChangeGrep call <SID>change_grep_program(<q-args>)
-command! ShowGreps echo 'Available greps: ' <SID>select_executable_programs()
+command! ShowGreps echo 'Available greps: ' <SID>display_available_greps()
 
 " }}}
 
