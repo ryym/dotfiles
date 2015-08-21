@@ -16,6 +16,7 @@ endfunction
 
 " Execute loadings and settings of bundles by NeoBundle
 " based on the configuration defined in the `a:configs`.
+" If NeoBundle doesn't exist, clone from Github automatically.
 function! w#neobundle#execute(configs)
   let configs = a:configs
 
@@ -23,7 +24,35 @@ function! w#neobundle#execute(configs)
     echoerr '[neobundle_w] declare_bundles() and configure_bundles() fundcions are required.'
     return
   endif
+  if ! isdirectory(configs.bundle_dir)
+    echoerr "[neobundle_w] " . configs.bundle_dir . " is an invalid directory."
+    return
+  endif
 
+  let neobundle_home = configs.bundle_dir . '/neobundle.vim'
+  if isdirectory(neobundle_home)
+    call s:_execute_neobundle(configs)
+  elseif executable('git')
+    if s:_clone_neobundle_from_github(neobundle_home)
+      call s:_execute_neobundle(configs)
+    else
+      echoerr '[neobundle_w] Installing neobundle.vim has failed.'
+    endif
+  else
+    echoerr "[neobundle_w] neobundle.vim doesn't exist and git is not available."
+  end
+
+  filetype plugin indent on
+endfunction
+
+function! s:_clone_neobundle_from_github(neobundle_home)
+  echo '[neobundle_w] Installing neobundle.vim...'
+  call system('git clone https://github.com/Shougo/neobundle.vim.git ' . a:neobundle_home)
+  return v:shell_error == 0
+endfunction
+
+function! s:_execute_neobundle(configs)
+  let configs = a:configs
   if has('vim_starting')
     if &compatible
       set nocompatible
@@ -39,12 +68,11 @@ function! w#neobundle#execute(configs)
     NeoBundleCheck
     NeoBundleSaveCache
   endif
- 
-  call configs.configure_bundles( s:generate_wrapper() )
 
+  call configs.configure_bundles( s:generate_wrapper() )
   call neobundle#end()
-  filetype plugin indent on
 endfunction
+
 " }}}
 
 " Helper functions {{{
