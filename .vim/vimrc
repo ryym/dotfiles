@@ -121,8 +121,6 @@ endfunction
 
 " Grep by external programs {{{
 
-" Setup {{{
-
 " Helper functions {{{
 
 function! s:make_grepprg_obj(program, command, grepprg)
@@ -192,8 +190,6 @@ let s:grepprgs = {
   \ }
 " Set the first executable command to the current grep program.
 let s:grepprgs.current = s:select_first_executable_grepprg()
-
-" }}}
 
 " Define the custom grep commands.
 for [s:program, s:config] in items(s:grepprgs.prgs)
@@ -370,6 +366,8 @@ endif
 
 " Key mappings {{{
 
+" Set up {{{
+
 " Use custom mapping commands.
 call w#mapping#load(s:SID())
 
@@ -382,7 +380,7 @@ Map n m       <Nop>
 Map n q       <Nop>
 Map n <Space> <Nop>
 
-" Motion {{{
+" }}}
 
 " Numbers {{{
 
@@ -393,25 +391,6 @@ endfor
 unlet s:n
 
 " }}}
-
-" Insert mode {{{
-
-Map i <C-j> <Down>
-Map i <C-k> <Up>
-Map i <C-h> <Left>
-Map i <C-l> <Right>
-Map i <C-a> <Home>
-Map i <C-e> <End>
-Remap i <S-CR> <End><CR>
-Remap i <C-CR> <C-o>O
-
-" Break undo sequence after these deletions in Insert mode.
-Map i <C-w> <C-g>u<C-w>
-Map i <C-u> <C-g>u<C-u>
-
-" }}}
-
-" Normal mode {{{
 
 " Marks {{{
 Map n mm m
@@ -449,6 +428,21 @@ endfunction
 
 " }}}
 
+" Insert mode {{{
+
+Map i <C-j> <Down>
+Map i <C-k> <Up>
+Map i <C-h> <Left>
+Map i <C-l> <Right>
+Map i <C-a> <Home>
+Map i <C-e> <End>
+Remap i <S-CR> <End><CR>
+Remap i <C-CR> <C-o>O
+
+" Break undo sequence after these deletions in Insert mode.
+Map i <C-w> <C-g>u<C-w>
+Map i <C-u> <C-g>u<C-u>
+
 " }}}
 
 " Visual mode {{{
@@ -470,10 +464,6 @@ Map c <C-n> <Down>
 Map c <C-p> <Up>
 
 " }}}
-
-" }}}
-
-" Action {{{
 
 " TODO: Define own 'unimpaired' mappings.
 
@@ -584,8 +574,6 @@ Map n \[grep]l ::ShowGreps
 
 " }}}
 
-" }}}
-
 " Buffers {{{
 
 MapNamedKey buffer <Space>b
@@ -665,9 +653,8 @@ function! s:declare_bundles()
 
   " }}}
 
-  " Editing {{{
+  " Basic Editing {{{
 
-  " Basic {{{
   NeoBundlew 'junegunn/vim-easy-align'
 
   NeoBundlew 'tpope/vim-commentary'
@@ -679,6 +666,7 @@ function! s:declare_bundles()
   NeoBundlew 'cohama/vim-smartinput-endwise'
 
   NeoBundlew 'LeafCage/yankround.vim'
+
   " }}}
 
   " Text object {{{
@@ -695,8 +683,6 @@ function! s:declare_bundles()
   NeoBundlew 'kana/vim-operator-user'
 
   NeoBundlew 'kana/vim-operator-replace'
-  " }}}
-
   " }}}
 
   " Motion {{{
@@ -806,8 +792,6 @@ endfunction " }}}
 " Configure bundles {{{
 function! s:configure_bundles(neobundle_wrapper)
   let nbw = a:neobundle_wrapper
-
-  " Extension {{{
 
   " unite and extentions {{{
 
@@ -968,10 +952,6 @@ function! s:configure_bundles(neobundle_wrapper)
   endif
   " }}}
 
-  " }}}
-
-  " Editing {{{
-
   " easy-align {{{
   if nbw.tap('easy-align')
     Remap nv ga <Plug>(EasyAlign)
@@ -1002,10 +982,6 @@ function! s:configure_bundles(neobundle_wrapper)
     endfunction
   endif
   " }}}
-
-  " }}}
-
-  " Motion {{{
 
   " EasyMotion {{{
   if nbw.tap('easymotion')
@@ -1056,10 +1032,6 @@ function! s:configure_bundles(neobundle_wrapper)
   endif
   " }}}
 
-  " }}}
-
-  " Utility {{{
-
   " bclose {{{
   if nbw.tap('bclose')
     Map n \[buffer]d ::Bclose
@@ -1095,10 +1067,6 @@ function! s:configure_bundles(neobundle_wrapper)
   endif
   " }}}
 
-  " }}}
-
-  " VCS {{{
-
   " fugitive {{{
   if nbw.tap('fugitive')
     MapNamedKey git <Space>g
@@ -1114,10 +1082,6 @@ function! s:configure_bundles(neobundle_wrapper)
   endif
   " }}}
 
-  " }}}
-
-  " FileType {{{
-
   " man (man page) {{{
   if nbw.try_tap('man')
     MapNamedKey man qm
@@ -1125,10 +1089,6 @@ function! s:configure_bundles(neobundle_wrapper)
     Remap n \[man]w <Plug>(Vman)
   endif
   " }}}
-
-  " }}}
-
-  " UI {{{
 
   " indent-guides {{{
   if nbw.tap('indent-guides')
@@ -1161,8 +1121,6 @@ function! s:configure_bundles(neobundle_wrapper)
     let g:foldCCtext_tail = "printf('%d lines ', v:foldend - v:foldstart + 1)"
     set foldtext =FoldCCtext()
   endif
-  " }}}
-
   " }}}
 
 endfunction " }}}
