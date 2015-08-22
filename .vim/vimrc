@@ -591,19 +591,6 @@ Map n \[tab]l gt
 " TODO: mappings for tab motions
 
 
-" Others {{{2
-
-" In command mode, paste current path by '%%'.
-Map c (expr) %% getcmdtype() == ':' ? expand('%:h') : '%%'
-
-" Reset search highlights.
-Map n (silent) <C-l> :<C-u>nohlsearch<CR><C-l>
-
-" Omni completion settings
-Map i <C-Space> <C-x><C-o>
-Map i (expr) <TAB> pumvisible() ? '<C-n>' : '<TAB>'
-
-
 
 " Plugins {{{1
 
