@@ -2,9 +2,9 @@
 " vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Initializing {{{
+" Initializing {{{1
 
-" Skip initialization if '+eval' feature is disabled. {{{
+" Skip initialization if '+eval' feature is disabled {{{
 " Note: (see: :help no-eval-feature)
 "   In '-eval' environment, the argument of 'if' (including '| endif')
 "   is ignored. So all lines after 'if' are ignored too. But
@@ -38,9 +38,9 @@ if has('vim_starting')
   endfunction
 endif
 
-" }}}
 
-" Colorscheme {{{
+
+" Colorscheme {{{1
 
 augroup vimrc
   autocmd ColorScheme hybrid highlight LineNr ctermfg=14 guifg=#676b41
@@ -55,25 +55,28 @@ if has('vim_starting')
   endif
 endif
 
-" }}}
 
-" Commands and functions {{{
 
-" SID {{{
+" Commands and functions {{{1
+
+" SID {{{2
+
 function! s:SID()
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfunction
-" }}}
 
-" Reload and Edit .vimrc {{{
+
+" Reload and Edit .vimrc {{{2
+
 command! Rv  source $MYVIMRC | if g:is_gui | source $MYGVIMRC | endif
 command! Ev  edit   $MYVIMRC
 if g:is_gui
  command! Evg edit $MYGVIMRC
 endif
-" }}}
 
-" Set indent easily {{{
+
+" Set indent easily {{{2
+
 command! -nargs=* IndentBy call <SID>set_indent(<f-args>)
 command! ShortIndent  IndentBy 2 1
 command! MediumIndent IndentBy 4 1
@@ -84,9 +87,9 @@ function! s:set_indent(n_space, expand_tab)
   let &l:softtabstop = a:n_space
   let &l:expandtab   = a:expand_tab
 endfunction
-" }}}
 
-" QuickfixDo {{{
+
+" QuickfixDo {{{2
 
 command! -nargs=+ QfDo call <SID>quickfix_do(<q-args>)
 
@@ -105,9 +108,8 @@ function! s:quickfix_do(command)
     endfor
 endfunction
 
-" }}}
 
-" Restore last cursor position {{{
+" Restore last cursor position {{{2
 
 command! RestoreCursorPosition call s:restore_cursor_position()
 
@@ -117,13 +119,10 @@ function! s:restore_cursor_position()
   endif
 endfunction
 
-" }}}
 
-" Grep by external programs {{{
+" Grep by external programs {{{2
 
-" Setup {{{
-
-" Helper functions {{{
+" Helper functions {{{3
 
 function! s:make_grepprg_obj(program, command, grepprg)
   return {
@@ -179,7 +178,7 @@ function! s:change_grep_program(program) abort
   echo 'Grep is set to:' a:program
 endfunction
 
-" }}}
+" Various grep commands {{{3
 
 " The dictionary which stores some information about grep commands.
 let s:grepprgs = {
@@ -192,8 +191,6 @@ let s:grepprgs = {
   \ }
 " Set the first executable command to the current grep program.
 let s:grepprgs.current = s:select_first_executable_grepprg()
-
-" }}}
 
 " Define the custom grep commands.
 for [s:program, s:config] in items(s:grepprgs.prgs)
@@ -212,11 +209,9 @@ unlet s:program s:config
 command! -nargs=1 ChangeGrep call <SID>change_grep_program(<q-args>)
 command! ShowGreps echo 'Available greps: ' <SID>display_available_greps()
 
-" }}}
 
-" }}}
 
-" Basic options {{{
+" Basic options {{{1
 
 language C
 set helplang =en,ja
@@ -305,20 +300,21 @@ set ttimeoutlen =10 " To eliminate delays on <Esc> in terminal.
 " Indent counts of leading backslash for line continuations in vim script.
 let g:vim_indent_cont = 2
 
-" }}}
 
-" Default events {{{
+
+" Default events {{{1
 
 augroup vimrc
   autocmd WinEnter * checktime
   autocmd BufReadPost * RestoreCursorPosition
 augroup END
 
-" }}}
 
-" Filetype settings {{{
 
-" Options for each file type {{{
+" Filetype settings {{{1
+
+" Options for each file type {{{2
+
 augroup vimrc
   " Groovy local settings
   autocmd FileType groovy setlocal cindent cinoptions& cinoptions+=j1
@@ -329,9 +325,10 @@ augroup vimrc
   " Show relative line numbers in help files.
   autocmd FileType help setlocal relativenumber
 augroup END
-" }}}
 
-" Indent settings {{{
+
+" Indent settings {{{2
+
 augroup vimrc
   autocmd FileType javascript ShortIndent
   autocmd FileType coffee     ShortIndent
@@ -360,15 +357,19 @@ augroup vimrc
   autocmd FileType text       IndentBy 4 0
   autocmd FileType help       IndentBy 8 0
 augroup END
-" }}}
 
+
+" Apply file type settings {{{2
 if ! has('vim_starting')
   " Apply file type settings to the current buffer when vimrc is reloaded.
   doautocmd vimrc FileType
 endif
-" }}}
 
-" Key mappings {{{
+
+
+" Key mappings {{{1
+
+" Set up {{{2
 
 " Use custom mapping commands.
 call w#mapping#load(s:SID())
@@ -382,9 +383,8 @@ Map n m       <Nop>
 Map n q       <Nop>
 Map n <Space> <Nop>
 
-" Motion {{{
 
-" Numbers {{{
+" Numbers {{{2
 
 " Invert numbers by <Space> (to type 6 - 9 by left hand).
 for s:n in range(1, 9)
@@ -392,33 +392,14 @@ for s:n in range(1, 9)
 endfor
 unlet s:n
 
-" }}}
 
-" Insert mode {{{
+" Marks {{{2
 
-Map i <C-j> <Down>
-Map i <C-k> <Up>
-Map i <C-h> <Left>
-Map i <C-l> <Right>
-Map i <C-a> <Home>
-Map i <C-e> <End>
-Remap i <S-CR> <End><CR>
-Remap i <C-CR> <C-o>O
-
-" Break undo sequence after these deletions in Insert mode.
-Map i <C-w> <C-g>u<C-w>
-Map i <C-u> <C-g>u<C-u>
-
-" }}}
-
-" Normal mode {{{
-
-" Marks {{{
 Map n mm m
 Map n _  `
-" }}}
 
-" Fix the direction of the ';', ',', 'n', 'N'. {{{
+
+" Fix the direction of the ';', ',', 'n', 'N' {{{2
 
 " Make the ';' key always move to the right.
 " Make the ',' key always move to the left.
@@ -447,19 +428,31 @@ function! s:search_pattern_to_fixed_direction(normal_key, reverse_key)
   return v:searchforward ? a:normal_key : a:reverse_key
 endfunction
 
-" }}}
 
-" }}}
+" Insert mode {{{2
 
-" Visual mode {{{
+Map i <C-j> <Down>
+Map i <C-k> <Up>
+Map i <C-h> <Left>
+Map i <C-l> <Right>
+Map i <C-a> <Home>
+Map i <C-e> <End>
+Remap i <S-CR> <End><CR>
+Remap i <C-CR> <C-o>O
+
+" Break undo sequence after these deletions in Insert mode.
+Map i <C-w> <C-g>u<C-w>
+Map i <C-u> <C-g>u<C-u>
+
+
+" Visual mode {{{2
 
 " Reselect visual block after indent.
 Map v < <gv
 Map v > >gv
 
-" }}}
 
-" Command-line mode {{{
+" Command-line mode {{{2
 
 " Like emacs.
 Map c <C-a> <Home>
@@ -469,15 +462,10 @@ Map c <C-f> <Right>
 Map c <C-n> <Down>
 Map c <C-p> <Up>
 
-" }}}
-
-" }}}
-
-" Action {{{
 
 " TODO: Define own 'unimpaired' mappings.
 
-" Map text objects. {{{
+" Map text objects {{{2
 
 MapTextObj d "
 MapTextObj s '
@@ -485,9 +473,8 @@ MapTextObj m )
 MapTextObj n }
 MapTextObj y >
 
-" }}}
 
-" Toggle options. {{{
+" Toggle options {{{2
 
 MapNamedKey toggle qo
 MapToggle r relativenumber
@@ -509,9 +496,9 @@ function! s:toggle_indent_width()
   endif
 endfunction
 
-" }}}
 
-" Customize operations in normal mode. {{{
+" Customize operations in normal mode {{{2
+
 Map n <C-h>     :us:vert help
 Map n <Leader>h :us:help
 Map n <Space>w  ::update
@@ -523,9 +510,11 @@ Map n <C-k> <C-y>gk
 Map n Y y$
 Map n Q q
 Map n qp ::pwd
-" }}}
+Map n zp zMzv
 
-" Disallow delete operations to change clipboard except 'd'. {{{
+
+" Disallow delete operations to change clipboard except 'd' {{{2
+
 for s:lkey in ['c', 's', 'x']
   let s:ukey = toupper(s:lkey)
   execute 'Map nv' s:lkey '"_' . s:lkey
@@ -543,21 +532,23 @@ unlet s:lkey s:ukey
 " The 'md' command delete texts without copy. 
 Map nv md "_d
 Map nv md "_d
-" }}}
 
-" Break lines and Insert spaces in normal mode. {{{
+
+"" Break lines and Insert spaces in normal mode {{{2
+
 Map n <S-CR>          o<Esc>
 Map n <C-CR>          O<Esc>
 Map n <S-Space>       i<Space><Esc>
 Map n <Leader><Space> a<Space><Esc>
-" }}}
 
-" Paste texts smartly. {{{
+
+" Paste texts smartly {{{2
+
 Map i (silent) <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
 Map c <C-v> <C-r>*
-" }}}
 
-" Grep by external programs. {{{
+
+" Grep by external programs {{{2
 
 " Toggle the current grep program.
 let s:grep_mappings = {
@@ -581,11 +572,8 @@ Map n (expr) \[grep]s <SID>grep_by_current_program(0)
 Map n (expr) \[grep]+ <SID>grep_by_current_program(1)
 Map n \[grep]l ::ShowGreps
 
-" }}}
 
-" }}}
-
-" Buffers {{{
+" Buffers {{{2
 
 MapNamedKey buffer <Space>b
 Map n \[buffer]a ::buffer #
@@ -593,9 +581,9 @@ Map n \[buffer]d ::bdelete
 Map n \[buffer]l ::ls
 Map n \[buffer]s :us:ls<CR>:buffer
 Map n \[buffer]j ::execute 'buffer' v:count1
-" }}}
 
-" Tabs {{{
+
+" Tabs {{{2
 
 " Use 't' as the prefix of tab motions.
 MapNamedKey tab t
@@ -604,9 +592,8 @@ Map n \[tab]h gT
 Map n \[tab]l gt
 " TODO: mappings for tab motions
 
-" }}}
 
-" Others {{{
+" Others {{{2
 
 " In command mode, paste current path by '%%'.
 Map c (expr) %% getcmdtype() == ':' ? expand('%:h') : '%%'
@@ -618,18 +605,16 @@ Map n (silent) <C-l> :<C-u>nohlsearch<CR><C-l>
 Map i <C-Space> <C-x><C-o>
 Map i (expr) <TAB> pumvisible() ? '<C-n>' : '<TAB>'
 
-" }}}
 
-" }}}
 
-" Plugins {{{
+" Plugins {{{1
 
 call w#neobundle#wrap()
 
-" Declare bundles {{{
-function! s:declare_bundles()
+" Declare bundles {{{2
 
-  " Extension {{{
+function! s:declare_bundles()
+  " Extension {{{3
 
   NeoBundlew 'Shougo/vimproc.vim', {
     \ 'disabled': g:is_windows,
@@ -662,11 +647,9 @@ function! s:declare_bundles()
 
   NeoBundlew 'tpope/vim-repeat'
 
-  " }}}
 
-  " Editing {{{
+  " Basic Editing {{{3
 
-  " Basic {{{
   NeoBundlew 'junegunn/vim-easy-align'
 
   NeoBundlew 'tpope/vim-commentary'
@@ -678,9 +661,10 @@ function! s:declare_bundles()
   NeoBundlew 'cohama/vim-smartinput-endwise'
 
   NeoBundlew 'LeafCage/yankround.vim'
-  " }}}
 
-  " Text object {{{
+
+  " Text object {{{3
+
   NeoBundlew 'kana/vim-textobj-user'
 
   NeoBundlew 'kana/vim-textobj-entire'
@@ -688,17 +672,16 @@ function! s:declare_bundles()
   NeoBundlew 'kana/vim-textobj-line'
 
   NeoBundlew 'kana/vim-textobj-indent'
-  " }}}
 
-  " Operator {{{
+
+  " Operator {{{3
+
   NeoBundlew 'kana/vim-operator-user'
 
   NeoBundlew 'kana/vim-operator-replace'
-  " }}}
 
-  " }}}
 
-  " Motion {{{
+  " Motion {{{3
 
   NeoBundlewLazy 'easymotion/vim-easymotion', {
     \ 'mappings': '<Plug>'
@@ -708,9 +691,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'haya14busa/incsearch.vim'
 
-  " }}}
 
-  " Utility {{{
+  " Utility {{{3
 
   NeoBundlew 'rbgrouleff/bclose.vim'
 
@@ -739,17 +721,15 @@ function! s:declare_bundles()
     \ 'commands': ['MacSpeech', 'MacSpeechSelected']
     \ }
 
-  " }}}
 
-  " VCS {{{
+  " VCS {{{3
 
   NeoBundlewLazy 'tpope/vim-fugitive', {
     \ 'commands': ['Gstatus', 'Git', 'Gdiff', 'Gblame']
     \ }
 
-  " }}}
 
-  " Filetype {{{
+  " Filetype {{{3
 
   NeoBundlewLazy 'mattn/emmet-vim', {
     \ 'filetypes': ['html', 'xml', 'eruby', 'jsp']
@@ -772,9 +752,8 @@ function! s:declare_bundles()
     \ 'filetypes': ['scala']
     \ }
 
-  " }}}
 
-  " UI {{{
+  " UI {{{3
 
   NeoBundlew 'itchyny/lightline.vim'
 
@@ -782,9 +761,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'w0ng/vim-hybrid'
 
-  " }}}
+  NeoBundlew 'LeafCage/foldCC.vim'
 
-  " Others {{{
+
+  " Others {{{3
 
   NeoBundlewLazy 'thinca/vim-themis', {
     \ 'filetypes': ['vimspec']
@@ -796,18 +776,15 @@ function! s:declare_bundles()
 
   NeoBundlew 'tpope/vim-unimpaired'
 
-  " }}}
+  "}}}
+endfunction
 
-endfunction " }}}
 
-" Configure bundles {{{
+" Configure bundles {{{2
+
 function! s:configure_bundles(neobundle_wrapper)
   let nbw = a:neobundle_wrapper
-
-  " Extension {{{
-
-  " unite and extentions {{{
-
+  " unite and extentions {{{3
   if nbw.tap('unite')
     MapNamedKey unite   <Space>u
     MapNamedKey uniteNq <Space>U
@@ -817,7 +794,7 @@ function! s:configure_bundles(neobundle_wrapper)
       execute 'Map n' '\[uniteNq]' . a:key ':u:' . a:command '-no-quit -winheight=15' . a:end_key
     endfunction
 
-    " unite {{{
+    " unite {{{4
     let s:mappings = [
       \   ['u', 'Unite'                    , '<Space>'],
       \   ['b', 'Unite buffer_tab'         , '<CR>'],
@@ -867,23 +844,22 @@ function! s:configure_bundles(neobundle_wrapper)
         Map ni (buffer expr) f unite#smart_map('f', unite#do_action('vimfiler'))
       endfunction
     endfunction
-    " }}}
 
-    " unite-mru {{{
+    " unite-mru {{{4
     if nbw.tap('neomru')
       call s:map_unite_commands('m', 'Unite file_mru', '<CR>')
       function! nbw.hooks.on_source(_)
         let g:unite_source_alias_aliases['fm'] = 'file_mru'
       endfunction
     endif
+
     " }}}
 
     delfunction s:map_unite_commands
   endif
 
-  " }}}
 
-  " vimfiler {{{
+  " vimfiler {{{3
   if nbw.tap('vimfiler')
     MapNamedKey vimfiler <Space>f
     Map n \[vimfiler]f :us:VimFiler
@@ -908,18 +884,18 @@ function! s:configure_bundles(neobundle_wrapper)
 
     endfunction
   endif
-  " }}}
 
-  " vimshell {{{
+
+  " vimshell {{{3
   if nbw.tap('vimshell')
     MapNamedKey vimshell <Space>t
     Map n \[vimshell]t :us:VimShell
     Map n \[vimshell]c ::VimShellCurrentDir
     Map n \[vimshell]d ::VimShellBufferDir
   endif
-  " }}}
 
-  " submode {{{
+
+  " submode {{{3
   if nbw.tap('submode')
     function! nbw.hooks.on_source(_)
       let g:submode_keep_leaving_key = 1
@@ -928,7 +904,7 @@ function! s:configure_bundles(neobundle_wrapper)
     endfunction
 
     function! nbw.hooks.on_post_source(_)
-      " Submode scroll {{{
+      " Submode scroll {{{4
       call w#submode#define('scroll')
       SbmScrollEnter n <Leader>s
       SbmScroll n <r> u <C-u>
@@ -941,9 +917,8 @@ function! s:configure_bundles(neobundle_wrapper)
       SbmScroll n K     4<C-y>k
       SbmScroll n <C-j> 6<C-e>j
       SbmScroll n <C-k> 6<C-y>k
-      " }}}
 
-      " Submode window-resize {{{
+      " Submode window-resize {{{4
       call w#submode#define('winRes')
       SbmWinResEnter n <C-w>m
       SbmWinResEnter n <C-w><C-m>
@@ -960,22 +935,19 @@ function! s:configure_bundles(neobundle_wrapper)
         execute 'SbmWinRes n' '<C-' . s:k . '>' 5 . s:command
       endfor
       unlet s:k s:command
+
       " }}}
     endfunction
   endif
-  " }}}
 
-  " }}}
 
-  " Editing {{{
-
-  " easy-align {{{
+  " easy-align {{{3
   if nbw.tap('easy-align')
     Remap nv ga <Plug>(EasyAlign)
   endif
-  " }}}
 
-  " yankround {{{
+
+  " yankround {{{3
   if nbw.tap('yankround')
     Remap nx p     <Plug>(yankround-p)
     Remap n  P     <Plug>(yankround-P)
@@ -984,27 +956,23 @@ function! s:configure_bundles(neobundle_wrapper)
     Remap n <C-p> <Plug>(yankround-prev)
     Remap n <C-n> <Plug>(yankround-next)
   endif
-  " }}}
 
-  " operator-replace {{{
+
+  " operator-replace {{{3
   if nbw.tap('operator-replace')
     Remap nvo mr <Plug>(operator-replace)
   endif
-  " }}}
 
-  " smartinput-endwise {{{
+
+  " smartinput-endwise {{{3
   if nbw.tap('smartinput-endwise')
     function! nbw.hooks.on_source(_)
       call smartinput_endwise#define_default_rules()
     endfunction
   endif
-  " }}}
 
-  " }}}
 
-  " Motion {{{
-
-  " EasyMotion {{{
+  " EasyMotion {{{3
   if nbw.tap('easymotion')
     Remap nvo ms <Plug>(easymotion-s2)
     Remap nvo mf <Plug>(easymotion-fl2)
@@ -1031,9 +999,9 @@ function! s:configure_bundles(neobundle_wrapper)
       highlight link EasyMotionTarget2First Todo
     endfunction
   endif
-  " }}}
 
-  " incsearch {{{
+
+  " incsearch {{{3
   if nbw.tap('incsearch')
     Remap nvo /  <Plug>(incsearch-forward)
     Remap nvo ?  <Plug>(incsearch-backward)
@@ -1051,52 +1019,44 @@ function! s:configure_bundles(neobundle_wrapper)
       let g:incsearch#magic = '\v'
     endfunction
   endif
-  " }}}
 
-  " }}}
 
-  " Utility {{{
-
-  " bclose {{{
+  " bclose {{{3
   if nbw.tap('bclose')
     Map n \[buffer]d ::Bclose
     Map n \[buffer]D ::Bclose!
   endif
-  " }}}
 
-  " quick-run {{{
+
+  " quick-run {{{3
   if nbw.tap('quickrun')
     Map nv <Leader>r :r:QuickRun
   endif
-  " }}}
 
-  " open-browser {{{
+
+  " open-browser {{{3
   if nbw.tap('open-browser')
     Remap nv <Leader>obo <Plug>(openbrowser-open)
     Remap nv <Leader>obs <Plug>(openbrowser-search)
   endif
-  " }}}
 
-  " restart {{{
+
+  " restart {{{3
     if nbw.try_tap('restart')
       " This doesn't work under the terminal.
       Map n <Leader><Leader>r ::Restart
       Map n <Leader><Leader>R ::Restart!
     endif
-  " }}}
 
-  " macspeech {{{
+
+  " macspeech {{{3
   if nbw.try_tap('macspeech')
     Map v  <Leader><Leader>q :r:MacSpeechSelected
     Map nv <Leader><Leader>Q ::MacSpeechStop
   endif
-  " }}}
 
-  " }}}
 
-  " VCS {{{
-
-  " fugitive {{{
+  " fugitive {{{3
   if nbw.tap('fugitive')
     MapNamedKey git <Space>g
     Map nv \[git]g :s:Git
@@ -1109,25 +1069,17 @@ function! s:configure_bundles(neobundle_wrapper)
       call fugitive#detect(expand('#:p'))
     endfunction
   endif
-  " }}}
 
-  " }}}
 
-  " FileType {{{
-
-  " man (man page) {{{
+  " man (man page) {{{3
   if nbw.try_tap('man')
     MapNamedKey man qm
     Map n \[man]m :s:Vman
     Remap n \[man]w <Plug>(Vman)
   endif
-  " }}}
 
-  " }}}
 
-  " UI {{{
-
-  " indent-guides {{{
+  " indent-guides {{{3
   if nbw.tap('indent-guides')
     Remap n \[toggle]g <Plug>IndentGuidesToggle
 
@@ -1140,22 +1092,31 @@ function! s:configure_bundles(neobundle_wrapper)
       endif
     endfunction
   endif
-  " }}}
 
-  " lightline {{{
+
+  " lightline {{{3
   if nbw.tap('lightline')
     if ! has('vim_starting')
       " Override default statusline when vimrc is reloaded.
       call lightline#update()
     endif
   endif
-  " }}}
+
+
+  " foldCC {{{3
+  if nbw.tap('foldCC')
+    let g:foldCCtext_maxchars = 70
+    let g:foldCCtext_head = "printf('%s %d: ', v:folddashes, v:foldlevel)"
+    let g:foldCCtext_tail = "printf('%d lines ', v:foldend - v:foldstart + 1)"
+    set foldtext =FoldCCtext()
+  endif
+
 
   " }}}
+endfunction
 
-endfunction " }}}
 
-" Load bundles by NeoBundle. {{{
+" Load bundles by NeoBundle {{{2
 
 call w#neobundle#execute({
   \   'vimrc'             : $MYVIMRC,
@@ -1166,19 +1127,16 @@ call w#neobundle#execute({
 delfunction s:declare_bundles
 delfunction s:configure_bundles
 
-" }}}
 
-" Another plugins {{{
+" Another plugins {{{2
 
 runtime macros/matchit.vim
 
-" }}}
 
-" }}}
 
-" Other customizing {{{
+" Other customizing {{{1
 
-" Line guides {{{
+" Line guides {{{2
 
 " Highlight lines around the current line.
 " XXX: This doesn't skip folds.
@@ -1233,11 +1191,9 @@ endfunction
 
 Map nv \[toggle]c :f:<SID>toggle_highlight_lines()
 
-" }}}
 
-" }}}
 
-" Local settings {{{
+" Local settings {{{1
 
 if filereadable($VIMLOCAL . '/vimrc')
   source $VIMLOCAL/vimrc
