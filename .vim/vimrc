@@ -4,7 +4,7 @@
 
 " Initializing {{{1
 
-" Skip initialization if '+eval' feature is disabled. {{{
+" Skip initialization if '+eval' feature is disabled {{{
 " Note: (see: :help no-eval-feature)
 "   In '-eval' environment, the argument of 'if' (including '| endif')
 "   is ignored. So all lines after 'if' are ignored too. But
@@ -359,7 +359,7 @@ augroup vimrc
 augroup END
 
 
-" Apply file type settings. {{{2
+" Apply file type settings {{{2
 if ! has('vim_starting')
   " Apply file type settings to the current buffer when vimrc is reloaded.
   doautocmd vimrc FileType
@@ -399,7 +399,7 @@ Map n mm m
 Map n _  `
 
 
-" Fix the direction of the ';', ',', 'n', 'N'. {{{2
+" Fix the direction of the ';', ',', 'n', 'N' {{{2
 
 " Make the ';' key always move to the right.
 " Make the ',' key always move to the left.
@@ -465,7 +465,7 @@ Map c <C-p> <Up>
 
 " TODO: Define own 'unimpaired' mappings.
 
-" Map text objects. {{{2
+" Map text objects {{{2
 
 MapTextObj d "
 MapTextObj s '
@@ -474,7 +474,7 @@ MapTextObj n }
 MapTextObj y >
 
 
-" Toggle options. {{{2
+" Toggle options {{{2
 
 MapNamedKey toggle qo
 MapToggle r relativenumber
@@ -497,7 +497,7 @@ function! s:toggle_indent_width()
 endfunction
 
 
-" Customize operations in normal mode. {{{2
+" Customize operations in normal mode {{{2
 
 Map n <C-h>     :us:vert help
 Map n <Leader>h :us:help
@@ -513,7 +513,7 @@ Map n qp ::pwd
 Map n zp zMzv
 
 
-" Disallow delete operations to change clipboard except 'd'. {{{2
+" Disallow delete operations to change clipboard except 'd' {{{2
 
 for s:lkey in ['c', 's', 'x']
   let s:ukey = toupper(s:lkey)
@@ -534,7 +534,7 @@ Map nv md "_d
 Map nv md "_d
 
 
-"" Break lines and Insert spaces in normal mode. {{{2
+"" Break lines and Insert spaces in normal mode {{{2
 
 Map n <S-CR>          o<Esc>
 Map n <C-CR>          O<Esc>
@@ -542,13 +542,13 @@ Map n <S-Space>       i<Space><Esc>
 Map n <Leader><Space> a<Space><Esc>
 
 
-" Paste texts smartly. {{{2
+" Paste texts smartly {{{2
 
 Map i (silent) <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
 Map c <C-v> <C-r>*
 
 
-" Grep by external programs. {{{2
+" Grep by external programs {{{2
 
 " Toggle the current grep program.
 let s:grep_mappings = {
@@ -1116,7 +1116,7 @@ function! s:configure_bundles(neobundle_wrapper)
 endfunction
 
 
-" Load bundles by NeoBundle. {{{2
+" Load bundles by NeoBundle {{{2
 
 call w#neobundle#execute({
   \   'vimrc'             : $MYVIMRC,
