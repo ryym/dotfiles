@@ -523,6 +523,7 @@ Map n <C-k> <C-y>gk
 Map n Y y$
 Map n Q q
 Map n qp ::pwd
+Map n zp zMzv
 " }}}
 
 " Disallow delete operations to change clipboard except 'd'. {{{
