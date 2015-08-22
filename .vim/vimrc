@@ -782,6 +782,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'w0ng/vim-hybrid'
 
+  NeoBundlew 'LeafCage/foldCC.vim'
+
   " }}}
 
   " Others {{{
@@ -1148,6 +1150,15 @@ function! s:configure_bundles(neobundle_wrapper)
       " Override default statusline when vimrc is reloaded.
       call lightline#update()
     endif
+  endif
+  " }}}
+
+  " foldCC {{{
+  if nbw.tap('foldCC')
+    let g:foldCCtext_maxchars = 70
+    let g:foldCCtext_head = "printf('%s %d: ', v:folddashes, v:foldlevel)"
+    let g:foldCCtext_tail = "printf('%d lines ', v:foldend - v:foldstart + 1)"
+    set foldtext =FoldCCtext()
   endif
   " }}}
 
