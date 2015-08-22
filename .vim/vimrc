@@ -658,7 +658,9 @@ function! s:declare_bundles()
 
   NeoBundlew 'kana/vim-smartinput'
 
-  NeoBundlew 'cohama/vim-smartinput-endwise'
+  NeoBundlew 'cohama/vim-smartinput-endwise', {
+    \ 'depends': ['smartinput']
+    \ }
 
   NeoBundlew 'LeafCage/yankround.vim'
 
