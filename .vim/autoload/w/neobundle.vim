@@ -70,6 +70,7 @@ function! s:_execute_neobundle(configs)
   endif
 
   call configs.configure_bundles( s:generate_wrapper() )
+  call neobundle#untap()
   call neobundle#end()
 endfunction
 
