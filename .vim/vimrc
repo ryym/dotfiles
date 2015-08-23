@@ -403,6 +403,7 @@ Map i <C-a> <Home>
 Map i <C-e> <End>
 Remap i <S-CR> <End><CR>
 Remap i <C-CR> <C-o>O
+Remap i <S-Tab> <Tab><Tab>
 
 " Break undo sequence after these deletions in Insert mode.
 Map i <C-w> <C-g>u<C-w>
