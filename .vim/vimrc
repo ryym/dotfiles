@@ -431,8 +431,6 @@ Map c <C-p> <Up>
 Map c (expr) %% getcmdtype() == ':' ? expand('%:h') : '%%'
 
 
-" TODO: Define own 'unimpaired' mappings.
-
 " Basic operation in normal mode {{{2
 
 Map n mm m
@@ -499,13 +497,8 @@ MapTextObj y >
 " Toggle options {{{2
 
 MapNamedKey toggle co
-MapToggle r relativenumber
-MapToggle n number
-MapToggle w wrap
-MapToggle t expandtab
-MapToggle l list
 
-Map n (silent) \[toggle]h ::let v:hlsearch = !v:hlsearch
+Map n \[toggle]h ::let v:hlsearch = ! v:hlsearch
 
 Map n \[toggle]i :f:<SID>toggle_indent_width()
 function! s:toggle_indent_width()
@@ -650,6 +643,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'LeafCage/yankround.vim'
 
+  NeoBundlew 'ryym/vim-unimpaired', {
+    \ 'rev': 'ryym'
+    \ }
+
 
   " Text object {{{3
 
@@ -762,7 +759,6 @@ function! s:declare_bundles()
 
   NeoBundlew 'vim-jp/vimdoc-ja'
 
-  NeoBundlew 'tpope/vim-unimpaired'
 
   "}}}
 endfunction
@@ -943,6 +939,18 @@ function! s:configure_bundles(neobundle_wrapper)
     Remap n  gP    <Plug>(yankround-gP)
     Remap n <C-p> <Plug>(yankround-prev)
     Remap n <C-n> <Plug>(yankround-next)
+  endif
+
+
+  " unimpaired {{{3
+  if nbw.tap('unimpaired')
+    let g:unimpaired_mapping = {
+      \ 'encodings' : 0,
+      \ 'excludes'  : { 'toggles' : ['h', 'i'] }
+      \ }
+    function! nbw.hooks.on_post_source(_)
+      call g:Unimpaired_toggle_option_by('t', 'expandtab')
+    endfunction
   endif
 
 
