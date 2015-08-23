@@ -447,7 +447,7 @@ Map n <C-j> <C-e>gj
 Map n <C-k> <C-y>gk
 Map n Y y$
 Map n Q q
-Map n qp ::pwd
+Map n <Leader>d ::pwd
 Map n zp zMzv
 
 " Break lines and Insert spaces in normal mode.
@@ -498,7 +498,7 @@ MapTextObj y >
 
 " Toggle options {{{2
 
-MapNamedKey toggle qo
+MapNamedKey toggle co
 MapToggle r relativenumber
 MapToggle n number
 MapToggle w wrap
@@ -1024,8 +1024,8 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " open-browser {{{3
   if nbw.tap('open-browser')
-    Remap nv <Leader>obo <Plug>(openbrowser-open)
-    Remap nv <Leader>obs <Plug>(openbrowser-search)
+    Remap nv <Leader>wo <Plug>(openbrowser-open)
+    Remap nv <Leader>ws <Plug>(openbrowser-search)
   endif
 
 
@@ -1061,7 +1061,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " man (man page) {{{3
   if nbw.try_tap('man')
-    MapNamedKey man qm
+    MapNamedKey man ma
     Map n \[man]m :s:Vman
     Remap n \[man]w <Plug>(Vman)
   endif
@@ -1177,7 +1177,7 @@ function! s:toggle_highlight_lines()
   endif
 endfunction
 
-Map nv \[toggle]c :f:<SID>toggle_highlight_lines()
+Map nv \[toggle]a :f:<SID>toggle_highlight_lines()
 
 
 
