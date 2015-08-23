@@ -565,6 +565,20 @@ Map n (expr) \[grep]+ <SID>grep_by_current_program(1)
 Map n \[grep]l ::ShowGreps
 
 
+" Quickfix {{{2
+
+Map n qo  ::cwindow
+Map n qc  ::cclose
+Map n qj  ::cnext
+Map n qk  ::cprevious
+Map n ql  ::cnfile
+Map n qh  ::cpfile
+Map n qgg ::cfirst
+Map n qG  ::clast
+Map n qn  ::cnewer
+Map n qp  ::colder
+
+
 " Buffers {{{2
 
 MapNamedKey buffer <Space>b
