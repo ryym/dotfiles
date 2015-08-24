@@ -649,11 +649,7 @@ function! s:declare_bundles()
 
   NeoBundlew 'tpope/vim-surround'
 
-  NeoBundlew 'kana/vim-smartinput'
-
-  NeoBundlew 'cohama/vim-smartinput-endwise', {
-    \ 'depends': ['smartinput']
-    \ }
+  NeoBundlew 'cohama/lexima.vim'
 
   NeoBundlew 'LeafCage/yankround.vim'
 
@@ -971,14 +967,6 @@ function! s:configure_bundles(neobundle_wrapper)
   " operator-replace {{{3
   if nbw.tap('operator-replace')
     Remap nvo mr <Plug>(operator-replace)
-  endif
-
-
-  " smartinput-endwise {{{3
-  if nbw.tap('smartinput-endwise')
-    function! nbw.hooks.on_source(_)
-      call smartinput_endwise#define_default_rules()
-    endfunction
   endif
 
 
