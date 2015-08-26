@@ -346,6 +346,7 @@ augroup vimrc
   autocmd FileType html       ShortIndent
   autocmd FileType xhtml      ShortIndent
   autocmd FileType eruby      ShortIndent
+  autocmd FileType jsp        ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent
