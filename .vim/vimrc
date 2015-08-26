@@ -343,15 +343,15 @@ augroup vimrc
   autocmd FileType scala      ShortIndent
   autocmd FileType sql        ShortIndent
   autocmd FileType json       ShortIndent
+  autocmd FileType html       ShortIndent
+  autocmd FileType xhtml      ShortIndent
+  autocmd FileType eruby      ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent
   autocmd FileType java       MediumIndent
   autocmd FileType groovy     MediumIndent
   autocmd FileType xml        MediumIndent
-  autocmd FileType html       MediumIndent
-  autocmd FileType xhtml      MediumIndent
-  autocmd FileType eruby      MediumIndent
   autocmd FileType sh         MediumIndent
   autocmd FileType markdown   MediumIndent
   autocmd FileType text       IndentBy 4 0
