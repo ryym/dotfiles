@@ -504,10 +504,10 @@ Map n \[toggle]h ::let v:hlsearch = ! v:hlsearch
 Map n \[toggle]i :f:<SID>toggle_indent_width()
 function! s:toggle_indent_width()
   if &tabstop <= 2
-    MediumIndent
-    echo 'Mdeium indent (4)'
+    call s:set_indent(4, &expandtab)
+    echo 'Medium indent (4)'
   else
-    ShortIndent
+    call s:set_indent(2, &expandtab)
     echo 'Short indent (2)'
   endif
 endfunction
