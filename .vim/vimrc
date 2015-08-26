@@ -957,9 +957,15 @@ function! s:configure_bundles(neobundle_wrapper)
   if nbw.tap('unimpaired')
     let g:unimpaired_mapping = {
       \ 'encodings' : 0,
-      \ 'excludes'  : { 'toggles' : ['h', 'i'] }
+      \ 'excludes'  : {
+      \     'nextprevs' : ['n'],
+      \     'toggles'   : ['h', 'i']
+      \   }
       \ }
     function! nbw.hooks.on_post_source(_)
+      Remap no [d <Plug>unimpairedContextPrevious
+      Remap no ]d <Plug>unimpairedContextNext
+
       call g:Unimpaired_toggle_option_by('t', 'expandtab')
     endfunction
   endif
