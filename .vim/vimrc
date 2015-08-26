@@ -402,8 +402,8 @@ Map i <C-h> <Left>
 Map i <C-l> <Right>
 Map i <C-a> <Home>
 Map i <C-e> <End>
-Remap i <S-CR> <End><CR>
-Remap i <C-CR> <C-o>O
+Remap i <C-CR> <End><CR>
+Remap i <S-CR> <C-o>O
 Remap i <S-Tab> <Tab><Tab>
 
 " Break undo sequence after these deletions in Insert mode.
@@ -450,8 +450,8 @@ Map n <Leader>d ::pwd
 Map n zp zMzv
 
 " Break lines and Insert spaces in normal mode.
-Map n <S-CR>          o<Esc>
-Map n <C-CR>          O<Esc>
+Map n <C-CR>          o<Esc>
+Map n <S-CR>          O<Esc>
 Map n <S-Space>       i<Space><Esc>
 Map n <Leader><Space> a<Space><Esc>
 
