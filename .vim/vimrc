@@ -314,6 +314,7 @@ set formatoptions =croql
 set fileignorecase
 set timeoutlen  =1200
 set ttimeoutlen =10 " To eliminate delays on <Esc> in terminal.
+set gdefault
 
 " Indent counts of leading backslash for line continuations in vim script.
 let g:vim_indent_cont = 2
