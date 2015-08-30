@@ -149,13 +149,13 @@ function! s:display_available_greps()
 endfunction
 
 " Run grep by the specified program.
-function! s:grep_by(is_append_mode, program, args)
+function! s:grep_by(is_append_mode, bang, program, args)
   let save_grepprg = &grepprg
 
   let config = s:grepprgs.prgs[a:program]
   let &grepprg = config.grepprg
 
-  let grep = 'grep' . (a:is_append_mode ? 'add' : '')
+  let grep = 'grep' . (a:is_append_mode ? 'add' : '') . a:bang
   silent execute grep a:args '| cwindow | redraw!'
   echo len(getqflist()) "matches."
   let &grepprg = save_grepprg
@@ -196,12 +196,12 @@ let s:grepprgs.current = s:select_first_executable_grepprg()
 for [s:program, s:config] in items(s:grepprgs.prgs)
   " Grep command
   execute printf(
-    \ "command! -nargs=+ -complete=file %s call <SID>grep_by(0, '%s', <q-args>)",
+    \ "command! -bang -nargs=+ -complete=file %s call <SID>grep_by(0, '<bang>', '%s', <q-args>)",
     \ s:config.command, s:program)
 
   " GrepAdd command
   execute printf(
-    \ "command! -nargs=+ -complete=file %sAdd call <SID>grep_by(1, '%s', <q-args>)",
+    \ "command! -bang -nargs=+ -complete=file %sAdd call <SID>grep_by(1, '<bang>' '%s', <q-args>)",
     \ s:config.command, s:program)
 endfor
 unlet s:program s:config
@@ -600,7 +600,7 @@ unlet s:grep_mappings s:key s:program
 " Start grep using the current program.
 function! s:grep_by_current_program(is_append_mode)
   let command = s:grepprgs.current.command
-  return ':' . command . (a:is_append_mode ? 'Add' : '') . ' '
+  return ':' . command . (a:is_append_mode ? 'Add' : '') . '! '
 endfunction
 
 MapNamedKey grep <Space>s
