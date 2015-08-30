@@ -1175,8 +1175,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " foldCC {{{3
   if nbw.tap('foldCC')
-    let g:foldCCtext_maxchars = 70
-    let g:foldCCtext_head = "printf('%s %d: ', v:folddashes, v:foldlevel)"
+    let g:foldCCtext_head = "printf('%s %d: ', repeat(v:folddashes, v:foldlevel), v:foldlevel)"
     let g:foldCCtext_tail = "printf('%d lines ', v:foldend - v:foldstart + 1)"
     set foldtext =FoldCCtext()
   endif
