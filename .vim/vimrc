@@ -542,7 +542,7 @@ call s:map_text_object('y', '>')
 
 MapNamedKey toggle co
 
-Map n \[toggle]h ::let v:hlsearch = ! v:hlsearch
+Map n (silent) \[toggle]h ::let v:hlsearch = ! v:hlsearch
 
 Map n \[toggle]i :f:<SID>toggle_indent_width()
 function! s:toggle_indent_width()
