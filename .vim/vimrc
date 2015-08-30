@@ -953,6 +953,28 @@ function! s:configure_bundles(neobundle_wrapper)
   endif
 
 
+  " lexima {{{3
+  if nbw.tap('lexima')
+    function! nbw.hooks.on_post_source(_)
+      " For vspec {{{4
+      call lexima#add_rule({
+        \ 'char'        : '<CR>',
+        \ 'input_after' : '<CR>end',
+        \ 'at'          : '^\s*\%(describe\|it\|context\)\s\+.\+\%#',
+        \ 'filetype'    : 'vim'
+        \ })
+      call lexima#add_rule({
+        \ 'char'        : '<CR>',
+        \ 'input_after' : '<CR>end',
+        \ 'at'          : '^\s*\%(before\|after\)\s*\%#',
+        \ 'filetype'    : 'vim'
+        \ })
+
+      " }}}
+    endfunction
+  endif
+
+
   " unimpaired {{{3
   if nbw.tap('unimpaired')
     let g:unimpaired_mapping = {
