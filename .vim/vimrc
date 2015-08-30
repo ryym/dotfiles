@@ -210,6 +210,24 @@ command! -nargs=1 ChangeGrep call <SID>change_grep_program(<q-args>)
 command! ShowGreps echo 'Available greps: ' <SID>display_available_greps()
 
 
+" Load rc-bundles {{{2
+
+" 'rc-bundle' meeans the bundles that used mainly in .vimrc itself.
+" All rc-bundles must be in '$MYVIMDIR/rcbundle/'.
+command! -nargs=1 RcBundle
+  \ if has('vim_starting') |
+  \   call <SID>load_rc_bundle(<f-args>) |
+  \ endif
+
+function! s:load_rc_bundle(bundle_name)
+  let bundle_rtp = expand('$MYVIMDIR/rcbundle/' . a:bundle_name)
+  execute 'set runtimepath+=' . bundle_rtp
+  execute 'runtime plugin/' . a:bundle_name
+  if isdirectory(bundle_rtp . '/after')
+    execute 'set runtimepath+=' . bundle_rtp . '/after'
+  endif
+endfunction
+
 
 " Basic options {{{1
 
