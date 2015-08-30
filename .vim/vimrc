@@ -391,7 +391,31 @@ endif
 " Set up {{{2
 
 " Use custom mapping commands.
-call w#mapping#load(s:SID())
+RcBundle mapping.vim
+call mapping#set_sid(s:SID())
+
+" Utility commands {{{
+
+command! -nargs=+ MapNamedKey call <SID>map_named_key(<f-args>)
+
+" Define a named key by mapping \[{name}] key sequence to {key}.
+" Named key is typically used as a prefix of other mappings.
+" Using named key as a prefix makes vimrc more maintainable.
+" Note: All named keys defined this command start with '\'
+" to avoid conflicting with other mappings starting with '['.
+function! s:map_named_key(name, key)
+  let command_name = '\[' . a:name . ']'
+  execute 'nnoremap' command_name '<Nop>'
+  execute 'nmap'     a:key        command_name
+endfunction
+
+" Change the mapping of text object {rhs} to {lhs}.
+function! s:map_text_object(lhs, rhs)
+  execute 'Map ox' 'i' . a:lhs  'i' . a:rhs
+  execute 'Map ox' 'a' . a:lhs  'a' . a:rhs
+endfunction
+
+" }}}
 
 " Define 'mapleader' before all mappings usiing <Leader>.
 let mapleader = "-"
@@ -506,11 +530,11 @@ endfunction
 
 " Text objects {{{2
 
-MapTextObj d "
-MapTextObj s '
-MapTextObj m )
-MapTextObj n }
-MapTextObj y >
+call s:map_text_object('d', '"')
+call s:map_text_object('s', "'")
+call s:map_text_object('m', ')')
+call s:map_text_object('n', '}')
+call s:map_text_object('y', '>')
 
 
 " Toggle options {{{2
