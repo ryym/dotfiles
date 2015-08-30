@@ -1,0 +1,3 @@
+[submodule ".vim/rcbundle/mapping.vim"]
+	path = .vim/rcbundle/mapping.vim
+	url = https://github.com/ryym/mapping.vim.git
