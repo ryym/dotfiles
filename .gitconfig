@@ -66,5 +66,6 @@
     dc     = diff --cached
     dfs    = diff --name-only
     dgvi   = difftool --tool=gvimdiff
+    sbm    = submodule
 [include]
     path = .gitconfig.local
