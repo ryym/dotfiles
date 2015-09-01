@@ -558,24 +558,23 @@ endfunction
 
 " Disallow some delete operations to change clipboard {{{2
 
-" The 'd' key can change clipboard.
-for s:lkey in ['c', 's', 'x']
+" The 'd' and 'c' keys can change clipboard.
+for s:lkey in ['s', 'x']
   let s:ukey = toupper(s:lkey)
   execute 'Map nv' s:lkey '"_' . s:lkey
   execute 'Map nv' s:ukey '"_' . s:ukey
 endfor
 
-" Leave default operations as 'm[key]'
-for s:lkey in ['c', 'x']
-  let s:ukey = toupper(s:lkey)
-  execute 'Map nv' 'm' . s:lkey s:lkey
-  execute 'Map nv' 'm' . s:ukey s:ukey
-endfor
-unlet s:lkey s:ukey
+" Leave the default operation
+" ('ms' is used by 'easymotion').
+Map nv mx x
+Map nv mX X
 
-" The 'md' command delete texts without copy.
+" The 'md' and 'mc' commands delete texts without copy.
 Map nv md "_d
 Map nv md "_d
+Map nv mc "_c
+Map nv mc "_c
 
 
 " Paste texts smartly {{{2
