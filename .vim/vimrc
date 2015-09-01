@@ -941,8 +941,10 @@ function! s:configure_bundles(neobundle_wrapper)
     endfunction
 
     function! nbw.hooks.on_post_source(_)
+      call w#submode#wrap()
+
       " Submode scroll {{{4
-      call w#submode#define('scroll')
+      SbmDefine scroll
       SbmScrollEnter n <Leader>s
       SbmScroll n <r> u <C-u>
       SbmScroll n <r> d <C-d>
@@ -956,7 +958,7 @@ function! s:configure_bundles(neobundle_wrapper)
       SbmScroll n <C-k> 6<C-y>k
 
       " Submode window-resize {{{4
-      call w#submode#define('winRes')
+      SbmDefine winRes
       SbmWinResEnter n <C-w>m
       SbmWinResEnter n <C-w><C-m>
 

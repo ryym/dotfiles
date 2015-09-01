@@ -7,6 +7,11 @@
 
 " Globals {{{
 
+" Load the wrapper command.
+function! w#submode#wrap()
+  command! -nargs=1 SbmDefine call w#submode#define(<f-args>)
+endfunction
+
 " Define ex commands which wraps functions of vim-submode.
 function! w#submode#define(name)
   let capit_name = toupper(a:name[0]) . a:name[1:]
