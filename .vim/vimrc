@@ -975,6 +975,12 @@ function! s:configure_bundles(neobundle_wrapper)
       endfor
       unlet s:k s:command
 
+      " Submode tab-motion {{{4
+      SbmDefine tab
+      SbmTabEnter n tt
+      SbmTab n l gt
+      SbmTab n h gT
+
       " }}}
     endfunction
   endif
