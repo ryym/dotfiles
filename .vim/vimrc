@@ -120,6 +120,32 @@ function! s:restore_cursor_position()
 endfunction
 
 
+" Capture command outputs {{{2
+
+command! -nargs=+ -complete=command
+  \ Capture call <SID>capture_output_of(<q-args>)
+cnoreabbrev cap Capture
+
+" Capture command outputs.
+" If any errors occurred, capture nothing.
+function! s:capture_output_of(commands)
+  redir => output
+  try
+    silent execute a:commands
+  catch
+    echoerr v:exception | return
+  finally
+    redir END
+  endtry
+
+  new
+  file `=printf('Output of: [ %s ]', a:commands)`
+  setlocal buftype   =nofile
+  setlocal bufhidden =delete
+  call setline(1, split(output, '\n'))
+endfunction
+
+
 " Grep by external programs {{{2
 
 " Helper functions {{{3
