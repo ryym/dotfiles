@@ -255,6 +255,12 @@ function! s:load_rc_bundle(bundle_name)
 endfunction
 
 
+" Others {{{2
+
+" Print each path of &runtimepath.
+command! Rtp echo substitute(&runtimepath, ',', '\n', 'g')
+
+
 " Basic options {{{1
 
 language C
