@@ -260,6 +260,10 @@ endfunction
 " Print each path of &runtimepath.
 command! Rtp echo substitute(&runtimepath, ',', '\n', 'g')
 
+" Remove trailing whitespaces without cursor moving.
+command! Rtw :%s/\v\s+$// | let v:hlsearch = 0 | normal! ``
+
+
 
 " Basic options {{{1
 
@@ -529,6 +533,10 @@ Map n <C-CR>          o<Esc>
 Map n <S-CR>          O<Esc>
 Map n <S-Space>       i<Space><Esc>
 Map n <Leader><Space> a<Space><Esc>
+
+" Remove trailing whitespaces.
+Map n (silent) <Leader>c ::Rtw
+
 
 
 " Fix the direction of the ';', ',', 'n', 'N' {{{2
