@@ -35,7 +35,7 @@ nnoremap k 3k
 nnoremap <C-j> 8j
 nnoremap <C-k> 8k
 nnoremap <C-h> :help<Space>
-nnoremap qoh :set nohlsearch<CR>
+nnoremap coh :set nohlsearch<CR>
 
 noremap ,r :source<Space>~/.vimperatorrc<CR>
 
