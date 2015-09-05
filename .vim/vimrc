@@ -728,6 +728,8 @@ function! s:declare_bundles()
     \ 'depends': ['vimproc']
     \ }
 
+  NeoBundlew 'Shougo/neocomplete.vim'
+
   NeoBundlew 'Shougo/tabpagebuffer.vim'
 
   NeoBundlew 'kana/vim-tabpagecd'
@@ -983,6 +985,13 @@ function! s:configure_bundles(neobundle_wrapper)
     Map n \[vimshell]t :us:VimShell
     Map n \[vimshell]c ::VimShellCurrentDir
     Map n \[vimshell]d ::VimShellBufferDir
+  endif
+
+
+  " neocomplete {{{3
+  if nbw.tap('neocomplete')
+    Map i (expr) <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    Map n \[toggle]o ::NeoCompleteToggle
   endif
 
 
