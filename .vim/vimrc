@@ -44,6 +44,7 @@ endif
 
 augroup vimrc
   autocmd ColorScheme hybrid highlight LineNr ctermfg=14 guifg=#676b41
+  autocmd ColorScheme hybrid highlight Comment ctermfg=11 guifg=#707880 gui=none,italic
 augroup END
 
 if has('vim_starting')

@@ -59,7 +59,7 @@ hi Todo           cterm=none   ctermbg=226    ctermfg=35     gui=none    guifg=#
 " Syntax Highlighting
 " ----------------------------------------------------------------------------
 hi Keyword          cterm=none    ctermbg=none    ctermfg=191        gui=none         guifg=#D1FA71
-hi Comment          cterm=none    ctermbg=none    ctermfg=245        gui=none         guifg=#AFAFAF
+hi Comment          cterm=none    ctermbg=none    ctermfg=245        gui=none,italic  guifg=#AFAFAF
 hi Delimiter        cterm=none    ctermbg=none    ctermfg=15         gui=none         guifg=#F7F7F7
 hi Identifier       cterm=none    ctermbg=none    ctermfg=117        gui=none         guifg=#96D9F1
 hi Structure        cterm=none    ctermbg=none    ctermfg=159        gui=none         guifg=#9DEEF2
