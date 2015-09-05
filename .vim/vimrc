@@ -585,7 +585,9 @@ MapNamedKey toggle co
 
 Map n (silent) \[toggle]h ::let v:hlsearch = ! v:hlsearch
 
+" Toggle indent width.
 Map n \[toggle]i :f:<SID>toggle_indent_width()
+
 function! s:toggle_indent_width()
   if &tabstop <= 2
     call s:set_indent(4, &expandtab)
@@ -594,6 +596,16 @@ function! s:toggle_indent_width()
     call s:set_indent(2, &expandtab)
     echo 'Short indent (2)'
   endif
+endfunction
+
+" Toggle colorschemes.
+Map n \[toggle]c :f:<SID>toggle_colorschemes()
+
+let s:togglable_colors = ['smyck256', 'hybrid']
+function! s:toggle_colorschemes()
+  let current = index(s:togglable_colors, g:colors_name)
+  let next = (current + 1) % len(s:togglable_colors)
+  execute 'colorscheme' s:togglable_colors[next]
 endfunction
 
 
@@ -1073,7 +1085,7 @@ function! s:configure_bundles(neobundle_wrapper)
       \ 'encodings' : 0,
       \ 'excludes'  : {
       \     'nextprevs' : ['n'],
-      \     'toggles'   : ['h', 'i']
+      \     'toggles'   : ['c', 'h', 'i']
       \   }
       \ }
     function! nbw.hooks.on_post_source(_)
