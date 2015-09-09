@@ -490,6 +490,9 @@ Remap i <S-Tab> <Tab><Tab>
 Map i <C-w> <C-g>u<C-w>
 Map i <C-u> <C-g>u<C-u>
 
+" Break a line without inserting the comment leader.
+Map i <C-]> <C-o>:set formatoptions-=ro<CR><CR><C-o>:set formatoptions+=ro<CR>
+
 
 " Visual mode {{{2
 
@@ -606,6 +609,20 @@ function! s:toggle_colorschemes()
   let current = index(s:togglable_colors, g:colors_name)
   let next = (current + 1) % len(s:togglable_colors)
   execute 'colorscheme' s:togglable_colors[next]
+endfunction
+
+" Toggle comment continuation at line breaking.
+Map n \[toggle]* :f:<SID>toggle_comment_continuation()
+
+function! s:toggle_comment_continuation()
+  let will_continue = ( match(&formatoptions, '\v[ro]') != -1 )
+  if will_continue
+    set formatoptions -=ro
+    echo 'Do not continue comment lines'
+  else
+    set formatoptions +=ro
+    echo 'Continue comment lines'
+  endif
 endfunction
 
 
