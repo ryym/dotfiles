@@ -34,6 +34,9 @@ nnoremap j 3j
 nnoremap k 3k
 nnoremap <C-j> 8j
 nnoremap <C-k> 8k
+nnoremap l 3l
+nnoremap h 3h
+
 nnoremap <C-h> :help<Space>
 nnoremap coh :set nohlsearch<CR>
 
