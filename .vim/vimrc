@@ -435,29 +435,13 @@ endif
 " Use custom mapping commands.
 RcBundle mapping.vim
 call mapping#set_sid(s:SID())
-
-" Utility commands {{{
-
-command! -nargs=+ MapNamedKey call <SID>map_named_key(<f-args>)
-
-" Define a named key by mapping \[{name}] key sequence to {key}.
-" Named key is typically used as a prefix of other mappings.
-" Using named key as a prefix makes vimrc more maintainable.
-" Note: All named keys defined this command start with '\'
-" to avoid conflicting with other mappings starting with '['.
-function! s:map_named_key(name, key)
-  let command_name = '\[' . a:name . ']'
-  execute 'nnoremap' command_name '<Nop>'
-  execute 'nmap'     a:key        command_name
-endfunction
+let g:mapping_named_key_format = '\[%s]'
 
 " Change the mapping of text object {rhs} to {lhs}.
 function! s:map_text_object(lhs, rhs)
   execute 'Map ox' 'i' . a:lhs  'i' . a:rhs
   execute 'Map ox' 'a' . a:lhs  'a' . a:rhs
 endfunction
-
-" }}}
 
 " Define 'mapleader' before all mappings usiing <Leader>.
 let mapleader = "-"
@@ -588,7 +572,7 @@ call s:map_text_object('y', '>')
 
 " Toggle options {{{2
 
-MapNamedKey toggle co
+MapNamedKey co toggle
 
 Map n (silent) \[toggle]h ::let v:hlsearch = ! v:hlsearch
 
@@ -676,7 +660,7 @@ function! s:grep_by_current_program(is_append_mode)
   return ':' . command . (a:is_append_mode ? 'Add' : '') . '! '
 endfunction
 
-MapNamedKey grep <Space>s
+MapNamedKey <Space>s grep
 Map n (expr) \[grep]s <SID>grep_by_current_program(0)
 Map n (expr) \[grep]+ <SID>grep_by_current_program(1)
 Map n \[grep]l ::ShowGreps
@@ -698,7 +682,7 @@ Map n qp  ::colder
 
 " Buffers {{{2
 
-MapNamedKey buffer <Space>b
+MapNamedKey <Space>b buffer
 Map n \[buffer]a ::buffer #
 Map n \[buffer]d ::bdelete
 Map n \[buffer]l ::ls
@@ -709,7 +693,7 @@ Map n \[buffer]j ::execute 'buffer' v:count1
 " Tabs {{{2
 
 " Use 't' as the prefix of tab motions.
-MapNamedKey tab t
+MapNamedKey t tab
 Map n \[tab]n ::tabnew
 Map n \[tab]h gT
 Map n \[tab]l gt
@@ -899,8 +883,8 @@ function! s:configure_bundles(neobundle_wrapper)
   let nbw = a:neobundle_wrapper
   " unite and extentions {{{3
   if nbw.tap('unite')
-    MapNamedKey unite   <Space>u
-    MapNamedKey uniteNq <Space>U
+    MapNamedKey <Space>u unite
+    MapNamedKey <Space>U uniteNq
 
     function! s:map_unite_commands(key, command, end_key)
       execute 'Map n' '\[unite]'   . a:key ':u:' . a:command . a:end_key
@@ -975,7 +959,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " vimfiler {{{3
   if nbw.tap('vimfiler')
-    MapNamedKey vimfiler <Space>f
+    MapNamedKey <Space>f vimfiler
     Map n \[vimfiler]f :us:VimFiler
     Map n \[vimfiler]s :us:VimFiler -split -winwidth=60
     Map n \[vimfiler]c ::VimFilerCurrentDir
@@ -1002,7 +986,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " vimshell {{{3
   if nbw.tap('vimshell')
-    MapNamedKey vimshell <Space>t
+    MapNamedKey <Space>t vimshell
     Map n \[vimshell]t :us:VimShell
     Map n \[vimshell]c ::VimShellCurrentDir
     Map n \[vimshell]d ::VimShellBufferDir
@@ -1219,7 +1203,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " fugitive {{{3
   if nbw.tap('fugitive')
-    MapNamedKey git <Space>g
+    MapNamedKey <Space>g git
     Map nv \[git]g :s:Git
     Map nv \[git]s ::Gstatus
     Map nv \[git]d ::Gdiff
@@ -1234,7 +1218,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
   " man (man page) {{{3
   if nbw.try_tap('man')
-    MapNamedKey man ma
+    MapNamedKey ma man
     Map n \[man]m :s:Vman
     Remap n \[man]w <Plug>(Vman)
   endif
