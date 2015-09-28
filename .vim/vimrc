@@ -99,14 +99,18 @@ command! -nargs=+ QfDo call <SID>quickfix_do(<q-args>)
 function! s:quickfix_do(command)
     let buffer_numbers = {}
     for fixlist_entry in getqflist()
-        let buffer_numbers[ fixlist_entry['bufnr'] ] = 1
+      let buffer_numbers[ fixlist_entry['bufnr'] ] = 1
     endfor
     let buffer_number_list = keys(buffer_numbers)
 
+    let current_bufnr = bufnr('%')
     for bufnr in buffer_number_list
-        execute 'buffer' bufnr
+      if bufexists( str2nr(bufnr) )
+        execute 'keepalt buffer' bufnr
         execute a:command
+      endif
     endfor
+    execute 'keepalt buffer' current_bufnr
 endfunction
 
 
