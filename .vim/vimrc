@@ -484,7 +484,7 @@ Map i <C-j> <Down>
 Map i <C-k> <Up>
 Map i <C-h> <Left>
 Map i <C-l> <Right>
-Map i <C-a> <Home>
+Map i <C-a> <Esc><S-i>
 Map i <C-e> <End>
 Remap i <C-CR> <End><CR>
 Remap i <S-CR> <C-o>O
