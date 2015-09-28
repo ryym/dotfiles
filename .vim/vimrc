@@ -254,6 +254,7 @@ function! s:load_rc_bundle(bundle_name)
   let bundle_rtp = expand('$MYVIMDIR/rcbundle/' . a:bundle_name)
   execute 'set runtimepath+=' . bundle_rtp
   execute 'runtime plugin/' . a:bundle_name
+  execute 'helptags' bundle_rtp . '/doc'
   if isdirectory(bundle_rtp . '/after')
     execute 'set runtimepath+=' . bundle_rtp . '/after'
   endif
