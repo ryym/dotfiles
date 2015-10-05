@@ -38,6 +38,7 @@ dotfiles=(
   '.ideavimrc'
   '.vimperatorrc'
   '.vim'
+  '.zshrc'
 )
 
 for dotfile in "${dotfiles[@]}"; do
