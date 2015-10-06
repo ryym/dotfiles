@@ -30,6 +30,7 @@ setopt hist_ignore_dups
 setopt share_history
 
 # Options
+
 setopt auto_cd
 setopt auto_pushd
 
@@ -37,3 +38,28 @@ setopt correct
 setopt list_packed
 setopt nolistbeep
 
+unsetopt nomatch
+
+# Aliases
+alias ls='ls -GF'
+alias ll='ls -lGF'
+alias la='ls -laGF'
+alias g='git'
+alias reload='source ~/.zshrc'
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+PATH=/usr/local/bin/:$PATH
+PATH=~/rubygems/bin/:$PATH
+
+eval "$(rbenv init - zsh)"
+
+# mkdir & cd
+mkcd()
+{
+    mkdir -p "$1"
+    cd "$1"
+}
+
+# Load local settings.
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
