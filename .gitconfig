@@ -8,6 +8,10 @@
     defaultToUpstream = true
 [gui]
     encoding = utf-8
+[pager]
+    diff = diff-highlight | less
+    show = diff-highlight | less
+    log  = diff-highlight | less
 [alias]
     alias  = !git config --global --list | grep ^alias | cut -c7-
     s      = status
