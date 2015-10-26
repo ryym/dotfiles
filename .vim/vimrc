@@ -815,6 +815,8 @@ function! s:declare_bundles()
     \ 'mappings': '<Plug>(openbrowser-'
     \ }
 
+  NeoBundlew 'thinca/vim-prettyprint'
+
   NeoBundlewLazy 'ryym/macspeech.vim', {
     \ 'disabled': !g:is_mac,
     \ 'commands': ['MacSpeech', 'MacSpeechSelected']
