@@ -59,18 +59,18 @@
     lconfs = config --local --list
     ls     = ls-files
     l      = log
-    re     = log --oneline -10 # show recent logs.
+    re     = !git --no-pager log --oneline -10 # show recent logs.
     sl     = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
-    slx    = log -10 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
+    slx    = !git --no-pager log -10 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     slxx   = log -20 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     slxxx  = log -30 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     slxxxx = log -40 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     tree   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     sh     = show
-    shfs   = show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
+    shfs   = !git --no-pager show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
     d      = diff
     dc     = diff --cached
-    dfs    = diff --name-only
+    dfs    = !git --no-pager diff --name-only
     dgvi   = difftool --tool=gvimdiff
     sbm    = submodule
 [include]
