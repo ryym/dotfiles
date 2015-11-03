@@ -1,6 +1,14 @@
 # ZSHRC
 # man zsh
 
+# On My Zsh
+if [ -d $HOME/.oh-my-zsh ]; then
+    ZSH=$HOME/.oh-my-zsh
+    ZSH_CUSTOM=$HOME/.zsh
+    plugins=(osx)
+    source $ZSH/oh-my-zsh.sh
+fi
+
 export LANG=en_US.UTF-8
 
 bindkey -e # Like Emacs.
@@ -10,6 +18,9 @@ colors
 
 autoload -U compinit
 compinit
+
+# Use completion with case-insensitivity.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~
 %# "
@@ -29,7 +40,6 @@ bindkey "^N" history-beginning-search-forward-end
 # vcs_info
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
-
 zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
 zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
 
@@ -66,6 +76,10 @@ PATH=/usr/local/bin/:$PATH
 PATH=~/rubygems/bin/:$PATH
 
 eval "$(rbenv init - zsh)"
+
+# Go
+export GOPATH=$HOME/.go
+PATH=$PATH:$GOPATH/bin/
 
 # mkdir & cd
 mkcd()
