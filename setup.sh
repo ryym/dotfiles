@@ -39,6 +39,7 @@ dotfiles=(
   '.vimperatorrc'
   '.vim'
   '.zshrc'
+  '.tmux.conf'
 )
 
 for dotfile in "${dotfiles[@]}"; do
