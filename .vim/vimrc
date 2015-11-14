@@ -853,6 +853,9 @@ function! s:declare_bundles()
     \ 'filetypes': ['scala']
     \ }
 
+  NeoBundleLazy 'rhysd/vim-textobj-ruby', {
+    \ 'filetypes': ['ruby']
+    \ }
 
   " UI {{{3
 
