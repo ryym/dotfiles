@@ -261,6 +261,20 @@ function! s:load_rc_bundle(bundle_name)
 endfunction
 
 
+" Take diff of windows {{{2
+
+" Take diff of opened windows or close diff mode if it opened.
+command! Windiff call <SID>toggle_win_diff(&diff)
+
+function! s:toggle_win_diff(is_opened)
+  if a:is_opened
+    diffoff!
+  else
+    windo diffthis
+  endif
+endfunction
+
+
 " Others {{{2
 
 " Print each path of &runtimepath.
