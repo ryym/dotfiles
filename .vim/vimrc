@@ -116,7 +116,7 @@ endfunction
 
 " Restore last cursor position {{{2
 
-command! RestoreCursorPosition call s:restore_cursor_position()
+command! RestoreCursorPosition call <SID>restore_cursor_position()
 
 function! s:restore_cursor_position()
   if line("'\"") > 1 && line("'\"") <= line("$")
