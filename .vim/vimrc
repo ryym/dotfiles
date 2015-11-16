@@ -1108,6 +1108,21 @@ function! s:configure_bundles(neobundle_wrapper)
         \ 'filetype'    : 'vim'
         \ })
 
+      " Supress auto-closing for folds in vim. {{{4
+      call lexima#add_rule({
+        \ 'char'     : '{',
+        \ 'input'    : '{',
+        \ 'at'       : '{{\%#',
+        \ 'delete'   : 2,
+        \ 'filetype' : 'vim'
+        \ })
+      call lexima#add_rule({
+        \ 'char'     : '<CR>',
+        \ 'input'    : '<CR>',
+        \ 'at'       : '{\{3\}\%#',
+        \ 'filetype' : 'vim'
+        \ })
+
       " }}}
     endfunction
   endif
