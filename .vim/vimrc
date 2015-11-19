@@ -934,6 +934,11 @@ function! s:configure_bundles(neobundle_wrapper)
       " Show dotfiles at :Unite file
       call unite#custom#source('file', 'matchers', 'matcher_default')
 
+      " Don't list up unneccesary files.
+      call unite#custom#source('file_rec,file_rec/async',
+        \ 'ignore_pattern',
+        \ 'node_modules/.*\|bower_components/.*\|*.png\|*.jpg\|*.jpeg\|*.gif')
+
       call unite#custom#profile('default', 'context', {
         \ 'start_insert': 1
         \ })
