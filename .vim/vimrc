@@ -871,6 +871,11 @@ function! s:declare_bundles()
     \ 'filetypes': ['ruby']
     \ }
 
+  NeoBundlew 'hail2u/vim-css3-syntax'
+
+  NeoBundlew 'othree/html5.vim'
+
+
   " UI {{{3
 
   NeoBundlew 'itchyny/lightline.vim'
