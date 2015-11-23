@@ -81,6 +81,9 @@ eval "$(rbenv init - zsh)"
 export GOPATH=$HOME/.go
 PATH=$PATH:$GOPATH/bin/
 
+# Node modules
+PATH=$PATH:./node_modules/.bin
+
 # mkdir & cd
 mkcd()
 {
