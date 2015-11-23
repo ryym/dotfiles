@@ -875,6 +875,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'othree/html5.vim'
 
+  NeoBundlew 'pangloss/vim-javascript'
+
+  NeoBundlew 'mxw/vim-jsx'
+
   NeoBundlew 'tpope/vim-rails'
 
 
