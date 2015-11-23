@@ -875,6 +875,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'othree/html5.vim'
 
+  NeoBundlew 'tpope/vim-rails'
+
 
   " UI {{{3
 
