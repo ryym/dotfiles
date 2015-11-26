@@ -836,6 +836,8 @@ function! s:declare_bundles()
     \ 'commands': ['MacSpeech', 'MacSpeechSelected']
     \ }
 
+  NeoBundlew 'lambdalisue/vim-unified-diff'
+
 
   " VCS {{{3
 
@@ -1249,6 +1251,19 @@ function! s:configure_bundles(neobundle_wrapper)
   if nbw.try_tap('macspeech')
     Map v  <Leader><Leader>q :r:MacSpeechSelected
     Map nv <Leader><Leader>Q ::MacSpeechStop
+  endif
+
+
+  " unified-diff {{{3
+  if nbw.tap('unified-diff')
+    function! nbw.hooks.on_source(bundle)
+      set diffexpr=unified_diff#diffexpr()
+
+      let unified_diff#executable = 'git'
+      let unified_diff#iwhite_arguments = [
+        \   '--ignore--all-space',
+        \ ]
+    endfunction
   endif
 
 
