@@ -390,15 +390,31 @@ augroup END
 
 " Options for each file type {{{2
 
+" Helper function {{{
+
+function! s:delegate_filetypes(filetypes)
+  for [name_pattern, type] in items(a:filetypes)
+    execute 'autocmd BufNewFile,BufRead' name_pattern
+      \ 'setlocal filetype='.type
+  endfor
+endfunction
+
+" }}}
+
 augroup vimrc
   " Groovy local settings
   autocmd FileType groovy setlocal cindent cinoptions& cinoptions+=j1
 
-  " *.gradle => grooby
-  autocmd BufNewFile,BufRead *.gradle setlocal filetype=groovy
-
   " Show relative line numbers in help files.
   autocmd FileType help setlocal relativenumber
+
+  " Configure filetypes which have to be assigned manually.
+  call s:delegate_filetypes({
+    \ '*.gradle'  : 'groovy',
+    \ '.babelrc'  : 'json',
+    \ '.pryrc'    : 'ruby',
+    \ 'Guardfile' : 'ruby'
+    \ })
 augroup END
 
 
