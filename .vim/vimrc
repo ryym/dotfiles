@@ -849,7 +849,7 @@ function! s:declare_bundles()
   " Filetype {{{3
 
   NeoBundlewLazy 'mattn/emmet-vim', {
-    \ 'filetypes': ['html', 'xml', 'eruby', 'jsp']
+    \ 'filetypes': ['html', 'xml', 'eruby', 'jsp', 'javascript']
     \ }
   NeoBundlewLazy 'PProvost/vim-ps1', {
     \ 'filetypes': ['ps1']
