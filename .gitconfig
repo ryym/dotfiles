@@ -14,6 +14,8 @@
     log  = diff-highlight | less
 [alias]
     alias  = !git config --global --list | grep ^alias | cut -c7-
+    setup  = !git init && touch .gitignore && git add .gitignore \
+             && git commit -m 'Init repository'
     s      = status
     h      = help
     b      = branch
