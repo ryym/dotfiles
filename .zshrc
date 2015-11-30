@@ -57,7 +57,7 @@ setopt share_history
 setopt auto_cd
 setopt auto_pushd
 
-setopt correct
+setopt nocorrect
 setopt list_packed
 setopt nolistbeep
 
