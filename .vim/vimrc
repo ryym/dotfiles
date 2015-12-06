@@ -994,6 +994,10 @@ function! s:configure_bundles(neobundle_wrapper)
         Map ni (buffer expr) s unite#smart_map('s', unite#do_action('split'))
         Map ni (buffer expr) v unite#smart_map('v', unite#do_action('vsplit'))
         Map ni (buffer expr) f unite#smart_map('f', unite#do_action('vimfiler'))
+
+        " For 'buffer' or 'buffer_tab'
+        Map n (buffer expr) d unite#smart_map('d', unite#do_action('delete'))
+        Map n (buffer expr) w unite#smart_map('w', unite#do_action('wipeout'))
       endfunction
     endfunction
 
