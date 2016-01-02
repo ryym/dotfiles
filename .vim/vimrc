@@ -605,7 +605,11 @@ call s:map_text_object('y', '>')
 
 MapNamedKey co toggle
 
+" Toggle search highlight.
 Map n (silent) \[toggle]h ::let v:hlsearch = ! v:hlsearch
+
+" Toggle scrollbinds of each window.
+Map n \[toggle]S ::windo setlocal scrollbind! scrollbind?
 
 " Toggle indent width.
 Map n \[toggle]i :f:<SID>toggle_indent_width()
@@ -1192,6 +1196,7 @@ function! s:configure_bundles(neobundle_wrapper)
       Remap no ]d <Plug>unimpairedContextNext
 
       call g:Unimpaired_toggle_option_by('t', 'expandtab')
+      call g:Unimpaired_toggle_option_by('s', 'scrollbind')
     endfunction
   endif
 
