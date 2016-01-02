@@ -91,5 +91,21 @@ mkcd()
     cd "$1"
 }
 
+## Peco
+
+# ghq
+# http://qiita.com/strsk/items/9151cef7e68f0746820d
+# http://qiita.com/udzura/items/3f120b5e4733fe85078d
+function peco-src() {
+    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-src
+bindkey '^]' peco-src
+
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
