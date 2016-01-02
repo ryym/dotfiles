@@ -756,6 +756,10 @@ function! s:declare_bundles()
     \ 'depends': ['unite']
     \ }
 
+  NeoBundlew 'haya14busa/unite-ghq', {
+    \ 'depends': ['unite']
+    \ }
+
   NeoBundlew 'Shougo/vimfiler.vim', {
     \ 'depends': ['unite']
     \ }
@@ -972,6 +976,8 @@ function! s:configure_bundles(neobundle_wrapper)
         \ 'start_insert': 1
         \ })
 
+      call unite#custom#default_action('directory', 'lcd')
+
       let g:unite_source_alias_aliases = {
         \ 'f'  : 'file',
         \ 'fr' : 'file_rec',
@@ -1008,6 +1014,12 @@ function! s:configure_bundles(neobundle_wrapper)
         let g:unite_source_alias_aliases['fm'] = 'file_mru'
       endfunction
     endif
+
+    " unite-ghq {{{4
+    if nbw.tap('unite-ghq')
+      call s:map_unite_commands('g', 'Unite ghq', '<CR>')
+    endif
+
 
     " }}}
 
