@@ -665,9 +665,9 @@ Map nv mX X
 
 " The 'md' and 'mc' commands delete texts without copy.
 Map nv md "_d
-Map nv md "_d
+Map nv mD "_D
 Map nv mc "_c
-Map nv mc "_c
+Map nv mC "_C
 
 
 " Paste texts smartly {{{2
