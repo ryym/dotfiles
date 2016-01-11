@@ -810,6 +810,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'kana/vim-textobj-indent'
 
+  NeoBundleLazy 'rhysd/vim-textobj-ruby', {
+    \ 'filetypes': ['ruby']
+    \ }
+
 
   " Operator {{{3
 
@@ -891,10 +895,6 @@ function! s:declare_bundles()
 
   NeoBundleLazy 'derekwyatt/vim-scala', {
     \ 'filetypes': ['scala']
-    \ }
-
-  NeoBundleLazy 'rhysd/vim-textobj-ruby', {
-    \ 'filetypes': ['ruby']
     \ }
 
   NeoBundlew 'hail2u/vim-css3-syntax'
