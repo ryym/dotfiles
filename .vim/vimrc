@@ -438,6 +438,7 @@ augroup vimrc
   autocmd FileType xhtml      ShortIndent
   autocmd FileType eruby      ShortIndent
   autocmd FileType jsp        ShortIndent
+  autocmd FileType vue        ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent
@@ -904,6 +905,10 @@ function! s:declare_bundles()
   NeoBundlew 'pangloss/vim-javascript'
 
   NeoBundlew 'mxw/vim-jsx'
+
+  NeoBundlewLazy 'posva/vim-vue', {
+    \ 'filetypes': ['vue']
+    \ }
 
   NeoBundlew 'tpope/vim-rails'
 
