@@ -783,6 +783,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'tpope/vim-repeat'
 
+  NeoBundlew 'osyo-manga/vim-over'
+
 
   " Basic Editing {{{3
 
@@ -1136,6 +1138,12 @@ function! s:configure_bundles(neobundle_wrapper)
   " easy-align {{{3
   if nbw.tap('easy-align')
     Remap nv ga <Plug>(EasyAlign)
+  endif
+
+
+  " vim-over {{{3
+  if nbw.tap('over')
+    Remap n <Space>o ::OverCommandLine
   endif
 
 
