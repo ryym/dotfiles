@@ -1332,6 +1332,13 @@ function! s:configure_bundles(neobundle_wrapper)
   endif
 
 
+  " vim-jsx {{{3
+  if nbw.tap('jsx')
+    " Apply syntax highlighting to '*.js' files.
+    let g:jsx_ext_required = 0
+  endif
+
+
   " man (man page) {{{3
   if nbw.try_tap('man')
     MapNamedKey ma man
