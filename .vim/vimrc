@@ -1201,7 +1201,7 @@ function! s:configure_bundles(neobundle_wrapper)
       \ 'encodings' : 0,
       \ 'excludes'  : {
       \     'nextprevs' : ['n'],
-      \     'toggles'   : ['c', 'h', 'i']
+      \     'toggles'   : ['c', 'h', 'i', 's']
       \   }
       \ }
     function! nbw.hooks.on_post_source(_)
@@ -1210,6 +1210,7 @@ function! s:configure_bundles(neobundle_wrapper)
 
       call g:Unimpaired_toggle_option_by('t', 'expandtab')
       call g:Unimpaired_toggle_option_by('s', 'scrollbind')
+      call g:Unimpaired_toggle_option_by('p', 'spell')
     endfunction
   endif
 
