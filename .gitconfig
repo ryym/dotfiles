@@ -1,6 +1,7 @@
 [push]
     default = simple
 [core]
+    editor = vim
     quotepath = false
 [rebase]
     autosquash = true
