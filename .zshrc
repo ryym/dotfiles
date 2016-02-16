@@ -74,6 +74,7 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 
 PATH=/usr/local/bin/:$PATH
 PATH=~/rubygems/bin/:$PATH
+PATH=~/.rbenv/bin:$PATH
 
 eval "$(rbenv init - zsh)"
 
