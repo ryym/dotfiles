@@ -108,5 +108,8 @@ function peco-src() {
 zle -N peco-src
 bindkey '^]' peco-src
 
+# AWS-CLI
+source $(which aws_zsh_completer.sh)
+
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
