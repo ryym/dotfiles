@@ -41,6 +41,7 @@ dotfiles=(
   '.zshrc'
   '.tmux.conf'
   '.pryrc'
+  '.ctags'
 )
 
 for dotfile in "${dotfiles[@]}"; do
