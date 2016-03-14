@@ -113,3 +113,6 @@ source $(which aws_zsh_completer.sh)
 
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+export NVM_DIR="/home/ryu/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
