@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -z "$DOTPATH" ]; then
+    echo '$DOTPATH is not set'
+    exit 1
+fi
+
+source "$DOTPATH/sync/lib/helper.sh"
+
+if hasnot go; then
+    return 1
+fi
+
+go get github.com/motemen/ghq
+go get github.com/peco/peco/cmd/peco

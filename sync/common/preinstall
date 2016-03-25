@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo -v
+
+echo 'Install start'

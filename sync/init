@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# Detect OS
+# preinstall
+# $os/preinstall
+#   osx: brew, xcode
+# Chose available package manager
+# $pm/preinstall
+#  update pm
+# $pm/install
+# install langs and additional tools
+# install lang tools
+# postinstall
+#
+# link files
+
+if [ -z "$DOTPATH" ]; then
+    echo '$DOTPATH is not set'
+    exit 1
+fi
+
+load() {
+    source "$DOTPATH/sync/$1"
+}
+
+load lib/helper.sh
+
+load common/preinstall
+
+if is_osx; then
+    load os/osx/preinstall
+fi
+
+for pm in $DOTPATH/sync/pm/*; do
+    # Note that $pm is an absolute path.
+    if has ${pm##*/}; then
+        echo "Use $pm to install basic libraries."
+        load "pm/${pm##*/}/preinstall"
+        load "pm/${pm##*/}/install"
+        break
+    fi
+done
+
+load common/install
+load common/postinstall
+

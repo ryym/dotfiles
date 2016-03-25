@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -z "$DOTPATH" ]; then
+    echo '$DOTPATH is not set'
+    exit 1
+fi
+
+source "$DOTPATH/sync/lib/helper.sh"
+
+# Install language environments.
+if has git; then
+    source "$DOTPATH/sync/common/langs.sh" "$ANYENV"
+fi
+
+for pmlang in "$DOTPATH"/sync/pm-lang/*; do
+    source "$pmlang/install"
+done
+
+source "$DOTPATH/sync/common/chsh-zsh.sh"
+source "$DOTPATH/sync/common/upgrade-vim.sh"
+
+
