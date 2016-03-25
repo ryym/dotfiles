@@ -4,45 +4,25 @@ has() {
     which $1 > /dev/null
 }
 
-hasnot() {
-    has $1 && return 1 || return 0
-}
-
-download_from_web() {
-   if has curl; then
-       curl -L "$1"
-   elif has wget; then
-       wget -O - "$1"
-   fi
-}
-
 clone_repository() {
     # TODO: Use master branch.
     local repository=https://github.com/ryym/dotfiles
     local archive_url=$repository/archive/sync.tar.gz
     local archive_dest=dotfiles-sync
 
-    if hasnot git && hasnot curl && hasnot wget; then
-        echo "git or curl or wget required"
-        return 1
-    fi
-
-    if has git; then
-        git clone -b sync $repository $DOTPATH
-    else
-        # XXX: Git以外でダウンロードした場合、$DOTPATHはGitリポジトリにはならない。
-        # だから上手くインストール作業が出来たとしても、後々.dotfilesを更新したい時に
-        # 困る。事前にGitをインストールするか、インストール処理後に.dotfilesを何とかGitリポジトリ化する
-        # 必要がある。
-        download_from_web $archive_url | tar xvz
-
-        if [ -d "$archive_dest" ]; then
-            mv "$archive_dest" "$DOTPATH"
+    # Ensure we can use Git.
+    if ! has git; then
+        if has apt-get; then
+            sudo apt-get update
+            sudo apt-get install -y git
         else
-            echo "download failed"
-            return 1
+            echo 'git is required'
+            exit 1
         fi
     fi
+
+    # TODO: Use master branch.
+    git clone -b sync $repository $DOTPATH
 }
 
 if [ -z "$DOTPATH" ]; then
@@ -57,6 +37,7 @@ fi
 
 clone_repository
 
+# XXX: Should be run by users explicitly.
 if [ $? -eq 0 ]; then
     "$DOTPATH/sync/init"
 else
