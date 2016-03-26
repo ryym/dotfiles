@@ -3,15 +3,9 @@
 new_shell=$1
 
 if [ -z $new_shell ]; then
-    echo 'Specify the shell to be set'
+    echo 'Usage: ch-sh <shell>'
     exit 1
 fi
-
-if [ -z "$DOTPATH" ]; then
-    echo '$DOTPATH is not set'
-    exit 1
-fi
-source "$DOTPATH/sync/lib/helper.sh"
 
 change_shell() {
     local shell_path=$(which $new_shell)
