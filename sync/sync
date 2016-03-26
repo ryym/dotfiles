@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0:$LINENO' ERR INT
+
+DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
+
+source "$DOTPATH/sync/helper.sh"
+
+osname=$(detect_osname)
+
+if [ -z $osname ]; then
+    echo 'Sorry, Your OS is not supported'
+else
+    echo 'Sync start'
+    load os/$osname/sync
+    echo 'Sync end'
+fi

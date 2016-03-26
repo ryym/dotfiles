@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+VERSIONS=(
+    '4.3.0'
+)
+
+for version in ${VERSIONS[@]}; do
+    ndenv install $version
+done
+
+ndenv global ${VERSIONS[0]}
+
+ndenv rehash

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+VERSIONS=(
+    '1.6'
+)
+
+for version in ${VERSIONS[@]}; do
+    goenv install $version
+done
+
+goenv global ${VERSIONS[0]}
+
+goenv rehash
+

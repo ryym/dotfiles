@@ -4,7 +4,7 @@ is_osx() {
 }
 
 has() {
-    which $1 > /dev/null
+    which $1 > /dev/null 2>&1
 }
 
 hasnot() {

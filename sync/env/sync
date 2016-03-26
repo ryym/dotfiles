@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/helper.sh"
+
+ANYENV="$ANYENV_PATH/bin/anyenv"
+
+echo 'Install anyenv'
+
+if [ ! -d "$ANYENV_PATH" ]; then
+    git clone -b fix-init https://github.com/ryym/anyenv "$ANYENV_PATH"
+    eval "$($ANYENV init -)"
+fi
+
+for envpath in "$DOTPATH"/sync/env/*env; do
+    $ANYENV install ${envpath##*/}
+done
+
+# Enable each '**env' command.
+eval "$($ANYENV init -)"
+
+for envpath in "$DOTPATH"/sync/env/*env; do
+    source $envpath
+done

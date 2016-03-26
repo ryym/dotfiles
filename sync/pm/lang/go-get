@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+get() {
+    echo "Go get: $1"
+    go get "$1"
+}
+
+if has go; then
+    get github.com/motemen/ghq
+    get github.com/peco/peco/cmd/peco
+fi

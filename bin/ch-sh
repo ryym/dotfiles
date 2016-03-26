@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+new_shell=$1
+
+if [ -z $new_shell ]; then
+    echo 'Specify the shell to be set'
+    exit 1
+fi
+
+if [ -z "$DOTPATH" ]; then
+    echo '$DOTPATH is not set'
+    exit 1
+fi
+source "$DOTPATH/sync/lib/helper.sh"
+
+change_shell() {
+    local shell_path=$(which $new_shell)
+
+    if ! grep -xq "$shell_path" /etc/shells; then
+        echo "Add $new_shell path ($shell_path) to /etc/shells"
+        sudo echo "$shell_path" >> /etc/shells
+    fi
+
+    sudo chsh -s "$shell_path" "${USER:-root}"
+}
+
+if has $new_shell && [ "${SHELL##*/}" != $new_shell ]; then
+    change_shell
+else
+    echo "$new_shell doesn't exist or the login shell is already $new_shell"
+fi
+

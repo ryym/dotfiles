@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/helper.sh"
+
+echo OSX!
+# load lib/presync
+
+# load env/sync
+
+# if ! has brew; then
+#     load os/osx/install-brew
+#     load os/osx/install-xcode
+# fi
+
+# load pm/brew
+
+# load lib/chsh 'zsh'
+
+# load lib/postsync
+
+# echo 'Completed. Please restart your computer.'

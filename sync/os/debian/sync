@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/helper.sh"
+
+load env/sync
+
+load pm/apt-get
+
+load pm/lang/sync
+
+# load lib/chsh zsh
+

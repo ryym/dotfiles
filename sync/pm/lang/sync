@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/helper.sh"
+
+for installer in "$DOTPATH"/sync/pm/lang/*; do
+    if [ ${installer##*/} != "sync" ]; then
+        source "$installer"
+    fi
+done
