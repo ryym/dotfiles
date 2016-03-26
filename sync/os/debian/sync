@@ -10,5 +10,7 @@ load pm/apt-get
 
 load pm/lang/sync
 
-# load lib/chsh zsh
+ch-sh zsh
+
+echo 'Completed. Please restart your shell.'
 
