@@ -4,20 +4,16 @@ set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/helper.sh"
 
-echo OSX!
-# load lib/presync
+load env/install
 
-# load env/sync
+if ! has brew; then
+    load os/osx/install-brew
+fi
 
-# if ! has brew; then
-#     load os/osx/install-brew
-#     load os/osx/install-xcode
-# fi
+load pm/brew/install
 
-# load pm/brew
+load pm/lang/install
 
-# load lib/chsh 'zsh'
+ch-sh zsh
 
-# load lib/postsync
-
-# echo 'Completed. Please restart your computer.'
+echo 'Completed. Please restart your shell.'

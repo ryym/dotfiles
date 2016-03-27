@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# http://brew.sh/
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/helper.sh"
+
+if has ruby; then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+else
+    echo 'ruby is required to install Homebrew'
+    exit 1
+fi

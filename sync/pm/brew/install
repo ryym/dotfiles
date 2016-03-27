@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if ! has brew; then
+    echo 'Homebrew is not installed'
+else
+    echo 'Homebrew'
+    brew update
+
+    if [ ! $(brew tap | grep 'homebrew/bundle') ]; then
+        brew tap homebrew/bundle
+    fi
+
+    brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile"
+fi
