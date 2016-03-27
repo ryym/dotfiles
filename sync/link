@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
+
+DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
+source "$DOTPATH/sync/helper.sh"
+
+while getopts t opt
+do
+    case $opt in
+        t) readonly DRY_RUN=1
+            ;;
+    esac
+done
+
+# Check if the dotfiles can be linked.
+validate() {
+    if [ ! -e "$srcpath" ]; then
+        echo "$srcpath doesn't exist." >&2
+        exit 1
+    fi
+
+    if [ -e "$destpath" ] && [ ! -L "$destpath" ]; then
+        echo "$destpath exists but is not a symlnk." >&2
+        exit 1
+    fi
+}
+
+# Create or update symbolic links in $HOME.
+link_dotfile() {
+    ln -nsf "$srcpath" "$destpath"
+    echo "-- $dotfile is linked. --"
+}
+
+# The files to be linked.
+LINKS=(
+    '.pryrc:ruby/pryrc'
+    '.zshrc:zsh/zshrc'
+    '.gitconfig:git/gitconfig'
+    '.vim:vim'
+    '.vimperatorrc:vimperatorrc'
+    '.tmux.conf:tmux.conf'
+    '.ctags:ctags'
+)
+
+for link in "${LINKS[@]}"; do
+    dotfile="${link%%:*}"
+    destpath="$HOME/$dotfile"
+    srcpath="$DOTPATH/dotfiles/${link#*:}"
+
+    if [ ${DRY_RUN:-0} -eq 0 ]; then
+        validate && link_dotfile
+    else
+        validate
+    fi
+done
+

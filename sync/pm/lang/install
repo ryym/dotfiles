@@ -5,7 +5,7 @@ trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/helper.sh"
 
 for installer in "$DOTPATH"/sync/pm/lang/*; do
-    if [ ${installer##*/} != "sync" ]; then
-        source "$installer"
+    if [ ${installer##*/} != "install" ]; then
+        source "$installer/install"
     fi
 done

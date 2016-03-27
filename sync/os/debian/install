@@ -4,11 +4,11 @@ set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/helper.sh"
 
-load env/sync
+load env/install
 
-load pm/apt-get
+load pm/apt-get/install
 
-load pm/lang/sync
+load pm/lang/install
 
 ch-sh zsh
 

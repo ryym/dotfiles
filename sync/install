@@ -13,6 +13,6 @@ if [ -z $osname ]; then
     echo 'Sorry, Your OS is not supported'
 else
     echo 'Sync start'
-    load os/$osname/sync
+    load os/$osname/install
     echo 'Sync end'
 fi
