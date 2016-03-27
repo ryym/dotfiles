@@ -12,7 +12,7 @@ change_shell() {
 
     if ! grep -xq "$shell_path" /etc/shells; then
         echo "Add $new_shell path ($shell_path) to /etc/shells"
-        sudo echo "$shell_path" >> /etc/shells
+        echo "$shell_path" | sudo tee -a /etc/shells
     fi
 
     sudo chsh -s "$shell_path" "${USER:-root}"
