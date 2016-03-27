@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 
-# TODO
+if has gem; then
+    gem install bundle
+    gem install pry
+    gem install byebug
+fi
 

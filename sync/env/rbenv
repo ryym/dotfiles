@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+VERSIONS=(
+    '2.3.0'
+)
+
+for version in ${VERSIONS[@]}; do
+    if ! has_version rbenv $version; then
+        rbenv install $version
+    fi
+done
+
+rbenv global ${VERSIONS[0]}
+
+rbenv rehash
+
