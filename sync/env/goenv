@@ -5,7 +5,9 @@ VERSIONS=(
 )
 
 for version in ${VERSIONS[@]}; do
-    goenv install $version
+    if ! has_version goenv $version; then
+        goenv install $version
+    fi
 done
 
 goenv global ${VERSIONS[0]}

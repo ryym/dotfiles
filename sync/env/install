@@ -6,6 +6,25 @@ source "$DOTPATH/sync/helper.sh"
 
 ANYENV="$ANYENV_PATH/bin/anyenv"
 
+has_env() {
+    local env=$1
+    if $ANYENV envs | grep $env >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+has_version() {
+    local env=$1
+    local version=$2
+    if $env versions | grep $version >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 echo 'Install anyenv'
 
 if [ ! -d "$ANYENV_PATH" ]; then
@@ -14,7 +33,9 @@ if [ ! -d "$ANYENV_PATH" ]; then
 fi
 
 for envpath in "$DOTPATH"/sync/env/*env; do
-    $ANYENV install ${envpath##*/}
+    if ! has_env ${envpath##*/}; then
+        $ANYENV install ${envpath##*/}
+    fi
 done
 
 # Enable each '**env' command.

@@ -5,7 +5,9 @@ VERSIONS=(
 )
 
 for version in ${VERSIONS[@]}; do
-    ndenv install $version
+    if ! has_version ndenv $version; then
+        ndenv install $version
+    fi
 done
 
 ndenv global ${VERSIONS[0]}
