@@ -62,12 +62,9 @@ function! s:_execute_neobundle(configs)
 
   call neobundle#begin(configs.bundle_dir)
 
-  if neobundle#load_cache(configs.vimrc)
-    NeoBundleFetch 'Shougo/neobundle.vim'
-    call configs.declare_bundles()
-    NeoBundleCheck
-    NeoBundleSaveCache
-  endif
+  NeoBundleFetch 'Shougo/neobundle.vim'
+  call configs.declare_bundles()
+  NeoBundleCheck
 
   call configs.configure_bundles( s:generate_wrapper() )
   call neobundle#untap()
