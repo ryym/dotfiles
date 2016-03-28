@@ -1,3 +1,4 @@
 dotfiles/vim/bundle/*
 dotfiles/vim/local/*
+sync/.log/log*
 !.gitkeep
