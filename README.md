@@ -29,7 +29,7 @@ This repository manages:
 ## Installation
 
 ```sh
-git clone https://github.com/ryym/dotfiles ~/.dotfiles
+git clone --recursive https://github.com/ryym/dotfiles ~/.dotfiles
 cd ~/.dotfiles && make
 ```
 
