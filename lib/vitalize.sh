@@ -8,6 +8,10 @@ if ! $(which __dot-bin-enabled) >/dev/null 2>&1; then
     PATH="$DOTPATH/bin:$PATH"
 fi
 
+if [ -z ${__CONST_LOADED:-''} ]; then
+    source "$DOTPATH/CONST.sh"
+fi
+
 deffunc() {
     eval "$1() {
         $2
