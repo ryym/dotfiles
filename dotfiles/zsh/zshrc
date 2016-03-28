@@ -68,29 +68,29 @@ alias ls='ls -GF'
 alias ll='ls -lGF'
 alias la='ls -laGF'
 alias g='git'
-alias reload='source ~/.zshrc'
+alias reload='exec $SHELL -l'
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+export DOTPATH=$HOME/.dotfiles
+source "$DOTPATH/lib/vitalize.sh"
 
-PATH=/usr/local/bin/:$PATH
-PATH=~/rubygems/bin/:$PATH
-PATH=~/.rbenv/bin:$PATH
-
-eval "$(rbenv init - zsh)"
+# Anyenv
+if [ -d "$ANYENV_PATH" ]; then
+    PATH="$ANYENV_PATH/bin:$PATH"
+    eval "$(anyenv init - zsh)"
+fi
 
 # Go
-export GOPATH=$HOME/.go
-PATH=$PATH:$GOPATH/bin/
+PATH="$PATH:$GOPATH/bin"
 
 # Node modules
-PATH=$PATH:./node_modules/.bin
+PATH="$PATH:./node_modules/.bin"
 
-# mkdir & cd
-mkcd()
-{
-    mkdir -p "$1"
-    cd "$1"
-}
+# # mkdir & cd
+# mkcd()
+# {
+#     mkdir -p "$1"
+#     cd "$1"
+# }
 
 ## Peco
 
@@ -109,10 +109,7 @@ zle -N peco-src
 bindkey '^]' peco-src
 
 # AWS-CLI
-which aws_zsh_completer >/dev/null 2>&1 && $(which aws_zsh_completer.sh)
+# which aws_zsh_completer >/dev/null 2>&1 && $(which aws_zsh_completer.sh)
 
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-export NVM_DIR="/home/ryu/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

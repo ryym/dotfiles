@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Install libraries for OS X.
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start "Install for OS X"
+
+if ! has brew; then
+    load os/osx/install-brew
+fi
+
+load pm/brew/install
+
+load env/install
+
+load pm/lang/install
+
+if [ ${SHELL##*/} != 'zsh' ]; then
+    ch-sh zsh
+fi
+
+log_finish "Install for OS X"

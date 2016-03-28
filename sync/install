@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Install libraries which are necessary for development.
+# This script detects a current OS automatically and run
+# proper installations for the OS.
+
+set -eu
+trap 'echo SYNC STOPPED: $0:$LINENO' ERR INT
+
+DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
+
+SYNCLOG="$DOTPATH/sync/.log/log"
+> "$SYNCLOG"
+
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+osname=$(detect_osname)
+
+if [ -z $osname ]; then
+    log_error 'Sorry, Your OS is not supported'
+    exit 1
+else
+    echo "$(c_blue "$DOTFILES_LOGO")"
+
+    log_start "Install"
+    log_info "OS: $(c_magenta "$osname")"
+
+    load os/$osname/install
+
+    log_finish "Install"
+    log_success "All installations are done successfully!"
+    log_warn "To apply changes, you may need to restart your PC."
+fi

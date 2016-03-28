@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Install libraries provided by language package managers.
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+for installer in "$DOTPATH"/sync/pm/lang/*; do
+    if [ ${installer##*/} != "install" ]; then
+        source "$installer/install"
+    fi
+done

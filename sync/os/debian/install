@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Install libraries for Debian / Ubuntu.
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_finish "Install for Debian"
+
+load pm/apt-get/install
+
+load env/install
+
+load pm/lang/install
+
+if [ ${SHELL##*/} != 'zsh' ]; then
+    ch-sh zsh
+fi
+
+log_finish "Install for Debian"

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'Homebrew bundle'
+
+if ! has brew; then
+    log_error 'Homebrew is not installed'
+    exit 1
+else
+    log_info 'Updating Homebrew...'
+    brew update | log
+
+    if [ ! $(brew tap | grep 'homebrew/bundle') ]; then
+        brew tap homebrew/bundle | log
+    fi
+
+    log_info 'Installing libraries by Homebrew-bundle...'
+    brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile" | log
+fi
+
+log_finish 'Homebrew bundle'

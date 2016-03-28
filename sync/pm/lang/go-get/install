@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+log_start 'Go get'
+
+get() {
+    log_info "Getting $(c_magenta $1) ..."
+    go get "$1"
+}
+
+if has go; then
+    get github.com/motemen/ghq
+    get github.com/peco/peco/cmd/peco
+else
+    log_error 'Go is not available'
+    exit 1
+fi
+
+log_finish 'Go get'

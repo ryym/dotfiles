@@ -1,9 +1,0 @@
-" idea自体がJISキーボードに対応していない為、実際のキーとは異なる割当でごまかす
-" ] -> \, [ -> ]
-imap <C-]> <ESC>
-vmap <C-]> <ESC>
-
-set ignorecase
-set hlsearch
-set scrolloff=3
-set relativenumber

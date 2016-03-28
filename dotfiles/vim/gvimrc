@@ -18,8 +18,8 @@ endif
 " IM settings {{{
 "
 if g:is_mac
+  " In OSX, noimdisable doesn't work correctly.
   set imdisable
-  set noimdisableactivate
 endif
 
 if g:is_windows

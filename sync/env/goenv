@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+VERSIONS=(
+    '1.6'
+)
+
+for version in ${VERSIONS[@]}; do
+    install_version goenv $version
+done
+
+set_global_version goenv ${VERSIONS[0]}

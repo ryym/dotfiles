@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# A noop command used to check if this 'bin' directory
+# is in the '$PATH' variable.
+:
+

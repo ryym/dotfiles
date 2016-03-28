@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+log_start 'APT get'
+
+install() {
+    log_info "Installing $(c_magenta $1)..."
+    sudo apt-get install -y "$@" | log
+}
+
+if ! has 'apt-get'; then
+    log_error 'APT is not installed'
+    exit 1
+else
+    log_info "Updating APT..."
+    sudo apt-get update | log
+
+    install git
+    install tmux
+    install zsh
+
+    # For Ruby compiling
+    install libssl-dev
+    install libreadline-dev
+    install zlib1g-dev
+fi
+
+log_finish 'APT get'
