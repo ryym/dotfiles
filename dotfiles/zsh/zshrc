@@ -71,12 +71,12 @@ alias g='git'
 alias reload='exec $SHELL -l'
 
 export DOTPATH=$HOME/.dotfiles
-source "$DOTPATH/CONST.sh"
+source "$DOTPATH/lib/vitalize.sh"
 
 # Anyenv
 if [ -d "$ANYENV_PATH" ]; then
     PATH="$ANYENV_PATH/bin:$PATH"
-    eval "$(anyenv init -)"
+    eval "$(anyenv init - zsh)"
 fi
 
 # Go
