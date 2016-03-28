@@ -10,3 +10,8 @@ sudo apt-get update
 install git
 install tmux
 install zsh
+
+# For Ruby compiling
+install libssl-dev
+install libreadline-dev
+install zlib-dev
