@@ -4,9 +4,9 @@ set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/lib/vitalize.sh"
 
-load env/install
-
 load pm/apt-get/install
+
+load env/install
 
 load pm/lang/install
 

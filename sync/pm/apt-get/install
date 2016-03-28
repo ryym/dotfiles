@@ -14,4 +14,4 @@ install zsh
 # For Ruby compiling
 install libssl-dev
 install libreadline-dev
-install zlib-dev
+install zlib1g-dev
