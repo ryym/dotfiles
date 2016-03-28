@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+log_start 'APT get'
+
 install() {
-    echo "Install $1"
-    sudo apt-get install -y "$@"
+    log_info "Installing $(c_magenta $1)..."
+    sudo apt-get install -y "$@" | log
 }
 
-sudo apt-get update
+log_info "Updating APT..."
+sudo apt-get update | log
 
 install git
 install tmux
@@ -15,3 +18,5 @@ install zsh
 install libssl-dev
 install libreadline-dev
 install zlib1g-dev
+
+log_finish 'APT get'

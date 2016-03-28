@@ -13,9 +13,16 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 osname=$(detect_osname)
 
 if [ -z $osname ]; then
-    echo 'Sorry, Your OS is not supported'
+    log_error 'Sorry, Your OS is not supported'
 else
-    echo 'Sync start' | teelog
+    echo "$(c_blue "$(print_logo)")"
+
+    log_start "Install"
+    log_info "OS: $(c_magenta "$osname")"
+
     load os/$osname/install
-    echo 'Sync end' | teelog
+
+    log_finish "Install"
+    log_success "All installations are done successfully!"
+    log_warn "To apply changes, you may need to restart your PC."
 fi

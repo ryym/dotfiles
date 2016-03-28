@@ -5,12 +5,7 @@ VERSIONS=(
 )
 
 for version in ${VERSIONS[@]}; do
-    if ! has_version rbenv $version; then
-        rbenv install $version | log
-    fi
+    install_version rbenv $version
 done
 
-rbenv global ${VERSIONS[0]} | log
-
-rbenv rehash
-
+set_global_version rbenv ${VERSIONS[0]}

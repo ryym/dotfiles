@@ -5,35 +5,22 @@ trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/lib/vitalize.sh"
 
 ANYENV="$ANYENV_PATH/bin/anyenv"
+source "$DOTPATH/sync/env/helper.sh"
 
-has_env() {
-    local env=$1
-    if $ANYENV envs | grep $env >/dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
-}
+log_start 'Anyenv'
 
-has_version() {
-    local env=$1
-    local version=$2
-    if $env versions | grep $version >/dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
-}
+log_info 'Cloning or updating anyenv...'
 
-echo 'Install anyenv'
-
-if [ ! -d "$ANYENV_PATH" ]; then
+if [ -d "$ANYENV_PATH" ]; then
+  git --work-tree="$ANYENV_PATH" pull | log
+else
     git clone -b fix-init https://github.com/ryym/anyenv "$ANYENV_PATH" | log
-    eval "$($ANYENV init -)"
+    eval "$($ANYENV init -)" | log
 fi
 
 for envpath in "$DOTPATH"/sync/env/*env; do
     if ! has_env ${envpath##*/}; then
+        log_info "Install $(c_magenta ${envpath##*/})"
         $ANYENV install ${envpath##*/} | log
     fi
 done
@@ -44,3 +31,5 @@ eval "$($ANYENV init -)"
 for envpath in "$DOTPATH"/sync/env/*env; do
     source $envpath
 done
+
+log_finish 'Anyenv'

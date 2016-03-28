@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 
+log_start 'Rubygems'
+
+install() {
+    log_info "Installing gem $(c_magenta $1)..."
+    gem install $1 | log
+}
+
 if has gem; then
-    gem install bundle | log
-    gem install pry | log
-    gem install byebug | log
+    install bundle
+    install pry
+    install byebug
+else
+    log_warn 'gem command is not available'
 fi
 
+log_finish 'Rubygems'

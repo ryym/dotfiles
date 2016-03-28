@@ -4,13 +4,16 @@ set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/lib/vitalize.sh"
 
+log_finish "Install for Debian"
+
 load pm/apt-get/install
 
 load env/install
 
 load pm/lang/install
 
-ch-sh zsh
+if [ ${SHELL##*/} != 'zsh' ]; then
+    ch-sh zsh
+fi
 
-echo 'Completed. Please restart your shell.'
-
+log_finish "Install for Debian"
