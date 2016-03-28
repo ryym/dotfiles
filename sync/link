@@ -4,7 +4,7 @@ set -eu
 trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
 
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
-source "$DOTPATH/sync/helper.sh"
+source "$DOTPATH/sync/lib/vitalize.sh"
 
 while getopts t opt
 do

@@ -2,7 +2,7 @@
 
 set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
-source "$DOTPATH/sync/helper.sh"
+source "$DOTPATH/sync/lib/vitalize.sh"
 
 for installer in "$DOTPATH"/sync/pm/lang/*; do
     if [ ${installer##*/} != "install" ]; then
