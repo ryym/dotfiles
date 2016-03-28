@@ -6,10 +6,10 @@ VERSIONS=(
 
 for version in ${VERSIONS[@]}; do
     if ! has_version ndenv $version; then
-        ndenv install $version
+        ndenv install $version | log
     fi
 done
 
-ndenv global ${VERSIONS[0]}
+ndenv global ${VERSIONS[0]} | log
 
 ndenv rehash

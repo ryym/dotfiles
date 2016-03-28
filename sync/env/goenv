@@ -6,11 +6,11 @@ VERSIONS=(
 
 for version in ${VERSIONS[@]}; do
     if ! has_version goenv $version; then
-        goenv install $version
+        goenv install $version | log
     fi
 done
 
-goenv global ${VERSIONS[0]}
+goenv global ${VERSIONS[0]} | log
 
 goenv rehash
 

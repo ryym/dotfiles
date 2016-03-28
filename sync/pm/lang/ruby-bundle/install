@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 if has gem; then
-    gem install bundle
-    gem install pry
-    gem install byebug
+    gem install bundle | log
+    gem install pry | log
+    gem install byebug | log
 fi
 

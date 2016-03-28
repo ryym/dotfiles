@@ -5,6 +5,9 @@ trap 'echo SYNC STOPPED: $0:$LINENO' ERR INT
 
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
+SYNCLOG="$DOTPATH/sync/.log/log"
+> "$SYNCLOG"
+
 source "$DOTPATH/sync/lib/vitalize.sh"
 
 osname=$(detect_osname)
@@ -12,7 +15,7 @@ osname=$(detect_osname)
 if [ -z $osname ]; then
     echo 'Sorry, Your OS is not supported'
 else
-    echo 'Sync start'
+    echo 'Sync start' | teelog
     load os/$osname/install
-    echo 'Sync end'
+    echo 'Sync end' | teelog
 fi

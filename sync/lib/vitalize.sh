@@ -23,3 +23,11 @@ is_osx() {
 is_debian() {
     return $(test -f /etc/debian_version)
 }
+
+log() {
+    cat - >> "$SYNCLOG"
+}
+
+teelog() {
+    cat - | tee -a "$SYNCLOG"
+}
