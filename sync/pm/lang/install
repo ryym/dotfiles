@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Install libraries provided by language package managers.
+
 set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/lib/vitalize.sh"

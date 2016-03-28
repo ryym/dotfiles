@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Install '**env' tools that can install and manage
+# several versions of a language. Currently, we use 'anyenv'
+# to manage these '**env' tools.
+
 set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/lib/vitalize.sh"
@@ -18,6 +22,7 @@ else
     eval "$($ANYENV init -)" | log
 fi
 
+# Install '**env' tools.
 for envpath in "$DOTPATH"/sync/env/*env; do
     if ! has_env ${envpath##*/}; then
         log_info "Install $(c_magenta ${envpath##*/})"
@@ -28,6 +33,7 @@ done
 # Enable each '**env' command.
 eval "$($ANYENV init -)"
 
+# Install languages.
 for envpath in "$DOTPATH"/sync/env/*env; do
     source $envpath
 done

@@ -11,7 +11,8 @@ if has go; then
     get github.com/motemen/ghq
     get github.com/peco/peco/cmd/peco
 else
-    log_warn 'Go is not available'
+    log_error 'Go is not available'
+    exit 1
 fi
 
 log_finish 'Go get'

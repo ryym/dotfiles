@@ -7,7 +7,8 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 log_start 'Homebrew bundle'
 
 if ! has brew; then
-    log_info 'Homebrew is not installed'
+    log_error 'Homebrew is not installed'
+    exit 1
 else
     log_info 'Updating Homebrew...'
     brew update | log

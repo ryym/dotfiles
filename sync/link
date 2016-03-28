@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Create symbolic links of dotfiles in the '$HOME' directory.
+
 set -eu
 trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
 
@@ -13,6 +15,17 @@ do
             ;;
     esac
 done
+
+# The files to be linked.
+LINKS=(
+    '.pryrc:ruby/pryrc'
+    '.zshrc:zsh/zshrc'
+    '.gitconfig:git/gitconfig'
+    '.vim:vim'
+    '.vimperatorrc:vimperatorrc'
+    '.tmux.conf:tmux.conf'
+    '.ctags:ctags'
+)
 
 # Check if the dotfiles can be linked.
 validate() {
@@ -32,17 +45,6 @@ link_dotfile() {
     ln -nsf "$srcpath" "$destpath"
     echo "-- $dotfile is linked. --"
 }
-
-# The files to be linked.
-LINKS=(
-    '.pryrc:ruby/pryrc'
-    '.zshrc:zsh/zshrc'
-    '.gitconfig:git/gitconfig'
-    '.vim:vim'
-    '.vimperatorrc:vimperatorrc'
-    '.tmux.conf:tmux.conf'
-    '.ctags:ctags'
-)
 
 for link in "${LINKS[@]}"; do
     dotfile="${link%%:*}"
