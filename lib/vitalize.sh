@@ -4,7 +4,7 @@
 # Note that this script add '$DOTPATH/bin' to the '$PATH'
 # automatically if it isn't in the '$PATH'.
 
-if ! $(which __dot-bin-enabled) >/dev/null 2>&1; then
+if ! $(which __dot_bin_enabled) >/dev/null 2>&1; then
     PATH="$DOTPATH/bin:$PATH"
 fi
 
@@ -20,7 +20,7 @@ deffunc() {
 
 # Define functions that formats and colorizes a text. 
 # Example:
-#   echo $(c-red $(c-bold ERROR:)) $(c-line An error is occured!)
+#   echo $(c_red $(c_bold ERROR:)) $(c_line An error is occured!)
 #
 # Reference of escape sequences:
 #   http://misc.flogisoft.com/bash/tip_colors_and_formatting
@@ -42,11 +42,11 @@ for color in ${texteffects[@]}; do
     fgcode=${color#*:}
     bgcode=$(($fgcode + 10))
 
-    deffunc "c-$colorname" "
+    deffunc "c_$colorname" "
         printf \"\\033[${fgcode}m\$1\\033[0m\"
     "
 
-    deffunc "c-bg-$colorname" "
+    deffunc "c_bg_$colorname" "
         printf \"\\033[${bgcode}m\$1\\033[0m\"
     "
 done
