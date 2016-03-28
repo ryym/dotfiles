@@ -2,7 +2,7 @@
 
 export __CONST_LOADED=1
 
-export DOTPATH=$HOME/.dotfiles
+export DOTPATH=${DOTPATH:-$HOME/.dotfiles}
 
 export GOPATH=$HOME/.go
 
