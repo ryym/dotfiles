@@ -55,3 +55,8 @@ make install
 | uninstall | Not implemented yet. |
 | unlink | Not implemented yet. |
 
+## Inspiration
+
+* [b4b4r07/dotfiles](https://github.com/b4b4r07/dotfiles)
+* [creasty/dotfiles](https://github.com/creasty/dotfiles)
+* [cowboy/dotfiles](https://github.com/cowboy/dotfiles)
