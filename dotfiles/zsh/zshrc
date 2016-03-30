@@ -70,21 +70,6 @@ alias la='ls -laGF'
 alias g='git'
 alias reload='exec $SHELL -l'
 
-export DOTPATH=$HOME/.dotfiles
-source "$DOTPATH/lib/vitalize.sh"
-
-# Anyenv
-if [ -d "$ANYENV_PATH" ]; then
-    PATH="$ANYENV_PATH/bin:$PATH"
-    eval "$(anyenv init - zsh)"
-fi
-
-# Go
-PATH="$PATH:$GOPATH/bin"
-
-# Node modules
-PATH="$PATH:./node_modules/.bin"
-
 # # mkdir & cd
 # mkcd()
 # {

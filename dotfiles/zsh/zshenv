@@ -1,0 +1,21 @@
+
+# Disallow duplicate paths in the '$PATH'.
+typeset -U PATH
+
+export DOTPATH=$HOME/.dotfiles
+source "$DOTPATH/lib/vitalize.sh"
+
+# Anyenv
+if [ -d "$ANYENV_PATH" ]; then
+    export PATH="$ANYENV_PATH/bin:$PATH"
+    eval "$(anyenv init - zsh)"
+fi
+
+# Go
+export PATH="$PATH:$GOPATH/bin"
+
+# Node modules
+export PATH="$PATH:./node_modules/.bin"
+
+# Load the local settings.
+[ -f ~/.zshenv.local ] && source ~/.zshenv.local

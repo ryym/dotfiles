@@ -20,6 +20,7 @@ done
 LINKS=(
     '.pryrc:ruby/pryrc'
     '.zshrc:zsh/zshrc'
+    '.zshenv:zsh/zshenv'
     '.gitconfig:git/gitconfig'
     '.vim:vim'
     '.vimperatorrc:vimperatorrc'
