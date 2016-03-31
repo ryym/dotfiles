@@ -70,13 +70,6 @@ alias la='ls -laGF'
 alias g='git'
 alias reload='exec $SHELL -l'
 
-# # mkdir & cd
-# mkcd()
-# {
-#     mkdir -p "$1"
-#     cd "$1"
-# }
-
 ## Peco
 
 # ghq

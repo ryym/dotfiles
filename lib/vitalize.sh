@@ -12,6 +12,13 @@ if [ -z ${__CONST_LOADED:-''} ]; then
     source "$DOTPATH/CONST.sh"
 fi
 
+# mkdir & cd
+mkcd()
+{
+    mkdir -p "$1"
+    cd "$1"
+}
+
 deffunc() {
     eval "$1() {
         $2
