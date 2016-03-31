@@ -40,7 +40,11 @@ is_debian() {
 
 # Output and redirect stdout to the log file.
 log() {
-    cat - | tee -a "${SYNCLOG:-$DOTPATH/sync/.log/log}"
+    if [ -n "${SYNCLOG:-}" ]; then
+        cat - | tee -a "$SYNCLOG"
+    else
+        cat -
+    fi
 }
 
 log_info() {
