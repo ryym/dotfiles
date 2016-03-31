@@ -38,36 +38,31 @@ is_debian() {
     return $(test -f /etc/debian_version)
 }
 
-# Redirect stdout to the log file.
-log() {
-    cat - >> "$SYNCLOG"
-}
-
 # Output and redirect stdout to the log file.
-teelog() {
-    cat - | tee -a "$SYNCLOG"
+log() {
+    cat - | tee -a "${SYNCLOG:-$DOTPATH/sync/.log/log}"
 }
 
 log_info() {
-    echo [$(c_grey $(date '+%T'))] "$@" | teelog
+    echo [$(c_grey $(date '+%T'))] "$@" | log
 }
 
 log_success() {
-    log_info "$(c_green "$@")" | teelog
+    log_info "$(c_green "$@")"
 }
 
 log_warn() {
-    log_info "$(c_yellow "$@")" | teelog
+    log_info "$(c_yellow "$@")"
 }
 
 log_error() {
-    log_info "$(c_red "$@")" | teelog
+    log_info "$(c_red "$@")"
 }
 
 log_start() {
-    log_info ">> START: $(c_cyan "$1")" | teelog
+    log_info ">> START: $(c_cyan "$1")"
 }
 
 log_finish() {
-    log_info "<< FINISH: $(c_cyan "$1")" | teelog
+    log_info "<< FINISH: $(c_cyan "$1")"
 }

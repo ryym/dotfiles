@@ -18,7 +18,7 @@ else
     fi
 
     log_info 'Installing libraries by Homebrew-bundle...'
-    brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile" | teelog
+    brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile" | log
 fi
 
 log_finish 'Homebrew bundle'
