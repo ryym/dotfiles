@@ -1,9 +1,15 @@
 
+# Ensure Zsh doesn't load global rc files like '/etc/zprofile'.
+setopt no_global_rcs
+
 # Disallow duplicate paths in the '$PATH'.
 typeset -U PATH
 
 export DOTPATH=$HOME/.dotfiles
 source "$DOTPATH/lib/vitalize.sh"
+
+# Homebrew
+export PATH="/usr/local/bin:$PATH"
 
 # Anyenv
 if [ -d "$ANYENV_PATH" ]; then
