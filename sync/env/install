@@ -18,7 +18,7 @@ log_info 'Cloning or updating anyenv...'
 if [ -d "$ANYENV_PATH" ]; then
   git --work-tree="$ANYENV_PATH" pull | log
 else
-    git clone -b fix-init https://github.com/ryym/anyenv "$ANYENV_PATH" | log
+    git clone https://github.com/riywo/anyenv "$ANYENV_PATH" | log
     eval "$($ANYENV init -)" | log
 fi
 
