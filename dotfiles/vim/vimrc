@@ -876,6 +876,10 @@ function! s:declare_bundles()
     \ 'commands': ['Gstatus', 'Git', 'Gdiff', 'Gblame']
     \ }
 
+  NeoBundlewLazy 'cohama/agit.vim', {
+    \ 'commands': ['Agit']
+    \ }
+
 
   " Filetype {{{3
 
@@ -1302,6 +1306,10 @@ function! s:configure_bundles(neobundle_wrapper)
   if nbw.try_tap('macspeech')
     Map v  <Leader><Leader>q :r:MacSpeechSelected
     Map nv <Leader><Leader>Q ::MacSpeechStop
+
+    function! nbw.hooks.on_source(bundle)
+      let g:macspeech_voice = 'Ava'
+    endfunction
   endif
 
 
