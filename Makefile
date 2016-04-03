@@ -20,3 +20,7 @@ uninstall:
 .PHONY: unlink
 unlink:
 	@./sync/unlink
+
+.PHONY: bin
+bin:
+	@chmod 755 bin/*
