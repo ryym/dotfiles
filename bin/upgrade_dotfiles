@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Fetch remote updates and pull them if necessary.
+
+if [ -n "$DOTPATH" ] && has git; then
+    cd "$DOTPATH"
+
+    echo 'Checking for updates of dotfiles...'
+    git fetch --prune >/dev/null
+
+    if git status | grep 'behind' >/dev/null; then
+        echo -n 'Upgrade dotfiles? [Y/n] '
+        read REPLY
+
+        if [ "$REPLY" != 'n' ]; then
+            upstream=$(git rev-parse @{upstream})
+            git rebase $upstream
+        fi
+    fi
+fi
