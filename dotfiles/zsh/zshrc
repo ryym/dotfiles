@@ -69,6 +69,8 @@ alias ll='ls -lGF'
 alias la='ls -laGF'
 alias g='git'
 alias reload='exec $SHELL -l'
+alias vi='vim'
+alias gvi='gvim'
 
 ## Peco
 
