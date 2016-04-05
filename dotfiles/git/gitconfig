@@ -79,3 +79,5 @@
     sbm    = submodule
 [include]
     path = .gitconfig.local
+[ghq]
+    root = ~/ghq
