@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+VERSIONS=(
+    '4.4.2'
+)
+
+for version in ${VERSIONS[@]}; do
+    install_version nodenv $version
+done
+
+set_global_version nodenv ${VERSIONS[0]}
+
