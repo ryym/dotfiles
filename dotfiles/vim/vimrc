@@ -411,6 +411,7 @@ augroup vimrc
   " Configure filetypes which have to be assigned manually.
   call s:delegate_filetypes({
     \ '*.gradle'  : 'groovy',
+    \ '*.es6'     : 'javascript',
     \ '.babelrc'  : 'json',
     \ '.pryrc'    : 'ruby',
     \ 'Guardfile' : 'ruby'
