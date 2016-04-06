@@ -913,6 +913,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'mxw/vim-jsx'
 
+  NeoBundlewLazy 'slim-template/vim-slim', {
+    \ 'filetypes': ['slim']
+    \ }
+
   NeoBundlewLazy 'posva/vim-vue', {
     \ 'filetypes': ['vue']
     \ }
