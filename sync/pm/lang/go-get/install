@@ -10,6 +10,7 @@ get() {
 if has go; then
     get github.com/motemen/ghq
     get github.com/peco/peco/cmd/peco
+    get github.com/monochromegane/the_platinum_searcher/cmd/pt
 else
     log_error 'Go is not available'
     exit 1
