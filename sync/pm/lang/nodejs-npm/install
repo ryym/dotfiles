@@ -8,7 +8,7 @@ install() {
 }
 
 if has npm; then
-   :
+   install grunt-cli
 else
     log_error 'npm is not available'
     exit 1
