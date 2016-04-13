@@ -1021,9 +1021,9 @@ function! s:configure_bundles(neobundle_wrapper)
       " Key mappings in unite buffers
       autocmd vimrc FileType unite call <SID>map_keys_on_unite()
       function! s:map_keys_on_unite()
-        Map ni (buffer expr) s unite#smart_map('s', unite#do_action('split'))
-        Map ni (buffer expr) v unite#smart_map('v', unite#do_action('vsplit'))
-        Map ni (buffer expr) f unite#smart_map('f', unite#do_action('vimfiler'))
+        Map n (buffer expr) s unite#smart_map('s', unite#do_action('split'))
+        Map n (buffer expr) v unite#smart_map('v', unite#do_action('vsplit'))
+        Map n (buffer expr) f unite#smart_map('f', unite#do_action('vimfiler'))
 
         " For 'buffer' or 'buffer_tab'
         Map n (buffer expr) d unite#smart_map('d', unite#do_action('delete'))
