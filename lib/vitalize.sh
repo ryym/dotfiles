@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Define some generic utility functions and commands.
-# Note that this script add '$DOTPATH/bin' to the '$PATH'
+# Note that this script adds '$DOTPATH/bin' to the '$PATH'
 # automatically if it isn't in the '$PATH'.
 
 if ! $(which __dot_bin_enabled) >/dev/null 2>&1; then
@@ -25,7 +25,7 @@ deffunc() {
     }"
 }
 
-# Define functions that formats and colorizes a text. 
+# Define functions that format and colorize a text.
 # Example:
 #   echo $(c_red $(c_bold ERROR:)) $(c_line An error is occured!)
 #
