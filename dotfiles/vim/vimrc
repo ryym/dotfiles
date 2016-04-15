@@ -562,6 +562,9 @@ Map n <Leader><Space> a<Space><Esc>
 " Remove trailing whitespaces.
 Map n (silent) <Leader>c ::Rtw
 
+" In US keyboard, typing ':' is so hard..
+Map nv ; :
+Map nv : ;
 
 
 " Fix the direction of the ';', ',', 'n', 'N' {{{2
@@ -580,10 +583,10 @@ Map nvo (expr) N <SID>search_pattern_to_fixed_direction('N', 'n')
 
 function! s:map_repeat_keys_and_move_to_occurrence(direct_to_right, command)
   if a:direct_to_right
-    Map nvo ; ;
+    Map nvo : ;
     Map nvo , ,
   else
-    Map nvo ; ,
+    Map nvo : ,
     Map nvo , ;
   endif
   return a:command
@@ -1243,7 +1246,7 @@ function! s:configure_bundles(neobundle_wrapper)
     Remap nvo mT <Plug>(easymotion-Tl2)
     Remap nvo m/ <Plug>(easymotion-fn)
     Remap nvo m? <Plug>(easymotion-Fn)
-    Remap nvo m; <Plug>(easymotion-next)
+    Remap nvo m: <Plug>(easymotion-next)
     Remap nvo m, <Plug>(easymotion-prev)
 
     function! nbw.hooks.on_source(_)
