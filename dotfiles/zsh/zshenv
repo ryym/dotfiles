@@ -10,7 +10,7 @@ fi
 # Ensure Zsh doesn't load global rc files like '/etc/zprofile'.
 setopt no_global_rcs
 
-export PATH="/sbin:$PATH"
+export PATH="/usr/sbin:/sbin:$PATH"
 
 # Disallow duplicate paths in the '$PATH'.
 typeset -U PATH
