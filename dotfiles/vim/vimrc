@@ -1278,6 +1278,11 @@ function! s:configure_bundles(neobundle_wrapper)
     Remap nvo g* <Plug>(incsearch-nohl-g*)
     Remap nvo g# <Plug>(incsearch-nohl-g#)
 
+    " Allow to use default search function by prefixing <Leader> key
+    " mainly to search Japanese on MacVim
+    " (https://github.com/haya14busa/incsearch.vim/issues/52).
+    Map nvo <Leader>/ /
+
     function! nbw.hooks.on_source(_)
       let g:incsearch#auto_nohlsearch = 1
       let g:incsearch#consistent_n_direction = 1
