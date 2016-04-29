@@ -930,6 +930,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'tpope/vim-rails'
 
+  NeoBundlewLazy 'leafgarland/typescript-vim', {
+    \ 'filetypes': ['typescript']
+    \ }
+
 
   " UI {{{3
 
