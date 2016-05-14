@@ -981,7 +981,7 @@ function! s:configure_bundles(neobundle_wrapper)
       \   ['u', 'Unite'                    , '<Space>'],
       \   ['b', 'Unite buffer_tab'         , '<CR>'],
       \   ['f', 'Unite file'               , '<CR>'],
-      \   ['r', 'Unite file_rec'           , '<CR>'],
+      \   ['r', 'Unite file_rec/async'     , '<CR>'],
       \   ['o', 'Unite'                    , ' output:'],
       \   ['c', 'UniteWithCurrentDir file' , '<CR>'],
       \   ['C', 'UniteWithCurrentDir'      , '<Space>'],
