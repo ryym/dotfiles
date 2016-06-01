@@ -2,11 +2,6 @@
 export DOTPATH=$HOME/.dotfiles
 source "$DOTPATH/lib/vitalize.sh"
 
-# Upgrade dotfiles at a first log-in.
-if [ -z "$TMUX" ]; then
-    upgrade_dotfiles
-fi
-
 # Ensure Zsh doesn't load global rc files like '/etc/zprofile'.
 setopt no_global_rcs
 
