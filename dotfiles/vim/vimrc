@@ -283,6 +283,8 @@ command! Rtp echo substitute(&runtimepath, ',', '\n', 'g')
 " Remove trailing whitespaces without cursor moving.
 command! Rtw :%s/\v\s+$// | let v:hlsearch = 0 | normal! ``
 
+" Print syntax names at the current cursor position.
+command! SyntaxNames :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
 
 " Basic options {{{1
