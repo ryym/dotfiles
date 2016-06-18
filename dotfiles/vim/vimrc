@@ -919,6 +919,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'mxw/vim-jsx'
 
+  NeoBundlew 'ryym/vim-riot'
+
   NeoBundlew 'elixir-lang/vim-elixir'
 
   NeoBundlewLazy 'digitaltoad/vim-pug', {
