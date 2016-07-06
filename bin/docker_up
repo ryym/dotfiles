@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Start docker-machine VM and setup environment variables
+# for the docker command.
+
+machine_name=${1:-default}
+
+if has docker-machine; then
+    if [ $(docker-machine status $machine_name) == "Running" ]; then
+        echo "docker-machine $machine_name is already running"
+    else
+        echo "Starting Docker VM ..."
+        docker-machine start $machine_name
+    fi
+    eval $(docker-machine env $machine_name)
+else
+    echo "docker-machine is not available" 1>&2
+    exit 1
+fi
