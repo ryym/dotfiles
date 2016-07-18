@@ -924,6 +924,10 @@ function! s:declare_bundles()
 
   NeoBundlew 'elixir-lang/vim-elixir'
 
+  NeoBundlew 'rust-lang/rust.vim'
+
+  NeoBundlew 'cespare/vim-toml'
+
   NeoBundlewLazy 'digitaltoad/vim-pug', {
     \ 'filetypes': ['pug'],
     \ }
