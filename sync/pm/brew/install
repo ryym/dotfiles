@@ -11,14 +11,14 @@ if ! has brew; then
     exit 1
 else
     log_info 'Updating Homebrew...'
-    brew update | log
+    brew update
 
     if [ ! $(brew tap | grep 'homebrew/bundle') ]; then
-        brew tap homebrew/bundle | log
+        brew tap homebrew/bundle
     fi
 
     log_info 'Installing libraries by Homebrew-bundle...'
-    brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile" | log
+    brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile"
 fi
 
 log_finish 'Homebrew bundle'

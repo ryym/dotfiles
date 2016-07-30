@@ -9,9 +9,6 @@ trap 'echo SYNC STOPPED: $0:$LINENO' ERR INT
 
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
-SYNCLOG="$DOTPATH/sync/.log/log"
-> "$SYNCLOG"
-
 source "$DOTPATH/sync/lib/vitalize.sh"
 
 osname=$(detect_osname)

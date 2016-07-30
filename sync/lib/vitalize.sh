@@ -38,17 +38,8 @@ is_debian() {
     return $(test -f /etc/debian_version)
 }
 
-# Output and redirect stdout to the log file.
-log() {
-    if [ -n "${SYNCLOG:-}" ]; then
-        cat - | tee -a "$SYNCLOG"
-    else
-        cat -
-    fi
-}
-
 log_info() {
-    echo [$(c_grey $(date '+%T'))] "$@" | log
+    echo [$(c_grey $(date '+%T'))] "$@"
 }
 
 log_success() {

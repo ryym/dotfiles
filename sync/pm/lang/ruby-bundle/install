@@ -4,7 +4,7 @@ log_start 'Rubygems'
 
 install() {
     log_info "Installing gem $(c_magenta $1)..."
-    gem install $1 | log
+    gem install $1
 }
 
 if has gem; then
