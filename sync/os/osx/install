@@ -19,7 +19,7 @@ load env/install
 load pm/lang/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then
-    ch-sh zsh
+    run ch-sh zsh
 fi
 
 log_finish "Install for OS X"

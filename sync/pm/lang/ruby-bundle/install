@@ -4,10 +4,10 @@ log_start 'Rubygems'
 
 install() {
     log_info "Installing gem $(c_magenta $1)..."
-    gem install $1
+    run gem install $1
 }
 
-if has gem; then
+if is_dryrun || has gem; then
     install bundle
     install pry
     install byebug

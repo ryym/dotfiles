@@ -22,6 +22,23 @@ load() {
     source "$DOTPATH/sync/$1"
 }
 
+# If $SYNC_DRYRUN has a non-empty value,
+# just echo the given command without executing it.
+# Note that you need to escape characters in some cases.
+# For example, 'run eval $($ANYENV init -)' executes
+# '$ANYENV init -' first and passes its output to the 'run' function.
+# So if the $ANYENV path doesn't exist it causes an error.
+run() {
+    log_info $(c_green $(c_bold RUN:)) "$*"
+    if ! is_dryrun; then
+        eval "$@"
+    fi
+}
+
+is_dryrun() {
+    return $(test ! -z ${SYNC_DRYRUN:-''})
+}
+
 detect_osname() {
     if is_osx; then
         echo 'osx'

@@ -8,7 +8,7 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 if has ruby; then
     log_info "Installing Homebrew..."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    run ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
     log_error 'Ruby is required to install Homebrew'
     exit 1

@@ -4,7 +4,7 @@ log_start 'APT get'
 
 install() {
     log_info "Installing $(c_magenta $1)..."
-    sudo apt-get install -y "$@"
+    run sudo apt-get install -y "$@"
 }
 
 if ! has 'apt-get'; then
@@ -12,7 +12,7 @@ if ! has 'apt-get'; then
     exit 1
 else
     log_info "Updating APT..."
-    sudo apt-get update
+    run sudo apt-get update
 
     install git
     install tmux

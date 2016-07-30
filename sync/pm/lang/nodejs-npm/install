@@ -4,10 +4,10 @@ log_start 'npm install (global)'
 
 install() {
     log_info "Installing node package $(c_magenta $1) ..."
-    npm install -g "$1"
+    run npm install -g "$1"
 }
 
-if has npm; then
+if is_dryrun || has npm; then
    install grunt-cli
 else
     log_error 'npm is not available'
