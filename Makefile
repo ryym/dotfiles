@@ -13,6 +13,17 @@ install:
 link:
 	@./sync/link
 
+.PHONY: dryrun
+dryrun: dryrun-install dryrun-link
+
+.PHONY: dryrun-install
+dryrun-install:
+	@SYNC_DRYRUN=1 ./sync/install
+
+.PHONY: dryrun-link
+dryrun-link:
+	@./sync/link -t
+
 .PHONY: uninstall
 uninstall:
 	@./sync/uninstall
