@@ -14,7 +14,7 @@ source "$DOTPATH/sync/env/helper.sh"
 log_start 'Anyenv'
 
 if [ -d "$ANYENV_PATH" ]; then
-    run git --work-tree="$ANYENV_PATH" pull
+    run git --git-dir="$ANYENV_PATH/.git" --work-tree="$ANYENV_PATH" pull
 else
     run git clone https://github.com/riywo/anyenv "$ANYENV_PATH"
     run eval "\"\$($ANYENV init -)\""
