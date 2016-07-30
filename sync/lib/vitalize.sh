@@ -29,7 +29,15 @@ load() {
 # '$ANYENV init -' first and passes its output to the 'run' function.
 # So if the $ANYENV path doesn't exist it causes an error.
 run() {
-    log_info $(c_green $(c_bold RUN:)) "$*"
+    local commands="$@"
+    local cmd=${commands%% *}
+    local args=${commands#* }
+
+    log_info \
+        $(c_green $(c_bold RUN:)) \
+        $(c_magenta $cmd) \
+        $args
+
     if ! is_dryrun; then
         eval "$@"
     fi
