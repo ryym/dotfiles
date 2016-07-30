@@ -3,7 +3,6 @@
 log_start 'Go get'
 
 get() {
-    log_info "Getting $(c_magenta $1) ..."
     run go get "$1"
 }
 

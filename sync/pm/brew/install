@@ -10,14 +10,12 @@ if ! has brew; then
     log_error 'Homebrew is not installed'
     exit 1
 else
-    log_info 'Updating Homebrew...'
     run brew update
 
     if [ ! $(brew tap | grep 'homebrew/bundle') ]; then
         run brew tap homebrew/bundle
     fi
 
-    log_info 'Installing libraries by Homebrew-bundle...'
     run brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile"
 fi
 

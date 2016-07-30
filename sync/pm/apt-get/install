@@ -3,7 +3,6 @@
 log_start 'APT get'
 
 install() {
-    log_info "Installing $(c_magenta $1)..."
     run sudo apt-get install -y "$@"
 }
 
@@ -11,7 +10,6 @@ if ! has 'apt-get'; then
     log_error 'APT is not installed'
     exit 1
 else
-    log_info "Updating APT..."
     run sudo apt-get update
 
     install git

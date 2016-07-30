@@ -31,7 +31,6 @@ install_version() {
     local env=$1
     local version=$2
     if ! has_version $env $version; then
-        log_info "$env: Installing $(c_magenta $version)..."
         run $env install $version
     fi
 }
@@ -39,7 +38,6 @@ install_version() {
 set_global_version() {
     local env=$1
     local version=$2
-    log_info "$env: Set global version to $(c_magenta $version)"
     run $env global $version
     run $env rehash
 }

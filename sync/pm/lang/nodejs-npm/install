@@ -3,7 +3,6 @@
 log_start 'npm install (global)'
 
 install() {
-    log_info "Installing node package $(c_magenta $1) ..."
     run npm install -g "$1"
 }
 
