@@ -928,6 +928,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'cespare/vim-toml'
 
+  NeoBundlew 'lambdatoast/elm.vim'
+
   NeoBundlewLazy 'digitaltoad/vim-pug', {
     \ 'filetypes': ['pug'],
     \ }
