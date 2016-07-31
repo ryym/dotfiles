@@ -11,7 +11,7 @@ install:
 
 .PHONY: link
 link:
-	@./sync/link
+	@./link/link
 
 .PHONY: dryrun
 dryrun: dryrun-install dryrun-link
@@ -22,7 +22,7 @@ dryrun-install:
 
 .PHONY: dryrun-link
 dryrun-link:
-	@./sync/link -t
+	@./link/link -t
 
 .PHONY: uninstall
 uninstall:
@@ -30,7 +30,7 @@ uninstall:
 
 .PHONY: unlink
 unlink:
-	@./sync/unlink
+	@./link/unlink
 
 .PHONY: bin
 bin:
