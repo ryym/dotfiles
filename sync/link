@@ -18,14 +18,14 @@ done
 
 # The files to be linked.
 LINKS=(
-    '.pryrc:ruby/pryrc'
-    '.zshrc:zsh/zshrc'
-    '.zshenv:zsh/zshenv'
-    '.gitconfig:git/gitconfig'
-    '.vim:vim'
-    '.vimperatorrc:vimperatorrc'
-    '.tmux.conf:tmux.conf'
-    '.ctags:ctags'
+    'ruby/pryrc:.pryrc'
+    'zsh/zshrc:.zshrc'
+    'zsh/zshenv:.zshenv'
+    'git/gitconfig:.gitconfig'
+    'vim:.vim'
+    'vimperatorrc:.vimperatorrc'
+    'tmux.conf:.tmux.conf'
+    'ctags:.ctags'
 )
 
 # Check if the dotfiles can be linked.
@@ -48,9 +48,9 @@ link_dotfile() {
 }
 
 for link in "${LINKS[@]}"; do
-    dotfile="${link%%:*}"
+    dotfile="${link#*:}"
     destpath="$HOME/$dotfile"
-    srcpath="$DOTPATH/dotfiles/${link#*:}"
+    srcpath="$DOTPATH/dotfiles/${link%%:*}"
 
     if [ ${DRY_RUN:-0} -eq 0 ]; then
         validate && link_dotfile
