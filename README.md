@@ -54,7 +54,7 @@ make install
 | install | Install development tools. |
 | link | Create symbolic links of the configuration files in your directory. |
 | uninstall | Not implemented yet. |
-| unlink | Not implemented yet. |
+| unlink | Remove symbolic links created by the link task. |
 
 ## Inspiration
 

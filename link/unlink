@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 
-echo 'Not implemented yet.'
-exit 1
+set -eu
+trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
+
+DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
+
+source "$DOTPATH/link/link_table"
+
+validate() {
+    if [ -e "$destpath" ] && [ ! -L "$destpath" ]; then
+        echo "$destpath exists but is not a symlnk." >&2
+        exit 1
+    fi
+}
+
+unlink_dotfile() {
+    if [ -e "$destpath" ]; then
+        rm -f "$destpath"
+        echo "-- $destpath is removed. --"
+    fi
+}
+
+for link in "${LINKS[@]}"; do
+    dotfile="${link#*:}"
+    destpath="$HOME/$dotfile"
+
+    validate && unlink_dotfile
+done
 

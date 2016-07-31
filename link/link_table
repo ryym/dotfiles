@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# The files to be linked.
+LINKS=(
+    'ruby/pryrc:.pryrc'
+    'zsh/zshrc:.zshrc'
+    'zsh/zshenv:.zshenv'
+    'git/gitconfig:.gitconfig'
+    'vim:.vim'
+    'vimperatorrc:.vimperatorrc'
+    'tmux.conf:.tmux.conf'
+    'ctags:.ctags'
+)

@@ -6,7 +6,8 @@ set -eu
 trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
 
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
-source "$DOTPATH/sync/lib/vitalize.sh"
+
+source "$DOTPATH/link/link_table"
 
 while getopts t opt
 do
@@ -15,18 +16,6 @@ do
             ;;
     esac
 done
-
-# The files to be linked.
-LINKS=(
-    'ruby/pryrc:.pryrc'
-    'zsh/zshrc:.zshrc'
-    'zsh/zshenv:.zshenv'
-    'git/gitconfig:.gitconfig'
-    'vim:.vim'
-    'vimperatorrc:.vimperatorrc'
-    'tmux.conf:.tmux.conf'
-    'ctags:.ctags'
-)
 
 # Check if the dotfiles can be linked.
 validate() {
