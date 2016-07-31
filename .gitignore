@@ -1,3 +1,6 @@
 dotfiles/vim/bundle/*
 dotfiles/vim/local/*
 !.gitkeep
+
+dotfiles/tmux/plugins/*
+!dotfiles/tmux/plugins/tpm

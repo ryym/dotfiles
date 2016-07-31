@@ -9,5 +9,6 @@ LINKS=(
     'vim:.vim'
     'vimperatorrc:.vimperatorrc'
     'tmux.conf:.tmux.conf'
+    'tmux:.tmux'
     'ctags:.ctags'
 )
