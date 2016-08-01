@@ -16,6 +16,8 @@ if [ -n "$DOTPATH" ] && has git; then
             upstream=$(git rev-parse @{upstream})
             git rebase $upstream
             [ $? -eq 0 ] && git log -10 --oneline
+
+            git submodule update --init
         fi
     fi
 fi
