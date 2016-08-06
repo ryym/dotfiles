@@ -52,6 +52,8 @@ detect_osname() {
         echo 'osx'
     elif is_debian; then
         echo 'debian'
+    elif is_centos; then
+        echo 'centos'
     fi
 }
 
@@ -61,6 +63,10 @@ is_osx() {
 
 is_debian() {
     return $(test -f /etc/debian_version)
+}
+
+is_centos() {
+    return $(test -f /etc/centos-release)
 }
 
 log_info() {

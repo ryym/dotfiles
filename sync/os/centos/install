@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Install libraries for CentOS.
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_finish "Install for CentOS"
+
+load pm/yum/install
+
+load env/install
+
+load pm/lang/install
+
+if [ ${SHELL##*/} != 'zsh' ]; then
+    run ch-sh zsh
+fi
+
+log_finish "Install for Debian"

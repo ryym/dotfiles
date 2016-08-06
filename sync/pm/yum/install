@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'Yum install'
+
+install() {
+    run sudo yum install -y "$@"
+}
+
+if ! has 'yum'; then
+    log_error 'Yum is not installed'
+    exit 1
+else
+    run sudo yum update -y
+
+    install git
+    install tmux
+    install zsh
+
+    install openssl
+    install openssl-devel
+    install readline
+    install readline-devel
+    install zlib
+    install zlib-devel
+fi
+
+log_finish 'Yum install'

@@ -12,6 +12,7 @@ This repository manages:
 
 * Mac OSX
 * Ubuntu / Debian
+* CentOS
 
 ## Prerequisites
 
@@ -20,11 +21,13 @@ This repository manages:
 * Package manager - to install basic libraries for your OS. You can use:
     * [Homebrew][Homebrew] (Mac OSX)
     * [APT][APT] (Ubuntu, Debian)
+    * [Yum][Yum] (CentOS)
 
 [Git]: https://git-scm.com/
 [Bash]: https://www.gnu.org/software/bash/
 [Homebrew]: http://brew.sh/
 [APT]: https://en.wikipedia.org/wiki/Advanced_Packaging_Tool
+[Yum]: http://yum.baseurl.org/
 
 ## Installation
 
