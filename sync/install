@@ -12,8 +12,9 @@ DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 source "$DOTPATH/sync/lib/vitalize.sh"
 
 osname=$(detect_osname)
+installer="$DOTPATH/sync/os/$osname/install"
 
-if [ -z $osname ]; then
+if [ -z $osname ] || [ ! -f $installer ]; then
     log_error 'Sorry, Your OS is not supported'
     exit 1
 else
