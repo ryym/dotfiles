@@ -6,10 +6,7 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 log_start 'Homebrew bundle'
 
-if ! has brew; then
-    log_error 'Homebrew is not installed'
-    exit 1
-else
+if is_dryrun || has brew; then
     run brew update
 
     if [ ! $(brew tap | grep 'homebrew/bundle') ]; then
@@ -17,6 +14,9 @@ else
     fi
 
     run brew bundle --file="$DOTPATH/sync/pm/brew/Brewfile"
+else
+    log_error 'Homebrew is not installed'
+    exit 1
 fi
 
 log_finish 'Homebrew bundle'

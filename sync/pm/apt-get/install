@@ -10,10 +10,7 @@ install() {
     run sudo apt-get install -y "$@"
 }
 
-if ! has 'apt-get'; then
-    log_error 'APT is not installed'
-    exit 1
-else
+if is_dryrun || has apt-get; then
     run sudo apt-get update
 
     install git
@@ -24,6 +21,9 @@ else
     install libssl-dev
     install libreadline-dev
     install zlib1g-dev
+else
+    log_error 'APT is not installed'
+    exit 1
 fi
 
 log_finish 'APT get'
