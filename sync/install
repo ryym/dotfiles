@@ -11,7 +11,7 @@ DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
 source "$DOTPATH/sync/lib/vitalize.sh"
 
-osname=$(detect_osname)
+osname=${OS:-$(detect_osname)}
 installer="$DOTPATH/sync/os/$osname/install"
 
 if [ -z $osname ] || [ ! -f $installer ]; then
@@ -19,6 +19,10 @@ if [ -z $osname ] || [ ! -f $installer ]; then
     exit 1
 else
     echo "$(c_blue "$DOTFILES_LOGO")"
+
+    is_dryrun && log_warn "
+        ====== DRY RUN ($osname) ======
+    "
 
     log_start "Install"
     log_info "OS: $(c_magenta "$osname")"
