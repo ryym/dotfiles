@@ -1,5 +1,9 @@
 # Dotfiles
 
+[![Travis][travis-badge]](https://travis-ci.org/ryym/dotfiles)
+
+[travis-badge]: https://travis-ci.org/ryym/dotfiles.svg
+
 This repository manages:
 
 * my configuration files for some basic development tools I usually use ([dotfiles]).

@@ -35,3 +35,7 @@ unlink:
 .PHONY: bin
 bin:
 	@chmod 755 bin/*
+
+.PHONY: test
+test:
+	@./test.sh
