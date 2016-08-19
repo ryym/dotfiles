@@ -452,6 +452,7 @@ augroup vimrc
   autocmd FileType xml        MediumIndent
   autocmd FileType sh         MediumIndent
   autocmd FileType markdown   MediumIndent
+  autocmd FileType go         IndentBy 4 0
   autocmd FileType text       IndentBy 4 0
   autocmd FileType help       IndentBy 8 0
 augroup END
