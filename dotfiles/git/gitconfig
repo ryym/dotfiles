@@ -43,6 +43,7 @@
     chab   = cherry-pick --abort
     f      = fetch
     fp     = fetch --prune
+    pp     = pull --prune
     rb     = rebase
     rbi    = rebase -i
     rcon   = rebase --continue
