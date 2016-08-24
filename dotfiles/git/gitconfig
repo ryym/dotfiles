@@ -24,6 +24,7 @@
     bd     = branch -d
     bmd    = branch --merged
     bnmd   = branch --no-merged
+    bp     = !git branch -d `git branch --merged | grep -v '*'` # prune branches
     a      = add
     aa     = add --all
     ap     = add -p
