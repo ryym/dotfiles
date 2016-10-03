@@ -34,8 +34,8 @@
     cmam   = commit -am
     cmf    = commit --amend -C HEAD # Fixup changes to HEAD commit
     cmaf   = commit -a --amend -C HEAD
-    cmw    = commit -m WIP
-    cmaw   = commit -am WIP
+    cmw    = commit -m 'WIP [ci skip]'
+    cmaw   = commit -am 'WIP [ci skip]'
     amend  = commit --amend
     co     = checkout
     cob    = checkout -b
