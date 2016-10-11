@@ -2,6 +2,7 @@
 
 # The files to be linked.
 LINKS=(
+    'ruby/gemrc:.gemrc'
     'ruby/pryrc:.pryrc'
     'zsh/zshrc:.zshrc'
     'zsh/zshenv:.zshenv'
