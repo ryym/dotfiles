@@ -12,4 +12,5 @@ LINKS=(
     'tmux/tmux.conf:.tmux.conf'
     'tmux:.tmux'
     'ctags:.ctags'
+    'agignore:.agignore'
 )
