@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Update ruby-build plugin to enable to install newer Ruby versions.
+
+if [ -n "$ANYENV_PATH" ] && has git; then
+    if has rbenv; then
+        git -C "$ANYENV_PATH/envs/rbenv/plugins/ruby-build" pull --prune
+    else
+        echo "rbenv is not available"
+        exit 1
+    fi
+fi

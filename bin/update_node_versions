@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Update node-build plugin to enable to install newer Node.js versions.
+
+if [ -n "$ANYENV_PATH" ] && has git; then
+    if has nodenv; then
+        git -C "$ANYENV_PATH/envs/nodenv/plugins/node-build" pull --prune
+    else
+        echo "nodenv is not available"
+        exit 1
+    fi
+fi
