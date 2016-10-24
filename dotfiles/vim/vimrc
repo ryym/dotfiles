@@ -794,6 +794,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'osyo-manga/vim-over'
 
+  NeoBundle 'editorconfig/editorconfig-vim'
+
 
   " Basic Editing {{{3
 
