@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# A simple test script. This just check if:
+# A simple test script. This just checks if:
 #   - all the dotfiles to be linked exist
 #   - all installation bash scripts are not broken
 # So the test success doesn't mean the installations work correctly
