@@ -401,6 +401,17 @@ function! s:delegate_filetypes(filetypes)
   endfor
 endfunction
 
+function! s:reflesh_commentstring_in_html()
+  let syntaxes = execute('SyntaxNames')
+  if syntaxes =~ 'javaScript'
+    setlocal commentstring=//%s
+  elseif syntaxes =~ 'css'
+    setlocal commentstring=/*%s*/
+  else
+    setlocal commentstring=<!--%s-->
+  endif
+endfunction
+
 " }}}
 
 augroup vimrc
@@ -409,6 +420,9 @@ augroup vimrc
 
   " Show relative line numbers in help files.
   autocmd FileType help setlocal relativenumber
+
+  " Set commentstring correctly for JS and CSS in HTML and Vue files.
+  autocmd CursorMoved *.html,*.vue call <SID>reflesh_commentstring_in_html()
 
   " Configure filetypes which have to be assigned manually.
   call s:delegate_filetypes({
