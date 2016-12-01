@@ -28,6 +28,7 @@
     a      = add
     aa     = add --all
     ap     = add -p
+    au     = add -u
     cm     = commit
     cmm    = commit -m
     cma    = commit -a
