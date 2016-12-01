@@ -95,3 +95,6 @@ bindkey '^]' peco-src
 
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# added by travis gem
+[ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
