@@ -3,7 +3,6 @@
 [core]
     editor = vim
     quotepath = false
-    editor = vim
 [rebase]
     autosquash = true
 [merge]
