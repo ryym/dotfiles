@@ -274,6 +274,15 @@ function! s:toggle_win_diff(is_opened)
   endif
 endfunction
 
+" Print current line syntaxes {{{2
+
+" Print syntax names at the current cursor position.
+command! SyntaxNames :echo <SID>get_current_syntax_names()
+
+function! s:get_current_syntax_names()
+  return map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction
+
 
 " Others {{{2
 
@@ -283,8 +292,6 @@ command! Rtp echo substitute(&runtimepath, ',', '\n', 'g')
 " Remove trailing whitespaces without cursor moving.
 command! Rtw :%s/\v\s+$// | let v:hlsearch = 0 | normal! ``
 
-" Print syntax names at the current cursor position.
-command! SyntaxNames :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
 
 " Basic options {{{1
@@ -402,13 +409,14 @@ function! s:delegate_filetypes(filetypes)
 endfunction
 
 function! s:reflesh_commentstring_in_html()
-  let syntaxes = execute('SyntaxNames')
-  if syntaxes =~ 'javaScript'
+  let syntaxes = join(s:get_current_syntax_names(), ' ')
+  if syntaxes =~ 'html'
+    setlocal commentstring=<!--%s-->
+  elseif syntaxes =~ 'javaScript'
     setlocal commentstring=//%s
   elseif syntaxes =~ 'css'
     setlocal commentstring=/*%s*/
   else
-    setlocal commentstring=<!--%s-->
   endif
 endfunction
 
