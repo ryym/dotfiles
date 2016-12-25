@@ -44,6 +44,7 @@
     f      = fetch
     fp     = fetch --prune
     pp     = pull --prune
+    puo    = push -u origin
     rb     = rebase
     rbi    = rebase -i
     rcon   = rebase --continue
