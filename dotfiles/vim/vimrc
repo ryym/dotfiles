@@ -873,6 +873,8 @@ function! s:declare_bundles()
 
   NeoBundlew 'rbgrouleff/bclose.vim'
 
+  NeoBundlew 'yuttie/comfortable-motion.vim'
+
   NeoBundlew 'thinca/vim-localrc'
 
   NeoBundlewLazy 'thinca/vim-quickrun', {
@@ -1338,6 +1340,20 @@ function! s:configure_bundles(neobundle_wrapper)
   if nbw.tap('bclose')
     Map n \[buffer]d ::Bclose
     Map n \[buffer]D ::Bclose!
+  endif
+
+
+  " comfortable-motion {{{3
+  if nbw.tap('comfortable-motion')
+    nnoremap <silent> <C-d> :call comfortable_motion#flick(170)<CR>
+    nnoremap <silent> <C-u> :call comfortable_motion#flick(-170)<CR>
+    nnoremap <silent> <C-f> :call comfortable_motion#flick(200)<CR>
+    nnoremap <silent> <C-b> :call comfortable_motion#flick(-200)<CR>
+
+    function nbw.hooks.on_source(_)
+      let g:comfortable_motion_no_default_key_mappings = 1
+      let g:comfortable_motion_friction = 800
+    endfunction
   endif
 
 
