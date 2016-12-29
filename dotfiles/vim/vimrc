@@ -831,9 +831,7 @@ function! s:declare_bundles()
 
   NeoBundlew 'LeafCage/yankround.vim'
 
-  NeoBundlew 'ryym/vim-unimpaired', {
-    \ 'rev': 'ryym'
-    \ }
+  NeoBundlew 'ryym/vim-unimpaired'
 
 
   " Text object {{{3
