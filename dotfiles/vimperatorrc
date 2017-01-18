@@ -24,6 +24,8 @@ ignorekeys add docs.google.com
 
 set hintchars=ifjklastdhgurwcyz
 
+nnoremap ; :
+
 nmap t <Nop>
 noremap tl gt
 noremap th gT
