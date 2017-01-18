@@ -38,6 +38,8 @@ nnoremap <C-j> 8j
 nnoremap <C-k> 8k
 nnoremap l 3l
 nnoremap h 3h
+nnoremap <M-S-h> :tabmove -1<CR>
+nnoremap <M-S-l> :tabmove +1<CR>
 
 nnoremap <C-h> :help<Space>
 nnoremap coh :set nohlsearch<CR>
