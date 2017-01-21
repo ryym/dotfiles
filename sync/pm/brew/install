@@ -9,7 +9,7 @@ log_start 'Homebrew bundle'
 if is_dryrun || has brew; then
     run brew update
 
-    if [ ! $(brew tap | grep 'homebrew/bundle') ]; then
+    if ! is_dryrun && [ ! $(brew tap | grep 'homebrew/bundle') ]; then
         run brew tap homebrew/bundle
     fi
 
