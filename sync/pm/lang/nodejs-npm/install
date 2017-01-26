@@ -8,6 +8,7 @@ install() {
 
 if is_dryrun || has npm; then
    install grunt-cli
+   install typescript
 else
     log_error 'npm is not available'
     exit 1
