@@ -9,6 +9,9 @@ map th gT
 
 map dd dc
 
+unmap R
+map R <C-r>
+
 map j 3j
 map k 3k
 map <C-j> 8j
