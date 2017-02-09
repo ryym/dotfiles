@@ -9,7 +9,7 @@ LINKS=(
     'git/gitconfig:.gitconfig'
     'vim:.vim'
     'vimperatorrc:.vimperatorrc'
-    'vromerc:.vromerc'
+    'cvimrc:.cvimrc'
     'tmux/tmux.conf:.tmux.conf'
     'tmux:.tmux'
     'ctags:.ctags'
