@@ -74,6 +74,14 @@ alias gvi='gvim'
 alias dk='docker'
 alias dkc='docker-compose'
 
+# A work around for tmux clipboard issue on macOS Sierra.
+# (http://stackoverflow.com/questions/39645253/clipboard-failure-in-tmux-vim-after-upgrading-to-macos-sierra)
+# Setting a default-command in .tmux.conf doesn't work for me..
+if [ -n "$TMUX" ]; then
+    alias vi='reattach-to-user-namespace vim'
+    alias gvi='reattach-to-user-namespace gvim'
+fi
+
 ## Peco
 
 # ghq
