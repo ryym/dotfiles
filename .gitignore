@@ -1,4 +1,4 @@
-dotfiles/vim/bundle/*
+dotfiles/vim/.dein
 dotfiles/vim/local/*
 !.gitkeep
 

@@ -1,0 +1,297 @@
+# TOML configuration for dein.vim
+
+# TODO: Remove unused plugins.
+
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = 'call my#conf#vimproc#hook_post_update()'
+
+# Unite
+
+[[plugins]]
+repo = 'Shougo/tabpagebuffer.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+hook_source = 'call my#conf#unite#hook_source()'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+depends = ['unite.vim']
+hook_source = 'call my#conf#unite#neomru_hook_source()'
+
+[[plugins]]
+repo = 'haya14busa/unite-ghq'
+depends = ['unite.vim']
+hook_source = 'call my#conf#unite#ghq_hook_source()'
+
+# Vimfiler
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = ['unite.vim']
+hook_source = 'call my#conf#vimfiler#hook_source()'
+
+[[plugins]]
+repo = 'Shougo/vimshell.vim'
+depends = ['vimproc.vim']
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+
+[[plugins]]
+repo = 'kana/vim-tabpagecd'
+
+[[plugins]]
+repo = 'kana/vim-submode'
+hook_source = 'call my#conf#submode#hook_source()'
+hook_post_source = 'call my#conf#submode#hook_post_source()'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+hook_source = 'Remap n <Space>o ::OverCommandLine'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+# Editing
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_source = 'Remap nv ga <Plug>(EasyAlign)'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+hook_post_source = 'call my#conf#editing#lexima_hook_post_source()'
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+hook_source = 'call my#conf#editing#yankround_hook_source()'
+
+# XXX: Sometimes post_source is called without sourcing the plugin.
+[[plugins]]
+repo = 'ryym/vim-unimpaired'
+hook_source = 'call my#conf#editing#unimpaired_hook_source()'
+hook_post_source = 'call my#conf#editing#unimpaired_hook_post_source()'
+
+# Text Object
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-ruby'
+on_ft = ['ruby']
+
+# Operator
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+hook_source = 'Remap nvo mr <Plug>(operator-replace)'
+
+# Motion
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'nelstrom/vim-visual-star-search'
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+
+[[plugins]]
+repo = 'yuttie/comfortable-motion.vim'
+hook_source = 'call my#conf#motion#comfortable_motion_hook_source()'
+
+# Utility
+
+[[plugins]]
+repo = 'rbgrouleff/bclose.vim'
+hook_source = '''
+  Map n \[buffer]d ::Bclose
+  Map n \[buffer]D ::Bclose!
+'''
+
+[[plugins]]
+repo = 'thinca/vim-localrc'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+on_cmd = 'QuickRun'
+
+[[plugins]]
+lazy = 1
+repo = 'kannokanno/previm'
+depends = ['open_browser.vim']
+on_ft = ['markdown']
+
+[[plugins]]
+lazy = 1
+repo = 'tyru/restart.vim'
+on_cmd = 'Restart'
+
+[[plugins]]
+lazy = 1
+repo = 'tyru/open-browser.vim'
+on_cmd = '<Plug>(openbrowser-'
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+
+[[plugins]]
+lazy = 1
+repo = 'ryym/macspeech.vim'
+on_cmd = ['MacSpeech', 'MacSpeechSelected']
+hook_source = 'let g:dein#plugin.disabled = !g:is_mac'
+
+[[plugins]]
+repo = 'lambdalisue/vim-unified-diff'
+hook_source = 'call my#conf#util#unified_diff_hook_source()'
+
+[[plugins]]
+lazy = 1
+repo = 'tpope/vim-fugitive'
+on_cmd = ['Gstatus', 'Git', 'Gdiff', 'Gblame']
+hook_post_source = 'my#conf#util#fugitive_hook_post_source()'
+
+[[plugins]]
+lazy = 1
+repo = 'cohama/agit.vim'
+on_cmd = ['Agit']
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+
+[[plugins]]
+repo = 'thinca/vim-themis'
+on_ft = ['vimspec']
+
+[[plugins]]
+repo = 'kana/vim-vspec'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+# Filetype
+
+[[plugins]]
+lazy = 1
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'xml', 'eruby', 'jsp', 'javascript']
+
+[[plugins]]
+repo = 'PProvost/vim-ps1'
+on_ft = ['ps1']
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+on_ft = ['cofee']
+
+[[plugins]]
+repo = 'bruno-/vim-man'
+on_map = ['<Plug>(Man)', '<Plug>(Sman)', '<Plug>(Vman)']
+on_cmd = ['Man', 'Sman', 'Vman']
+hook_source = '''
+  let g:dein#plugin.disabled = g.is_windows
+  MapNamedKey ma man
+  Map n \[man]m :s:Vman
+  Remap n \[man]w <Plug>(Vman)
+'''
+
+[[plugins]]
+repo = 'derekwyatt/vim-scala'
+on_ft = ['scala']
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'othree/html5.vim'
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+
+[[plugins]]
+repo = 'mxw/vim-jsx'
+
+[[plugins]]
+repo = 'ryym/vim-riot'
+
+[[plugins]]
+repo = 'elixir-lang/vim-elixir'
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'lambdatoast/elm.vim'
+
+[[plugins]]
+repo = 'digitaltoad/vim-pug'
+on_ft = ['pug']
+
+[[plugins]]
+repo = 'slim-template/vim-slim'
+on_ft = ['slim']
+
+[[plugins]]
+repo = 'posva/vim-vue'
+on_ft = ['vue']
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+
+# UI
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_source = '''
+  if ! has('vim_starting')
+    call lightline#update() " Override default statusline when vimrc is reloaded.
+  endif
+'''
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_source = 'call my#conf#ui#indent_guides_hook_source()'
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'LeafCage/foldCC.vim'
+hook_source = '''
+  let g:foldCCtext_head = "printf('%s %d: ', repeat(v:folddashes, v:foldlevel), v:foldlevel)"
+  let g:foldCCtext_tail = "printf('%d lines ', v:foldend - v:foldstart + 1)"
+  set foldtext =FoldCCtext()
+'''

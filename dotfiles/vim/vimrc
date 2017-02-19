@@ -769,6 +769,42 @@ Map n \[tab]l gt
 
 
 " Plugins {{{1
+" https://github.com/Shougo/dein.vim
+
+let $PLUGINS_ROOT = expand($MYVIMDIR . '/.dein')
+let $DEIN_PATH = expand($PLUGINS_ROOT . '/repos/github.com/Shougo/dein.vim')
+let dein_installer_path = expand($MYVIMDIR . '/__dein_installer.sh')
+
+if ! isdirectory($DEIN_PATH)
+  if g:is_windows
+    throw 'Please install dein.vim to $PLUGINS_ROOT (https://github.com/Shougo/dein.vim)'
+  endif
+  echo 'Installing dein.vim to ' . $DEIN_PATH
+  call system('curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh >' . dein_installer_path)
+  call system('sh ' . dein_installer_path . ' $PLUGINS_ROOT')
+  call system('rm -f ' . dein_installer_path)
+endif
+
+set runtimepath+=$DEIN_PATH
+
+if dein#load_state($PLUGINS_ROOT)
+  call dein#begin($PLUGINS_ROOT)
+  call dein#load_toml('$MYVIMDIR/dein.toml')
+  call dein#end()
+  call dein#save_state()
+else
+  call dein#call_hook('source')
+endif
+
+filetype plugin indent on
+syntax enable
+
+if dein#check_install()
+  call dein#install()
+  call dein#call_hook('source')
+endif
+
+autocmd vimrc VimEnter * call dein#call_hook('post_source')
 
 
 
