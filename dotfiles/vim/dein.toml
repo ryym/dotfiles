@@ -71,6 +71,7 @@ repo = 'nelstrom/vim-visual-star-search'
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
+hook_source = 'call my#conf#motion#incsearch_hook_source()'
 
 [[plugins]]
 repo = 'yuttie/comfortable-motion.vim'
