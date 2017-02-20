@@ -1,19 +1,17 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" The wrapper of submode.vim
-"
 " The mini vim-submode wrapper
-" to define ex commands for each submode.
+" which defines ex commands for each submode.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Globals {{{
 
 " Load the wrapper command.
-function! w#submode#wrap()
-  command! -nargs=1 SbmDefine call w#submode#define(<f-args>)
+function! my#submode#wrap()
+  command! -nargs=1 SbmDefine call my#submode#define(<f-args>)
 endfunction
 
 " Define ex commands which wraps functions of vim-submode.
-function! w#submode#define(name)
+function! my#submode#define(name)
   let capit_name = toupper(a:name[0]) . a:name[1:]
   call s:define_sbm_command(a:name, capit_name . 'Enter', 'enter_with')
   call s:define_sbm_command(a:name, capit_name . 'Leave', 'leave_with')
@@ -21,22 +19,22 @@ function! w#submode#define(name)
   call s:define_sbm_command(a:name, capit_name . 'Unmap', 'unmap')
 endfunction
 
-function! w#submode#enter_with(name, ...)
+function! my#submode#enter_with(name, ...)
   let args = s:normalize_args(a:name, a:000, 4)
   call call('submode#enter_with', args)
 endfunction
 
-function! w#submode#leave_with(name, ...)
+function! my#submode#leave_with(name, ...)
   let args = s:normalize_args(a:name, a:000, 3)
   call call('submode#leave_with', args)
 endfunction
 
-function! w#submode#map(name, ...)
+function! my#submode#map(name, ...)
   let args = s:normalize_args(a:name, a:000, 4)
   call call('submode#map', args)
 endfunction
 
-function! w#submode#unmap(name, ...)
+function! my#submode#unmap(name, ...)
   let args = s:normalize_args(a:name, a:000, 3)
   call call('submdoe#unmap', args)
 endfunction
@@ -49,7 +47,7 @@ let s:args_idx_options = 2
 
 function! s:define_sbm_command(submode_name, command_name, function_name)
   execute 'command! -nargs=+ Sbm' . a:command_name
-    \ 'call w#submode#' . a:function_name . "('" . a:submode_name . "', <f-args>)"
+    \ 'call my#submode#' . a:function_name . "('" . a:submode_name . "', <f-args>)"
 endfunction
 
 function! s:normalize_args(name, args, n_full_args)
@@ -69,4 +67,3 @@ function! s:normalize_args(name, args, n_full_args)
 endfunction
 
 " }}}
-

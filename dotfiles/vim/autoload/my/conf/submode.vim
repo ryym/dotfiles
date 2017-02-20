@@ -5,7 +5,7 @@ function! my#conf#submode#hook_source()
 endfunction
 
 function! my#conf#submode#hook_post_source()
-  call w#submode#wrap()
+  call my#submode#wrap()
 
   SbmDefine scroll
   SbmScrollEnter n <Leader>s
