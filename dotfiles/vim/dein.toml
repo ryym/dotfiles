@@ -1,7 +1,5 @@
 # TOML configuration for dein.vim
 
-# TODO: Remove unused plugins.
-
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
@@ -36,13 +34,6 @@ depends = ['unite.vim']
 hook_source = 'call my#conf#vimfiler#hook_source()'
 
 [[plugins]]
-repo = 'Shougo/vimshell.vim'
-depends = ['vimproc.vim']
-
-[[plugins]]
-repo = 'Shougo/neocomplete.vim'
-
-[[plugins]]
 repo = 'kana/vim-tabpagecd'
 
 [[plugins]]
@@ -54,17 +45,15 @@ hook_post_source = 'call my#conf#submode#hook_post_source()'
 repo = 'tpope/vim-repeat'
 
 [[plugins]]
-repo = 'osyo-manga/vim-over'
-hook_source = 'Remap n <Space>o ::OverCommandLine'
-
-[[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
 # Editing
 
 [[plugins]]
+lazy = 1
 repo = 'junegunn/vim-easy-align'
 hook_source = 'Remap nv ga <Plug>(EasyAlign)'
+on_map = '<Plug>(EasyAlign)'
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
@@ -142,6 +131,7 @@ hook_source = '''
 repo = 'thinca/vim-localrc'
 
 [[plugins]]
+lazy = 1
 repo = 'thinca/vim-quickrun'
 on_cmd = 'QuickRun'
 
@@ -150,11 +140,6 @@ lazy = 1
 repo = 'kannokanno/previm'
 depends = ['open_browser.vim']
 on_ft = ['markdown']
-
-[[plugins]]
-lazy = 1
-repo = 'tyru/restart.vim'
-on_cmd = 'Restart'
 
 [[plugins]]
 lazy = 1
@@ -189,10 +174,12 @@ on_cmd = ['Agit']
 repo = 'tpope/vim-rails'
 
 [[plugins]]
+lazy = 1
 repo = 'thinca/vim-themis'
 on_ft = ['vimspec']
 
 [[plugins]]
+lazy = 1
 repo = 'kana/vim-vspec'
 
 [[plugins]]
@@ -207,11 +194,9 @@ on_ft = ['html', 'xml', 'eruby', 'jsp', 'javascript']
 
 [[plugins]]
 repo = 'PProvost/vim-ps1'
-on_ft = ['ps1']
 
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'
-on_ft = ['cofee']
 
 [[plugins]]
 repo = 'bruno-/vim-man'
@@ -226,7 +211,6 @@ hook_source = '''
 
 [[plugins]]
 repo = 'derekwyatt/vim-scala'
-on_ft = ['scala']
 
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
@@ -257,19 +241,15 @@ repo = 'lambdatoast/elm.vim'
 
 [[plugins]]
 repo = 'digitaltoad/vim-pug'
-on_ft = ['pug']
 
 [[plugins]]
 repo = 'slim-template/vim-slim'
-on_ft = ['slim']
 
 [[plugins]]
 repo = 'posva/vim-vue'
-on_ft = ['vue']
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
-on_ft = ['typescript']
 
 # UI
 
