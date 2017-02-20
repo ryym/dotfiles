@@ -1,53 +1,11 @@
 # TOML configuration for dein.vim
 
+# Plugin manager {{{1
+
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-hook_post_update = 'call my#conf#vimproc#hook_post_update()'
-
-# Unite
-
-[[plugins]]
-repo = 'Shougo/tabpagebuffer.vim'
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-hook_source = 'call my#conf#unite#hook_source()'
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-depends = ['unite.vim']
-hook_source = 'call my#conf#unite#neomru_hook_source()'
-
-[[plugins]]
-repo = 'haya14busa/unite-ghq'
-depends = ['unite.vim']
-hook_source = 'call my#conf#unite#ghq_hook_source()'
-
-# Vimfiler
-
-[[plugins]]
-repo = 'Shougo/vimfiler.vim'
-depends = ['unite.vim']
-hook_source = 'call my#conf#vimfiler#hook_source()'
-
-[[plugins]]
-repo = 'kana/vim-tabpagecd'
-
-[[plugins]]
-repo = 'kana/vim-submode'
-hook_source = 'call my#conf#submode#hook_source()'
-hook_post_source = 'call my#conf#submode#hook_post_source()'
-
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-[[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-
-# Editing
+# Editing {{{1
 
 [[plugins]]
 lazy = 1
@@ -75,7 +33,7 @@ repo = 'ryym/vim-unimpaired'
 hook_source = 'call my#conf#editing#unimpaired_hook_source()'
 hook_post_source = 'call my#conf#editing#unimpaired_hook_post_source()'
 
-# Text Object
+# Text Object {{{1
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
@@ -93,7 +51,7 @@ repo = 'kana/vim-textobj-indent'
 repo = 'rhysd/vim-textobj-ruby'
 on_ft = ['ruby']
 
-# Operator
+# Operator {{{1
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
@@ -102,7 +60,7 @@ repo = 'kana/vim-operator-user'
 repo = 'kana/vim-operator-replace'
 hook_source = 'Remap nvo mr <Plug>(operator-replace)'
 
-# Motion
+# Motion {{{1
 
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
@@ -118,74 +76,7 @@ repo = 'haya14busa/incsearch.vim'
 repo = 'yuttie/comfortable-motion.vim'
 hook_source = 'call my#conf#motion#comfortable_motion_hook_source()'
 
-# Utility
-
-[[plugins]]
-repo = 'rbgrouleff/bclose.vim'
-hook_source = '''
-  Map n \[buffer]d ::Bclose
-  Map n \[buffer]D ::Bclose!
-'''
-
-[[plugins]]
-repo = 'thinca/vim-localrc'
-
-[[plugins]]
-lazy = 1
-repo = 'thinca/vim-quickrun'
-on_cmd = 'QuickRun'
-
-[[plugins]]
-lazy = 1
-repo = 'kannokanno/previm'
-depends = ['open_browser.vim']
-on_ft = ['markdown']
-
-[[plugins]]
-lazy = 1
-repo = 'tyru/open-browser.vim'
-on_cmd = '<Plug>(openbrowser-'
-
-[[plugins]]
-repo = 'thinca/vim-prettyprint'
-
-[[plugins]]
-lazy = 1
-repo = 'ryym/macspeech.vim'
-on_cmd = ['MacSpeech', 'MacSpeechSelected']
-hook_source = 'let g:dein#plugin.disabled = !g:is_mac'
-
-[[plugins]]
-repo = 'lambdalisue/vim-unified-diff'
-hook_source = 'call my#conf#util#unified_diff_hook_source()'
-
-[[plugins]]
-lazy = 1
-repo = 'tpope/vim-fugitive'
-on_cmd = ['Gstatus', 'Git', 'Gdiff', 'Gblame']
-hook_post_source = 'my#conf#util#fugitive_hook_post_source()'
-
-[[plugins]]
-lazy = 1
-repo = 'cohama/agit.vim'
-on_cmd = ['Agit']
-
-[[plugins]]
-repo = 'tpope/vim-rails'
-
-[[plugins]]
-lazy = 1
-repo = 'thinca/vim-themis'
-on_ft = ['vimspec']
-
-[[plugins]]
-lazy = 1
-repo = 'kana/vim-vspec'
-
-[[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-
-# Filetype
+# Filetype {{{1
 
 [[plugins]]
 lazy = 1
@@ -251,7 +142,7 @@ repo = 'posva/vim-vue'
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
 
-# UI
+# UI {{{1
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -275,3 +166,112 @@ hook_source = '''
   let g:foldCCtext_tail = "printf('%d lines ', v:foldend - v:foldstart + 1)"
   set foldtext =FoldCCtext()
 '''
+
+# Tools {{{1
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = 'call my#conf#tool#hook_post_update()'
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = ['unite.vim']
+hook_source = 'call my#conf#tool#vimfiler_hook_source()'
+
+[[plugins]]
+repo = 'kana/vim-tabpagecd'
+
+[[plugins]]
+repo = 'kana/vim-submode'
+hook_source = 'call my#conf#submode#hook_source()'
+hook_post_source = 'call my#conf#submode#hook_post_source()'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'rbgrouleff/bclose.vim'
+hook_source = '''
+  Map n \[buffer]d ::Bclose
+  Map n \[buffer]D ::Bclose!
+'''
+
+[[plugins]]
+repo = 'thinca/vim-localrc'
+
+[[plugins]]
+lazy = 1
+repo = 'thinca/vim-quickrun'
+on_cmd = 'QuickRun'
+
+[[plugins]]
+lazy = 1
+repo = 'kannokanno/previm'
+depends = ['open_browser.vim']
+on_ft = ['markdown']
+
+[[plugins]]
+lazy = 1
+repo = 'tyru/open-browser.vim'
+on_cmd = '<Plug>(openbrowser-'
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+
+[[plugins]]
+lazy = 1
+repo = 'ryym/macspeech.vim'
+on_cmd = ['MacSpeech', 'MacSpeechSelected']
+hook_source = 'let g:dein#plugin.disabled = !g:is_mac'
+
+[[plugins]]
+repo = 'lambdalisue/vim-unified-diff'
+hook_source = 'call my#conf#tool#unified_diff_hook_source()'
+
+[[plugins]]
+lazy = 1
+repo = 'tpope/vim-fugitive'
+on_cmd = ['Gstatus', 'Git', 'Gdiff', 'Gblame']
+hook_post_source = 'my#conf#tool#fugitive_hook_post_source()'
+
+[[plugins]]
+lazy = 1
+repo = 'cohama/agit.vim'
+on_cmd = ['Agit']
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+
+[[plugins]]
+lazy = 1
+repo = 'thinca/vim-themis'
+on_ft = ['vimspec']
+
+[[plugins]]
+lazy = 1
+repo = 'kana/vim-vspec'
+
+[[plugins]]
+repo = 'Shougo/tabpagebuffer.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+hook_source = 'call my#conf#unite#hook_source()'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+depends = ['unite.vim']
+hook_source = 'call my#conf#unite#neomru_hook_source()'
+
+[[plugins]]
+repo = 'haya14busa/unite-ghq'
+depends = ['unite.vim']
+hook_source = 'call my#conf#unite#ghq_hook_source()'
+
+# Document {{{1
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'

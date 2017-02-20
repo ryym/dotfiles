@@ -1,5 +1,3 @@
-" The initializer for Unite.vim and its plugins.
-
 function! s:map_unite_commands(key, command, end_key)
   execute 'Map n' '\[unite]'   . a:key ':u:' . a:command . a:end_key
   execute 'Map n' '\[uniteNq]' . a:key ':u:' . a:command '-no-quit -winheight=15' . a:end_key
