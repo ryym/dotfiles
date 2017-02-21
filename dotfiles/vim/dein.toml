@@ -211,13 +211,15 @@ on_cmd = 'QuickRun'
 [[plugins]]
 lazy = 1
 repo = 'kannokanno/previm'
-depends = ['open_browser.vim']
+depends = ['open-browser.vim']
 on_ft = ['markdown']
 
 [[plugins]]
-lazy = 1
 repo = 'tyru/open-browser.vim'
-on_cmd = '<Plug>(openbrowser-'
+hook_add = '''
+  Remap nv <Leader>wo <Plug>(openbrowser-open)
+  Remap nv <Leader>ws <Plug>(openbrowser-search)
+'''
 
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
