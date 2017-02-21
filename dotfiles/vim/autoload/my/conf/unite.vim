@@ -3,7 +3,7 @@ function! s:map_unite_commands(key, command, end_key)
   execute 'Map n' '\[uniteNq]' . a:key ':u:' . a:command '-no-quit -winheight=15' . a:end_key
 endfunction
 
-function! my#conf#unite#hook_source()
+function! my#conf#unite#hook_post_source()
   MapNamedKey <Space>u unite
   MapNamedKey <Space>U uniteNq
 

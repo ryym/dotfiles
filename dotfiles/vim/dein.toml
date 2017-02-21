@@ -260,7 +260,7 @@ repo = 'Shougo/tabpagebuffer.vim'
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
-hook_source = 'call my#conf#unite#hook_source()'
+hook_source = 'call my#conf#unite#hook_post_source()'
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
