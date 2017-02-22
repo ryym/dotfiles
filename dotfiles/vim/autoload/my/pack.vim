@@ -116,8 +116,8 @@ function! my#pack#load_all()
     endif
   endfor
 
-  " Make sure all packages are sourced.
-  " It seems that this command never loads a package in some cases.
+  " Make sure all packages are sourced. It seems that this command
+  " never loads a package in some cases without a bang.
   packloadall!
 
   for name in keys(b:packs)
