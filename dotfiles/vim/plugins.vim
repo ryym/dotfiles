@@ -360,7 +360,12 @@ endfunction
 let def = my#pack#add('thinca/vim-prettyprint')
 
 if g:is_mac
-  call my#pack#add('ryym/macspeech.vim')
+  let def = my#pack#add('ryym/macspeech.vim')
+  function! def.before_load()
+    let g:macspeech_voice = 'Ava'
+    Map v  <Leader><Leader>q :r:MacSpeechSelected
+    Map nv <Leader><Leader>Q ::MacSpeechStop
+  endfunction
 endif
 
 let def = my#pack#add('lambdalisue/vim-unified-diff')
