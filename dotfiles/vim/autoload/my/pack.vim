@@ -6,6 +6,10 @@ let b:packs = {}
 let b:new_packs = {}
 let b:pack_path = split(&packpath, ',')[0] . '/pack/minpac/'
 
+" Define commands
+command! PackInstall call my#pack#install_new()
+command! PackLoadAll call my#pack#load_all()
+
 function! my#pack#compatible_vim_version()
   return 800
 endfunction
@@ -101,7 +105,7 @@ function! my#pack#warn_if_new_packs_exist()
   if len(new_packs) > 0
     let names = join(keys(new_packs), ', ')
     echom '[pack] There are new packages: ' . names . '.'
-    echom '[pack] Call my#pack#install_new() and my#pack#load_all().'
+    echom '[pack] Run PackInstall and PackLoadAll.'
   endif
 endfunction
 
