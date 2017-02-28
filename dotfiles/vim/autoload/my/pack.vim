@@ -145,3 +145,8 @@ function! my#pack#load_opt(name)
     call def.after_load()
   endif
 endfunction
+
+" Remove unused plugins.
+function! my#pack#clean()
+  call minpac#clean()
+endfunction
