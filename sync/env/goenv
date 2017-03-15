@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 VERSIONS=(
-    '1.6'
+    '1.7'
+    '1.8'
 )
 
 for version in ${VERSIONS[@]}; do
