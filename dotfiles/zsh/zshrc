@@ -83,11 +83,11 @@ if [ -n "$TMUX" ]; then
 fi
 
 ## Peco
-
-# ghq
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
 # http://qiita.com/udzura/items/3f120b5e4733fe85078d
-function peco-src() {
+
+# ghq
+function peco-ghq() {
     local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
@@ -95,8 +95,20 @@ function peco-src() {
     fi
     zle clear-screen
 }
-zle -N peco-src
-bindkey '^]' peco-src
+zle -N peco-ghq
+bindkey '^]' peco-ghq
+
+# Go package sources
+function peco-gopath() {
+    local selected_dir=$(gits -p $GOPATH/src | peco --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-gopath
+bindkey '^g' peco-gopath
 
 # AWS-CLI
 # which aws_zsh_completer >/dev/null 2>&1 && $(which aws_zsh_completer.sh)
