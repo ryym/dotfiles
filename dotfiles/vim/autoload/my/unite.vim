@@ -47,7 +47,8 @@ function! my#unite#configure()
     \ 'bt' : 'buffer_tab',
     \ 'g'  : 'grep',
     \ 'l'  : 'line',
-    \ 'nb' : 'neobundle'
+    \ 'nb' : 'neobundle',
+    \ 'go' : 'gosrc',
     \ }
 
   if executable('ag')
