@@ -90,6 +90,12 @@ function! def.after_load()
 endfunction " }}}
 
 let def = my#pack#add('mattn/emmet-vim')
+function! def.before_load()
+  " https://github.com/mattn/emmet-vim/issues/350
+  let g:user_emmet_settings = {
+    \  'javascript.jsx' : { 'extends' : 'jsx' },
+    \ }
+endfunction
 
 """ Text Object
 
@@ -189,6 +195,9 @@ let def = my#pack#add('othree/html5.vim')
 let def = my#pack#add('pangloss/vim-javascript')
 
 let def = my#pack#add('mxw/vim-jsx')
+function! def.before_load()
+  let g:jsx_ext_required = 0
+endfunction
 
 let def = my#pack#add('ryym/vim-riot')
 
