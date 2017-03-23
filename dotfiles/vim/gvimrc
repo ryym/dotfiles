@@ -9,6 +9,8 @@ if has('vim_starting')
   elseif g:is_mac
     set guifont=Ricty\ Diminished\ Regular:h14
   endif
+
+  colorscheme hybrid
 endif
 
 if g:is_mac
