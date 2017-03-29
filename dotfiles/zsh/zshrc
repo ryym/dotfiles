@@ -108,6 +108,13 @@ function peco-gopath() {
 zle -N peco-gopath
 bindkey '^g' peco-gopath
 
+# Vim plugins
+function peco-vimpacks() {
+    peco-src 'gits -p ~/.vim/pack'
+}
+zle -N peco-vimpacks
+bindkey '^v' peco-vimpacks
+
 # AWS-CLI
 # which aws_zsh_completer >/dev/null 2>&1 && $(which aws_zsh_completer.sh)
 
