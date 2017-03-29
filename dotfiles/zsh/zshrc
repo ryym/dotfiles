@@ -85,27 +85,25 @@ fi
 ## Peco
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
 # http://qiita.com/udzura/items/3f120b5e4733fe85078d
-
-# ghq
-function peco-ghq() {
-    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+function peco-src() {
+    local selected_dir=$(eval "$1" | peco --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
     fi
     zle clear-screen
 }
+
+# ghq
+function peco-ghq() {
+    peco-src 'ghq list -p'
+}
 zle -N peco-ghq
 bindkey '^]' peco-ghq
 
 # Go package sources
 function peco-gopath() {
-    local selected_dir=$(gits -p $GOPATH/src | peco --query "$LBUFFER")
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
-        zle accept-line
-    fi
-    zle clear-screen
+    peco-src 'gits -p $GOPATH/src'
 }
 zle -N peco-gopath
 bindkey '^g' peco-gopath
