@@ -73,6 +73,7 @@ alias vi='vim'
 alias gvi='gvim'
 alias dk='docker'
 alias dkc='docker-compose'
+alias be='bundle exec'
 
 # A work around for tmux clipboard issue on macOS Sierra.
 # (http://stackoverflow.com/questions/39645253/clipboard-failure-in-tmux-vim-after-upgrading-to-macos-sierra)
