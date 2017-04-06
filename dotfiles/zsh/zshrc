@@ -124,3 +124,6 @@ bindkey '^v' peco-vimpacks
 
 # added by travis gem
 [ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
+
+# Enable Rust command line tools.
+[ -f $HOME/.carg/env ] && source $HOME/.cargo/env
