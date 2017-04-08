@@ -25,5 +25,11 @@ export PATH="$PATH:$GOPATH/bin"
 # Node modules
 export PATH="$PATH:./node_modules/.bin"
 
+# added by travis gem
+[ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
+
+# Rust
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
+
 # Load the local settings.
 [ -f ~/.zshenv.local ] && source ~/.zshenv.local
