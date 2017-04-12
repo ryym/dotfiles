@@ -36,13 +36,9 @@ This repository manages:
 ## Installation
 
 ```sh
-git clone --recursive https://github.com/ryym/dotfiles ~/.dotfiles
+git clone https://github.com/ryym/dotfiles ~/.dotfiles
 cd ~/.dotfiles && make
 ```
-
-Note that the `--recursive` option is necessary to install with [Git Submodules].
-
-[Git Submodules]: <https://git-scm.com/book/en/v2/Git-Tools-Submodules>
 
 ## Available tasks
 
