@@ -215,11 +215,12 @@ endfunction
 
 " The dictionary which stores some information about grep commands.
 let s:grepprgs = {
-  \ 'order' : ['ag', 'pt', 'vim'],
+  \ 'order' : ['git', 'ag', 'pt', 'vim'],
   \ 'prgs' : {
-  \   'ag'  : s:make_grepprg_obj('ag', 'AgGrep',  'ag --nocolor --nogroup'),
-  \   'pt'  : s:make_grepprg_obj('pt', 'PtGrep',  'pt --nocolor --nogroup'),
-  \   'vim' : s:make_grepprg_obj('vim', 'VimGrep',  'internal')
+  \   'git' : s:make_grepprg_obj('git', 'GitGrep', 'git grep -n'),
+  \   'ag'  : s:make_grepprg_obj('ag', 'AgGrep', 'ag --nocolor --nogroup'),
+  \   'pt'  : s:make_grepprg_obj('pt', 'PtGrep', 'pt --nocolor --nogroup'),
+  \   'vim' : s:make_grepprg_obj('vim', 'VimGrep', 'internal')
   \  }
   \ }
 " Set the first executable command to the current grep program.
