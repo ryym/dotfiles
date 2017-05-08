@@ -81,6 +81,7 @@ alias be='bundle exec'
 if [ -n "$TMUX" ]; then
     alias vi='reattach-to-user-namespace vim'
     alias gvi='reattach-to-user-namespace gvim'
+    alias open='reattach-to-user-namespace open'
 fi
 
 ## Peco
