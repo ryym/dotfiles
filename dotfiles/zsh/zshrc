@@ -75,15 +75,6 @@ alias dk='docker'
 alias dkc='docker-compose'
 alias be='bundle exec'
 
-# A work around for tmux clipboard issue on macOS Sierra.
-# (http://stackoverflow.com/questions/39645253/clipboard-failure-in-tmux-vim-after-upgrading-to-macos-sierra)
-# Setting a default-command in .tmux.conf doesn't work for me..
-if [ -n "$TMUX" ]; then
-    alias vi='reattach-to-user-namespace vim'
-    alias gvi='reattach-to-user-namespace gvim'
-    alias open='reattach-to-user-namespace open'
-fi
-
 ## Peco
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
 # http://qiita.com/udzura/items/3f120b5e4733fe85078d
