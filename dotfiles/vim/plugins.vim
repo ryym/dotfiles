@@ -176,10 +176,10 @@ endfunction "}}}
 
 let def = my#pack#add('yuttie/comfortable-motion.vim')
 function! def.before_load() "{{{
-  nnoremap <silent> <C-d> :call comfortable_motion#flick(170)<CR>
-  nnoremap <silent> <C-u> :call comfortable_motion#flick(-170)<CR>
-  nnoremap <silent> <C-f> :call comfortable_motion#flick(200)<CR>
-  nnoremap <silent> <C-b> :call comfortable_motion#flick(-200)<CR>
+  Map n (silent) <C-d> :f:comfortable_motion#flick(170)
+  Map n (silent) <C-u> :f:comfortable_motion#flick(-170)
+  Map n (silent) <C-f> :f:comfortable_motion#flick(200)
+  Map n (silent) <C-b> :f:comfortable_motion#flick(-200)
 
   let g:comfortable_motion_no_default_key_mappings = 1
   let g:comfortable_motion_friction = 800
