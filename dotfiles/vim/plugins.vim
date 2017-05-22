@@ -118,6 +118,13 @@ function! def.after_load()
   Remap nvo mr <Plug>(operator-replace)
 endfunction
 
+let def = my#pack#add('ryym/operator-camelize.vim')
+function! def.after_load()
+  Remap  nvo mp <Plug>(operator-to-camel)
+  Remap  nvo mP <Plug>(operator-to-pascal)
+  Remap  nvo mk <Plug>(operator-to-snake)
+endfunction
+
 """ Motion
 
 let def = my#pack#add('easymotion/vim-easymotion')
