@@ -26,6 +26,9 @@ function! my#unite#configure()
   endfor
   unlet s:mappings s:key s:command s:end_key
 
+  command! -nargs=1 -complete=file UniteRec call unite#start([['file_rec/async', <q-args>]])
+  Map n \[unite]f :UniteRec<Space>
+
   " Show dotfiles at :Unite file
   call unite#custom#source('file', 'matchers', 'matcher_default')
 
