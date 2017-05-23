@@ -254,6 +254,14 @@ function! def.before_load()
   set foldtext =FoldCCtext()
 endfunction
 
+let def = my#pack#add('itchyny/vim-cursorword')
+function! def.after_load()
+  augroup vim-cursorword
+    autocmd!
+    autocmd FileType vimfiler,unite let b:cursorword = 0
+  augroup END
+endfunction
+
 """ Tools
 
 let def = my#pack#add('Shougo/vimproc.vim')
