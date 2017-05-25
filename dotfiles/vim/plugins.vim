@@ -301,14 +301,31 @@ function! def.before_load() "{{{
 
   let g:vimfiler_as_default_explorer  = 1
   let g:vimfiler_safe_mode_by_default = 0
+  let g:vimfiler_no_default_key_mappings = 1
 
-  " Key mappings in vimfiler buffers
   autocmd vimrc FileType vimfiler call <SID>configure_vimfiler_buffer()
   function! s:configure_vimfiler_buffer()
-    " TODO: This conflicts with the default mapping '<Space>'(mark file).
-    Remap n (buffer) <Space>q <Plug>(vimfiler_exit)
-
-    Remap n (silent buffer expr) Ar vimfiler#do_action('rec')
+    Remap n (buffer nowait) j <Plug>(vimfiler_loop_cursor_down)
+    Remap n (buffer nowait) k <Plug>(vimfiler_loop_cursor_up)
+    Remap n (buffer nowait) l <Plug>(vimfiler_smart_l)
+    Remap n (buffer nowait) h <Plug>(vimfiler_smart_h)
+    Remap n (buffer nowait) gg <Plug>(vimfiler_cursor_top)
+    Remap n (buffer nowait) yy <Plug>(vimfiler_yank_full_path)
+    Remap n (buffer nowait) t <Plug>(vimfiler_expand_tree)
+    Remap n (buffer nowait) T <Plug>(vimfiler_expand_tree_recursive)
+    Remap n (buffer nowait) <C-l> <Plug>(vimfiler_redraw_screen)
+    Remap n (buffer nowait) i <Plug>(vimfiler_toggle_mark_current_line)
+    Remap n (buffer nowait) * <Plug>(vimfiler_toggle_mark_all_lines)
+    Remap n (buffer nowait) c <Plug>(vimfiler_copy_file)
+    Remap n (buffer nowait) m <Plug>(vimfiler_move_file)
+    Remap n (buffer nowait) d <Plug>(vimfiler_delete_file)
+    Remap n (buffer nowait) r <Plug>(vimfiler_rename_file)
+    Remap n (buffer nowait) K <Plug>(vimfiler_make_directory)
+    Remap n (buffer nowait) C <Plug>(vimfiler_new_file)
+    Remap n (buffer nowait) <CR> <Plug>(vimfiler_cd_or_edit)
+    Remap n (buffer nowait) ~ <Plug>(vimfiler_switch_to_home_directory)
+    Remap n (buffer nowait) . <Plug>(vimfiler_toggle_visible_ignore_files)
+    Remap n (buffer nowait) <Space>q <Plug>(vimfiler_exit)
 
     setlocal nobuflisted
   endfunction
