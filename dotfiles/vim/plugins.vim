@@ -449,6 +449,14 @@ let def.after_load = function('my#unite#configure_neomru')
 let def = my#pack#add('haya14busa/unite-ghq')
 let def.after_load = function('my#unite#configure_ghq')
 
+let def = my#pack#add('ryym/bufswitcher.vim')
+function def.after_load()
+  SbmDefine bufswitch
+  SbmBufswitchEnter n r <Space>bb <Plug>(bufswitcher-show)
+  SbmBufswitch n <r> l <Plug>(bufswitcher-next)
+  SbmBufswitch n <r> h <Plug>(bufswitcher-prev)
+endfunction
+
 """ Document
 
 let def = my#pack#add('vim-jp/vimdoc-ja')
