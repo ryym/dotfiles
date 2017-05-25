@@ -303,12 +303,14 @@ function! def.before_load() "{{{
   let g:vimfiler_safe_mode_by_default = 0
 
   " Key mappings in vimfiler buffers
-  autocmd vimrc FileType vimfiler call <SID>map_keys_on_vimfiler()
-  function! s:map_keys_on_vimfiler()
+  autocmd vimrc FileType vimfiler call <SID>configure_vimfiler_buffer()
+  function! s:configure_vimfiler_buffer()
     " TODO: This conflicts with the default mapping '<Space>'(mark file).
     Remap n (buffer) <Space>q <Plug>(vimfiler_exit)
 
     Remap n (silent buffer expr) Ar vimfiler#do_action('rec')
+
+    setlocal nobuflisted
   endfunction
 endfunction "}}}
 
