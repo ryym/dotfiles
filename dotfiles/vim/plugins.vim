@@ -325,6 +325,7 @@ function! def.before_load() "{{{
     Remap n (buffer nowait) <CR> <Plug>(vimfiler_cd_or_edit)
     Remap n (buffer nowait) ~ <Plug>(vimfiler_switch_to_home_directory)
     Remap n (buffer nowait) . <Plug>(vimfiler_toggle_visible_ignore_files)
+    Remap n (buffer nowait) <C-g> <Plug>(vimfiler_print_filename)
     Remap n (buffer nowait) <Space>q <Plug>(vimfiler_exit)
 
     setlocal nobuflisted
