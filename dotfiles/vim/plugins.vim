@@ -450,11 +450,17 @@ let def = my#pack#add('haya14busa/unite-ghq')
 let def.after_load = function('my#unite#configure_ghq')
 
 let def = my#pack#add('ryym/bufswitcher.vim')
+function def.before_load()
+  let g:bufswitcher_configs = { 'per_tab': 1 }
+endfunction
 function def.after_load()
   SbmDefine bufswitch
   SbmBufswitchEnter n r <Space>bb <Plug>(bufswitcher-show)
   SbmBufswitch n <r> l <Plug>(bufswitcher-next)
   SbmBufswitch n <r> h <Plug>(bufswitcher-prev)
+  for i in [2, 3, 4, 5, 6]
+    call submode#map('bufswitch', 'n', '', i, ':BufswitcherSwitchTo ' . i . '<CR>')
+  endfor
 endfunction
 
 """ Document
