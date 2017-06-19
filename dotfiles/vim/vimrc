@@ -615,6 +615,7 @@ Map n Y y$
 Map n Q q
 Map n <Leader>d ::pwd
 Map n zp zMzv
+Map n <C-w>h ::split
 
 " Break lines and Insert spaces in normal mode.
 Map n <C-CR>          o<Esc>
