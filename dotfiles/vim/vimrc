@@ -443,6 +443,7 @@ augroup vimrc
     \ '.pryrc'       : 'ruby',
     \ 'Guardfile'    : 'ruby',
     \ 'Vagrantfile'  : 'ruby',
+    \ 'Berksfile'    : 'ruby',
     \ 'Dockerfile.*' : 'Dockerfile'
     \ })
 augroup END
