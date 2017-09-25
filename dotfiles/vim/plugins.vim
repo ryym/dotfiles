@@ -224,6 +224,11 @@ let def = my#pack#add('posva/vim-vue')
 
 let def = my#pack#add('leafgarland/typescript-vim')
 
+let def = my#pack#add('hashivim/vim-terraform')
+function! def.after_load()
+  autocmd FileType terraform setlocal commentstring=#%s
+endfunction
+
 """ UI
 
 let def = my#pack#add('w0ng/vim-hybrid')
