@@ -66,6 +66,7 @@ alias gvi='gvim'
 alias dk='docker'
 alias dkc='docker-compose'
 alias be='bundle exec'
+alias npmr='npm run'
 
 ## Peco
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
