@@ -5,13 +5,8 @@ source "$DOTPATH/lib/vitalize.sh"
 # Ensure Zsh doesn't load global rc files like '/etc/zprofile'.
 setopt no_global_rcs
 
-export PATH="/usr/sbin:/sbin:$PATH"
-
 # Disallow duplicate paths in the '$PATH'.
 typeset -U PATH
-
-# Homebrew
-export PATH="/usr/local/bin:$PATH"
 
 # Anyenv
 if [ -d "$ANYENV_PATH" ]; then
@@ -19,11 +14,16 @@ if [ -d "$ANYENV_PATH" ]; then
     eval "$(anyenv init - zsh)"
 fi
 
-# Go
-export PATH="$PATH:$GOPATH/bin"
-
 # Node modules
-export PATH="$PATH:./node_modules/.bin"
+export PATH="./node_modules/.bin:$PATH"
+
+# Go
+export PATH="$GOPATH/bin:$PATH"
+
+export PATH="/usr/sbin:/sbin:$PATH"
+
+# Homebrew
+export PATH="/usr/local/bin:$PATH"
 
 # added by travis gem
 [ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
