@@ -16,7 +16,6 @@ brew 'vim'
 brew 'zsh'
 
 tap 'caskroom/cask'
-brew 'brew-cask'
 
 cask 'alfred'
 cask 'appcleaner'
