@@ -94,6 +94,7 @@ function! def.before_load()
   " https://github.com/mattn/emmet-vim/issues/350
   let g:user_emmet_settings = {
     \  'javascript.jsx' : { 'extends' : 'jsx' },
+    \  'typescript' : { 'extends' : 'jsx' },
     \ }
 endfunction
 
