@@ -58,6 +58,12 @@ function! def.after_load() "{{{
     \ 'at'       : '{\{3\}\%#',
     \ 'filetype' : 'vim'
     \ })
+
+  " Supress auto-closing of single quotes (lifetimes) in Rust.
+  call lexima#add_rule({
+    \ 'char'     : "'",
+    \ 'filetype' : 'rust'
+    \ })
 endfunction "}}}
 
 let def = my#pack#add('LeafCage/yankround.vim')
