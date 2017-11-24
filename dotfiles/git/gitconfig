@@ -24,6 +24,14 @@
     bmd    = branch --merged
     bnmd   = branch --no-merged
     bp     = !git branch -d `git branch --merged | grep -v '*'` # prune branches
+
+    # List `Squash and merge`d branches (https://github.com/not-an-aardvark/git-delete-squashed).
+    bsqd   = !" \
+        git for-each-ref refs/heads/ '--format=%(refname:short)' | while read branch; do \
+            mergeBase=$(git merge-base master $branch) && \
+            [[ $(git cherry master $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == "-"* ]] && \
+            echo $branch; \
+        done"
     a      = add
     aa     = add --all
     ap     = add -p
