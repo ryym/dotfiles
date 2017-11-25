@@ -36,6 +36,11 @@ if has('vim_starting')
     echomsg 'Startup time:' reltimestr( reltime(s:startuptime) )
     unlet s:startuptime
   endfunction
+
+  " Change the cursor to vertical bar in normal mode on the terminal.
+  " (https://qiita.com/Linda_pp/items/9e0c94eb82b18071db34)
+  let &t_SI .= "\e[6 q"
+  let &t_EI .= "\e[2 q"
 endif
 
 
