@@ -200,6 +200,12 @@ let def = my#pack#add('kchmck/vim-coffee-script')
 
 let def = my#pack#add('bruno-/vim-man')
 
+let def = my#pack#add('fatih/vim-go')
+function! def.before_load()
+  let g:go_fmt_command = "goimports"
+  let g:go_highlight_types = 1
+endfunction
+
 let def = my#pack#add('derekwyatt/vim-scala')
 
 let def = my#pack#add('hail2u/vim-css3-syntax')
