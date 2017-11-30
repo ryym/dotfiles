@@ -245,6 +245,9 @@ endfunction
 """ UI
 
 let def = my#pack#add('w0ng/vim-hybrid')
+function! def.after_load()
+  colorscheme hybrid
+endfunction
 
 let def = my#pack#add('itchyny/lightline.vim')
 function! def.after_load()
