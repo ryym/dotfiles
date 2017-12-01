@@ -262,7 +262,7 @@ function! def.before_load() "{{{
 
   let g:indent_guides_start_level = 2
   let g:indent_guides_guide_size  = 1
-  let g:indent_guides_exclude_filetypes = ['help', 'man']
+  let g:indent_guides_exclude_filetypes = ['help', 'man', 'go']
   if g:is_gui
     autocmd vimrc VimEnter * IndentGuidesEnable
   endif
