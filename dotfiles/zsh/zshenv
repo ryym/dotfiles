@@ -8,15 +8,6 @@ setopt no_global_rcs
 # Disallow duplicate paths in the '$PATH'.
 typeset -U PATH
 
-# Anyenv
-if [ -d "$ANYENV_PATH" ]; then
-    export PATH="$ANYENV_PATH/bin:$PATH"
-    eval "$(anyenv init - zsh)"
-fi
-
-# Node modules
-export PATH="./node_modules/.bin:$PATH"
-
 # Go
 export PATH="$GOPATH/bin:$PATH"
 
@@ -24,6 +15,12 @@ export PATH="/usr/sbin:/sbin:$PATH"
 
 # Homebrew
 export PATH="/usr/local/bin:$PATH"
+
+# Anyenv
+if [ -d "$ANYENV_PATH" ]; then
+    export PATH="$ANYENV_PATH/bin:$PATH"
+    eval "$(anyenv init - zsh)"
+fi
 
 # added by travis gem
 [ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
