@@ -554,6 +554,14 @@ Map i <C-]> <C-o>:set formatoptions-=ro<CR><CR><C-o>:set formatoptions+=ro<CR>
 
 Map i <C-w> <C-r>=<SID>start_file_completion()<CR>
 
+if !g:is_gui
+  " I don't know why but `Ctrl+Space` pastes text in clipboard
+  " only when I use Vim on the terminal.
+  " This is annoying so just insert a space instead.
+  " (ref: http://h-miyako.hatenablog.com/entry/2014/01/20/053327)
+  Map i <Nul> <Space>
+endif
+
 " Improve file path completion {{{3
 " Vim has a file name completion but it is done from the
 " current directory, not a directory of a current file.
