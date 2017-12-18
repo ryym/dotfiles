@@ -462,6 +462,8 @@ let def = my#pack#add('cohama/agit.vim')
 
 let def = my#pack#add('tpope/vim-rails')
 
+let def = my#pack#add('gre/play2vim')
+
 let def = my#pack#add_opt('thinca/vim-themis')
 
 let def = my#pack#add_opt('kana/vim-vspec')
