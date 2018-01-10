@@ -104,6 +104,12 @@ function! def.before_load()
     \ }
 endfunction
 
+let def = my#pack#add('prettier/vim-prettier')
+function! def.before_load()
+  let g:prettier#exec_cmd_async = 1
+  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.scss,*.json,*.graphql,*.md Prettier
+endfunction
+
 """ Text Object
 
 let def = my#pack#add('kana/vim-textobj-user')
