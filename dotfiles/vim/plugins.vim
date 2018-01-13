@@ -105,10 +105,40 @@ function! def.before_load()
 endfunction
 
 let def = my#pack#add('prettier/vim-prettier')
+"{{{
 function! def.before_load()
+  let info = my#pack#get_info('vim-prettier')
+  let plug_path = info.dir . '/'
+
+  if !isdirectory(plug_path . 'node_modules')
+    execute "cd" plug_path
+    echom "Installing prettier..."
+    call system("yarn install")
+    execute "cd -"
+  endif
+
   let g:prettier#exec_cmd_async = 1
-  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.scss,*.json,*.graphql,*.md Prettier
+
+  command! PrettierEnableAuto call <SID>prettier_toggle_auto_save(1)
+  command! PrettierDisableAuto call <SID>prettier_toggle_auto_save(0)
+  call s:prettier_toggle_auto_save(1)
 endfunction
+
+let s:prettier_auto_save_enabled = 0
+function! s:prettier_toggle_auto_save(on) abort
+  if a:on && !s:prettier_auto_save_enabled
+    let s:prettier_auto_save_enabled = 1
+    augroup VimPrettier
+      autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.scss,*.json,*.graphql,*.md Prettier
+    augroup END
+  elseif !a:on
+    let s:prettier_auto_save_enabled = 0
+    augroup VimPrettier
+      autocmd!
+    augroup END
+  endif
+endfunction
+"}}}
 
 """ Text Object
 
