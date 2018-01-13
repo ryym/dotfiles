@@ -210,6 +210,9 @@ let def = my#pack#add('fatih/vim-go')
 function! def.before_load()
   let g:go_fmt_command = "goimports"
   let g:go_highlight_types = 1
+
+  MapNamedKey <Space>G go
+  Map n \[go]t ::GoTest
 endfunction
 
 let def = my#pack#add('derekwyatt/vim-scala')
