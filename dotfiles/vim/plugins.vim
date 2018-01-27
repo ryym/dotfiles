@@ -528,6 +528,8 @@ function def.after_load()
   Map n \[buffer]3 ::BufswitcherSwitchTo 3
 endfunction
 
+let def = my#pack#add('qpkorr/vim-renamer')
+
 """ Document
 
 let def = my#pack#add('vim-jp/vimdoc-ja')
