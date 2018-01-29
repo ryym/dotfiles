@@ -52,7 +52,7 @@
     f      = fetch
     fp     = fetch --prune
     pp     = pull --prune
-    puo    = push -u origin
+    puo    = push -u origin HEAD
     rb     = rebase
     rbi    = rebase -i
     rcon   = rebase --continue
