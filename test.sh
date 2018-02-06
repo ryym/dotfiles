@@ -6,7 +6,9 @@
 # So the test success doesn't mean the installations work correctly
 # on every platforms.
 
-link/check_dotfiles
+if ! link/check_dotfiles; then
+    exit 1
+fi
 
 for ospath in sync/os/*; do
     OS=${ospath##*/} make dryrun-install
