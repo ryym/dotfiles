@@ -6,7 +6,6 @@ LINKS=(
     'ruby/pryrc:.pryrc'
     'zsh/zshrc:.zshrc'
     'zsh/zshenv:.zshenv'
-    'zsh/completion:.zsh-completion'
     'git/gitconfig:.gitconfig'
     'vim:.vim'
     'vimperatorrc:.vimperatorrc'
