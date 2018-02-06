@@ -8,8 +8,6 @@ bindkey -e # Like Emacs.
 autoload -Uz colors
 colors
 
-fpath=(~/.zsh-completion $fpath)
-
 autoload -U compinit
 compinit
 
