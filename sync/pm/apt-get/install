@@ -13,6 +13,7 @@ install() {
 if is_dryrun || has apt-get; then
     run sudo apt-get update
 
+    install build-essential
     install git
     install tmux
     install zsh
