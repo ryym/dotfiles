@@ -441,6 +441,8 @@ augroup vimrc
   " Set commentstring correctly for JS and CSS in HTML and Vue files.
   autocmd CursorMoved *.html,*.vue call <SID>reflesh_commentstring_in_html()
 
+  autocmd FileType ocaml setlocal commentstring=(*%s*)
+
   " Configure filetypes which have to be assigned manually.
   call s:delegate_filetypes({
     \ '*.gradle'     : 'groovy',
