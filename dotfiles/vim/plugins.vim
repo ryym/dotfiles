@@ -530,6 +530,15 @@ endfunction
 
 let def = my#pack#add('qpkorr/vim-renamer')
 
+let def = my#pack#add('w0rp/ale')
+function def.before_load()
+  let g:ale_linters_explicit = 1
+  let g:ale_fix_on_save = 1
+  let g:ale_fixers = {
+    \ 'rust': ['rustfmt'],
+    \ }
+endfunction
+
 """ Document
 
 let def = my#pack#add('vim-jp/vimdoc-ja')
