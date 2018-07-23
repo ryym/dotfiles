@@ -67,6 +67,7 @@ alias dk='docker'
 alias dkc='docker-compose'
 alias be='bundle exec'
 alias npmr='npm run'
+alias cg='cargo'
 
 ## Peco
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
