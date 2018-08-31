@@ -129,7 +129,7 @@ function! s:prettier_toggle_auto_save(on) abort
   if a:on && !s:prettier_auto_save_enabled
     let s:prettier_auto_save_enabled = 1
     augroup VimPrettier
-      autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.scss,*.graphql Prettier
+      autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.scss,*.graphql,*.vue Prettier
     augroup END
   elseif !a:on
     let s:prettier_auto_save_enabled = 0
