@@ -102,6 +102,11 @@ function peco-vimpacks() {
 zle -N peco-vimpacks
 bindkey '^v' peco-vimpacks
 
+# https://github.com/direnv/direnv
+if has direnv; then
+    eval "$(direnv hook zsh)"
+fi
+
 # AWS-CLI
 # which aws_zsh_completer >/dev/null 2>&1 && $(which aws_zsh_completer.sh)
 
