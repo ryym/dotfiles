@@ -266,7 +266,10 @@ let def = my#pack#add('rust-lang/rust.vim')
 
 let def = my#pack#add('cespare/vim-toml')
 
-let def = my#pack#add('lambdatoast/elm.vim')
+let def = my#pack#add('elmcast/elm-vim')
+function! def.before_load()
+  let g:elm_setup_keybindings = 0
+endfunction
 
 let def = my#pack#add('digitaltoad/vim-pug')
 
@@ -536,6 +539,7 @@ function def.before_load()
   let g:ale_fix_on_save = 1
   let g:ale_fixers = {
     \ 'rust': ['rustfmt'],
+    \ 'elm': ['elm-format'],
     \ }
 endfunction
 
