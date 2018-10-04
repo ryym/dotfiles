@@ -14,4 +14,5 @@ LINKS=(
     'tmux:.tmux'
     'ctags:.ctags'
     'agignore:.agignore'
+    'prettierrc.json:.prettierrc'
 )
