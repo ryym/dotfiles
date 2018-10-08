@@ -19,11 +19,6 @@ endtry
 
 """ Editing
 
-let def = my#pack#add('junegunn/vim-easy-align')
-function! def.after_load()
-  Remap nv ga <Plug>(EasyAlign)
-endfunction
-
 let def = my#pack#add('tpope/vim-commentary')
 
 let def = my#pack#add('tpope/vim-surround')
@@ -146,11 +141,7 @@ let def = my#pack#add('kana/vim-textobj-user')
 
 let def = my#pack#add('kana/vim-textobj-entire')
 
-let def = my#pack#add('kana/vim-textobj-line')
-
 let def = my#pack#add('kana/vim-textobj-indent')
-
-let def = my#pack#add('rhysd/vim-textobj-ruby')
 
 """ Operator
 
@@ -161,7 +152,7 @@ function! def.after_load()
   Remap nvo mr <Plug>(operator-replace)
 endfunction
 
-let def = my#pack#add('ryym/operator-camelize.vim')
+let def = my#pack#add_opt('ryym/operator-camelize.vim')
 function! def.after_load()
   Remap  nvo mp <Plug>(operator-to-camel)
   Remap  nvo mP <Plug>(operator-to-pascal)
@@ -230,9 +221,9 @@ endfunction "}}}
 
 """ File Type
 
-let def = my#pack#add('PProvost/vim-ps1')
+let def = my#pack#add_opt('PProvost/vim-ps1')
 
-let def = my#pack#add('kchmck/vim-coffee-script')
+let def = my#pack#add_opt('kchmck/vim-coffee-script')
 
 let def = my#pack#add('bruno-/vim-man')
 
@@ -258,9 +249,9 @@ function! def.before_load()
   let g:jsx_ext_required = 0
 endfunction
 
-let def = my#pack#add('ryym/vim-riot')
+let def = my#pack#add_opt('ryym/vim-riot')
 
-let def = my#pack#add('elixir-lang/vim-elixir')
+let def = my#pack#add_opt('elixir-lang/vim-elixir')
 
 let def = my#pack#add('rust-lang/rust.vim')
 
@@ -271,7 +262,7 @@ function! def.before_load()
   let g:elm_setup_keybindings = 0
 endfunction
 
-let def = my#pack#add('digitaltoad/vim-pug')
+let def = my#pack#add_opt('digitaltoad/vim-pug')
 
 let def = my#pack#add('slim-template/vim-slim')
 
@@ -454,8 +445,6 @@ endfunction
 
 let def = my#pack#add('thinca/vim-localrc')
 
-let def = my#pack#add('thinca/vim-quickrun')
-
 let def = my#pack#add('kannokanno/previm')
 
 let def = my#pack#add('tyru/open-browser.vim')
@@ -464,10 +453,8 @@ function! def.before_load()
   Remap nv <Leader>ws <Plug>(openbrowser-search)
 endfunction
 
-let def = my#pack#add('thinca/vim-prettyprint')
-
 if g:is_mac
-  let def = my#pack#add('ryym/macspeech.vim')
+  let def = my#pack#add_opt('ryym/macspeech.vim')
   function! def.before_load()
     let g:macspeech_voice = 'Ava'
     Map v  <Leader><Leader>q :r:MacSpeechSelected
@@ -493,8 +480,6 @@ function! def.after_load() "{{{
   " Detect current opened file to enable fugitive.
   call fugitive#detect(expand('#:p'))
 endfunction "}}}
-
-let def = my#pack#add('cohama/agit.vim')
 
 let def = my#pack#add('tpope/vim-rails')
 
@@ -531,7 +516,7 @@ function def.after_load()
   Map n \[buffer]3 ::BufswitcherSwitchTo 3
 endfunction
 
-let def = my#pack#add('qpkorr/vim-renamer')
+let def = my#pack#add_opt('qpkorr/vim-renamer')
 
 let def = my#pack#add('w0rp/ale')
 function def.before_load()
@@ -542,10 +527,6 @@ function def.before_load()
     \ 'elm': ['elm-format'],
     \ }
 endfunction
-
-""" Document
-
-let def = my#pack#add('vim-jp/vimdoc-ja')
 
 " }}}
 
