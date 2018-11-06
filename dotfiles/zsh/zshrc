@@ -29,7 +29,7 @@ bindkey "^N" history-beginning-search-forward-end
 # vcs_info
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
-zstyle ':vcs_info:*' formats '%F{green}(%b)%f'
+zstyle ':vcs_info:*' formats '%F{blue}(%b)%f'
 zstyle ':vcs_info:*' actionformats '%F{red}(%b|%a)%f'
 
 function _update_vcs_info_msg() {
