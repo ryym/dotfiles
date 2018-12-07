@@ -480,6 +480,7 @@ augroup vimrc
   autocmd FileType eruby      ShortIndent
   autocmd FileType jsp        ShortIndent
   autocmd FileType vue        ShortIndent
+  autocmd FileType terraform  ShortIndent
   autocmd FileType c          MediumIndent
   autocmd FileType cs         MediumIndent
   autocmd FileType vb         MediumIndent

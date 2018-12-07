@@ -525,6 +525,7 @@ function def.before_load()
   let g:ale_fixers = {
     \ 'rust': ['rustfmt'],
     \ 'elm': ['elm-format'],
+    \ 'terraform': ['terraform'],
     \ }
 endfunction
 
