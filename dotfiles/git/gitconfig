@@ -1,8 +1,12 @@
+[user]
+    name = ryym
+    email = ryym.64@gmail.com
 [push]
     default = simple
 [core]
     editor = vim
     quotepath = false
+    excludesfile = /Users/ryu/.gitignore
 [rebase]
     autosquash = true
 [merge]
