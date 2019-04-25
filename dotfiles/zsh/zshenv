@@ -19,8 +19,19 @@ export PATH="/usr/local/bin:$PATH"
 # Anyenv
 if [ -d "$ANYENV_PATH" ]; then
     export PATH="$ANYENV_PATH/bin:$PATH"
-    eval "$(anyenv init - zsh)"
+
+    # Source the customize initialization script
+    # instead of `eval "$(anyenv init - zsh)"`.
+    source "$DOTPATH/lib/anyenv-init.sh"
 fi
+
+# # Anyenv
+# if [ -d "$ANYENV_PATH" ] && [ ! -e /tmp/_anyenv_loaded ]; then
+#     echo "anyenvvv $__ANYENV_LOADED"
+#     export PATH="$ANYENV_PATH/bin:$PATH"
+#     eval "$(anyenv init - zsh)"
+#     touch /tmp/_anyenv_loaded
+# fi
 
 # added by travis gem
 [ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
