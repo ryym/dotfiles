@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+log_start 'Rustup'
+
+if ! has cargo; then
+    # https://www.rust-lang.org/tools/install
+    run "curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path"
+fi
+
+log_finish 'Rustup'

@@ -16,6 +16,8 @@ load pm/brew/install
 
 load env/install
 
+load lib/rustup
+
 load pm/lang/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then
