@@ -8,7 +8,6 @@ LINKS=(
     'zsh/zshenv:.zshenv'
     'git/gitconfig:.gitconfig'
     'vim:.vim'
-    'vimperatorrc:.vimperatorrc'
     'cvimrc:.cvimrc'
     'tmux/tmux.conf:.tmux.conf'
     'tmux:.tmux'
