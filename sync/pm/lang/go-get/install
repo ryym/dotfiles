@@ -8,6 +8,7 @@ get() {
 
 if is_dryrun || has go; then
     get github.com/motemen/ghq
+    get github.com/pocke/whichpr
     get github.com/ryym/slv
 else
     log_error 'Go is not available'
