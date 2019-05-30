@@ -452,8 +452,9 @@ augroup vimrc
     \ 'Guardfile'    : 'ruby',
     \ 'Vagrantfile'  : 'ruby',
     \ 'Berksfile'    : 'ruby',
-    \ 'Dockerfile*' : 'Dockerfile',
+    \ 'Dockerfile*'  : 'Dockerfile',
     \ '*.purs'       : 'haskell',
+    \ '*.css'        : 'scss',
     \ })
 augroup END
 
