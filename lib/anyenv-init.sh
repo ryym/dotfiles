@@ -18,7 +18,7 @@ export PATH="/Users/ryu/.anyenv/envs/nodenv/bin:$PATH"
 export PATH="/Users/ryu/.anyenv/envs/nodenv/shims:${PATH}"
 export NODENV_SHELL=zsh
 source '/Users/ryu/.anyenv/envs/nodenv/libexec/../completions/nodenv.zsh'
-(command nodenv rehash 2>/dev/null &)
+# (command nodenv rehash 2>/dev/null &)
 nodenv() {
   local command
   command="${1:-}"
@@ -38,7 +38,7 @@ export PATH="/Users/ryu/.anyenv/envs/pyenv/bin:$PATH"
 export PATH="/Users/ryu/.anyenv/envs/pyenv/shims:${PATH}"
 export PYENV_SHELL=zsh
 source '/Users/ryu/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh'
-(command pyenv rehash 2>/dev/null &)
+# (command pyenv rehash 2>/dev/null &)
 pyenv() {
   local command
   command="${1:-}"
@@ -53,12 +53,13 @@ pyenv() {
     command pyenv "$command" "$@";;
   esac
 }
+
 export RBENV_ROOT="/Users/ryu/.anyenv/envs/rbenv"
 export PATH="/Users/ryu/.anyenv/envs/rbenv/bin:$PATH"
 export PATH="/Users/ryu/.anyenv/envs/rbenv/shims:${PATH}"
 export RBENV_SHELL=zsh
 source '/Users/ryu/.anyenv/envs/rbenv/libexec/../completions/rbenv.zsh'
-(command rbenv rehash 2>/dev/null &)
+# (command rbenv rehash 2>/dev/null &)
 rbenv() {
   local command
   command="${1:-}"
