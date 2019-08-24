@@ -1,6 +1,6 @@
 # Dotfiles
 
-[![CircleCI](circleci-badge)](https://circleci.com/gh/ryym/dotfiles)
+[![CircleCI][circleci-badge]](https://circleci.com/gh/ryym/dotfiles)
 
 [circleci-badge]: https://circleci.com/gh/ryym/dotfiles.svg?style=svg
 
