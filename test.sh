@@ -12,5 +12,5 @@ fi
 
 for ospath in sync/os/*; do
     OS=${ospath##*/} make dryrun-install
-    echo
+    echo ''
 done
