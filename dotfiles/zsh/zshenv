@@ -33,9 +33,6 @@ fi
 #     touch /tmp/_anyenv_loaded
 # fi
 
-# added by travis gem
-[ -f /Users/ryu/.travis/travis.sh ] && source /Users/ryu/.travis/travis.sh
-
 # Rust
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
