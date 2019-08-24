@@ -1,4 +1,0 @@
-language: C
-
-script:
-  make test

@@ -1,8 +1,8 @@
 # Dotfiles
 
-[![Travis][travis-badge]](https://travis-ci.org/ryym/dotfiles)
+[![CircleCI](circleci-badge)](https://circleci.com/gh/ryym/dotfiles)
 
-[travis-badge]: https://travis-ci.org/ryym/dotfiles.svg
+[circleci-badge]: https://circleci.com/gh/ryym/dotfiles.svg?style=svg
 
 This repository manages:
 
