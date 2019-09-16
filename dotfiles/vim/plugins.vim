@@ -318,31 +318,6 @@ endfunction
 
 """ Tools
 
-let def = my#pack#add('Shougo/vimproc.vim')
-function! def.before_load() "{{{
-  let info = my#pack#get_info('vimproc.vim')
-  let vimproc_path = info.dir . '/'
-
-  " Check if a binary already exist or not.
-  if glob(vimproc_path . 'lib/*') != '' || g:is_windows
-    return
-  endif
-
-  let cmd = ''
-  if g:is_mac
-    let cmd = 'make -f make_mac.mak'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-
-  execute "cd" vimproc_path
-  echom "Build vimproc: " . cmd
-  call system(cmd)
-  execute "cd -"
-endfunction "}}}
-
 let def = my#pack#add('Shougo/defx.nvim')
 if !has('nvim')
   call my#pack#add('roxma/nvim-yarp')
