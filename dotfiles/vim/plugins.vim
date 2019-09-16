@@ -223,8 +223,6 @@ let def = my#pack#add('hail2u/vim-css3-syntax')
 
 let def = my#pack#add('othree/html5.vim')
 
-let def = my#pack#add('pangloss/vim-javascript')
-
 let def = my#pack#add('mxw/vim-jsx')
 function! def.before_load()
   let g:jsx_ext_required = 0
