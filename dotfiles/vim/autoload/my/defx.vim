@@ -2,6 +2,8 @@ function! my#defx#configure()
   MapNamedKey <Space>f defx
   Map n \[defx]E ::Defx -split=vertical -winwidth=35
   Map n \[defx]e ::call my#defx#_open_buffer_dir()
+  Map n \[defx]c ::call my#defx#_close_filer()
+
 
   autocmd vimrc FileType defx call <SID>configure_defx_buffer()
 endfunction
@@ -27,4 +29,21 @@ endfunction
 
 function! my#defx#_open_buffer_dir() abort
   execute 'Defx -split=vertical -winwidth=35 ' . expand('%:h')
+endfunction
+
+function! my#defx#_close_filer() abort
+  let bufnr = s:find_defx_bufnr()
+  if bufnr != -1
+    execute 'bdelete ' . bufnr
+  endif
+endfunction
+
+function s:find_defx_bufnr() abort
+  for bufnr in tabpagebuflist()
+    let ft = getbufvar(bufnr, '&filetype')
+    if ft == 'defx'
+      return bufnr
+    endif
+  endfor
+  return -1
 endfunction
