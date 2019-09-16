@@ -187,26 +187,7 @@ endfunction "}}}
 
 let def = my#pack#add('nelstrom/vim-visual-star-search')
 
-let def = my#pack#add('haya14busa/incsearch.vim')
-function! def.before_load() "{{{
-  Remap nvo /  <Plug>(incsearch-forward)
-  Remap nvo ?  <Plug>(incsearch-backward)
-  Remap nvo g/ <Plug>(incsearch-stay)
-  Remap nvo n  <Plug>(incsearch-nohl-n)
-  Remap nvo N  <Plug>(incsearch-nohl-N)
-  Remap nvo *  <Plug>(incsearch-nohl-*)
-  Remap nvo #  <Plug>(incsearch-nohl-#)
-  Remap nvo g* <Plug>(incsearch-nohl-g*)
-  Remap nvo g# <Plug>(incsearch-nohl-g#)
-
-  " Leave default search function to search multi byte characters.
-  " (https://github.com/haya14busa/incsearch.vim/issues/52)
-  Map nvo <Leader>/ /
-
-  let g:incsearch#auto_nohlsearch = 1
-  let g:incsearch#consistent_n_direction = 1
-  let g:incsearch#magic = '\v'
-endfunction "}}}
+let def = my#pack#add('haya14busa/is.vim')
 
 let def = my#pack#add('yuttie/comfortable-motion.vim')
 function! def.before_load() "{{{
