@@ -1,7 +1,7 @@
 function! my#defx#configure()
   MapNamedKey <Space>f defx
-  Map n \[defx]e ::Defx -split=vertical -winwidth=35
-  Map n \[defx]E ::call my#defx#_open_buffer_dir()
+  Map n \[defx]E ::Defx -split=vertical -winwidth=35
+  Map n \[defx]e ::call my#defx#_open_buffer_dir()
 
   autocmd vimrc FileType defx call <SID>configure_defx_buffer()
 endfunction

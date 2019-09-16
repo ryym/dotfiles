@@ -4,11 +4,11 @@ function! my#fzf#configure()
   MapNamedKey <Space>z fzf
 
   Map n \[fzf]f ::call fzf#run({'sink': 'edit'})
-  Map n \[fzf]b ::call my#fzf#_tabpage_buffers()
+  Map n \[fzf]z ::call my#fzf#_tabpage_buffers()
   Map n \[fzf]m ::call my#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#fzf#_lines()
-  Map n \[fzf]z ::call my#fzf#_ghq()
-  Map n \[fzf]g ::call my#fzf#_gosrc()
+  Map n \[fzf]g ::call my#fzf#_ghq()
+  Map n \[fzf]G ::call my#fzf#_gosrc()
   Map n \[fzf]o :us:FZFoutput
 endfunction
 
