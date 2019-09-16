@@ -70,11 +70,13 @@ alias be='bundle exec'
 alias npmr='npm run'
 alias cg='cargo'
 
-## Peco
+## FZF
+export FZF_DEFAULT_OPTS="--reverse --bind=ctrl-k:kill-line"
+
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
 # http://qiita.com/udzura/items/3f120b5e4733fe85078d
-function peco-src() {
-    local selected_dir=$(eval "$1" | peco --query "$LBUFFER")
+function fzf-src() {
+    local selected_dir=$(eval "$1" | fzf --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
@@ -82,26 +84,17 @@ function peco-src() {
     zle clear-screen
 }
 
-# ghq
-function peco-ghq() {
-    peco-src 'ghq list -p'
+function fzf-ghq() {
+    fzf-src 'ghq list -p'
 }
-zle -N peco-ghq
-bindkey '^]' peco-ghq
+zle -N fzf-ghq
+bindkey '^]' fzf-ghq
 
-# Go package sources
-function peco-gopath() {
-    peco-src 'gits -p $GOPATH/src'
+function fzf-gopath() {
+    fzf-src 'gits -p $GOPATH/src'
 }
-zle -N peco-gopath
-bindkey '^g' peco-gopath
-
-# Vim plugins
-function peco-vimpacks() {
-    peco-src 'gits -p ~/.vim/pack'
-}
-zle -N peco-vimpacks
-bindkey '^v' peco-vimpacks
+zle -N fzf-gopath
+bindkey '^g' fzf-gopath
 
 # https://github.com/direnv/direnv
 if has direnv; then
