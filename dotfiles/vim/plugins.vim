@@ -441,6 +441,12 @@ function def.before_load()
     \ }
 endfunction
 
+let def = my#pack#add('prabirshrestha/async.vim')
+let def = my#pack#add('prabirshrestha/vim-lsp')
+let def.after_load = function('my#lsp#configure')
+let def = my#pack#add('prabirshrestha/asyncomplete.vim')
+let def = my#pack#add('prabirshrestha/asyncomplete-lsp.vim')
+
 " }}}
 
 " Note that we don't install not installed packages automatically.
