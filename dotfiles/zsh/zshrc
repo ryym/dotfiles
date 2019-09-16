@@ -71,7 +71,7 @@ alias npmr='npm run'
 alias cg='cargo'
 
 ## FZF
-export FZF_DEFAULT_OPTS="--reverse --bind=ctrl-k:kill-line"
+export FZF_DEFAULT_OPTS="-i --cycle --reverse --bind=ctrl-k:kill-line"
 
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
 # http://qiita.com/udzura/items/3f120b5e4733fe85078d
