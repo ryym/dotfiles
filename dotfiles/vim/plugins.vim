@@ -187,26 +187,7 @@ endfunction "}}}
 
 let def = my#pack#add('nelstrom/vim-visual-star-search')
 
-let def = my#pack#add('haya14busa/incsearch.vim')
-function! def.before_load() "{{{
-  Remap nvo /  <Plug>(incsearch-forward)
-  Remap nvo ?  <Plug>(incsearch-backward)
-  Remap nvo g/ <Plug>(incsearch-stay)
-  Remap nvo n  <Plug>(incsearch-nohl-n)
-  Remap nvo N  <Plug>(incsearch-nohl-N)
-  Remap nvo *  <Plug>(incsearch-nohl-*)
-  Remap nvo #  <Plug>(incsearch-nohl-#)
-  Remap nvo g* <Plug>(incsearch-nohl-g*)
-  Remap nvo g# <Plug>(incsearch-nohl-g#)
-
-  " Leave default search function to search multi byte characters.
-  " (https://github.com/haya14busa/incsearch.vim/issues/52)
-  Map nvo <Leader>/ /
-
-  let g:incsearch#auto_nohlsearch = 1
-  let g:incsearch#consistent_n_direction = 1
-  let g:incsearch#magic = '\v'
-endfunction "}}}
+let def = my#pack#add('haya14busa/is.vim')
 
 let def = my#pack#add('yuttie/comfortable-motion.vim')
 function! def.before_load() "{{{
@@ -241,8 +222,6 @@ let def = my#pack#add('derekwyatt/vim-scala')
 let def = my#pack#add('hail2u/vim-css3-syntax')
 
 let def = my#pack#add('othree/html5.vim')
-
-let def = my#pack#add('pangloss/vim-javascript')
 
 let def = my#pack#add('mxw/vim-jsx')
 function! def.before_load()
@@ -312,81 +291,23 @@ let def = my#pack#add('itchyny/vim-cursorword')
 function! def.after_load()
   augroup vim-cursorword
     autocmd!
-    autocmd FileType vimfiler,unite let b:cursorword = 0
+    autocmd FileType defx let b:cursorword = 0
   augroup END
 endfunction
 
 """ Tools
 
-let def = my#pack#add('Shougo/vimproc.vim')
-function! def.before_load() "{{{
-  let info = my#pack#get_info('vimproc.vim')
-  let vimproc_path = info.dir . '/'
-
-  " Check if a binary already exist or not.
-  if glob(vimproc_path . 'lib/*') != '' || g:is_windows
-    return
-  endif
-
-  let cmd = ''
-  if g:is_mac
-    let cmd = 'make -f make_mac.mak'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-
-  execute "cd" vimproc_path
-  echom "Build vimproc: " . cmd
-  call system(cmd)
-  execute "cd -"
-endfunction "}}}
-
-let def = my#pack#add('Shougo/vimfiler.vim')
-function! def.before_load() "{{{
-  MapNamedKey <Space>f vimfiler
-  Map n \[vimfiler]f :us:VimFiler
-  Map n \[vimfiler]s :us:VimFiler -split -winwidth=60
-  Map n \[vimfiler]c ::VimFilerCurrentDir
-  Map n \[vimfiler]d ::VimFilerBufferDir
-  Map n \[vimfiler]e ::VimFilerBufferDir -split -simple -winwidth=35 -no-quit
-  Map n \[vimfiler]E :us:VimFiler        -split -simple -winwidth=35 -no-quit
-
-  let g:vimfiler_as_default_explorer  = 1
-  let g:vimfiler_safe_mode_by_default = 0
-  let g:vimfiler_no_default_key_mappings = 1
-
-  autocmd vimrc FileType vimfiler call <SID>configure_vimfiler_buffer()
-  function! s:configure_vimfiler_buffer()
-    Remap n (buffer nowait) j <Plug>(vimfiler_loop_cursor_down)
-    Remap n (buffer nowait) k <Plug>(vimfiler_loop_cursor_up)
-    Remap n (buffer nowait) l <Plug>(vimfiler_smart_l)
-    Remap n (buffer nowait) h <Plug>(vimfiler_smart_h)
-    Remap n (buffer nowait) gg <Plug>(vimfiler_cursor_top)
-    Remap n (buffer nowait) yy <Plug>(vimfiler_yank_full_path)
-    Remap n (buffer nowait) f <Plug>(vimfiler_expand_tree)
-    Remap n (buffer nowait) F <Plug>(vimfiler_expand_tree_recursive)
-    Remap n (buffer nowait) <C-l> <Plug>(vimfiler_redraw_screen)
-    Remap n (buffer nowait) i <Plug>(vimfiler_toggle_mark_current_line)
-    Remap n (buffer nowait) * <Plug>(vimfiler_toggle_mark_all_lines)
-    Remap n (buffer nowait) c <Plug>(vimfiler_copy_file)
-    Remap n (buffer nowait) m <Plug>(vimfiler_move_file)
-    Remap n (buffer nowait) d <Plug>(vimfiler_delete_file)
-    Remap n (buffer nowait) r <Plug>(vimfiler_rename_file)
-    Remap n (buffer nowait) K <Plug>(vimfiler_make_directory)
-    Remap n (buffer nowait) C <Plug>(vimfiler_new_file)
-    Remap n (buffer nowait) <CR> <Plug>(vimfiler_cd_or_edit)
-    Remap n (buffer nowait) ~ <Plug>(vimfiler_switch_to_home_directory)
-    Remap n (buffer nowait) . <Plug>(vimfiler_toggle_visible_ignore_files)
-    Remap n (buffer nowait) <C-g> <Plug>(vimfiler_print_filename)
-    Remap n (buffer nowait) <Space>q <Plug>(vimfiler_exit)
-
-    setlocal nobuflisted
-  endfunction
-endfunction "}}}
-
 let def = my#pack#add('kana/vim-tabpagecd')
+
+let def = my#pack#add('Shougo/defx.nvim')
+if !has('nvim')
+  call my#pack#add('roxma/nvim-yarp')
+  call my#pack#add('roxma/vim-hug-neovim-rpc')
+endif
+let def.after_load = function('my#defx#configure')
+
+let def = my#pack#add('junegunn/fzf')
+let def.after_load = function('my#fzf#configure')
 
 let def = my#pack#add('kana/vim-submode')
 function! def.before_load() "{{{
@@ -490,15 +411,6 @@ let def = my#pack#add_opt('thinca/vim-themis')
 let def = my#pack#add_opt('kana/vim-vspec')
 
 let def = my#pack#add('Shougo/tabpagebuffer.vim')
-
-let def = my#pack#add('Shougo/unite.vim')
-let def.after_load = function('my#unite#configure')
-
-let def = my#pack#add('Shougo/neomru.vim')
-let def.after_load = function('my#unite#configure_neomru')
-
-let def = my#pack#add('haya14busa/unite-ghq')
-let def.after_load = function('my#unite#configure_ghq')
 
 let def = my#pack#add('ryym/bufswitcher.vim')
 function def.before_load()
