@@ -297,13 +297,14 @@ endfunction
 
 """ Tools
 
+let def = my#pack#add('kana/vim-tabpagecd')
+
 let def = my#pack#add('Shougo/defx.nvim')
 if !has('nvim')
   call my#pack#add('roxma/nvim-yarp')
   call my#pack#add('roxma/vim-hug-neovim-rpc')
 endif
 let def.after_load = function('my#defx#configure')
-let def = my#pack#add('kana/vim-tabpagecd')
 
 let def = my#pack#add('junegunn/fzf')
 let def.after_load = function('my#fzf#configure')
