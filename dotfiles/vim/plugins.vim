@@ -312,7 +312,7 @@ let def = my#pack#add('itchyny/vim-cursorword')
 function! def.after_load()
   augroup vim-cursorword
     autocmd!
-    autocmd FileType defx,unite let b:cursorword = 0
+    autocmd FileType defx let b:cursorword = 0
   augroup END
 endfunction
 
@@ -350,6 +350,9 @@ if !has('nvim')
 endif
 let def.after_load = function('my#defx#configure')
 let def = my#pack#add('kana/vim-tabpagecd')
+
+let def = my#pack#add('junegunn/fzf')
+let def.after_load = function('my#fzf#configure')
 
 let def = my#pack#add('kana/vim-submode')
 function! def.before_load() "{{{
@@ -453,15 +456,6 @@ let def = my#pack#add_opt('thinca/vim-themis')
 let def = my#pack#add_opt('kana/vim-vspec')
 
 let def = my#pack#add('Shougo/tabpagebuffer.vim')
-
-let def = my#pack#add('Shougo/unite.vim')
-let def.after_load = function('my#unite#configure')
-
-let def = my#pack#add('Shougo/neomru.vim')
-let def.after_load = function('my#unite#configure_neomru')
-
-let def = my#pack#add('haya14busa/unite-ghq')
-let def.after_load = function('my#unite#configure_ghq')
 
 let def = my#pack#add('ryym/bufswitcher.vim')
 function def.before_load()
