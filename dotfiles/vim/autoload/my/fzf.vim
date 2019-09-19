@@ -1,11 +1,16 @@
 " https://github.com/junegunn/fzf/blob/master/README-VIM.md
 
 function! my#fzf#configure()
-  MapNamedKey <Space>z fzf
+  MapNamedKey <Space>u fzf
 
-  Map n \[fzf]f ::call my#fzf#_git_files()
+  if !executable('fzf')
+    echom 'fzf is not installed'
+    return
+  endif
+
+  Map n \[fzf]f ::call my#fzf#_without_ignored_files()
   Map n \[fzf]F ::call fzf#run({'sink': 'edit'})
-  Map n \[fzf]z ::call my#fzf#_tabpage_buffers()
+  Map n \[fzf]b ::call my#fzf#_tabpage_buffers()
   Map n \[fzf]m ::call my#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#fzf#_lines()
   Map n \[fzf]g ::call my#fzf#_ghq()
@@ -13,10 +18,15 @@ function! my#fzf#configure()
   Map n \[fzf]o :us:FZFoutput
 endfunction
 
-function! my#fzf#_git_files() abort
+let s:fd_available = executable('fd')
+
+function! my#fzf#_without_ignored_files() abort
+  " https://github.com/sharkdp/fd
+  " fd is so fast and it respects .gitignore by default.
+  let src = s:fd_available ? 'fd --hidden --type f' : 'git ls-files'
   call fzf#run({
     \   'sink': 'edit',
-    \   'source': 'git ls-files',
+    \   'source': src,
     \   'up': '35%',
     \ })
 endfunction

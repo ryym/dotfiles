@@ -73,7 +73,12 @@ alias cg='cargo'
 alias manv='() { vim -c "Man $1 | only" }'
 
 ## FZF
-export FZF_DEFAULT_OPTS="-i --cycle --reverse --bind=ctrl-k:kill-line"
+export FZF_DEFAULT_OPTS="-i --cycle --reverse --bind=ctrl-k:kill-line,space:toggle+down,ctrl-s:select-all,ctrl-d:deselect-all"
+
+# Make fzf super faster
+# - https://github.com/junegunn/fzf#respecting-gitignore
+# - https://github.com/sharkdp/fd
+export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore"
 
 # http://qiita.com/strsk/items/9151cef7e68f0746820d
 # http://qiita.com/udzura/items/3f120b5e4733fe85078d
