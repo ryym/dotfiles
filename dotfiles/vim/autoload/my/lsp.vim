@@ -1,4 +1,6 @@
 function! my#lsp#configure()
+  let g:lsp_fold_enabled = 0
+
   MapNamedKey <Space>v lsp
   Map n \[lsp]d ::LspDocumentDiagnostics
   Map n \[lsp]s ::LspDocumentSymbol
@@ -6,7 +8,7 @@ function! my#lsp#configure()
   Map n \[lsp]k ::LspPreviousError
   Map n \[lsp]r ::LspRename
   Map n \[lsp]? ::LspStatus
-  Map n (silent) \[lsp]i ::call my#lsp#_toggle_hover_buffer()
+  Map n (silent) \[lsp]i ::LspHover
 
   " TypeScript (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-TypeScript)
   if executable('typescript-language-server')
@@ -59,15 +61,6 @@ function s:find_nearest_dir(filename)
   return lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), a:filename)
 endfunction
 
-function my#lsp#_toggle_hover_buffer() abort
-  let bufnr = s:find_hover_bufnr()
-  if bufnr == -1
-    execute 'LspHover'
-  else
-    execute 'bdelete ' . bufnr
-  endif
-endfunction
-
 function s:configure_lsp()
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
@@ -75,6 +68,8 @@ function s:configure_lsp()
   Map n (buffer) <C-]> ::LspDefinition
   Map n (buffer) gd ::LspDefinition
   Map n (buffer) gD ::LspReferences
+  Map n (buffer) gD ::LspReferences
+  Map n (buffer) K ::LspHover
 endfunction
 
 function s:find_hover_bufnr() abort
