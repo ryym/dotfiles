@@ -113,3 +113,14 @@ fi
 
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# Use fzf to add files interactively.
+gitfunc_add_interactive() {
+    local selected=$( \
+    git status --short | grep -v '^M' | fzf --multi \
+        --bind 'ctrl-d:execute(git diff --color=always {2} | less -R > /dev/tty)' \
+        --bind 'ctrl-e:execute(vim {2} < /dev/tty > /dev/tty)' \
+        --preview 'test {1} = "??" && bat --plain --color=always {2} || git diff --color=always {2}'
+    );
+    test "$selected" && git add $(awk '{print $2}' <<< "$selected") && git status;
+}

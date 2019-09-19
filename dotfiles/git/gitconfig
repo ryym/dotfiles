@@ -21,6 +21,7 @@
     setup  = !git init && touch .gitignore && git add .gitignore \
              && git commit -m 'Init repository'
     s      = status
+    ss     = !tig status
     h      = help
     b      = branch
     bm     = branch -m
@@ -40,6 +41,7 @@
     aa     = add --all
     ap     = add -p
     au     = add -u
+    ai     = !zsh -c 'source $HOME/.zshrc && gitfunc_add_interactive'
     cm     = commit
     cmm    = commit -m
     cma    = commit -a
