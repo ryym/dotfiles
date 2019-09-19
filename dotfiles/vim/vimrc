@@ -550,6 +550,8 @@ Remap i <C-CR> <End><CR>
 Remap i <S-CR> <C-o>O
 Remap i <S-Tab> <Tab><Tab>
 
+Map i (expr) <Tab>  pumvisible() ? "\<C-n>" : "\<Tab>"
+
 " Break undo sequence after these deletions in Insert mode.
 Map i <C-w> <C-g>u<C-w>
 Map i <C-u> <C-g>u<C-u>
@@ -623,8 +625,8 @@ Map c (expr) %% getcmdtype() == ':' ? expand('%:h') : '%%'
 
 Map n mm m
 Map n _  `
-Map n <C-h>     :us:vert help
-Map n <Leader>h :us:help
+Map n <C-h>     :us:help
+Map n <Leader>h :us:vert help
 Map n <Space>w  ::update
 Map n <Space>W  ::update!
 Map n <Space>q  ::quit
