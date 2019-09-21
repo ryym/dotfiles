@@ -1,8 +1,1 @@
-dotfiles/vim/pack/
-dotfiles/vim/local/*
 !.gitkeep
-
-dotfiles/tmux/plugins/*
-!dotfiles/tmux/plugins/tpm
-
-dotfiles/tmux/resurrect/
