@@ -1,15 +1,15 @@
 " https://github.com/junegunn/fzf/blob/master/README-VIM.md
 
 function! my#fzf#configure()
-  MapNamedKey <Space>u fzf
-
   if !executable('fzf')
     echom 'fzf is not installed'
     return
   endif
 
+  MapNamedKey <Space>u fzf
+
   Map n \[fzf]f ::call my#fzf#_without_ignored_files()
-  Map n \[fzf]F ::call fzf#run({'sink': 'edit'})
+  Map n \[fzf]F ::call my#fzf#_all_files()
   Map n \[fzf]b ::call my#fzf#_tabpage_buffers()
   Map n \[fzf]m ::call my#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#fzf#_lines()
@@ -29,6 +29,17 @@ function! my#fzf#_without_ignored_files() abort
     \   'source': src,
     \   'up': '35%',
     \ })
+endfunction
+
+function! my#fzf#_all_files()
+  call fzf#run({ 'sink': funcref('my#fzf#_open_file_or_dir') })
+endfunction
+function! my#fzf#_open_file_or_dir(name)
+  if isdirectory(a:name)
+    execute 'cd' a:name
+  else
+    execute 'edit' a:name
+  endif
 endfunction
 
 function! my#fzf#_tabpage_buffers() abort
