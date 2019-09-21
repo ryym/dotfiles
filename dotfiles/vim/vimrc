@@ -631,8 +631,6 @@ Map n <Space>w  ::update
 Map n <Space>W  ::update!
 Map n <Space>q  ::quit
 Map n <Space>Q  ::quit!
-Map n <C-j> <C-e>gj
-Map n <C-k> <C-y>gk
 Map n Y y$
 Map n Q q
 Map n <Leader>d ::pwd
@@ -652,6 +650,9 @@ Map n (silent) <Leader>c ::Rtw
 " In US keyboard, typing ':' is so hard..
 Map nv ; :
 Map nv : ;
+
+Map nvo <C-j> }
+Map nvo <C-k> {
 
 
 " Fix the direction of the ';', ',', 'n', 'N' {{{2
