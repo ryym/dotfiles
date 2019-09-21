@@ -42,6 +42,7 @@ function! my#fzf#_open_file_or_dir(name)
   endif
 endfunction
 
+" TODO: Sort buffers by last open time.
 function! my#fzf#_tabpage_buffers() abort
   let bufs = gettabvar(tabpagenr(), 'tabpagebuffer')
   let bufnrs = map(keys(bufs), 'str2nr(v:val, 10)')
@@ -64,16 +65,26 @@ endfunction
 function! my#fzf#_lines() abort
   let scale = len(string(line('$')))
   let lines = map(getline(1, '$'), {idx, v -> printf("% ".scale."d", idx+1) . '| ' . v})
+
   call fzf#run({
-    \   'sink': function('my#fzf#_lines_sink', [scale]),
+    \   'sink*': funcref('my#fzf#_lines_on_select', [scale]),
     \   'source': lines,
-    \   'options': '--reverse',
+    \   'options': '--multi --reverse --expect=ctrl-y',
     \ })
 endfunction
-
-function! my#fzf#_lines_sink(width, line) abort
-  let ln = str2nr(a:line[0:a:width])
-  execute ln
+function! my#fzf#_lines_on_select(width, lines) abort
+  if len(a:lines) == 0
+    return
+  endif
+  if a:lines[0] == 'ctrl-y'
+    let lines = map(a:lines[1:], {_i, l -> substitute(l, '^\s*\d\+|\s', '', '')})
+    " Copy the selected lines.
+    call setreg('*', join(lines, "\n"))
+  else
+    " Go to the selected line.
+    let ln = str2nr(a:lines[1][0:a:width])
+    execute ln
+  endif
 endfunction
 
 function! my#fzf#_ghq() abort
