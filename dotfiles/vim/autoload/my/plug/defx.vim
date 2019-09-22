@@ -1,5 +1,9 @@
 function! my#plug#defx#configure(conf) abort
   let a:conf.repo = 'Shougo/defx.nvim'
+  if !has('nvim')
+    let a:conf.depends = ['nvim_yarp', 'hug_neovim_rpc']
+  endif
+
   let a:conf.after_load = function('my#plug#defx#after_load')
 endfunction
 
