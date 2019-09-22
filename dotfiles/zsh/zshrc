@@ -114,13 +114,40 @@ fi
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
-# Use fzf to add files interactively.
+# Use fzf to git-add/checkout files interactively.
 gitfunc_add_interactive() {
-    local selected=$( \
-    git status --short | grep -v '^M' | fzf --multi \
-        --bind 'ctrl-d:execute(git diff --color=always {2} | less -R > /dev/tty)' \
-        --bind 'ctrl-e:execute(vim {2} < /dev/tty > /dev/tty)' \
-        --preview 'test {1} = "??" && bat --plain --color=always {2} || git diff --color=always {2}'
+    local output=$( \
+        git status --short | grep -E '^\sM|^\?' | fzf --multi \
+            --expect 'ctrl-o' \
+            --bind 'ctrl-d:execute(git diff --color=always {2} | less -R > /dev/tty)' \
+            --bind 'ctrl-e:execute(vim {2} < /dev/tty > /dev/tty)' \
+            --preview 'test {1} = "??" && (test -d {2} && ls -Al {2} || bat --plain --color=always {2}) || git diff --color=always {2}'
     );
-    test "$selected" && git add $(awk '{print $2}' <<< "$selected") && git status;
+    local selected=$(echo "$output" | sed '1,1d' | awk '{print $2}')
+    if test "$output"; then
+        case $(head -n 1 <<< "$output") in
+            ctrl-o) git checkout $(echo "$selected") ;;
+            *) git add $(echo "$selected") ;;
+        esac;
+        git status;
+    fi
+}
+
+# Use fzf to git-reset files interactively.
+gitfunc_reset_interactive() {
+    local output=$( \
+        git status --short | grep -E '^M|^A' | fzf --multi \
+            --expect 'ctrl-h'
+            --bind 'ctrl-d:execute(git diff --cached --color=always {2} | less -R > /dev/tty)' \
+            --bind 'ctrl-e:execute(vim {2} < /dev/tty > /dev/tty)' \
+            --preview 'test {1} = "A" && bat --plain --color=always {2} || git diff --cached --color=always {2}'
+    );
+    local selected=$(echo "$output" | sed '1,1d' | awk '{print $2}')
+    if test "$output"; then
+        case $(head -n 1 <<< "$output") in
+            # reset --hard by ctrl-h?
+            *) git reset $(echo "$selected") ;;
+        esac;
+        git status;
+    fi
 }

@@ -68,6 +68,7 @@
     mab    = merge --abort
     rs     = reset --mixed
     rsh    = reset --hard
+    rsi    = !zsh -c 'source $HOME/.zshrc && gitfunc_reset_interactive'
     st     = stash
     stl    = stash list
     sts    = stash save
