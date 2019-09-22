@@ -15,12 +15,14 @@ let s:conf = {
   \   'is_debug': 0,
   \ }
 
-function! my#plugger#enable(conf) abort
-  call my#plugger#setup(a:conf)
-  call my#plugger#load_plugins()
+let s:repo_root = expand('<sfile>:p:h:h')
+
+function! plugger#enable(conf) abort
+  call plugger#setup(a:conf)
+  call plugger#load_plugins()
 endfunction
 
-function! my#plugger#setup(conf) abort
+function! plugger#setup(conf) abort
   " Default paths.
   let first_packpath = split(&packpath, ',')[0]
   let s:conf.pack_root = first_packpath . '/pack/plugs/opt/'
@@ -32,16 +34,18 @@ function! my#plugger#setup(conf) abort
     endif
   endfor
 
-  command! -nargs=+ PluggerAdd call my#plugger#add_conf_templates(<f-args>)
-  command! PluggerInstall call my#plugger#install_new()
+  command! -nargs=+ PluggerAdd call plugger#add_conf_templates(<f-args>)
+  command! PluggerInstall call plugger#install_new()
 endfunction
 
-function! my#plugger#load_plugins() abort
+" Load all plugin configurations and load plugins.
+" This ignores not installed plugins.
+function! plugger#load_plugins() abort
   let plugs = s:load_configs()
 
   for key in plugs.keys
     let conf = plugs.confs[key]
-    if conf.skip || !conf.installed
+    if conf.skip_load || !conf.installed
       continue
     endif
 
@@ -50,15 +54,16 @@ function! my#plugger#load_plugins() abort
 endfunction
 
 function! s:initial_conf() abort
-  return { 'repo': '', 'depends': [], 'skip': 0, 'installed': 0 }
+  return { 'repo': '', 'depends': [], 'install_if': 1, 'skip_load': 0, 'installed': 0 }
 endfunction
 
-function! my#plugger#install_new() abort
+" Install configured but not installed plugins.
+function! plugger#install_new() abort
   let plugs = s:load_configs()
   let repos = []
   for key in plugs.keys
     let conf = plugs.confs[key]
-    if !conf.installed
+    if !conf.installed && conf.install_if
       call add(repos, {'name': key, 'url': conf.repo})
     endif
   endfor
@@ -94,7 +99,7 @@ function! my#plugger#install_new() abort
       if !has_key(self.errs, repo.name)
         let conf = self.plugs.confs[repo.name]
         let conf.installed = 1
-        if !conf.skip
+        if !conf.skip_load
           call s:load_plugin(repo.name, self.plugs)
         endif
       endif
@@ -111,8 +116,10 @@ function! my#plugger#install_new() abort
     \   'is_debug': s:conf.is_debug,
     \   'plugins': repos,
     \ }
+
+  " TODO: Execute in a terminal window.
   call job_start(
-    \   ['scripts/install-plugins', json_encode(arg)],
+    \   [s:repo_root . '/scripts/install-plugins', json_encode(arg)],
     \   {
     \     'out_cb': ctx.on_stdout,
     \     'err_cb': ctx.on_stderr,
@@ -121,7 +128,7 @@ function! my#plugger#install_new() abort
     \ )
 endfunction
 
-function! my#plugger#plugin_path(key)
+function! plugger#plugin_path(key)
   return s:conf.pack_root . a:key
 endfunction
 
@@ -177,7 +184,7 @@ function! s:load_plugin(key, plugs) abort
   let deps_ok = 1
   for dep in conf.depends
     let d = a:plugs.confs[dep]
-    if d.repo == '' || d.skip || !d.installed
+    if d.repo == '' || d.skip_load || !d.installed
       let deps_ok = 0
       break
     endif
@@ -201,14 +208,14 @@ function! s:load_plugin(key, plugs) abort
   endif
 endfunction
 
-function! my#plugger#add_conf_templates(...) abort
+function! plugger#add_conf_templates(...) abort
   for cmd in a:000
     let cmds = split(cmd, ':')
-    call my#plugger#add_conf_template(cmds[0], join(cmds[1:], ''))
+    call plugger#add_conf_template(cmds[0], join(cmds[1:], ''))
   endfor
 endfunction
 
-function! my#plugger#add_conf_template(name, repo) abort
+function! plugger#add_conf_template(name, repo) abort
   if !isdirectory(s:conf.conf_root)
     call mkdir(s:conf.conf_root, 'p')
   endif
