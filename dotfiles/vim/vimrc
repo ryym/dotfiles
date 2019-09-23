@@ -831,7 +831,7 @@ Map n \[tab]l gt
 
 " Plugins {{{1
 
-source $MYVIMDIR/plugins.vim
+call plugger#enable({})
 
 runtime macros/matchit.vim
 

@@ -1,9 +1,17 @@
-function! my#defx#configure()
+function! my#plug#defx#configure(conf) abort
+  let a:conf.repo = 'Shougo/defx.nvim'
+  if !has('nvim')
+    let a:conf.depends = ['nvim_yarp', 'hug_neovim_rpc']
+  endif
+
+  let a:conf.after_load = function('my#plug#defx#after_load')
+endfunction
+
+function! my#plug#defx#after_load()
   MapNamedKey <Space>f defx
   Map n \[defx]E ::Defx -split=vertical -winwidth=35
-  Map n \[defx]e ::call my#defx#_open_buffer_dir()
-  Map n \[defx]c ::call my#defx#_close_filer()
-
+  Map n \[defx]e ::call my#plug#defx#_open_buffer_dir()
+  Map n \[defx]c ::call my#plug#defx#_close_filer()
 
   autocmd vimrc FileType defx call <SID>configure_defx_buffer()
 endfunction
@@ -25,13 +33,14 @@ function! s:configure_defx_buffer() abort
   Map n (silent buffer expr) r defx#do_action('rename')
   Map n (silent buffer expr) <C-l> defx#do_action('redraw')
   Map n (silent buffer expr) <C-g> defx#do_action('print')
+  Map n (silent buffer expr) . defx#do_action('toggle_ignored_files')
 endfunction
 
-function! my#defx#_open_buffer_dir() abort
+function! my#plug#defx#_open_buffer_dir() abort
   execute 'Defx -split=vertical -winwidth=35 ' . expand('%:h')
 endfunction
 
-function! my#defx#_close_filer() abort
+function! my#plug#defx#_close_filer() abort
   let bufnr = s:find_defx_bufnr()
   if bufnr != -1
     execute 'bdelete ' . bufnr
