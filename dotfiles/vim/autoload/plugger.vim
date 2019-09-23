@@ -50,12 +50,40 @@ endfunction
 function! plugger#load_plugins() abort
   let plugs = s:load_configs()
 
-  for key in plugs.keys
-    let conf = plugs.confs[key]
+  let startup_file = len(argv()) == 0 ? 0 : argv()[0]
+  let key_groups = s:classify_plug_keys(plugs, startup_file)
+
+  call s:load_plugins(key_groups[0], plugs)
+  call timer_start(1, {-> s:load_plugins(key_groups[1], plugs)})
+endfunction
+
+function! s:load_plugins(keys, plugs) abort
+  for key in a:keys
+    let conf = a:plugs.confs[key]
     if conf.installed
-      call s:load_plugin(key, plugs)
+      call s:load_plugin(key, a:plugs)
     endif
   endfor
+endfunction
+
+function! s:classify_plug_keys(plugs, startup_file) abort
+  let sync_keys = []
+  let async_keys = []
+  for key in a:plugs.keys
+    let conf = a:plugs.confs[key]
+
+    " For async loading, we need to consider the case when a user launches Vim
+    " with a filename. For example when a user opens a Elm file by 'vim Foo.elm',
+    " the `Foo.elm` file does not be highlighted even if `elm.vim` is installed
+    " because the plugin is loaded asynchronously (that is, loaded after the file is loaded).
+    " We can avoid such cases by detecting the file names and load synchronously as needed.
+    if conf.async.enabled && (a:startup_file is 0 || !conf.async.detect_startup_file(a:startup_file))
+      call add(async_keys, key)
+    else
+      call add(sync_keys, key)
+    endif
+  endfor
+  return [sync_keys, async_keys]
 endfunction
 
 function! s:initial_conf() abort
@@ -64,6 +92,7 @@ function! s:initial_conf() abort
     \   'depends': [],
     \   'install_if': 1,
     \   'skip_load': 0,
+    \   'async': { 'enabled': 0, 'detect_startup_file': 0 },
     \   'installed': 0,
     \   'load_state': s:load_state.not_loaded,
     \ }
@@ -165,6 +194,18 @@ function! s:load_configs() abort
       endif
     endfor
 
+    if conf.async.enabled
+      let tp = type(conf.async.detect_startup_file)
+      if tp == v:t_number
+        let conf.async.detect_startup_file = {->0}
+      elseif tp == v:t_list
+        let exts = conf.async.detect_startup_file
+        let conf.async.detect_startup_file = function('s:has_any_ext', [exts])
+      elseif tp != v:t_func
+        throw '[plugger] Invalid config async.detect_startup_file:' key
+      endif
+    endif
+
     " It may be already added by another plugin which depends on it.
     if !has_key(plugs.confs, key)
       call add(plugs.keys, key)
@@ -173,6 +214,15 @@ function! s:load_configs() abort
   endfor
 
   return plugs
+endfunction
+
+function! s:has_any_ext(exts, name) abort
+  for ext in a:exts
+    if matchend(a:name, '\.' . ext) != -1
+      return 1
+    endif
+  endfor
+  return 0
 endfunction
 
 function! s:conf_name(path) abort
