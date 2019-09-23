@@ -831,6 +831,10 @@ Map n \[tab]l gt
 
 " Plugins {{{1
 
+" Loading plugins asynchronously redraws a screen soon
+" so suppress the welcome message which disappears by the redrawing.
+set shortmess=I
+
 call plugger#enable({})
 
 runtime macros/matchit.vim
