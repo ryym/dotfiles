@@ -17,6 +17,13 @@ let s:conf = {
 
 let s:repo_root = expand('<sfile>:p:h:h')
 
+let s:load_state = {
+  \   'not_loaded': 0,
+  \   'loaded': 1,
+  \   'skipped': 2,
+  \   'unmet_deps': 3,
+  \ }
+
 function! plugger#enable(conf) abort
   call plugger#setup(a:conf)
   call plugger#load_plugins()
@@ -45,16 +52,21 @@ function! plugger#load_plugins() abort
 
   for key in plugs.keys
     let conf = plugs.confs[key]
-    if conf.skip_load || !conf.installed
-      continue
+    if conf.installed
+      call s:load_plugin(key, plugs)
     endif
-
-    call s:load_plugin(key, plugs)
   endfor
 endfunction
 
 function! s:initial_conf() abort
-  return { 'repo': '', 'depends': [], 'install_if': 1, 'skip_load': 0, 'installed': 0 }
+  return {
+    \   'repo': '',
+    \   'depends': [],
+    \   'install_if': 1,
+    \   'skip_load': 0,
+    \   'installed': 0,
+    \   'load_state': s:load_state.not_loaded,
+    \ }
 endfunction
 
 " Install configured but not installed plugins.
@@ -97,11 +109,8 @@ function! plugger#install_new() abort
 
     for repo in self.repos
       if !has_key(self.errs, repo.name)
-        let conf = self.plugs.confs[repo.name]
-        let conf.installed = 1
-        if !conf.skip_load
-          call s:load_plugin(repo.name, self.plugs)
-        endif
+        let self.plugs.confs[repo.name].installed = 1
+        call s:load_plugin(repo.name, self.plugs)
       endif
     endfor
   endfunction
@@ -156,8 +165,8 @@ function! s:load_configs() abort
       endif
     endfor
 
+    " It may be already added by another plugin which depends on it.
     if !has_key(plugs.confs, key)
-      " It may be already added by another plugin which depends on it.
       call add(plugs.keys, key)
     endif
     let plugs.confs[key] = conf
@@ -170,7 +179,6 @@ function! s:conf_name(path) abort
   return fnamemodify(a:path, ':t:r')
 endfunction
 
-" Note that this does not check skip or installed state.
 function! s:load_plugin(key, plugs) abort
   if !has_key(a:plugs.confs, a:key)
     throw '[plugger] unknown plugin' a:key
@@ -180,16 +188,24 @@ function! s:load_plugin(key, plugs) abort
   if conf.repo == ''
     throw '[plugger] repository of ' . a:key . ' not configured'
   endif
+  if !conf.installed
+    throw '[plugger] cannot load ' . a:key . ' not installed yet'
+  endif
 
+  if conf.skip_load
+    let conf.load_state = s:load_state.skipped
+    return
+  endif
+  
   let deps_ok = 1
   for dep in conf.depends
-    let d = a:plugs.confs[dep]
-    if d.repo == '' || d.skip_load || !d.installed
+    if a:plugs.confs[dep].load_state != s:load_state.loaded
       let deps_ok = 0
       break
     endif
   endfor
   if !deps_ok
+    let conf.load_state = s:load_state.unmet_deps
     return
   endif
 
@@ -206,6 +222,8 @@ function! s:load_plugin(key, plugs) abort
   if has_key(conf, 'after_load')
     call conf.after_load()
   endif
+
+  let conf.load_state = s:load_state.loaded
 endfunction
 
 function! plugger#add_conf_templates(...) abort
