@@ -43,6 +43,7 @@ function! plugger#setup(conf) abort
 
   command! -nargs=+ PluggerAdd call plugger#add_conf_templates(<f-args>)
   command! PluggerInstall call plugger#install_new()
+  command! -nargs=+ PluggerLoad call plugger#reload_plugins(<f-args>)
 endfunction
 
 " Load all plugin configurations and load plugins.
@@ -61,7 +62,7 @@ function! s:load_plugins(keys, plugs) abort
   for key in a:keys
     let conf = a:plugs.confs[key]
     if conf.installed
-      call s:load_plugin(key, a:plugs)
+      call s:load_plugin(key, a:plugs, 0)
     endif
   endfor
 endfunction
@@ -136,12 +137,15 @@ function! plugger#install_new() abort
       echohl None
     endif
 
+    let installed_keys = []
     for repo in self.repos
       if !has_key(self.errs, repo.name)
         let self.plugs.confs[repo.name].installed = 1
-        call s:load_plugin(repo.name, self.plugs)
+        call add(installed_keys, repo.name)
       endif
     endfor
+
+    call s:load_plugins(installed_keys, self.plugs)
   endfunction
 
   if !isdirectory(s:conf.pack_root)
@@ -229,7 +233,7 @@ function! s:conf_name(path) abort
   return fnamemodify(a:path, ':t:r')
 endfunction
 
-function! s:load_plugin(key, plugs) abort
+function! s:load_plugin(key, plugs, ignore_skip) abort
   if !has_key(a:plugs.confs, a:key)
     throw '[plugger] unknown plugin' a:key
   endif
@@ -242,7 +246,7 @@ function! s:load_plugin(key, plugs) abort
     throw '[plugger] cannot load ' . a:key . ' not installed yet'
   endif
 
-  if conf.skip_load
+  if !a:ignore_skip && conf.skip_load
     let conf.load_state = s:load_state.skipped
     return
   endif
@@ -303,4 +307,13 @@ function! plugger#add_conf_template(name, repo) abort
     \ 'endfunction',
     \ ]
   call writefile(lines, filepath)
+endfunction
+
+function! plugger#reload_plugins(...) abort
+  let plugs = s:load_configs()
+  for key in a:000
+    let path = s:conf.conf_root . key . '.vim'
+    execute 'source' path
+    call s:load_plugin(key, plugs, 1)
+  endfor
 endfunction
