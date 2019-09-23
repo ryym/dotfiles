@@ -44,6 +44,7 @@ function! plugger#setup(conf) abort
   command! -nargs=+ PluggerAdd call plugger#add_conf_templates(<f-args>)
   command! PluggerInstall call plugger#install_new()
   command! -nargs=+ PluggerLoad call plugger#reload_plugins(<f-args>)
+  command! -nargs=+ PluggerUpdate call plugger#update(<f-args>)
 endfunction
 
 " Load all plugin configurations and load plugins.
@@ -102,20 +103,43 @@ endfunction
 " Install configured but not installed plugins.
 function! plugger#install_new() abort
   let plugs = s:load_configs()
-  let repos = []
+
+  let keys_not_installed = []
   for key in plugs.keys
     let conf = plugs.confs[key]
     if !conf.installed && conf.install_if
-      call add(repos, {'name': key, 'url': conf.repo})
+      call add(keys_not_installed, key)
     endif
   endfor
 
-  if len(repos) == 0
+  if len(keys_not_installed) == 0
     echom 'All plugins are installed already'
     return
   endif
 
-  let ctx = {'plugs': plugs, 'repos': repos, 'errs': {}}
+  call s:update_plugins(keys_not_installed, plugs)
+endfunction
+
+function! plugger#update(...) abort
+  let plugs = s:load_configs()
+  call s:update_plugins(a:000, plugs)
+endfunction
+
+function! s:update_plugins(keys, plugs) abort
+  if len(a:keys) == 0
+    return
+  endif
+
+  let repos = []
+  for key in a:keys
+    if !has_key(a:plugs.confs, key)
+      throw '[plugger] unknown plugin' key
+    endif
+    let conf = a:plugs.confs[key]
+    call add(repos, {'name': key, 'url': conf.repo})
+  endfor
+
+  let ctx = {'plugs': a:plugs, 'repos': repos, 'errs': {}}
 
   function ctx.on_stdout(_ch, out) abort
     echom a:out
