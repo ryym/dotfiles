@@ -1,5 +1,6 @@
 function! my#plug#bclose#configure(conf) abort
   let a:conf.repo = 'rbgrouleff/bclose.vim'
+  let a:conf.skip_load = 1
   let a:conf.before_load = function('my#plug#bclose#before_load')
 endfunction
 

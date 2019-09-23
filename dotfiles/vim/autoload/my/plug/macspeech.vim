@@ -1,6 +1,7 @@
 function! my#plug#macspeech#configure(conf) abort
   let a:conf.repo = 'ryym/macspeech.vim'
   let a:conf.install_if = g:is_mac
+  let a:conf.skip_load = 1
   let a:conf.before_load = function('my#plug#macspeech#before_load')
 endfunction
 

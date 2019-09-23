@@ -1,5 +1,6 @@
 function! my#plug#unimpaired#configure(conf) abort
   let a:conf.repo = 'ryym/vim-unimpaired'
+  let a:conf.depends = ['repeat']
   let a:conf.before_load = function('my#plug#unimpaired#before_load')
   let a:conf.after_load = function('my#plug#unimpaired#after_load')
 endfunction
