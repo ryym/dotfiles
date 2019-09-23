@@ -1,5 +1,6 @@
 function! my#plug#go#configure(conf) abort
   let a:conf.repo = 'fatih/vim-go'
+  let a:conf.async.detect_startup_file = ['go']
   let a:conf.before_load = function('my#plug#go#before_load')
 endfunction
 

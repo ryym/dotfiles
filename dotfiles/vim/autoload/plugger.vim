@@ -92,7 +92,7 @@ function! s:initial_conf() abort
     \   'depends': [],
     \   'install_if': 1,
     \   'skip_load': 0,
-    \   'async': { 'enabled': 0, 'detect_startup_file': 0 },
+    \   'async': { 'enabled': 1, 'detect_startup_file': 0 },
     \   'installed': 0,
     \   'load_state': s:load_state.not_loaded,
     \ }

@@ -1,6 +1,7 @@
 function! my#plug#lsp#configure(conf) abort
   let a:conf.repo = 'prabirshrestha/vim-lsp'
   let a:conf.depends = ['async']
+  let a:conf.async.enabled = 0
   let a:conf.after_load = function('my#plug#lsp#after_load')
 endfunction
 
