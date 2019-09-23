@@ -81,8 +81,6 @@ if g:is_gui
  command! Evg edit $MYGVIMRC
 endif
 
-command! Evp edit $MYVIMDIR/plugins.vim
-
 
 " Set indent easily {{{2
 
