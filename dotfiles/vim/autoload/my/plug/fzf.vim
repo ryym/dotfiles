@@ -16,6 +16,7 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
   Map n \[fzf]G ::call my#plug#fzf#_gosrc()
+  Map n \[fzf]p ::call my#plug#fzf#_plugins()
   Map n \[fzf]o :us:FZFoutput
 endfunction
 
@@ -35,6 +36,7 @@ endfunction
 function! my#plug#fzf#_all_files()
   call fzf#run({ 'sink': funcref('my#plug#fzf#_open_file_or_dir') })
 endfunction
+
 function! my#plug#fzf#_open_file_or_dir(name)
   if isdirectory(a:name)
     execute 'cd' a:name
@@ -108,6 +110,14 @@ function! my#plug#fzf#_most_recently_used() abort
   call fzf#run({
     \   'sink': 'edit',
     \   'source': v:oldfiles,
+    \   'up': '35%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_plugins() abort
+  call fzf#run({
+    \   'sink': funcref('my#plug#fzf#_open_file_or_dir'),
+    \   'source': 'gits ~/.vim/pack',
     \   'up': '35%',
     \ })
 endfunction
