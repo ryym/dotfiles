@@ -4,3 +4,6 @@
 [submodule "dotfiles/vim/pack/init/opt/mapping.vim"]
 	path = dotfiles/vim/pack/init/opt/mapping.vim
 	url = git@github.com:ryym/mapping.vim
+[submodule "dotfiles/vim/pack/init/opt/vim-plugger"]
+	path = dotfiles/vim/pack/init/opt/vim-plugger
+	url = git@github.com:ryym/vim-plugger

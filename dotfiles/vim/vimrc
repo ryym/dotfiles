@@ -819,7 +819,12 @@ Map n \[tab]l gt
 " so suppress the welcome message which disappears by the redrawing.
 set shortmess=I
 
-call plugger#enable({})
+call s:load_init_plug('vim-plugger')
+
+call plugger#enable({
+  \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
+  \   'autoload_prefix': 'my#plug#',
+  \ })
 
 runtime macros/matchit.vim
 
