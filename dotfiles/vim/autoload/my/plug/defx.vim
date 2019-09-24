@@ -34,6 +34,8 @@ function! s:configure_defx_buffer() abort
   Map n (silent buffer expr) <C-l> defx#do_action('redraw')
   Map n (silent buffer expr) <C-g> defx#do_action('print')
   Map n (silent buffer expr) . defx#do_action('toggle_ignored_files')
+
+  Map n (silent buffer expr) ss defx#do_action('toggle_select')
 endfunction
 
 function! my#plug#defx#_open_buffer_dir() abort
