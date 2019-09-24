@@ -45,6 +45,12 @@ function! plugger#setup(conf) abort
   command! PluggerInstall call plugger#install_new()
   command! -nargs=+ PluggerLoad call plugger#reload_plugins(<f-args>)
   command! -nargs=+ PluggerUpdate call plugger#update(<f-args>)
+
+  augroup plugger
+    autocmd!
+
+    autocmd User plugger_async_load_post :
+  augroup END
 endfunction
 
 " Load all plugin configurations and load plugins.
@@ -56,7 +62,12 @@ function! plugger#load_plugins() abort
   let key_groups = s:classify_plug_keys(plugs, startup_file)
 
   call s:load_plugins(key_groups[0], plugs)
-  call timer_start(1, {-> s:load_plugins(key_groups[1], plugs)})
+  call timer_start(1, {-> s:load_plugins_async(key_groups[1], plugs)})
+endfunction
+
+function! s:load_plugins_async(keys, plugs) abort
+  call s:load_plugins(a:keys, a:plugs)
+  doautocmd User plugger_async_load_post
 endfunction
 
 function! s:load_plugins(keys, plugs) abort
