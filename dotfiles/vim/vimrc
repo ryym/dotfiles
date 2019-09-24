@@ -242,22 +242,14 @@ command! -nargs=1 ChangeGrep call <SID>change_grep_program(<q-args>)
 command! ShowGreps echo 'Available greps: ' <SID>display_available_greps()
 
 
-" Load rc-bundles {{{2
+" Load initial plugins {{{2
 
-" 'rc-bundle' meeans the bundles that used mainly in .vimrc itself.
-" All rc-bundles must be in '$MYVIMDIR/rcbundle/'.
-command! -nargs=1 RcBundle
-  \ if has('vim_starting') |
-  \   call <SID>load_rc_bundle(<f-args>) |
-  \ endif
+function! s:load_init_plug(name) abort
+  execute 'packadd' a:name
 
-function! s:load_rc_bundle(bundle_name)
-  let bundle_rtp = expand('$MYVIMDIR/rcbundle/' . a:bundle_name)
-  execute 'set runtimepath+=' . bundle_rtp
-  execute 'runtime plugin/' . a:bundle_name
-  execute 'helptags' bundle_rtp . '/doc'
-  if isdirectory(bundle_rtp . '/after')
-    execute 'set runtimepath+=' . bundle_rtp . '/after'
+  let docdir = $MYVIMDIR . '/pack/init/opt/' . a:name . '/doc'
+  if isdirectory(docdir)
+    execute 'helptags' docdir
   endif
 endfunction
 
@@ -500,8 +492,8 @@ endif
 
 " Set up {{{2
 
-" Use custom mapping commands.
-RcBundle mapping.vim
+call s:load_init_plug('mapping.vim')
+
 call mapping#set_sid(s:SID())
 let g:mapping_named_key_format = '\[%s]'
 
