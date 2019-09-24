@@ -16,7 +16,8 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
   Map n \[fzf]G ::call my#plug#fzf#_gosrc()
-  Map n \[fzf]p ::call my#plug#fzf#_plugins()
+  Map n \[fzf]p ::call my#plug#fzf#_plugin_confs()
+  Map n \[fzf]P ::call my#plug#fzf#_plugin_dirs()
   Map n \[fzf]o :us:FZFoutput
 endfunction
 
@@ -37,11 +38,18 @@ function! my#plug#fzf#_all_files()
   call fzf#run({ 'sink': funcref('my#plug#fzf#_open_file_or_dir') })
 endfunction
 
-function! my#plug#fzf#_open_file_or_dir(name)
-  if isdirectory(a:name)
-    execute 'cd' a:name
+function! my#plug#fzf#_open_file_or_dir(...)
+  if len(a:000) > 1
+    let prefix = len(a:000) > 1 ? a:000[0] : ''
+    let path = prefix . a:000[1]
   else
-    execute 'edit' a:name
+    let path = a:000[0]
+  endif
+
+  if isdirectory(path)
+    execute 'cd' path
+  else
+    execute 'edit' path
   endif
 endfunction
 
@@ -114,10 +122,19 @@ function! my#plug#fzf#_most_recently_used() abort
     \ })
 endfunction
 
-function! my#plug#fzf#_plugins() abort
+function! my#plug#fzf#_plugin_confs() abort
   call fzf#run({
-    \   'sink': funcref('my#plug#fzf#_open_file_or_dir'),
-    \   'source': 'gits ~/.vim/pack',
+    \   'sink': 'edit',
+    \   'dir': $MYVIMDIR . '/autoload/my/plug/',
+    \   'up': '35%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_plugin_dirs() abort
+  let packdir = $MYVIMDIR . '/pack/'
+  call fzf#run({
+    \   'sink': funcref('my#plug#fzf#_open_file_or_dir', [packdir]),
+    \   'source': 'gits ' . packdir,
     \   'up': '35%',
     \ })
 endfunction
