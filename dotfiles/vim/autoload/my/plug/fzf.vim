@@ -58,7 +58,7 @@ endfunction
 function! my#plug#fzf#_tab_buffers() abort
   call fzf#run({
     \   'sink': 'edit',
-    \   'source': my#plug#fzf#tab_buffers#list(tabpagenr()),
+    \   'source': my#plug#fzf#tab_buffers#list_others(tabpagenr()),
     \   'up': '35%',
     \ })
 endfunction

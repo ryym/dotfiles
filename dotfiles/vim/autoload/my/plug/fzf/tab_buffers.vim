@@ -9,9 +9,18 @@ function! my#plug#fzf#tab_buffers#enable() abort
   augroup END
 endfunction
 
-function! my#plug#fzf#tab_buffers#list(tabnr) abort
+function! my#plug#fzf#tab_buffers#list_others(tabnr) abort
   let bufs = gettabvar(a:tabnr, 'tab_buffers', {})
-  let bufnrs = map(keys(bufs), 'str2nr(v:val, 10)')
+
+  let bufnrs = values(bufs)
+    \ ->sort({a, b -> a.displayed < b.displayed ? 1 : -1})
+    \ ->map('v:val.nr')
+
+  " The current buffer must be displayed most recently.
+  " We remove it from list because we use this list to switch
+  " to another buffer.
+  let bufnrs = bufnrs[1:]
+
   return bufnrs->filter('buflisted(v:val)')->map('bufname(v:val)')
 endfunction
 
@@ -27,9 +36,17 @@ function! s:append_buffer(bufnr) abort
     endif
   endfor
 
-  let t:tab_buffers[a:bufnr] = 1
+  let t:tab_buffers[a:bufnr] = {
+    \   'nr': str2nr(a:bufnr),
+    \   'displayed': reltimestr(reltime()),
+    \ }
 endfunction
 
 function! s:remove_buffer(bufnr) abort
-  call remove(t:tab_buffers, a:bufnr)
+  " I don't inspect the detail match but there is a case
+  " that this `remove_buffer` is called without calling the
+  " `append_buffer` function.
+  if exists('t:tab_buffers') && has_key(t:tab_buffers, a:bufnr)
+    call remove(t:tab_buffers, a:bufnr)
+  endif
 endfunction
