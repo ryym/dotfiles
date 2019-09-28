@@ -124,7 +124,7 @@ gitfunc_add_interactive() {
     esac
     "
     local output=$( \
-        git status --short | grep -E '^[ M]M|^\sD|^\?' | fzf --multi \
+        git status --short | grep -E '^.M|^\sD|^\?' | fzf --multi \
             --expect 'ctrl-o,ctrl-r' \
             --bind 'ctrl-d:execute(git diff --color=always {2} | less -R > /dev/tty)' \
             --bind 'ctrl-e:execute(vim {2} < /dev/tty > /dev/tty)' \
