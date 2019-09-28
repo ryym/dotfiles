@@ -122,8 +122,10 @@ function! my#plug#fzf#_most_recently_used() abort
 endfunction
 
 function! my#plug#fzf#_plugin_confs() abort
+  let src = s:fd_available ? 'fd --type f' : ''
   call fzf#run({
     \   'sink': 'edit',
+    \   'source': src,
     \   'dir': $MYVIMDIR . '/autoload/my/plug/',
     \   'up': '35%',
     \ })
