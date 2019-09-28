@@ -7,11 +7,13 @@ function! my#plug#fzf#configure(conf) abort
 endfunction
 
 function! my#plug#fzf#after_load()
+  call my#plug#fzf#tab_buffers#enable()
+
   MapNamedKey <Space>u fzf
 
   Map n \[fzf]f ::call my#plug#fzf#_without_ignored_files()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
-  Map n \[fzf]b ::call my#plug#fzf#_tabpage_buffers()
+  Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
   Map n \[fzf]m ::call my#plug#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
@@ -53,13 +55,10 @@ function! my#plug#fzf#_open_file_or_dir(...)
   endif
 endfunction
 
-" TODO: Sort buffers by last open time.
-function! my#plug#fzf#_tabpage_buffers() abort
-  let bufs = gettabvar(tabpagenr(), 'tabpagebuffer')
-  let bufnrs = map(keys(bufs), 'str2nr(v:val, 10)')
+function! my#plug#fzf#_tab_buffers() abort
   call fzf#run({
     \   'sink': 'edit',
-    \   'source': map(filter(bufnrs, 'buflisted(v:val)'), 'bufname(v:val)'),
+    \   'source': my#plug#fzf#tab_buffers#list(tabpagenr()),
     \   'up': '35%',
     \ })
 endfunction
