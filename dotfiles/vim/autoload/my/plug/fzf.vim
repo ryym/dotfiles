@@ -20,6 +20,7 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]G ::call my#plug#fzf#_gosrc()
   Map n \[fzf]p ::call my#plug#fzf#_plugin_confs()
   Map n \[fzf]P ::call my#plug#fzf#_plugin_dirs()
+  Map n \[fzf]_r ::call my#plug#fzf#_runtimepaths()
   Map n \[fzf]o :us:FZFoutput
 endfunction
 
@@ -136,6 +137,15 @@ function! my#plug#fzf#_plugin_dirs() abort
   call fzf#run({
     \   'sink': funcref('my#plug#fzf#_open_file_or_dir', [packdir]),
     \   'source': 'gits ' . packdir,
+    \   'up': '35%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_runtimepaths() abort
+  let paths = split(&runtimepath, ',')
+  call fzf#run({
+    \   'sink': 'cd',
+    \   'source': paths,
     \   'up': '35%',
     \ })
 endfunction
