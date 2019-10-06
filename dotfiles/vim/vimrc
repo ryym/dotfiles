@@ -824,10 +824,12 @@ set shortmess=I
 
 call s:load_init_plug('vim-plugger')
 
-call plugger#enable({
-  \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
-  \   'autoload_prefix': 'my#plug#',
-  \ })
+if !$VIM_NO_PLUG
+  call plugger#enable({
+    \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
+    \   'autoload_prefix': 'my#plug#',
+    \ })
+endif
 
 runtime macros/matchit.vim
 
