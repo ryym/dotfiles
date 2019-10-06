@@ -55,6 +55,7 @@
     cob    = checkout -b
     chp    = cherry-pick
     chab   = cherry-pick --abort
+    sw     = switch
     f      = fetch
     fp     = fetch --prune
     pp     = pull --prune
