@@ -427,6 +427,9 @@ augroup vimrc
 
   autocmd FileType ocaml setlocal commentstring=(*%s*)
 
+  " The textwidth is set as 78 by default.
+  autocmd FileType vim setlocal textwidth=0
+
   " Configure filetypes which have to be assigned manually.
   call s:delegate_filetypes({
     \ '*.gradle'     : 'groovy',
