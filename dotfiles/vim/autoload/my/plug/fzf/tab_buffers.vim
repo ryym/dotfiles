@@ -30,7 +30,7 @@ function! s:append_buffer(bufnr) abort
   endif
 
   for tabnr in range(1, tabpagenr('$'))
-    let bufs = gettabvar(tabnr, 'tab_buffers')
+    let bufs = gettabvar(tabnr, 'tab_buffers', {})
     if has_key(bufs, a:bufnr)
       call remove(bufs, a:bufnr)
     endif
