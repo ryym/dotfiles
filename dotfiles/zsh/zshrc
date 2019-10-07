@@ -71,6 +71,7 @@ alias be='bundle exec'
 alias npmr='npm run'
 alias cg='cargo'
 alias manv='() { vim -c "exe \"PluggerLoad man\" | Man $1 | only" }'
+alias tf='terraform'
 
 ## FZF
 export FZF_DEFAULT_OPTS="-i --cycle --reverse --bind=ctrl-k:kill-line,ctrl-s:select-all,ctrl-d:deselect-all"
