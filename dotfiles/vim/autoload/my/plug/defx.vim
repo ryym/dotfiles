@@ -9,8 +9,8 @@ endfunction
 
 function! my#plug#defx#after_load()
   MapNamedKey <Space>f defx
-  Map n \[defx]E ::Defx -split=vertical -winwidth=35
-  Map n \[defx]e ::call my#plug#defx#_open_buffer_dir()
+  Map n \[defx]E ::call my#plug#defx#_open_buffer_dir('')
+  Map n \[defx]e ::call my#plug#defx#_open_buffer_dir(expand('%:h'))
   Map n \[defx]c ::call my#plug#defx#_close_filer()
 
   autocmd vimrc FileType defx call <SID>configure_defx_buffer()
@@ -38,8 +38,9 @@ function! s:configure_defx_buffer() abort
   Map n (silent buffer expr) ss defx#do_action('toggle_select')
 endfunction
 
-function! my#plug#defx#_open_buffer_dir() abort
-  execute 'Defx -split=vertical -winwidth=35 ' . expand('%:h')
+function! my#plug#defx#_open_buffer_dir(path) abort
+  " execute 'Defx  -direction=topleft -split=vertical -winwidth=35 ' . expand('%:h')
+  execute 'Defx  -direction=topleft -split=vertical -winwidth=35 ' . a:path
 endfunction
 
 function! my#plug#defx#_close_filer() abort
