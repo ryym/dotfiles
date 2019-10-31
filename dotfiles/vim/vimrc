@@ -15,34 +15,7 @@
 " }}}
 set cpoptions-=C | if 0 | endif
 
-" Default properties
-let g:is_windows = has('win32') || has('win64')
-let g:is_mac     = has('mac')   || has('macunix') || has('gui_macvim')
-let g:is_gui     = has('gui_running')
-let $MYVIMDIR    = expand( g:is_windows ? '~/vimfiles' : '~/.vim' )
-let $VIMLOCAL    = expand($MYVIMDIR . '/local')
-
-" Reset all autocmd defined in vimrc.
-" TODO: create ex command to define vimrc autocmd.
-augroup vimrc
-  autocmd!
-augroup END
-
-if has('vim_starting')
-  autocmd vimrc VimEnter * call <SID>display_startup_time()
-
-  let s:startuptime = reltime()
-  function! s:display_startup_time()
-    echomsg 'Startup time:' reltimestr( reltime(s:startuptime) )
-    unlet s:startuptime
-  endfunction
-
-  " Change the cursor to vertical bar in normal mode on the terminal.
-  " (https://qiita.com/Linda_pp/items/9e0c94eb82b18071db34)
-  let &t_SI .= "\e[6 q"
-  let &t_EI .= "\e[2 q"
-endif
-
+call my#init#setup()
 
 
 " Colorscheme {{{1
