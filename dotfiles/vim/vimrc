@@ -629,8 +629,6 @@ Map n Y y$
 Map n Q q
 Map n <Leader>d ::pwd
 Map n zp zMzv
-Map n <C-w>\\ ::vsplit
-Map n <C-w>- ::split
 
 " Break lines and Insert spaces in normal mode.
 Map n <C-CR>          o<Esc>
@@ -820,6 +818,81 @@ Map n \[tab]n ::tabnew
 Map n \[tab]h gT
 Map n \[tab]l gt
 " TODO: mappings for tab motions
+
+
+" Window and Terminal {{{2
+
+" Like Tmux
+set noequalalways
+set splitright
+set splitbelow
+
+autocmd vimrc TerminalOpen * call s:setup_terminal_buffer()
+
+function! s:setup_terminal_buffer() abort
+  " Disable these options to keep the window width same between
+  " the terminal mode and terminal-normal mode.
+  setlocal nonumber
+  setlocal norelativenumber
+  setlocal foldcolumn=0
+endfunction
+
+" Currently we use <C-w> for 'termwinkey' and change the <C-w> to <C-t> in my shell.
+
+Map n <C-w>- ::split
+Map n <C-w>\\ ::vsplit
+Map n <C-w>v ::call <SID>split_from_buf({'ratio': 0.35})
+Map n <C-w>V ::call <SID>split_from_buf({'ratio': 0.35, 'vert': 1})
+Map n <C-w>t- ::call <SID>split_from_buf({'term': 1})
+Map n <C-w>t\\ ::call <SID>split_from_buf({'term': 1, 'vert': 1})
+Map n <C-w>tv ::call <SID>split_from_buf({'term': 1, 'ratio': 0.35})
+Map n <C-w>tV ::call <SID>split_from_buf({'term': 1, 'ratio': 0.35, 'vert': 1})
+Map n <C-w>tt ::terminal ++curwin
+
+Map t <C-w>- <C-\><C-n>:call <SID>split_from_term({})<CR>
+Map t <C-w>\\ <C-\><C-n>:call <SID>split_from_term({'vert': 1})<CR>
+Map t <C-w>t- <C-\><C-n>:call <SID>split_from_term({'term': 1})<CR>
+Map t <C-w>t\\ <C-\><C-n>:call <SID>split_from_term({'term': 1, 'vert': 1})<CR>
+Map t <C-w>tv <C-\><C-n>:call <SID>split_from_term({'term': 1, 'ratio': 0.35})<CR>
+Map t <C-w>tV <C-\><C-n>:call <SID>split_from_term({'term': 1, 'ratio': 0.35, 'vert': 1})<CR>
+Map t <C-w>n <C-\><C-n>
+Map t <C-w><C-n> <C-\><C-n>
+
+function! s:split_from_buf(opt) abort
+  let src_win = win_getid()
+  call s:split_by_ratio(src_win, a:opt)
+endfunction
+
+function! s:split_from_term(opt) abort
+  let src_win = win_getid()
+  call s:split_by_ratio(src_win, a:opt)
+
+  " The src window is now in normal mode so restore the terminal mode.
+  " Without this, we need to change the mode manually when we back to the
+  " src window. This is not handy.
+  let dest_win = win_getid()
+  call win_gotoid(src_win)
+  normal i
+  call win_gotoid(dest_win)
+endfunction
+
+function! s:split_by_ratio(src_win, opt) abort
+  let is_vertical = get(a:opt, 'vert', 0)
+  let prefix = is_vertical ? 'vertical' : ''
+  let cur_size = is_vertical ? winwidth(a:src_win) : winheight(a:src_win)
+
+  execute prefix 'split'
+  if get(a:opt, 'term', 0)
+    term ++curwin
+  else
+    enew
+  endif
+
+  if has_key(a:opt, 'ratio')
+    let desired_size = cur_size * a:opt.ratio
+    execute prefix 'resize' string(desired_size)
+  endif
+endfunction
 
 
 
