@@ -18,11 +18,15 @@ endfunction
 
 function! s:configure_defx_buffer() abort
   " https://github.com/Shougo/defx.nvim/issues/13#issuecomment-424909116
-  Map n (silent buffer expr) l defx#do_action('open', 'wincmd w \| drop')
+  " Map n (silent buffer expr) l defx#do_action('open', 'wincmd w \| drop')
+  " Map n (silent buffer expr) h defx#do_action('cd', '..')
+  Map n (silent buffer expr) <C-l> defx#do_action('open', 'wincmd w \| drop')
+  Map n (silent buffer expr) <C-h> defx#do_action('cd', '..')
 
-  Map n (silent buffer expr) h defx#do_action('cd', '..')
+  " Map n (silent buffer expr) <C-j> defx#do_action('open_or_close_tree')
   Map n (silent buffer expr) f defx#do_action('open_or_close_tree')
   Map n (silent buffer expr) F defx#do_action('open_tree_recursive')
+
   Map n (silent buffer expr) C defx#do_action('new_file')
   Map n (silent buffer expr) K defx#do_action('new_directory')
   Map n (silent buffer expr) yy defx#do_action('yank_path')
@@ -31,7 +35,7 @@ function! s:configure_defx_buffer() abort
   Map n (silent buffer expr) mm defx#do_action('move')
   Map n (silent buffer expr) p defx#do_action('paste')
   Map n (silent buffer expr) r defx#do_action('rename')
-  Map n (silent buffer expr) <C-l> defx#do_action('redraw')
+  Map n (silent buffer expr) <S-l> defx#do_action('redraw')
   Map n (silent buffer expr) <C-g> defx#do_action('print')
   Map n (silent buffer expr) . defx#do_action('toggle_ignored_files')
 
