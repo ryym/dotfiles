@@ -2,8 +2,6 @@
 " vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Initializing {{{1
-
 " Skip initialization if '+eval' feature is disabled {{{
 " Note: (see: :help no-eval-feature)
 "   In '-eval' environment, the argument of 'if' (including '| endif')
@@ -17,115 +15,19 @@ set cpoptions-=C | if 0 | endif
 
 call my#init#setup()
 
+call my#init#colorscheme#setup()
 
-" Colorscheme {{{1
+call my#init#commands#setup()
 
-if has('vim_starting')
-  set t_Co =256
-  if &t_Co < 256
-    colorscheme desert
-  else
-    colorscheme smyck256
-  endif
-endif
-
-
-
-" Commands and functions {{{1
-
-" SID {{{2
+" SID {{{1
 
 function! s:SID()
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfunction
 
 
-" Reload and Edit .vimrc {{{2
 
-command! Rv  source $MYVIMRC | if g:is_gui | source $MYGVIMRC | endif
-command! Ev  edit   $MYVIMRC
-if g:is_gui
- command! Evg edit $MYGVIMRC
-endif
-
-
-" Set indent easily {{{2
-
-command! -nargs=* IndentBy call <SID>set_indent(<f-args>)
-command! ShortIndent  IndentBy 2 1
-command! MediumIndent IndentBy 4 1
-
-function! s:set_indent(n_space, expand_tab)
-  let &l:shiftwidth  = a:n_space
-  let &l:tabstop     = a:n_space
-  let &l:softtabstop = a:n_space
-  let &l:expandtab   = a:expand_tab
-endfunction
-
-
-" QuickfixDo {{{2
-
-command! -nargs=+ QfDo call <SID>quickfix_do(<q-args>)
-
-" Execute the specified command for each buffer in the quickfix list.
-" From: http://stackoverflow.com/questions/4792561/how-to-do-search-replace-with-ack-in-vim/4793316#4793316
-function! s:quickfix_do(command)
-    let buffer_numbers = {}
-    for fixlist_entry in getqflist()
-      let buffer_numbers[ fixlist_entry['bufnr'] ] = 1
-    endfor
-    let buffer_number_list = keys(buffer_numbers)
-
-    let current_bufnr = bufnr('%')
-    for bufnr in buffer_number_list
-      if bufexists( str2nr(bufnr) )
-        execute 'keepalt buffer' bufnr
-        execute a:command
-      endif
-    endfor
-    execute 'keepalt buffer' current_bufnr
-endfunction
-
-
-" Restore last cursor position {{{2
-
-command! RestoreCursorPosition call <SID>restore_cursor_position()
-
-function! s:restore_cursor_position()
-  if line("'\"") > 1 && line("'\"") <= line("$")
-    execute 'normal! g`"'
-  endif
-endfunction
-
-
-" Capture command outputs {{{2
-
-command! -nargs=+ -complete=command
-  \ Capture call <SID>capture_output_of(<q-args>)
-cnoreabbrev cap Capture
-
-" Capture command outputs.
-" If any errors occurred, capture nothing.
-function! s:capture_output_of(commands)
-  redir => output
-  try
-    silent execute a:commands
-  catch
-    echoerr v:exception | return
-  finally
-    redir END
-  endtry
-
-  new
-  file `=printf('Output of: [ %s ]', a:commands)`
-  setlocal buftype   =nofile
-  setlocal bufhidden =delete
-  call setline(1, split(output, '\n'))
-endfunction
-
-
-
-" Load initial plugins {{{2
+" Load initial plugins {{{1
 
 function! s:load_init_plug(name) abort
   execute 'packadd' a:name
@@ -135,39 +37,6 @@ function! s:load_init_plug(name) abort
     execute 'helptags' docdir
   endif
 endfunction
-
-
-" Take diff of windows {{{2
-
-" Take diff of opened windows or close diff mode if it opened.
-command! Windiff call <SID>toggle_win_diff(&diff)
-
-function! s:toggle_win_diff(is_opened)
-  if a:is_opened
-    diffoff!
-  else
-    windo diffthis
-  endif
-endfunction
-
-" Print current line syntaxes {{{2
-
-" Print syntax names at the current cursor position.
-command! SyntaxNames :echo <SID>get_current_syntax_names()
-
-function! s:get_current_syntax_names()
-  return map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunction
-
-
-" Others {{{2
-
-" Print each path of &runtimepath.
-command! Rtp echo substitute(&runtimepath, ',', '\n', 'g')
-
-" Remove trailing whitespaces without cursor moving.
-command! Rtw :%s/\v\s+$// | let v:hlsearch = 0 | normal! ``
-
 
 
 " Basic options {{{1
@@ -639,7 +508,13 @@ Map c <C-v> <C-r>*
 
 " Grep by external programs {{{2
 
-call my#init#greps#define()
+  MapNamedKey <Space>s grep
+  Map n (expr) \[grep]s my#init#func#grep#by_current(0)
+  Map n (expr) \[grep]+ my#init#func#grep#by_current(1)
+  Map n \[grep]l ::ShowGreps
+  Map n \[grep]a ::ChangeGrep ag
+  Map n \[grep]g ::ChangeGrep git
+  Map n \[grep]v ::ChangeGrep git
 
 
 " Quickfix {{{2
