@@ -56,6 +56,12 @@ function! my#init#options#setup() abort
   " This makes splitting be more Tmux-like.
   set noequalalways
 
+  " Do not show the welcome message on startup.
+  " This is because I load most of the plugins asynchronously.
+  " Therefore the screen will be redrawn soon after plugins are loaded
+  " and the message is displayed for a moment. This is annoying.
+  set shortmess=I
+
   set cursorline
   set number
   set relativenumber

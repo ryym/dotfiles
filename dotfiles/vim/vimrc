@@ -25,41 +25,11 @@ call my#init#autocmds#setup()
 
 call my#init#mappings#setup()
 
-function! s:load_init_plug(name) abort
-  execute 'packadd' a:name
-
-  let docdir = $MYVIMDIR . '/pack/init/opt/' . a:name . '/doc'
-  if isdirectory(docdir)
-    execute 'helptags' docdir
-  endif
-endfunction
-
-" Plugins {{{1
-
-" Loading plugins asynchronously redraws a screen soon
-" so suppress the welcome message which disappears by the redrawing.
-set shortmess=I
-
-call s:load_init_plug('vim-plugger')
-
-if !$VIM_NO_PLUG
-  call plugger#enable({
-    \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
-    \   'autoload_prefix': 'my#plug#',
-    \ })
-endif
-
-runtime macros/matchit.vim
-
-
-
-" Local settings {{{1
+call my#init#plugins#setup()
 
 if filereadable($VIMLOCAL . '/vimrc')
   source $VIMLOCAL/vimrc
   command! Evl edit $VIMLOCAL/vimrc
 endif
-
-" }}}
 
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
