@@ -18,6 +18,7 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
   Map n \[fzf]G ::call my#plug#fzf#_gosrc()
+  Map n \[fzf]i ::call my#plug#fzf#_init_scripts()
   Map n \[fzf]p ::call my#plug#fzf#_plugin_confs()
   Map n \[fzf]P ::call my#plug#fzf#_plugin_dirs()
   Map n \[fzf]_r ::call my#plug#fzf#_runtimepaths()
@@ -127,7 +128,17 @@ function! my#plug#fzf#_plugin_confs() abort
   call fzf#run({
     \   'sink': 'edit',
     \   'source': src,
-    \   'dir': $MYVIMDIR . '/autoload/my/plug/',
+    \   'dir': $MYVIMDIR . '/autoload/my/plug',
+    \   'up': '35%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_init_scripts() abort
+  let root = $MYVIMDIR . '/autoload/my/init'
+  let files = [root . '.vim'] + globpath(root, '**', 0, 1)
+  call fzf#run({
+    \   'sink': 'edit',
+    \   'source': files,
     \   'up': '35%',
     \ })
 endfunction

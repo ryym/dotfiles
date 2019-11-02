@@ -44,7 +44,7 @@ endfunction
 
 function! my#plug#defx#_open_buffer_dir(path) abort
   " execute 'Defx  -direction=topleft -split=vertical -winwidth=35 ' . expand('%:h')
-  execute 'Defx  -direction=topleft -split=vertical -winwidth=35 ' . a:path
+  execute 'Defx -split=vertical -winwidth=35 ' . a:path
 endfunction
 
 function! my#plug#defx#_close_filer() abort
