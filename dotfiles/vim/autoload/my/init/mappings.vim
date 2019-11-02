@@ -137,6 +137,14 @@ function! my#init#mappings#setup() abort
   Map n \[tab]h gT
   Map n \[tab]l gt
 
+  Map n <C-w>tt ::terminal ++curwin
+
+  " Go to normal mode from terminal mode.
+  Map t <C-w>n <C-\><C-n>
+  Map t <C-w><C-n> <C-\><C-n>
+
+  call s:map_unified_win_switches()
+
   " Reselect visual block after indent.
   Map v < <gv
   Map v > >gv
@@ -203,6 +211,37 @@ function! s:map_text_object(lhs, rhs)
   execute 'Map ox' 'a' . a:lhs  'a' . a:rhs
 endfunction
 
+" Define unified key mappings for window switching for normal mode and terminal mode.
+" Note that currently we use <C-w> for 'termwinkey'. This makes difficult to use <C-w>
+" (deleting a word) in bash/zsh. Therefore I remapped the <C-t> to <C-w> in my zsh.
+function! s:map_unified_win_switches() abort
+  " Split equally. This does not open a new buffer.
+  Map n <C-w>- ::split
+  Map n <C-w>\\ ::vsplit
+
+  " Split equally from terminal. This always open a new normal buffer.
+  Map t <C-w>- <C-\><C-n>:call my#init#func#window#split_from_term({})<CR>
+  Map t <C-w>\\ <C-\><C-n>:call my#init#func#window#split_from_term({'vert': 1})<CR>
+
+  " Split and open a small new normal buffer.
+  Map n <C-w>v ::call my#init#func#window#split_from_buf({'ratio': 0.35})
+  Map n <C-w>V ::call my#init#func#window#split_from_buf({'ratio': 0.35, 'vert': 1})
+  Map t <C-w>v <C-\><C-n>:call my#init#func#window#split_from_term({'ratio': 0.35})<CR>
+  Map t <C-w>V <C-\><C-n>:call my#init#func#window#split_from_term({'ratio': 0.35, 'vert': 1})<CR>
+
+  " Split equally and open a new terminal.
+  Map n <C-w>t- ::call my#init#func#window#split_from_buf({'term': 1})
+  Map n <C-w>t\\ ::call my#init#func#window#split_from_buf({'term': 1, 'vert': 1})
+  Map t <C-w>t- <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1})<CR>
+  Map t <C-w>t\\ <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1, 'vert': 1})<CR>
+
+  " Split and open a small terminal.
+  Map t <C-w>tv <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1, 'ratio': 0.35})<CR>
+  Map t <C-w>tV <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1, 'ratio': 0.35, 'vert': 1})<CR>
+  Map n <C-w>tv ::call my#init#func#window#split_from_buf({'term': 1, 'ratio': 0.35})
+  Map n <C-w>tV ::call my#init#func#window#split_from_buf({'term': 1, 'ratio': 0.35, 'vert': 1})
+endfunction
+
 function! s:map_repeat_keys_and_move_to_occurrence(direct_to_right, command)
   if a:direct_to_right
     Map nvo : ;
@@ -245,4 +284,3 @@ function! s:toggle_comment_continuation()
     echo 'Continue comment lines'
   endif
 endfunction
-

@@ -52,6 +52,10 @@ function! my#init#options#setup() abort
   set foldmethod =marker
   set foldcolumn =3
 
+  " Do not align window sizes automatically.
+  " This makes splitting be more Tmux-like.
+  set noequalalways
+
   set cursorline
   set number
   set relativenumber
