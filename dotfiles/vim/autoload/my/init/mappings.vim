@@ -7,7 +7,7 @@ function! my#init#mappings#setup() abort
   let g:mapping_named_key_format = '\[%s]'
 
   " Define 'mapleader' before all mappings usiing <Leader>.
-  let mapleader = "-"
+  let g:mapleader = "-"
   Map nv - <Nop>
 
   " Use these keys as main leader keys.
