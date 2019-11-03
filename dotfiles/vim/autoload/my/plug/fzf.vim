@@ -135,7 +135,7 @@ endfunction
 
 function! my#plug#fzf#_init_scripts() abort
   let root = $MYVIMDIR . '/autoload/my/init'
-  let files = [root . '.vim'] + globpath(root, '**', 0, 1)
+  let files = [$MYVIMRC, root . '.vim'] + globpath(root, '**', 0, 1)
   call fzf#run({
     \   'sink': 'edit',
     \   'source': files,
