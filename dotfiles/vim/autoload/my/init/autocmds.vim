@@ -2,7 +2,12 @@ function! my#init#autocmds#setup() abort
   augroup vimrc
     autocmd WinEnter * checktime
     autocmd BufReadPost * RestoreCursorPosition
-    autocmd TerminalOpen * call s:setup_terminal_buffer()
+
+    if has('nvim')
+      autocmd TermOpen * call s:setup_terminal_buffer()
+    else
+      autocmd TerminalOpen * call s:setup_terminal_buffer()
+    endif
   augroup END
 
   call s:customize_per_filetype()
@@ -15,6 +20,8 @@ function! my#init#autocmds#setup() abort
 endfunction
 
 function! s:setup_terminal_buffer() abort
+  startinsert
+
   " Disable these options to keep the window width same between
   " the terminal mode and terminal-normal mode.
   setlocal nonumber

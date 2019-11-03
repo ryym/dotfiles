@@ -42,7 +42,7 @@ function! my#init#func#window#split_by_ratio(src_win, opt) abort
   endtry
 
   if get(a:opt, 'term', 0)
-    term ++curwin
+    execute has('nvim') ? 'terminal' : 'terminal ++curwin'
   else
     enew
   endif

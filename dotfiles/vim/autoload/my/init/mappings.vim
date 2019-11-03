@@ -137,7 +137,12 @@ function! my#init#mappings#setup() abort
   Map n \[tab]h gT
   Map n \[tab]l gt
 
-  Map n <C-w>tt ::terminal ++curwin
+  if has('nvim')
+    Map t <C-w> <C-\\><C-n><C-w>
+    Map n <C-w>tt ::terminal
+  else
+    Map n <C-w>tt ::terminal ++curwin
+  endif
 
   " Go to normal mode from terminal mode.
   Map t <C-w>n <C-\><C-n>

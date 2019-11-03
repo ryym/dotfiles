@@ -4,7 +4,11 @@ function! my#init#setup() abort
   let g:is_mac = has('mac') || has('macunix') || has('gui_macvim')
   let g:is_gui = has('gui_running')
 
-  let $MYVIMDIR = expand(g:is_windows ? '~/vimfiles' : '~/.vim')
+  if has('nvim')
+    let $MYVIMDIR = stdpath('config')
+  else
+    let $MYVIMDIR = expand(g:is_windows ? '~/vimfiles' : '~/.vim')
+  endif
   let $VIMLOCAL = expand($MYVIMDIR . '/local')
 
   " Let's define auto commands under this 'vimrc' group so that
