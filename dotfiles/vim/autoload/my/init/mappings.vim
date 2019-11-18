@@ -264,10 +264,10 @@ endfunction
 
 function! s:toggle_indent_width()
   if &tabstop <= 2
-    call s:set_indent(4, &expandtab)
+    execute 'IndentBy' 4 &expandtab
     echo 'Medium indent (4)'
   else
-    call s:set_indent(2, &expandtab)
+    execute 'IndentBy' 2 &expandtab
     echo 'Short indent (2)'
   endif
 endfunction
