@@ -70,7 +70,7 @@ function! s:delegate_filetypes(filetypes)
 endfunction
 
 function! s:adjust_commentstring_in_html()
-  let syntaxes = join(s:get_current_syntax_names(), ' ')
+  let syntaxes = join(my#init#func#syntax#names_at_cursor(), ' ')
   if syntaxes =~ 'html'
     setlocal commentstring=<!--%s-->
   elseif syntaxes =~ 'javaScript'

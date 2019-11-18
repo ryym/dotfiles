@@ -24,7 +24,7 @@ function! my#init#commands#setup() abort
   command! Windiff call <SID>toggle_win_diff(&diff)
 
   " Print syntax names at the current cursor position.
-  command! SyntaxNames :echo <SID>get_current_syntax_names()
+  command! SyntaxNames :echo my#init#func#syntax#names_at_cursor()
 
   " Print each path of &runtimepath.
   command! Rtp echo substitute(&runtimepath, ',', '\n', 'g')
@@ -102,9 +102,3 @@ function! s:toggle_win_diff(is_opened)
     windo diffthis
   endif
 endfunction
-
-function! s:get_current_syntax_names()
-  return map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunction
-
-
