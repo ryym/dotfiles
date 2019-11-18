@@ -1,4 +1,7 @@
 function! my#plug#prettier#configure(conf) abort
+  " Use vim-prets experimentally as an alternative for a while.
+  let a:conf.skip_load = 1
+
   let a:conf.repo = 'prettier/vim-prettier'
   let a:conf.before_load = function('my#plug#prettier#before_load')
 endfunction
