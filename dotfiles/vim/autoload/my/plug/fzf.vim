@@ -59,10 +59,24 @@ endfunction
 
 function! my#plug#fzf#_tab_buffers() abort
   call fzf#run({
-    \   'sink': 'edit',
+    \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
     \   'source': my#plug#fzf#tab_buffers#list_others(tabpagenr()),
     \   'up': '35%',
+    \   'options': '--multi --expect=ctrl-d'
     \ })
+endfunction
+
+function! my#plug#fzf#_tab_buffers_on_select(names) abort
+  if len(a:names) == 0
+    return
+  endif
+  if a:names[0] == 'ctrl-d'
+    for name in a:names[1:]
+      execute 'bdelete' name
+    endfor
+  else
+    execute 'edit' a:names[1]
+  endif
 endfunction
 
 command! -nargs=1 FZFoutput call my#plug#fzf#_outputs(<q-args>)
