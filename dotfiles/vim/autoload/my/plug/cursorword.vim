@@ -7,5 +7,6 @@ function! my#plug#cursorword#after_load()
   augroup vim-cursorword
     autocmd!
     autocmd FileType defx let b:cursorword = 0
+    autocmd FileType viler let b:cursorword = 0
   augroup END
 endfunction
