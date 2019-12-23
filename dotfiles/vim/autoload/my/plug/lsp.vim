@@ -6,6 +6,7 @@ function! my#plug#lsp#configure(conf) abort
 endfunction
 
 function! my#plug#lsp#after_load()
+  let g:lsp_diagnostics_echo_cursor = 1
   let g:lsp_fold_enabled = 0
 
   MapNamedKey <Space>v lsp
