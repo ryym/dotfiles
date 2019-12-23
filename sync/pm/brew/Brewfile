@@ -22,20 +22,14 @@ brew 'zsh'
 
 tap 'caskroom/cask'
 
-cask 'alfred'
-cask 'appcleaner'
-cask 'caffeine'
-cask 'dropbox'
-cask 'firefox'
-cask 'google-chrome'
-cask 'google-japanese-ime'
-cask 'skitch'
-cask 'skim'
-cask 'slack'
-cask 'vagrant'
-cask 'virtualbox'
-cask 'visual-studio-code'
-# cask 'mactex'  # It takes a hell of a time..
+# cask 'alfred'
+# cask 'dropbox'
+# cask 'firefox'
+# cask 'google-chrome'
+# cask 'google-japanese-ime'
+# cask 'skitch'
+# cask 'skim'
+# cask 'slack'
 
 tap 'caskroom/fonts'
 
