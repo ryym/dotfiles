@@ -13,10 +13,14 @@ if [ -z ${__CONST_LOADED:-''} ]; then
 fi
 
 # mkdir & cd
-mkcd()
-{
+mkcd() {
     mkdir -p "$1"
     cd "$1"
+}
+
+# Go to dotfiles quickly
+dot() {
+    cd ~/.dotfiles
 }
 
 deffunc() {
