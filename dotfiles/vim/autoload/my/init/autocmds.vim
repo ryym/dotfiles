@@ -58,6 +58,7 @@ function! s:customize_per_filetype() abort
       \ 'Dockerfile*'  : 'Dockerfile',
       \ '*.purs'       : 'haskell',
       \ '*.css'        : 'scss',
+      \ '*.tsx'        : 'typescript.tsx',
       \ })
   augroup END
 endfunction
@@ -83,36 +84,38 @@ endfunction
 
 function! s:define_filetype_indents() abort
   augroup vimrc
-    autocmd FileType javascript ShortIndent
-    autocmd FileType typescript ShortIndent
-    autocmd FileType coffee     ShortIndent
-    autocmd FileType css        ShortIndent
-    autocmd FileType scss       ShortIndent
-    autocmd FileType sass       ShortIndent
-    autocmd FileType haml       ShortIndent
-    autocmd FileType yaml       ShortIndent
-    autocmd FileType ruby       ShortIndent
-    autocmd FileType vim        ShortIndent
-    autocmd FileType vimspec    ShortIndent
-    autocmd FileType scala      ShortIndent
-    autocmd FileType sql        ShortIndent
-    autocmd FileType json       ShortIndent
-    autocmd FileType html       ShortIndent
-    autocmd FileType xhtml      ShortIndent
-    autocmd FileType eruby      ShortIndent
-    autocmd FileType jsp        ShortIndent
-    autocmd FileType vue        ShortIndent
-    autocmd FileType terraform  ShortIndent
-    autocmd FileType c          MediumIndent
-    autocmd FileType cs         MediumIndent
-    autocmd FileType vb         MediumIndent
-    autocmd FileType java       MediumIndent
-    autocmd FileType groovy     MediumIndent
-    autocmd FileType xml        MediumIndent
-    autocmd FileType sh         MediumIndent
-    autocmd FileType markdown   MediumIndent
-    autocmd FileType go         IndentBy 4 0
-    autocmd FileType text       IndentBy 4 0
-    autocmd FileType help       IndentBy 8 0
+    autocmd FileType javascript      ShortIndent
+    autocmd FileType typescript      ShortIndent
+    autocmd FileType coffee          ShortIndent
+    autocmd FileType css             ShortIndent
+    autocmd FileType scss            ShortIndent
+    autocmd FileType sass            ShortIndent
+    autocmd FileType haml            ShortIndent
+    autocmd FileType yaml            ShortIndent
+    autocmd FileType ruby            ShortIndent
+    autocmd FileType vim             ShortIndent
+    autocmd FileType vimspec         ShortIndent
+    autocmd FileType scala           ShortIndent
+    autocmd FileType sql             ShortIndent
+    autocmd FileType json            ShortIndent
+    autocmd FileType html            ShortIndent
+    autocmd FileType xhtml           ShortIndent
+    autocmd FileType eruby           ShortIndent
+    autocmd FileType jsp             ShortIndent
+    autocmd FileType vue             ShortIndent
+    autocmd FileType terraform       ShortIndent
+    autocmd FileType typescript      ShortIndent
+    autocmd FileType typescript.tsx  ShortIndent
+    autocmd FileType c               MediumIndent
+    autocmd FileType cs              MediumIndent
+    autocmd FileType vb              MediumIndent
+    autocmd FileType java            MediumIndent
+    autocmd FileType groovy          MediumIndent
+    autocmd FileType xml             MediumIndent
+    autocmd FileType sh              MediumIndent
+    autocmd FileType markdown        MediumIndent
+    autocmd FileType go              IndentBy 4 0
+    autocmd FileType text            IndentBy 4 0
+    autocmd FileType help            IndentBy 8 0
   augroup END
 endfunction
