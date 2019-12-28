@@ -4,8 +4,9 @@ function! my#plug#viler#configure(conf) abort
 endfunction
 
 function! my#plug#viler#after_load() abort
-  " TODO: Remove defx and rename the mapping prefix.
-  Map n (silent) \[defx]f ::call viler#open(expand('%:h'), {'do_before': 'vsplit \| vert resize 35'})
+  MapNamedKey <Space>f viler
+
+  Map n (silent) \[viler]f ::call viler#open(expand('%:h'), {'do_before': 'vsplit \| vert resize 35' })
 
   autocmd vimrc FileType viler call <SID>configure_viler_buffer()
 endfunction
