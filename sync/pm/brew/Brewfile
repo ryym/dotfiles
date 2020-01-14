@@ -20,8 +20,6 @@ brew 'vim'
 brew 'yarn'
 brew 'zsh'
 
-tap 'caskroom/cask'
-
 # cask 'alfred'
 # cask 'dropbox'
 # cask 'firefox'
@@ -31,7 +29,7 @@ tap 'caskroom/cask'
 # cask 'skim'
 # cask 'slack'
 
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 
 cask 'font-ricty-diminished'
 
