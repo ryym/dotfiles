@@ -6,7 +6,7 @@
 [core]
     editor = vim
     quotepath = false
-    excludesfile = /Users/ryu/.gitignore
+    excludesfile = ~/.gitignore
 [rebase]
     autosquash = true
 [merge]

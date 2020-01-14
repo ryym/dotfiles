@@ -31,7 +31,7 @@ let s:fd_available = executable('fd')
 function! my#plug#fzf#_without_ignored_files() abort
   " https://github.com/sharkdp/fd
   " fd is so fast and it respects .gitignore by default.
-  let src = s:fd_available ? 'fd --hidden --type f' : 'git ls-files'
+  let src = s:fd_available ? 'fd --hidden --type f --exclude .git' : 'git ls-files'
   call fzf#run({
     \   'sink': 'edit',
     \   'source': src,
