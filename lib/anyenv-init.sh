@@ -4,7 +4,7 @@
 # And I commented out `rbenv rehash` and `nodenv rehash` because
 # they are so slow and unnecessary (I think).
 
-source "/Users/ryu/.anyenv/libexec/../completions/anyenv.zsh"
+source "$HOME/.anyenv/libexec/../completions/anyenv.zsh"
 anyenv() {
   typeset command
   command="$1"
@@ -13,11 +13,11 @@ anyenv() {
   fi
   command anyenv "$command" "$@"
 }
-export NODENV_ROOT="/Users/ryu/.anyenv/envs/nodenv"
-export PATH="/Users/ryu/.anyenv/envs/nodenv/bin:$PATH"
-export PATH="/Users/ryu/.anyenv/envs/nodenv/shims:${PATH}"
+export NODENV_ROOT="$HOME/.anyenv/envs/nodenv"
+export PATH="$HOME/.anyenv/envs/nodenv/bin:$PATH"
+export PATH="$HOME/.anyenv/envs/nodenv/shims:${PATH}"
 export NODENV_SHELL=zsh
-source '/Users/ryu/.anyenv/envs/nodenv/libexec/../completions/nodenv.zsh'
+source "$HOME/.anyenv/envs/nodenv/libexec/../completions/nodenv.zsh"
 # (command nodenv rehash 2>/dev/null &)
 nodenv() {
   local command
@@ -33,11 +33,11 @@ nodenv() {
     command nodenv "$command" "$@";;
   esac
 }
-export PYENV_ROOT="/Users/ryu/.anyenv/envs/pyenv"
-export PATH="/Users/ryu/.anyenv/envs/pyenv/bin:$PATH"
-export PATH="/Users/ryu/.anyenv/envs/pyenv/shims:${PATH}"
+export PYENV_ROOT="$HOME/.anyenv/envs/pyenv"
+export PATH="$HOME/.anyenv/envs/pyenv/bin:$PATH"
+export PATH="$HOME/.anyenv/envs/pyenv/shims:${PATH}"
 export PYENV_SHELL=zsh
-source '/Users/ryu/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh'
+source "$HOME/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh"
 # (command pyenv rehash 2>/dev/null &)
 pyenv() {
   local command
@@ -54,11 +54,11 @@ pyenv() {
   esac
 }
 
-export RBENV_ROOT="/Users/ryu/.anyenv/envs/rbenv"
-export PATH="/Users/ryu/.anyenv/envs/rbenv/bin:$PATH"
-export PATH="/Users/ryu/.anyenv/envs/rbenv/shims:${PATH}"
+export RBENV_ROOT="$HOME/.anyenv/envs/rbenv"
+export PATH="$HOME/.anyenv/envs/rbenv/bin:$PATH"
+export PATH="$HOME/.anyenv/envs/rbenv/shims:${PATH}"
 export RBENV_SHELL=zsh
-source '/Users/ryu/.anyenv/envs/rbenv/libexec/../completions/rbenv.zsh'
+source "$HOME/.anyenv/envs/rbenv/libexec/../completions/rbenv.zsh"
 # (command rbenv rehash 2>/dev/null &)
 rbenv() {
   local command

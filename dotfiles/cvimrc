@@ -1,9 +1,9 @@
 " To nitialize: https://github.com/1995eaton/chromium-vim/issues/312
 
-let configpath = '/Users/ryu/.cvimrc'
+let configpath = '~/.cvimrc'
 set localconfig
 
-map _R :source '/Users/ryu/.cvimrc'
+map _R :source '~/.cvimrc'
 
 map ; :
 
