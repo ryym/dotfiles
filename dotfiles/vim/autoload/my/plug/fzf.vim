@@ -22,7 +22,6 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]p ::call my#plug#fzf#_plugin_confs()
   Map n \[fzf]P ::call my#plug#fzf#_plugin_dirs()
   Map n \[fzf]_r ::call my#plug#fzf#_runtimepaths()
-  Map n \[fzf]n ::call my#plug#fzf#_notes()
   Map n \[fzf]o :us:FZFoutput
 endfunction
 
@@ -174,17 +173,4 @@ function! my#plug#fzf#_runtimepaths() abort
     \   'source': paths,
     \   'up': '35%',
     \ })
-endfunction
-
-function! my#plug#fzf#_notes() abort
-  call fzf#run({
-    \   'sink': funcref('my#plug#fzf#_open_note'),
-    \   'source': 'notes ls --relative',
-    \   'up': '35%',
-    \ })
-endfunction
-
-function! my#plug#fzf#_open_note(name) abort
-  let path = "$NOTES_CLI_HOME/" . a:name
-  execute 'edit' path
 endfunction
