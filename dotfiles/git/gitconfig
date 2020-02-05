@@ -57,6 +57,8 @@
     chab   = cherry-pick --abort
     sw     = switch
     f      = fetch
+    fu     = fetch upstream
+    fa     = fetch --all
     fp     = fetch --prune
     pp     = pull --prune
     puo    = push -u origin HEAD
