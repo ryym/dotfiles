@@ -104,3 +104,5 @@
     path = .gitconfig.local
 [ghq]
     root = ~/ghq/src
+[url "git@github.com:"]
+	insteadOf = https://github.com/
