@@ -4,6 +4,6 @@ export __CONST_LOADED=1
 
 export DOTPATH=${DOTPATH:-$HOME/.dotfiles}
 
-export GOPATH=$HOME/.go
+export GOPATH=$HOME/ghq
 
 export ANYENV_PATH=$HOME/.anyenv
