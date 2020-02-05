@@ -7,11 +7,13 @@ function! my#plug#viler#after_load() abort
   MapNamedKey <Space>f viler
 
   Map n (silent) \[viler]f ::call viler#open(expand('%:h'), {'do_before': 'vsplit \| vert resize 35' })
+  Map n (silent) \[viler]e ::call viler#open(expand('%:h'))
 
   autocmd vimrc FileType viler call <SID>configure_viler_buffer()
 endfunction
 
 function! s:configure_viler_buffer() abort
+  Map n (buffer nowait) <CR> ::call viler#open_cursor_file('edit')
   Remap n (buffer nowait) <C-l> <Plug>(viler-open-file)
   Remap n (buffer nowait) <C-h> <Plug>(viler-cd-up)
   Remap n (buffer nowait) f <Plug>(viler-toggle-tree)
