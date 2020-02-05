@@ -2,7 +2,6 @@
 
 VERSIONS=(
     '10.15.3'
-    '8.10.0'
 )
 
 for version in ${VERSIONS[@]}; do
