@@ -16,7 +16,7 @@ function! my#plug#prets#after_load() abort
     \   'html',
     \ ])
 
-  if exists('g:ale_fixers')
+  if exists('g:ale_fixers') && !$VIM_PRETS_NO_AUTO_FMT
     let g:ale_fixers.javascript = [function('prets#ale')]
     let g:ale_fixers.typescript = [function('prets#ale')]
     let g:ale_fixers.scss = [function('prets#ale')]
