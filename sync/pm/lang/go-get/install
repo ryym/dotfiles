@@ -3,7 +3,7 @@
 log_start 'Go get'
 
 get() {
-    run go get "$1"
+    GO111MODULE=on run go get "$1"
 }
 
 if is_dryrun || has go; then
