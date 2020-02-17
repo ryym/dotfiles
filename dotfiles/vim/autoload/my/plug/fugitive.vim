@@ -12,4 +12,15 @@ function! my#plug#fugitive#after_load()
 
   " Detect current opened file to enable fugitive.
   call fugitive#detect(expand('#:p'))
+
+  autocmd FileType fugitiveblame call s:configure_blame_buf()
+endfunction
+
+function! s:configure_blame_buf() abort
+  " Open a PR page which contains a commit your cursor put on.
+  Map n (buffer) P ::call my#plug#fugitive#_open_pr(expand("<cword>"))
+endfunction
+
+function! my#plug#fugitive#_open_pr(hash) abort
+  call system('whichpr open ' . a:hash)
 endfunction
