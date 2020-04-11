@@ -30,6 +30,9 @@
     bnmd   = branch --no-merged
     bp     = !git branch -d `git branch --merged | grep -v '*'` # prune branches
 
+    # Delete the PR tracking branches.
+    bppr   = !git branch -D `git branch | grep 'p\\d\\+'`
+
     # List `Squash and merge`d branches (https://github.com/not-an-aardvark/git-delete-squashed).
     bsqd   = !" \
         git for-each-ref refs/heads/ '--format=%(refname:short)' | while read branch; do \
@@ -55,6 +58,7 @@
     coi    = !git checkout $(git branch | fzf)
     coia   = !git checkout $(git branch -a | fzf)
     cob    = checkout -b
+    copr   = !git_checkout_pr
     chp    = cherry-pick
     chab   = cherry-pick --abort
     sw     = switch
@@ -71,8 +75,11 @@
     m      = merge
     mnf    = merge --no-ff
     mab    = merge --abort
+    remoterepo = !git_remote_repo_name
+    remotebranch = !git_remote_branch_name
     rs     = reset --mixed
     rsh    = reset --hard
+    rsrmt  = !git reset --hard `git_remote_branch_name`
     rsi    = !zsh -c 'source $HOME/.zshrc && gitfunc_reset_interactive'
     st     = stash
     stl    = stash list
