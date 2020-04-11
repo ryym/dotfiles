@@ -52,6 +52,8 @@
     cmaw   = commit -am 'WIP [ci skip]'
     amend  = commit --amend
     co     = checkout
+    coi    = !git checkout $(git branch | fzf)
+    coia   = !git checkout $(git branch -a | fzf)
     cob    = checkout -b
     chp    = cherry-pick
     chab   = cherry-pick --abort
