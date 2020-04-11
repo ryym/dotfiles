@@ -23,4 +23,7 @@ function! my#plug#prets#after_load() abort
     let g:ale_fixers.json = [function('prets#ale')]
     let g:ale_fixers.html = [function('prets#ale')]
   endif
+
+  MapNamedKey <Space>p prets
+  Map n \[prets]f ::PretsRun
 endfunction
