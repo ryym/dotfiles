@@ -9,5 +9,6 @@ function! my#plug#go#before_load()
   let g:go_highlight_types = 1
 
   MapNamedKey <Space>G go
-  Map n \[go]t ::GoTest
+  Map n \[go]b ::GoBuild! .
+  Map n \[go]t ::GoTest! ./...
 endfunction
