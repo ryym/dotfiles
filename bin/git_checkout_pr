@@ -1,0 +1,166 @@
+#!/usr/bin/env ruby
+
+# A Ruby script to checkout the branch of pull request on GitHub.
+# Usage: git_chckout_pr [pr number] <name>
+# It creates a local branch named `p[number]-[name]`.
+# And this script automatically:
+#   - fetches the remote repository if it does not exist.
+#   - set the upstream branch.
+# You need a GitHub token to use this script.
+
+# GitHub 公式の gh はまだ黎明期っぽく remote branch のトラッキングができなくて不便だった。
+# 他にもブランチ名に PR 番号使いたかったので自作した。
+
+require 'net/http'
+require 'uri'
+require 'json'
+require 'yaml'
+
+class Config
+  def self.load
+    config = YAML.load_file("#{ENV['HOME']}/.my-git-tool-config.yml")
+    new(config)
+  end
+
+  def initialize(config)
+    @config = config
+  end
+
+  def github_token
+    @config.fetch("github_token")
+  end
+end
+
+# RemoteRepo is a value object that represents the remote repository.
+class RemoteRepo
+  def self.list_from_git
+    remote_repos = `git remote -v`.split("\n").select { |l| l.end_with?('(fetch)') }
+    remote_repos.map(&RemoteRepo.method(:from_line))
+  end
+
+  # line: origin git@github.com:org/repo (fetch)
+  def self.from_line(line)
+    parts = line.split(" ")
+    raise "unexpected remote repo format: #{line}" if parts.size != 3
+
+    nickname, url, _type = parts
+    new(nickname, url)
+  end
+
+  attr_reader :nickname, :url
+
+  def initialize(nickname, url)
+    @nickname = nickname
+    @url = url
+  end
+
+  def repo_name
+    repo_fullname.split('/')[1]
+  end
+
+  def repo_fullname
+    @repo_fullname ||= repo_fullname_from_url(url)
+  end
+
+  private def repo_fullname_from_url(url)
+    if url.start_with?('git@')
+      return url.split(':').last
+    end
+
+    if url.include?('://')
+      org, repo = url.split('/').last(2)
+      return "#{org}/#{repo}"
+    end
+
+    raise "unknown remote URL format: #{url}"
+  end
+end
+
+# Main is a main logic of this script.
+class Main
+  def initialize(config)
+    @config = config
+  end
+
+  def run
+    remote_repos = RemoteRepo.list_from_git
+    if remote_repos.empty?
+      puts "no remote repositories found"
+      exit 1
+    end
+
+    main_remote_repo =
+      remote_repos.find { |r| r.nickname == 'upstream' } ||
+      remote_repos.find { |r| r.nickname == 'origin' }
+
+    if main_remote_repo.nil?
+      puts "remote repository named 'upstream' or 'origin' not found"
+      exit 1
+    end
+
+    pr_number, description = ARGV
+    pr = get_pull_request(repo: main_remote_repo.repo_fullname, number: pr_number)
+
+    remote_org, remote_branch = pr["head"]["label"].split(":")
+    puts "remote repo org: #{remote_org}, remote branch: #{remote_branch}"
+
+    remote_repo_fullname = "#{remote_org}/#{main_remote_repo.repo_name}"
+    target_remote_repo = remote_repos.find { |r| r.repo_fullname == remote_repo_fullname }
+
+    if target_remote_repo.nil?
+      puts "adding new remote repository #{remote_org}..."
+      url = "git@github.com:#{remote_repo_fullname}"
+      system("git remote add #{remote_org} #{url}")
+      target_remote_repo = RemoteRepo.new(remote_org, url)
+    end
+
+    system("git fetch #{target_remote_repo.nickname}")
+
+    current_branch, branches = list_local_branches
+    existing_branch = branches.find { |b| b.start_with?("p#{pr_number}") }
+    is_current = current_branch == existing_branch
+    if existing_branch
+      puts "The branch #{existing_branch} already exists"
+      return
+    end
+
+    local_branch_name = "p#{pr_number}" + (description ? "-#{description}" : "")
+    system("git checkout -b #{local_branch_name} #{target_remote_repo.nickname}/#{remote_branch}")
+  end
+
+  def get_pull_request(repo:, number:)
+    url = URI.parse('https://api.github.com')
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+
+    req = Net::HTTP::Get.new("/repos/#{repo}/pulls/#{number}")
+    req['Authorization'] = "token #{@config.github_token}"
+    res = http.request(req)
+
+    unless res.code == "200"
+      p res.body
+      raise "failed to fetch pull request"
+    end
+
+    JSON.parse(res.body)
+  end
+
+  def list_local_branches
+    current_branch = nil
+    existing_branches = `git branch`.split("\n").map do |b|
+      if b[0] == '*'
+        current_branch = b.sub(/^\*\s+/, '')
+      end
+      b.strip
+    end
+
+    if current_branch == nil
+      raise "failed to detect the current branch"
+    end
+
+    return [current_branch, existing_branches]
+  end
+end
+
+config = Config.load
+Main.new(config).run
