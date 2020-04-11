@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+# 現在のブランチに対応するリモートのリポジトリ名を取得するためのスクリプト。
+
+remote_branch_name = `git_remote_branch_name`
+puts remote_branch_name.split('/')[0]
+

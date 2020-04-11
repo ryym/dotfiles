@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+# 現在のブランチに対応するリモートブランチ名を取得するためのスクリプト。
+
+branch_details = `git branch -vv`.split("\n")
+
+current_branch_line = branch_details.find do |b|
+  b[0] == '*'
+end
+raise "failed to detect the current branch line" if current_branch_line == nil
+
+_asterisk, local_branch_name, _commit, remote_info = current_branch_line.split(/\s+/)
+
+if remote_info.include?(':')
+  # [branch-name:additional info]
+  remote_branch_name = remote_info[1, remote_info.index(':') - 1]
+else
+  remote_branch_name = remote_info[1, remote_info.size - 2]
+end
+
+puts remote_branch_name
+
+
