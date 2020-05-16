@@ -9,6 +9,7 @@ function! my#plug#hybrid#after_load() abort
     autocmd ColorScheme hybrid highlight LineNr ctermfg=58 guifg=#676b41
     autocmd ColorScheme hybrid highlight Comment guifg=#707880 gui=none,italic
     autocmd ColorScheme hybrid highlight VertSplit ctermfg=60 guifg=#5f5b84
+    autocmd ColorScheme hybrid highlight DiffText ctermfg=123 ctermbg=62
   augroup END
 
   colorscheme hybrid
