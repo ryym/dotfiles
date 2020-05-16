@@ -66,6 +66,7 @@
     fu     = fetch upstream
     fa     = fetch --all
     fp     = fetch --prune
+    fr     = !git fetch `git_remote_repo_name`
     pp     = pull --prune
     puo    = push -u origin HEAD
     rb     = rebase
