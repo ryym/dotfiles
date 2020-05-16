@@ -101,6 +101,7 @@
     slxxxx = log -40 --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset %s %Cgreen(%ci)%Creset' --date=local
     tree   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     sh     = show
+    shm    = !git_show_merge_commit
     shfs   = !git --no-pager show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
     d      = diff
     dc     = diff --cached
