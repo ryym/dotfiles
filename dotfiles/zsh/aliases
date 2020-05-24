@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+# Aliases
+alias ls='ls -GF'
+alias ll='ls -lGF'
+alias la='ls -laGF'
+alias g='git'
+alias reload='exec $SHELL -l'
+alias v='vim'
+alias vi='vim'
+alias gvi='gvim'
+alias dk='docker'
+alias dkc='docker-compose'
+alias be='bundle exec'
+alias npmr='npm run'
+alias cg='cargo'
+alias manv='() { vim -c "exe \"PluggerLoad man\" | Man $1 | only" }'
+alias tf='terraform'
+alias y='yarn'
