@@ -106,6 +106,7 @@
     dfs    = !git --no-pager diff --name-only
     dgvi   = difftool --tool=gvimdiff
     sbm    = submodule
+    lsstg  = diff --name-only --cached # List staged files.
 
     # https://developer.atlassian.com/blog/2015/04/force-with-lease/
     pushfw = push --force-with-lease
@@ -113,5 +114,7 @@
     path = .gitconfig.local
 [ghq]
     root = ~/ghq/src
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+[init]
+	defaultBranch = main
+[pull]
+	ff = only
