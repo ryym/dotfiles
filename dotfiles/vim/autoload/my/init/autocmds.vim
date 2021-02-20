@@ -49,6 +49,7 @@ function! s:customize_per_filetype() abort
     " Configure filetypes which have to be assigned manually.
     call s:delegate_filetypes({
       \ '*.gradle'     : 'groovy',
+      \ 'Jenkinsfile'  : 'groovy',
       \ '*.es6'        : 'javascript',
       \ '.babelrc'     : 'json',
       \ '.pryrc'       : 'ruby',
