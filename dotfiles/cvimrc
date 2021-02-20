@@ -1,4 +1,4 @@
-" To nitialize: https://github.com/1995eaton/chromium-vim/issues/312
+" To initialize: https://github.com/1995eaton/chromium-vim/issues/312
 
 let configpath = '~/.cvimrc'
 set localconfig
