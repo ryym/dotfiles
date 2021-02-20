@@ -27,6 +27,9 @@ endfunction
 
 let s:fd_available = executable('fd')
 
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :100 {}'"
+
 function! my#plug#fzf#_without_ignored_files() abort
   " https://github.com/sharkdp/fd
   " fd is so fast and it respects .gitignore by default.
@@ -35,6 +38,7 @@ function! my#plug#fzf#_without_ignored_files() abort
     \   'sink': 'edit',
     \   'source': src,
     \   'up': '35%',
+    \   'options': s:bat_preview_opt,
     \ })
 endfunction
 
@@ -62,7 +66,7 @@ function! my#plug#fzf#_tab_buffers() abort
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
     \   'source': my#plug#fzf#tab_buffers#list_others(tabpagenr()),
     \   'up': '35%',
-    \   'options': '--multi --expect=ctrl-d'
+    \   'options': '--multi --expect=ctrl-d ' . s:bat_preview_opt
     \ })
 endfunction
 
