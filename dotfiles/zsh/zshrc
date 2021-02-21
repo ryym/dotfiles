@@ -86,12 +86,7 @@ function fzf-ghq() {
 }
 zle -N fzf-ghq
 bindkey '^]' fzf-ghq
-
-function fzf-gopath() {
-    fzf-src 'gits -p $GOPATH/src'
-}
-zle -N fzf-gopath
-bindkey '^g' fzf-gopath
+bindkey '^g' fzf-ghq
 
 # https://github.com/direnv/direnv
 if has direnv; then
