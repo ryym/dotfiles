@@ -11,4 +11,13 @@ function my#plug#ale#before_load()
     \ 'elm': ['elm-format'],
     \ 'terraform': ['terraform'],
     \ }
+  let g:ale_fixers.javascript = ['prettier']
+  let g:ale_fixers.typescript = ['prettier']
+  let g:ale_fixers.scss = ['prettier']
+  let g:ale_fixers.json = ['prettier']
+  let g:ale_fixers.html = ['prettier']
+  let g:ale_fixers.graphql = ['prettier']
+
+  MapNamedKey <Space>a ale
+  Map n \[ale]f ::ALEFix
 endfunction
