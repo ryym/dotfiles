@@ -19,6 +19,9 @@ function! my#plug#unimpaired#after_load()
   Remap no [d <Plug>unimpairedContextPrevious
   Remap no ]d <Plug>unimpairedContextNext
 
+  Remap no [s <Plug>unimpairedBlankUp
+  Remap no ]s <Plug>unimpairedBlankDown
+
   call g:Unimpaired_toggle_option_by('t', 'expandtab')
   call g:Unimpaired_toggle_option_by('s', 'scrollbind')
   call g:Unimpaired_toggle_option_by('p', 'spell')
