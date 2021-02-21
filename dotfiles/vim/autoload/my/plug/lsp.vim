@@ -16,6 +16,10 @@ function! my#plug#lsp#after_load()
   Map n \[lsp]k ::LspPreviousError
   Map n \[lsp]r ::LspRename
   Map n \[lsp]? ::LspStatus
+  Map n \[lsp]v ::LspImplementation
+  Map n \[lsp]V ::LspPeekImplementation
+  Map n \[lsp]t ::LspTypeDefinition
+  Map n \[lsp]T ::LspPeekTypeDefinition
   Map n (silent) \[lsp]i ::LspHover
 
   " TypeScript (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-TypeScript)
