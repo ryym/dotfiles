@@ -118,6 +118,7 @@ function! my#init#mappings#setup() abort
   Map n qG  ::clast
   Map n qn  ::cnewer
   Map n qp  ::colder
+  Map n q<Enter> <Enter>:cclose<Enter>
 
   " Use 'Q' to run macros since 'q' is used as a leader key for quickfix.
   Map n Q q
