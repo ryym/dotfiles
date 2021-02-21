@@ -44,10 +44,6 @@ function! my#init#mappings#setup() abort
   Map n <S-Space>       i<Space><Esc>
   Map n <Leader><Space> a<Space><Esc>
 
-  " In US keyboard, typing ':' is so hard.
-  Map nv ; :
-  Map nv : ;
-
   " Easy paragraph moving.
   Map nvo <C-j> }
   Map nvo <C-k> {
@@ -250,10 +246,10 @@ endfunction
 
 function! s:map_repeat_keys_and_move_to_occurrence(direct_to_right, command)
   if a:direct_to_right
-    Map nvo : ;
+    Map nvo ; ;
     Map nvo , ,
   else
-    Map nvo : ,
+    Map nvo ; ,
     Map nvo , ;
   endif
   return a:command
