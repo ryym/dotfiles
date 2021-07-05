@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+log_start 'Rust cargo'
+
+get() {
+    cargo install "$1"
+}
+
+if is_dryrun || has cargo; then
+    cargo install bat
+    cargo install git-delta
+else
+    log_error 'Rust is not available'
+    exit 1
+fi
+
+log_finish 'Rust cargo'
