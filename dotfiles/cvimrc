@@ -1,11 +1,11 @@
 " To initialize: https://github.com/1995eaton/chromium-vim/issues/312
+"   let configpath = '/path/to/your/.cvimrc'
+"   set localconfig
 
 let configpath = '~/.cvimrc'
 set localconfig
 
 map _R :source '~/.cvimrc'
-
-map ; :
 
 map <C-o> goBack
 map <C-i> goForward
