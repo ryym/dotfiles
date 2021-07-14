@@ -42,7 +42,7 @@
     aa     = add --all
     ap     = add -p
     au     = add -u
-    ai     = !zsh -c 'source $HOME/.zshrc && gitfunc_add_interactive'
+    ai     = !zsh -c 'source $HOME/.dotfiles/lib/gitfuncs && gitfunc_add_interactive'
     cm     = commit
     cmm    = commit -m
     cma    = commit -a
@@ -79,7 +79,7 @@
     rs     = reset --mixed
     rsh    = reset --hard
     rsrmt  = !git reset --hard `git_remote_branch_name`
-    rsi    = !zsh -c 'source $HOME/.zshrc && gitfunc_reset_interactive'
+    rsi    = !zsh -c 'source $HOME/.dotfiles/lib/gitfuncs && gitfunc_reset_interactive'
     st     = stash
     stl    = stash list
     sts    = stash save
