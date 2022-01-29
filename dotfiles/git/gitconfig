@@ -12,6 +12,9 @@
     autosquash = true
 [merge]
     defaultToUpstream = true
+    conflictstyle = diff3
+[checkout]
+    defaultRemote = origin
 [gui]
     encoding = utf-8
 [alias]
