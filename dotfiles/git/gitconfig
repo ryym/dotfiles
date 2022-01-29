@@ -1,8 +1,9 @@
 [user]
     name = ryym
     email = ryym.64@gmail.com
+	signingkey = 6B523D1904C0A72CBD688FFC1694882EA6D8390F
 [push]
-    default = simple
+    default = upstream
 [core]
     editor = vim
     quotepath = false
@@ -121,3 +122,5 @@
 	defaultBranch = main
 [pull]
 	ff = only
+[commit]
+	gpgsign = true
