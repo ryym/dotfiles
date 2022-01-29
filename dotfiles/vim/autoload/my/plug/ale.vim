@@ -18,6 +18,9 @@ function my#plug#ale#before_load()
   let g:ale_fixers.html = ['prettier']
   let g:ale_fixers.graphql = ['prettier']
 
+  " https://github.com/dense-analysis/ale/issues/3814
+  let g:ale_rust_rustfmt_options = '--edition 2018'
+
   MapNamedKey <Space>a ale
   Map n \[ale]f ::ALEFix
 endfunction
