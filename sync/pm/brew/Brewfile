@@ -34,4 +34,6 @@ brew 'zsh'
 tap 'homebrew/cask-fonts'
 
 cask 'font-ricty-diminished'
+# https://github.com/tonsky/FiraCode
+cask 'font-fira-code'
 
