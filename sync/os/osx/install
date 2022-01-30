@@ -14,9 +14,9 @@ fi
 
 load pm/brew/install
 
-load env/install
-
 load lib/rustup
+
+load env/install
 
 load pm/lang/install
 
