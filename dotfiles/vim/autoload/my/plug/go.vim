@@ -8,6 +8,10 @@ function! my#plug#go#before_load()
   let g:go_fmt_command = "goimports"
   let g:go_highlight_types = 1
 
+  " https://cs.opensource.google/go/x/tools/+/refs/tags/gopls/v0.8.1:gopls/doc/vim.md
+  let g:go_def_mode='gopls'
+  let g:go_info_mode='gopls'
+
   MapNamedKey <Space>G go
   Map n \[go]b ::GoBuild! .
   Map n \[go]t ::GoTest! ./...
