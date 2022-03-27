@@ -17,6 +17,7 @@ function my#plug#ale#before_load()
   let g:ale_fixers.json = ['prettier']
   let g:ale_fixers.html = ['prettier']
   let g:ale_fixers.graphql = ['prettier']
+  let g:ale_fixers.go = ['goimports']
 
   " https://github.com/dense-analysis/ale/issues/3814
   let g:ale_rust_rustfmt_options = '--edition 2018'

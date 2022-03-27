@@ -56,17 +56,17 @@ function! my#plug#lsp#after_load()
     echom 'Install RLS to use LSP for Rust (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Rust)'
   endif
 
-  " " Go (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Go)
-  " if executable('gopls')
-  "   autocmd User lsp_setup call lsp#register_server({
-  "     \ 'name': 'go',
-  "     \ 'cmd': {_info -> ['gopls', '-mode', 'stdio']},
-  "     \ 'whitelist': ['go'],
-  "     \ })
-  "   autocmd FileType go call s:configure_lsp()
-  " else
-  "   echom 'Install gopls to use LSP for Go'
-  " endif
+  " Go (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Go)
+  if executable('gopls')
+    autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'go',
+      \ 'cmd': {_info -> ['gopls']},
+      \ 'whitelist': ['go'],
+      \ })
+    autocmd FileType go call s:configure_lsp()
+  else
+    echom 'Install gopls to use LSP for Go'
+  endif
 
   " Scala (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Scala)
   " metals: https://scalameta.org/metals/
