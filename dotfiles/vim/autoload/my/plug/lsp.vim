@@ -68,6 +68,24 @@ function! my#plug#lsp#after_load()
   "   echom 'Install gopls to use LSP for Go'
   " endif
 
+  " Scala (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Scala)
+  " metals: https://scalameta.org/metals/
+  " cousier: https://get-coursier.io/
+  " cs install metals && cs bootstrap metals -o /path/to/metals
+  if executable('metals')
+    autocmd User lsp_setup call lsp#register_server({
+      \  'name': 'scala',
+      \  'cmd': {_info -> ['metals']},
+      \  'root_uri': {_info -> lsp#utils#path_to_uri(s:find_nearest_dir('build.sbt'))},
+      \  'workspace_config': {},
+      \  'whitelist': ['scala', 'sbt'],
+      \ })
+    autocmd FileType scala call s:configure_lsp()
+    autocmd BufWritePre *.scala LspDocumentFormatSync
+  else
+    echom 'Install metals to use LSP for Scala'
+  endif
+
 endfunction
 
 function s:find_nearest_dir(filename)
