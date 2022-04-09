@@ -55,9 +55,9 @@ function! my#plug#fzf#_open_file_or_dir(...)
   endif
 
   if isdirectory(path)
-    execute 'cd' path
+    execute 'cd' fnameescape(path)
   else
-    execute 'edit' path
+    execute 'edit' fnameescape(path)
   endif
 endfunction
 
@@ -76,10 +76,10 @@ function! my#plug#fzf#_tab_buffers_on_select(names) abort
   endif
   if a:names[0] == 'ctrl-d'
     for name in a:names[1:]
-      execute 'bdelete' name
+      execute 'bdelete' fnameescape(name)
     endfor
   else
-    execute 'edit' a:names[1]
+    execute 'edit' fnameescape(a:names[1])
   endif
 endfunction
 
