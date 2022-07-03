@@ -8,6 +8,7 @@
 
 shopt -s expand_aliases
 source "$DOTPATH/dotfiles/zsh/aliases"
+source "$HOME/aliases.local"
 
 eval "$@"
 cmds=($@)
