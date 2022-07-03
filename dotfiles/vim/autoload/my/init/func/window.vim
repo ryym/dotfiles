@@ -1,7 +1,3 @@
-function! my#init#func#window#hoge() abort
-  echom 'hogehoge'
-endfunction
-
 function! my#init#func#window#split_from_buf(opt) abort
   let src_win = win_getid()
   call my#init#func#window#split_by_ratio(src_win, a:opt)
