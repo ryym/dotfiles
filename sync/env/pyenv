@@ -16,8 +16,10 @@ export PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/sqlite/lib/pkgconfig"
 
 set -u
 
-for version in ${VERSIONS[@]}; do
-    install_version pyenv $version
-done
+# FIXME: Pyenv seems not support M1 Mac yet.
 
-set_global_version pyenv ${VERSIONS[0]}
+# for version in ${VERSIONS[@]}; do
+#     install_version pyenv $version
+# done
+
+# set_global_version pyenv ${VERSIONS[0]}
