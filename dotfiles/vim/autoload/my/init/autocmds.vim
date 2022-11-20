@@ -58,7 +58,6 @@ function! s:customize_per_filetype() abort
       \ 'Berksfile'    : 'ruby',
       \ 'Dockerfile*'  : 'Dockerfile',
       \ '*.purs'       : 'haskell',
-      \ '*.css'        : 'scss',
       \ '*.tsx'        : 'typescript.tsx',
       \ })
   augroup END
