@@ -160,7 +160,7 @@ function! my#init#mappings#setup() abort
   Map c <C-p> <Up>
 
   " Paste current path by '%%'.
-  Map c (expr) %% getcmdtype() == ':' ? expand('%:h') : '%%'
+  Map c (expr) %% getcmdtype() == ':' ? fnameescape(expand('%:h')) : '%%'
 
   " Easy cursor moving in insert mode.
   Map i <C-j> <Down>
