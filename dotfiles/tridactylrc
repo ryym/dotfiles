@@ -1,0 +1,6 @@
+" https://github.com/tridactyl/tridactyl
+
+bind <C-j> scrollline 20
+bind <C-k> scrollline -20
+
+bind <Space>ba tab #

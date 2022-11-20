@@ -10,6 +10,7 @@ LINKS=(
     'vim:.vim'
     'vim:.config/nvim'
     'cvimrc:.cvimrc'
+    'tridactylrc:.tridactylrc'
     'tmux/tmux.conf:.tmux.conf'
     'tmux:.tmux'
     'ctags:.ctags'
