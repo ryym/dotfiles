@@ -15,6 +15,7 @@ function! my#plug#lsp#after_load()
   Map n \[lsp]j ::LspNextError
   Map n \[lsp]k ::LspPreviousError
   Map n \[lsp]r ::LspRename
+  Map n \[lsp]R ::LspReferences
   Map n \[lsp]? ::LspStatus
   Map n \[lsp]v ::LspImplementation
   Map n \[lsp]V ::LspPeekImplementation
