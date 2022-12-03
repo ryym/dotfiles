@@ -16,7 +16,10 @@ PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/sqlite/lib/pkgconfig"
 
 set -u
 
+log_warn 'Skipped: Python installation via pyenv'
+
 # FIXME: Pyenv seems not support M1 Mac yet.
+# It also results in error on Arch Linux.
 
 # for version in ${VERSIONS[@]}; do
 #     install_version pyenv $version
