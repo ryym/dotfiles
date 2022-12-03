@@ -9,13 +9,14 @@ DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
 source "$DOTPATH/link/link_table"
 
-# Check if the dotfiles can be linked.
-validate() {
+check_srcpath_exists() {
     if [ ! -e "$srcpath" ]; then
         echo "$srcpath doesn't exist." >&2
         exit 1
     fi
+}
 
+check_destpath_is_linkable() {
     if [ -e "$destpath" ] && [ ! -L "$destpath" ]; then
         echo "$destpath exists but is not a symlnk." >&2
         exit 1
@@ -57,9 +58,11 @@ for link in "${LINKS[@]}"; do
         *) destpath="$HOME/$dotfile" ;;
     esac
 
-    if [ ${DOTFILES_DRYRUN:-0} -eq 0 ]; then
-        validate && link_dotfile
+    if [ ${DOTFILES_LINKTEST:-0} -eq 1 ]; then 
+        check_srcpath_exists
+    elif [ ${DOTFILES_DRYRUN:-0} -ne 0 ]; then
+        check_srcpath_exists && check_destpath_is_linkable
     else
-        validate
+        check_srcpath_exists && check_destpath_is_linkable && link_dotfile
     fi
 done

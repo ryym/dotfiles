@@ -24,6 +24,10 @@ dryrun-install:
 dryrun-link:
 	@DOTFILES_DRYRUN=1 ./link/link
 
+.PHONY: test-link
+test-link:
+	@DOTFILES_LINKTEST=1 ./link/link
+
 .PHONY: uninstall
 uninstall:
 	@./sync/uninstall

@@ -6,7 +6,7 @@
 # So the test success doesn't mean the installations work correctly
 # on every platforms.
 
-make dryrun-link
+make test-link
 code=$?
 test $code -ne 0 && exit $code
 
