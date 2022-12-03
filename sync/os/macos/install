@@ -12,13 +12,13 @@ if ! has brew; then
     load os/macos/install-brew
 fi
 
-load pm/brew/install
+load pkgs/brew/install
 
 load lib/rustup
 
 load env/install
 
-load pm/lang/install
+load pkgs/langs/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then
     run ch-sh zsh

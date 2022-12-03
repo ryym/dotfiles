@@ -7,9 +7,9 @@ The install scripts is in this directory.
 ### os/
 
 This directory contains the installers for each supported OS. These files
-use other install scripts in `pm/` or `env/`.
+use other install scripts in `pkgs/` or `env/`.
 
-### pm/
+### pkgs/
 
 This directory contains the installers which install some basic tools
 via a package manager that are usually used in the supported OSs.

@@ -8,11 +8,11 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 log_finish "Install for Debian"
 
-load pm/apt-get/install
+load pkgs/apt-get/install
 
 load env/install
 
-load pm/lang/install
+load pkgs/langs/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then
     run ch-sh zsh

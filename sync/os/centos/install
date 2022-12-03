@@ -8,11 +8,11 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 log_finish "Install for CentOS"
 
-load pm/yum/install
+load pkgs/yum/install
 
 load env/install
 
-load pm/lang/install
+load pkgs/langs/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then
     run ch-sh zsh
