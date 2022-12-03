@@ -7,4 +7,7 @@ unset nmaps
 bind <C-j> scrollline 20
 bind <C-k> scrollline -20
 
+bind <C-o> back
+bind <C-i> forward
+
 bind <Space>ba tab #
