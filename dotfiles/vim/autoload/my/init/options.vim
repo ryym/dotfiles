@@ -83,7 +83,7 @@ function! my#init#options#setup() abort
   set backspace   =indent,eol,start
   set linespace   =1
   set mouse       =a
-  set clipboard   =unnamed
+  set clipboard   =unnamed,unnamedplus
   set keywordprg  =:help
   set scrolloff   =3
   set textwidth   =0
