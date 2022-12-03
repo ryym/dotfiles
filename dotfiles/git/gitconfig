@@ -8,7 +8,7 @@
     editor = vim
     quotepath = false
     excludesfile = ~/.gitignore
-    pager = delta --theme 'zenburn'
+    pager = delta --syntax-theme 'zenburn'
 [rebase]
     autosquash = true
 [merge]
