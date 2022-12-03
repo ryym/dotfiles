@@ -24,16 +24,35 @@ validate() {
 
 # Create or update symbolic links in $HOME.
 link_dotfile() {
-    mkdir -p $(dirname "$destpath")
-    ln -nsf "$srcpath" "$destpath"
+    case "$srcpath" in
+        *.service)
+            user=$($sudo && echo '' || echo '--user')
+            cmd="systemctl $user link $srcpath"
+            ;;
+        *)
+            cmd="ln -nsf $srcpath $destpath"
+            ;;
+    esac
+
+    sudo=$($sudo && echo 'sudo' || echo '')
+    $sudo mkdir -p $(dirname "$destpath")
+    $sudo $cmd
     echo "-- $dotfile is linked. --"
 }
 
 for link in "${LINKS[@]}"; do
+    head="${link%%:*}"
+    if [ "$head" == '!sudo' ]; then
+        link="${link#*:}"
+        sudo=true
+    else
+        sudo=false
+    fi
+
     dotfile="${link#*:}"
     srcpath="$DOTPATH/dotfiles/${link%%:*}"
 
-    case $dotfile in
+    case "$dotfile" in
         /*) destpath="$dotfile" ;;
         *) destpath="$HOME/$dotfile" ;;
     esac
@@ -44,4 +63,3 @@ for link in "${LINKS[@]}"; do
         validate
     fi
 done
-
