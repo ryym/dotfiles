@@ -43,10 +43,11 @@ function! my#plug#lsp#after_load()
   endif
 
   " Rust (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Rust)
-  if executable('rls')
+  " (For old versions of Rust, you may need to use rls instead of rust-analyzer)
+  if executable('rust-analyzer')
     autocmd User lsp_setup call lsp#register_server({
       \  'name': 'rust',
-      \  'cmd': {_info -> ['rustup', 'run', 'stable', 'rls']},
+      \  'cmd': {_info -> ['rustup', 'run', 'stable', 'rust-analyzer']},
       \  'workspace_config': {'rust': {'clippy_preference': 'on'}},
       \  'whitelist': ['rust'],
       \ })
