@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Install libraries for Arch Linux.
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start "Install for Arch Linux"
+
+load pkgs/pacman/install
+
+load lib/rustup
+
+load lang-envs/install
+
+load pkgs/langs/install
+
+if [ ${SHELL##*/} != 'zsh' ]; then
+    run ch-sh zsh
+fi
+
+log_finish "Install for Arch Linux"

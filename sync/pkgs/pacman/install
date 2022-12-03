@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'pacman'
+
+install() {
+    run sudo pacman --noconfirm -S "$@"
+}
+
+if is_dryrun || has pacman; then
+    # Note that this needs interactive inputs.
+    run sudo pacman -Syu
+
+    # Basic tools
+    install autoconf
+    install docker
+    install docker-compose
+    install fzf
+    install git
+    install go
+    install iwd
+    install make
+    install sudo
+    install tmux
+    install tree
+    install which
+    install wget
+    install wl-clipboard
+    install zsh
+
+    # For Japanese inputs
+    install adobe-source-han-sans-jp-fonts
+    install fcitx5-im
+    install fcitx5-mozc
+
+    # For desktop (GUI) environments
+    # They should be performed interactively with care.
+    # See for latest info: https://wiki.archlinux.org/title/GNOME
+    #
+    # firefox
+    # gnome
+    # xf86-video-intel
+    # xorg-servder
+
+    # AUR
+    # gnome-browser-connector (for managing GNOME shell extensions in browser)
+
+else
+    log_error 'pacman not found'
+    exit 1
+fi
+
+log_finish 'pacman'
