@@ -87,6 +87,16 @@ function! my#plug#lsp#after_load()
     echom 'Install metals to use LSP for Scala'
   endif
 
+  " Unofficial Ruby LSP (https://solargraph.org)
+  " if executable("solargraph")
+  "   autocmd User lsp_setup call lsp#register_server({
+  "     \ 'name': 'ruby',
+  "     \ 'cmd': {_info -> ['solargraph', 'stdio']},
+  "     \ 'whitelist': ['ruby'],
+  "     \ })
+  "   autocmd FileType ruby call s:configure_lsp()
+  " endif
+
 endfunction
 
 function s:find_nearest_dir(filename)
