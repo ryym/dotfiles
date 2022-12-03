@@ -44,15 +44,13 @@ function! my#plug#lsp#after_load()
 
   " Rust (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Rust)
   " (For old versions of Rust, you may need to use rls instead of rust-analyzer)
-  if executable('rust-analyzer')
-    autocmd User lsp_setup call lsp#register_server({
-      \  'name': 'rust',
-      \  'cmd': {_info -> ['rustup', 'run', 'stable', 'rust-analyzer']},
-      \  'workspace_config': {'rust': {'clippy_preference': 'on'}},
-      \  'whitelist': ['rust'],
-      \ })
-    autocmd FileType rust call s:configure_lsp()
-  endif
+  autocmd User lsp_setup call lsp#register_server({
+    \  'name': 'rust',
+    \  'cmd': {_info -> ['rustup', 'run', 'stable', 'rust-analyzer']},
+    \  'workspace_config': {'rust': {'clippy_preference': 'on'}},
+    \  'whitelist': ['rust'],
+    \ })
+  autocmd FileType rust call s:configure_lsp()
 
   " Go (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Go)
   if executable('gopls')
