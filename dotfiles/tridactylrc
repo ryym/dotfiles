@@ -1,5 +1,9 @@
 " https://github.com/tridactyl/tridactyl
 
+" It seems that Tridactyl keeps settings after quitting Firefox.
+" This is sometimes confusing so reset keybindings everytime.
+unset nmaps
+
 bind <C-j> scrollline 20
 bind <C-k> scrollline -20
 
