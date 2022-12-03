@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 # Aliases
-alias ls='ls -GF'
-alias ll='ls -lGF'
-alias la='ls -laGF'
+alias ls='ls -F'
+alias ll='ls -lF'
+alias la='ls -laF'
 alias g='git'
 alias reload='exec $SHELL -l'
 alias v='vim'
