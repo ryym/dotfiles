@@ -8,6 +8,7 @@ get() {
 
 if is_dryrun || has cargo; then
     cargo install bat
+    cargo install fd-find
     cargo install git-delta
 else
     log_error 'Rust is not available'
