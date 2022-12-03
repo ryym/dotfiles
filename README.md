@@ -14,7 +14,7 @@ This repository manages:
 
 ## Supported OS
 
-* Mac OSX
+* macOS
 * Ubuntu / Debian
 * CentOS
 
@@ -23,7 +23,7 @@ This repository manages:
 * [Git] - to download and update this repository.
 * [Bash] - to run install scripts written in Bash.
 * Package manager - to install basic libraries for your OS. You can use:
-    * [Homebrew][Homebrew] (Mac OSX)
+    * [Homebrew][Homebrew] (macOS)
     * [APT][APT] (Ubuntu, Debian)
     * [Yum][Yum] (CentOS)
 

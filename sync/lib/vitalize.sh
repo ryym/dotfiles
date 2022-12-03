@@ -48,8 +48,8 @@ is_dryrun() {
 }
 
 detect_osname() {
-    if is_osx; then
-        echo 'osx'
+    if is_macos; then
+        echo 'macos'
     elif is_debian; then
         echo 'debian'
     elif is_centos; then
@@ -57,7 +57,7 @@ detect_osname() {
     fi
 }
 
-is_osx() {
+is_macos() {
     return $(test $(uname) == 'Darwin')
 }
 

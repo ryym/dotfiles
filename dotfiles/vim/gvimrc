@@ -20,7 +20,7 @@ endif
 " IM settings {{{
 "
 if g:is_mac
-  " In OSX, noimdisable doesn't work correctly.
+  " In macOS, noimdisable doesn't work correctly.
   set imdisable
 endif
 
