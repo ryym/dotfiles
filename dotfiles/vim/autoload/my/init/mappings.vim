@@ -191,8 +191,9 @@ function! my#init#mappings#setup() abort
   Map i <C-w> <C-r>=my#init#func#completion#files()<CR>
 
   " Paste text.
-  Map i (silent) <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
-  Map c <C-v> <C-r>*
+  let sys_register = g:is_unix ? '+' : '*'
+  execute 'Map i (silent) <C-v> <C-o>:set paste<CR><C-r>' . sys_register . '<C-o>:set nopaste<CR>'
+  execute 'Map c <C-v> <C-r>' . sys_register
 
   if !g:is_gui
     " I don't know why but `Ctrl+Space` pastes text in clipboard

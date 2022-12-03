@@ -2,6 +2,7 @@ function! my#init#setup() abort
   " Global utility constants.
   let g:is_windows = has('win32') || has('win64')
   let g:is_mac = has('mac') || has('macunix') || has('gui_macvim')
+  let g:is_unix = !has('mac') && has('unix')
   let g:is_gui = has('gui_running')
 
   if has('nvim')
