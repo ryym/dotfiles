@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 
-# Install '**env' tools that can install and manage
-# several versions of a language. Currently, we use 'anyenv'
-# to manage these '**env' tools.
+# We often need to manage multiple versions of some programming languages.
+# Currently we use anyenv to manage tools that manages multiple versions of a language.
 
 set -eu
 trap 'echo SYNC STOPPED: $0' ERR INT
 source "$DOTPATH/sync/lib/vitalize.sh"
 
 ANYENV="$ANYENV_PATH/bin/anyenv"
-source "$DOTPATH/sync/env/helper.sh"
+source "$DOTPATH/sync/lang-envs/helper.sh"
 
 log_start 'Anyenv'
 
@@ -22,7 +21,7 @@ else
 fi
 
 # Install '**env' tools.
-for envpath in "$DOTPATH"/sync/env/*env; do
+for envpath in "$DOTPATH"/sync/lang-envs/*env; do
     if ! has_env ${envpath##*/}; then
         run $ANYENV install "${envpath##*/}"
     fi
@@ -32,7 +31,7 @@ done
 run eval "\"\$($ANYENV init -)\""
 
 # Install languages.
-for envpath in "$DOTPATH"/sync/env/*env; do
+for envpath in "$DOTPATH"/sync/lang-envs/*env; do
     source $envpath
 done
 

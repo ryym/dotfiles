@@ -16,7 +16,7 @@ load pkgs/brew/install
 
 load lib/rustup
 
-load env/install
+load lang-envs/install
 
 load pkgs/langs/install
 

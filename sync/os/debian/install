@@ -10,7 +10,7 @@ log_finish "Install for Debian"
 
 load pkgs/apt-get/install
 
-load env/install
+load lang-envs/install
 
 load pkgs/langs/install
 

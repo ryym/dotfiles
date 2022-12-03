@@ -7,14 +7,14 @@ The install scripts is in this directory.
 ### os/
 
 This directory contains the installers for each supported OS. These files
-use other install scripts in `pkgs/` or `env/`.
+use other install scripts in `pkgs/` or `lang-envs/`.
 
 ### pkgs/
 
 This directory contains the installers which install some basic tools
 via a package manager that are usually used in the supported OSs.
 
-### env/
+### lang-envs/
 
 This directory contains the installers of language version managers like [rbenv].
 All manager tools themselves are managed by [anyenv].

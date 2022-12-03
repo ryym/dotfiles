@@ -10,7 +10,7 @@ log_finish "Install for CentOS"
 
 load pkgs/yum/install
 
-load env/install
+load lang-envs/install
 
 load pkgs/langs/install
 
