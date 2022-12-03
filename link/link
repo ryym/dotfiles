@@ -8,6 +8,7 @@ trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
 source "$DOTPATH/link/link_table"
+source "$DOTPATH/link/helper.sh"
 
 check_srcpath_exists() {
     if [ ! -e "$srcpath" ]; then
@@ -23,40 +24,25 @@ check_destpath_is_linkable() {
     fi
 }
 
-# Create or update symbolic links in $HOME.
 link_dotfile() {
-    case "$srcpath" in
-        *.service)
-            user=$($sudo && echo '' || echo '--user')
-            cmd="systemctl $user link $srcpath"
+    case $(dotfile_type "$srcpath") in
+        normal)
+            local cmd="ln -nsf $srcpath $destpath"
             ;;
-        *)
-            cmd="ln -nsf $srcpath $destpath"
+        systemd)
+            local user=$($sudo && echo '' || echo '--user')
+            local cmd="systemctl $user link $srcpath"
             ;;
     esac
 
-    sudo=$($sudo && echo 'sudo' || echo '')
-    $sudo mkdir -p $(dirname "$destpath")
-    $sudo $cmd
+    local prefix=$($sudo && echo 'sudo' || echo '')
+    $prefix mkdir -p $(dirname "$destpath")
+    $prefix $cmd
     echo "-- $dotfile is linked. --"
 }
 
 for link in "${LINKS[@]}"; do
-    head="${link%%:*}"
-    if [ "$head" == '!sudo' ]; then
-        link="${link#*:}"
-        sudo=true
-    else
-        sudo=false
-    fi
-
-    dotfile="${link#*:}"
-    srcpath="$DOTPATH/dotfiles/${link%%:*}"
-
-    case "$dotfile" in
-        /*) destpath="$dotfile" ;;
-        *) destpath="$HOME/$dotfile" ;;
-    esac
+    prepare_variables "$link"
 
     if [ ${DOTFILES_LINKTEST:-0} -eq 1 ]; then 
         check_srcpath_exists
