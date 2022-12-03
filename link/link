@@ -9,14 +9,6 @@ DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
 source "$DOTPATH/link/link_table"
 
-while getopts t opt
-do
-    case $opt in
-        t) readonly DRY_RUN=1
-            ;;
-    esac
-done
-
 # Check if the dotfiles can be linked.
 validate() {
     if [ ! -e "$srcpath" ]; then
@@ -46,7 +38,7 @@ for link in "${LINKS[@]}"; do
         *) destpath="$HOME/$dotfile" ;;
     esac
 
-    if [ ${DRY_RUN:-0} -eq 0 ]; then
+    if [ ${DOTFILES_DRYRUN:-0} -eq 0 ]; then
         validate && link_dotfile
     else
         validate

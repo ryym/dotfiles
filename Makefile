@@ -18,11 +18,11 @@ dryrun: dryrun-install dryrun-link
 
 .PHONY: dryrun-install
 dryrun-install:
-	@SYNC_DRYRUN=1 ./sync/install
+	@DOTFILES_DRYRUN=1 ./sync/install
 
 .PHONY: dryrun-link
 dryrun-link:
-	@./link/link -t
+	@DOTFILES_DRYRUN=1 ./link/link
 
 .PHONY: uninstall
 uninstall:

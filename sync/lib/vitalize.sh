@@ -22,8 +22,7 @@ load() {
     source "$DOTPATH/sync/$1"
 }
 
-# If $SYNC_DRYRUN has a non-empty value,
-# just echo the given command without executing it.
+# Run given commands or just echo them on dryrun mode.
 # Note that you need to escape characters in some cases.
 # For example, 'run eval $($ANYENV init -)' executes
 # '$ANYENV init -' first and passes its output to the 'run' function.
@@ -44,7 +43,7 @@ run() {
 }
 
 is_dryrun() {
-    return $(test ! -z ${SYNC_DRYRUN:-''})
+    return $(test ! -z ${DOTFILES_DRYRUN:-''})
 }
 
 log_info() {
