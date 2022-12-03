@@ -21,6 +21,17 @@ dot() {
     cd ~/.dotfiles
 }
 
+# Detect OS type
+ostype() {
+    if test $(uname) == 'Darwin'; then
+        echo 'macos'
+    elif test -f /etc/debian_version; then
+        echo 'debian'
+    elif test -f /etc/centos-release; then
+        echo 'centos'
+    fi
+}
+
 deffunc() {
     eval "$1() {
         $2

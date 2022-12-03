@@ -11,7 +11,7 @@ DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
 source "$DOTPATH/sync/lib/vitalize.sh"
 
-osname=${OS:-$(detect_osname)}
+osname=${OS:-$(ostype)}
 installer="$DOTPATH/sync/os/$osname/install"
 
 if [ -z $osname ] || [ ! -f $installer ]; then

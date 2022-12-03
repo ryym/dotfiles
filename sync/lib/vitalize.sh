@@ -47,28 +47,6 @@ is_dryrun() {
     return $(test ! -z ${SYNC_DRYRUN:-''})
 }
 
-detect_osname() {
-    if is_macos; then
-        echo 'macos'
-    elif is_debian; then
-        echo 'debian'
-    elif is_centos; then
-        echo 'centos'
-    fi
-}
-
-is_macos() {
-    return $(test $(uname) == 'Darwin')
-}
-
-is_debian() {
-    return $(test -f /etc/debian_version)
-}
-
-is_centos() {
-    return $(test -f /etc/centos-release)
-}
-
 log_info() {
     echo [$(c_grey $(date '+%T'))] "$@"
 }
