@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+log_start 'Go modules install'
+
+install() {
+    run go install "$1"
+}
+
+if is_dryrun || has go; then
+    install github.com/pocke/whichpr@latest
+    install github.com/ryym/slv@latest
+else
+    log_error 'Go is not available'
+    exit 1
+fi
+
+log_finish 'Go modules install'
