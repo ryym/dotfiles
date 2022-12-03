@@ -40,8 +40,6 @@ function! my#plug#lsp#after_load()
         \  'whitelist': ['javascript', 'javascript.jsx'],
         \ })
       autocmd FileType javascript,javascript.tsx call s:configure_lsp()
-  else
-    echom 'Install typescript-language-server to use LSP for JavaScript/TypeScript.'
   endif
 
   " Rust (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Rust)
@@ -53,8 +51,6 @@ function! my#plug#lsp#after_load()
       \  'whitelist': ['rust'],
       \ })
     autocmd FileType rust call s:configure_lsp()
-  else
-    echom 'Install RLS to use LSP for Rust (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Rust)'
   endif
 
   " Go (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Go)
@@ -65,8 +61,6 @@ function! my#plug#lsp#after_load()
       \ 'whitelist': ['go'],
       \ })
     autocmd FileType go call s:configure_lsp()
-  else
-    echom 'Install gopls to use LSP for Go'
   endif
 
   " Scala (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Scala)
@@ -83,8 +77,6 @@ function! my#plug#lsp#after_load()
       \ })
     autocmd FileType scala call s:configure_lsp()
     autocmd BufWritePre *.scala LspDocumentFormatSync
-  else
-    echom 'Install metals to use LSP for Scala'
   endif
 
   " Unofficial Ruby LSP (https://solargraph.org)
