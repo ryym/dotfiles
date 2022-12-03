@@ -6,11 +6,13 @@
 # So the test success doesn't mean the installations work correctly
 # on every platforms.
 
-if ! link/check_dotfiles; then
-    exit 1
-fi
+make dryrun-link
+code=$?
+test $code -ne 0 && exit $code
 
 for ospath in sync/os/*; do
     OS=${ospath##*/} make dryrun-install
+    code=$?
+    test $code -ne 0 && exit $code
     echo ''
 done
