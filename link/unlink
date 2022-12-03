@@ -6,6 +6,7 @@ trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
 source "$DOTPATH/link/link_table"
+source "$DOTPATH/link/helper.sh"
 
 validate() {
     if [ -e "$destpath" ] && [ ! -L "$destpath" ]; then
@@ -15,16 +16,22 @@ validate() {
 }
 
 unlink_dotfile() {
-    if [ -e "$destpath" ]; then
-        rm -f "$destpath"
-        echo "-- $destpath is removed. --"
-    fi
+    case $(dotfile_type "$srcpath") in
+        systemd)
+            echo "[WARN] unlink of systemd service is not supported: $destpath"
+            ;;
+        normal)
+            if [ -e "$destpath" ]; then
+                local prefix=$($sudo && echo 'sudo' || echo '')
+                $prefix rm -f "$destpath"
+                echo "-- $destpath is removed. --"
+            fi
+            ;;
+    esac
 }
 
 for link in "${LINKS[@]}"; do
-    dotfile="${link#*:}"
-    destpath="$HOME/$dotfile"
-
+    prepare_variables "$link"
     validate && unlink_dotfile
 done
 
