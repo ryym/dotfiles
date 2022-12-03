@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$DOTPATH/lib/vitalize.sh"
+
 # The files to be linked.
 LINKS=(
     'ruby/gemrc:.gemrc'
@@ -18,3 +20,13 @@ LINKS=(
     'agignore:.agignore'
     'prettierrc.json:.prettierrc'
 )
+
+case $(ostype) in
+    arch)
+        LINKS+=(
+            'arch/xremap.yml:.config/xremap.yml'
+            'arch/xremap.service:.config/systemd/user/xremap.service'
+            '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
+        )
+        ;;
+esac

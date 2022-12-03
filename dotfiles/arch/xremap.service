@@ -1,0 +1,20 @@
+# Use 'systemctl --user link' to put this service.
+# Note that we need to use real path when enable/disable this service.
+
+[Unit]
+Description=Xremap
+
+# Wait for keyboard connection and stop on disconnection.
+# The sys-keyboard device is created via udev rule.
+After=sys-keyboard.device
+BindsTo=sys-keyboard.device
+
+[Service]
+ExecStart=/home/ryu/.cargo/bin/xremap /home/ryu/.config/xremap.yml
+Restart=always
+
+[Install]
+WantedBy=default.target
+
+# Start when the keyboard is connected.
+WantedBy=sys-keyboard.device

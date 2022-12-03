@@ -1,0 +1,58 @@
+# https://github.com/k0kubun/xremap
+
+# Note that you need to disable GNOME mutter overlay key to change Super key behavior.
+# ```zsh
+# % gsettings set org.gnome.mutter overlay-key '' # deafult is 'Super_L'
+# ```
+
+keymap:
+  - name: Global
+    remap:
+      Semicolon: Shift-Semicolon
+      Shift-Semicolon: Semicolon
+      Shift-Minus: Shift-Backslash
+      Shift-Backspace: Shift-Grave
+
+      # In US keyboard, emit F22 on single right shift keypress.
+      # This mimics the RO key on JIS that can input an uderscore without shift key. 
+      F22: Shift-Minus
+      Shift-F22: Grave
+
+      # Mimic 英数/かな in Apple keyboard JIS layout.
+      F20:
+        launch: ["fcitx5-remote", "-s", "keyboard-us"]
+      F21:
+        launch: ["fcitx5-remote", "-s", "mozc"]
+
+  # Mimic macOS keybindings:
+  #   - Use Super (Win/Cmd) as basic modifier instead of Ctrl.
+  #   - Use Ctrl to move cursor (as known as Emacs keybindings) anywhere.
+  - name: Like macOS
+    # Apply the keybindings except for GNOME terminal.
+    #   - It already support Emacs-like keybindings.
+    #   - Changing Ctrl key behavior breaks many operations, espetially in Vim.
+    #   - We can customize copy-paste key by preferences.
+    application:
+      not: gnome-terminal-server
+    remap:
+      Ctrl-B: Left
+      Ctrl-F: Right
+      Ctrl-P: Up
+      Ctrl-N: Down
+      Ctrl-A: Home
+      Ctrl-E: End
+      Ctrl-K: [Shift-End, Delete]
+
+      Super-A: Ctrl-A
+      Super-C: Ctrl-C
+      Super-E: Ctrl-E
+      Super-F: Ctrl-F
+      Super-L: Ctrl-L
+      Super-N: Ctrl-N
+      Super-R: Ctrl-R
+      Super-S: Ctrl-S
+      Super-T: Ctrl-T
+      Super-V: Ctrl-V
+      Super-W: Ctrl-W
+      Super-X: Ctrl-X
+      Super-Z: Ctrl-Z
