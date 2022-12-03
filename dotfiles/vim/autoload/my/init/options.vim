@@ -7,7 +7,13 @@ function! my#init#options#setup() abort
   set fileencodings =utf-8,cp932
 
   if exists('&ambiwidth')
-    set ambiwidth =double
+    " When ambiwidth is set to double, ambiguous width characters such as U+2500 ─ are
+    " shown incorrectly in terminal in Vim, in some environments. For example,
+    " GNOME terminal displays anbiguous width caracters in single (narrow) width by default.
+    " We can change the terminal behavior but tmux always use a single width.
+    " Therefore using single width is a simple solution for now.
+    " (ref: https://qiita.com/s417-lama/items/b38089a42fe7d4a061da)
+    set ambiwidth =single
   endif
 
   filetype plugin indent on
