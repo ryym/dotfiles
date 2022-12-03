@@ -15,8 +15,7 @@ This repository manages:
 ## Supported OS
 
 * macOS
-* Ubuntu / Debian
-* CentOS
+* Arch Linux
 
 ## Prerequisites
 
@@ -24,14 +23,12 @@ This repository manages:
 * [Bash] - to run install scripts written in Bash.
 * Package manager - to install basic libraries for your OS. You can use:
     * [Homebrew][Homebrew] (macOS)
-    * [APT][APT] (Ubuntu, Debian)
-    * [Yum][Yum] (CentOS)
+    * [pacman][pacman] (Arch Linux)
 
 [Git]: https://git-scm.com/
 [Bash]: https://www.gnu.org/software/bash/
 [Homebrew]: http://brew.sh/
-[APT]: https://en.wikipedia.org/wiki/Advanced_Packaging_Tool
-[Yum]: http://yum.baseurl.org/
+[pacman]: https://wiki.archlinux.org/title/pacman
 
 ## Installation
 
