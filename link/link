@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Create symbolic links of dotfiles in the '$HOME' directory.
+# Create symbolic links of dotfiles.
 
 set -eu
 trap 'echo LINK STOPPED: $0:$LINENO' ERR INT
@@ -32,14 +32,19 @@ validate() {
 
 # Create or update symbolic links in $HOME.
 link_dotfile() {
+    mkdir -p $(dirname "$destpath")
     ln -nsf "$srcpath" "$destpath"
     echo "-- $dotfile is linked. --"
 }
 
 for link in "${LINKS[@]}"; do
     dotfile="${link#*:}"
-    destpath="$HOME/$dotfile"
     srcpath="$DOTPATH/dotfiles/${link%%:*}"
+
+    case $dotfile in
+        /*) destpath="$dotfile" ;;
+        *) destpath="$HOME/$dotfile" ;;
+    esac
 
     if [ ${DRY_RUN:-0} -eq 0 ]; then
         validate && link_dotfile
