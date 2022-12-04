@@ -15,7 +15,9 @@ tri.browserBg.runtime.getPlatformInfo().then(os => {
     tri.excmds.bind('<ArrowLeft>', 'scrollpage -1') // <C-b>
     tri.excmds.bind('<Del>', 'scrollline -20') // <C-k>
 
-    // Prevent Tridactyl from consuming <C-f> to use native Browser's page search.
+    // Prevent Tridactyl from consuming some Ctrl shortcuts to use original mappings such as
+    // native browser's page search (Ctrl-f), web app shortcuts (e.g. Ctrl-k in Slack or Discord), etc.
     tri.excmds.unbind('<C-f>')
+    tri.excmds.unbind('<C-k>')
   }
 });

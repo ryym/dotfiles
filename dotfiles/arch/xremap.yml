@@ -47,6 +47,7 @@ keymap:
       Super-C: Ctrl-C
       Super-E: Ctrl-E
       Super-F: Ctrl-F
+      Super-K: Ctrl-K
       Super-L: Ctrl-L
       Super-N: Ctrl-N
       Super-R: Ctrl-R
