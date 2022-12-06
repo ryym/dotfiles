@@ -59,6 +59,7 @@ function! s:customize_per_filetype() abort
       \ 'Dockerfile*'  : 'Dockerfile',
       \ '*.purs'       : 'haskell',
       \ '*.tsx'        : 'typescript.tsx',
+      \ '*.json'       : 'json5',
       \ })
   augroup END
 endfunction
