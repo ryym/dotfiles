@@ -17,6 +17,7 @@ function my#plug#ale#before_load()
   let g:ale_fixers.css = ['prettier']
   let g:ale_fixers.scss = ['prettier']
   let g:ale_fixers.json = ['prettier']
+  let g:ale_fixers.json5 = ['prettier']
   let g:ale_fixers.html = ['prettier']
   let g:ale_fixers.graphql = ['prettier']
   let g:ale_fixers.go = ['goimports']
