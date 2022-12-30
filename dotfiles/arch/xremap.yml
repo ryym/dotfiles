@@ -13,8 +13,8 @@ keymap:
       Shift-Minus: Shift-Backslash
       Shift-Backspace: Shift-Grave
 
-      # In US keyboard, emit F22 on single right shift keypress.
-      # This mimics the RO key on JIS that can input an uderscore without shift key. 
+      # Currently I make my US keyboard emit F22 on single right shift keypress
+      # to mimic the RO key on JIS that can input an uderscore without shift key.
       F22: Shift-Minus
       Shift-F22: Grave
 
