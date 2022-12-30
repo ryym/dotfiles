@@ -57,3 +57,6 @@ keymap:
       Super-W: Ctrl-W
       Super-X: Ctrl-X
       Super-Z: Ctrl-Z
+
+      # Open browser's developer tool.
+      Super-LeftAlt-I: Ctrl-Shift-I
