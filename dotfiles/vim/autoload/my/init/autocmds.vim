@@ -87,6 +87,7 @@ function! s:define_filetype_indents() abort
   augroup vimrc
     autocmd FileType javascript      ShortIndent
     autocmd FileType typescript      ShortIndent
+    autocmd FileType typescript.tsx  ShortIndent
     autocmd FileType coffee          ShortIndent
     autocmd FileType css             ShortIndent
     autocmd FileType scss            ShortIndent
@@ -105,8 +106,6 @@ function! s:define_filetype_indents() abort
     autocmd FileType jsp             ShortIndent
     autocmd FileType vue             ShortIndent
     autocmd FileType terraform       ShortIndent
-    autocmd FileType typescript      ShortIndent
-    autocmd FileType typescript.tsx  ShortIndent
     autocmd FileType c               MediumIndent
     autocmd FileType cs              MediumIndent
     autocmd FileType vb              MediumIndent
