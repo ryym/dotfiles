@@ -2,9 +2,6 @@
 .PHONY: sync
 sync: install link
 
-.PHONY: clean
-clean: uninstall unlink
-
 .PHONY: install
 install:
 	@./sync/install
@@ -27,10 +24,6 @@ dryrun-link:
 .PHONY: test-link
 test-link:
 	@DOTFILES_LINKTEST=1 ./link/link
-
-.PHONY: uninstall
-uninstall:
-	@./sync/uninstall
 
 .PHONY: unlink
 unlink:
