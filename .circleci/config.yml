@@ -5,7 +5,6 @@ workflows:
     jobs:
       - test
 
-
 jobs:
   test:
     docker:
