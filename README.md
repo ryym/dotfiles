@@ -1,9 +1,5 @@
 # Dotfiles
 
-[![CircleCI][circleci-badge]](https://circleci.com/gh/ryym/dotfiles)
-
-[circleci-badge]: https://circleci.com/gh/ryym/dotfiles.svg?style=svg
-
 This repository manages:
 
 * my configuration files for some basic development tools I usually use ([dotfiles]).
