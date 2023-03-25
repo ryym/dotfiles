@@ -6,12 +6,26 @@
 # Usage: notif sleep 3
 # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-applescript-or-shel
 
+source "$DOTPATH/lib/vitalize.sh"
+
 shopt -s expand_aliases
 source "$DOTPATH/dotfiles/zsh/aliases"
-source "$HOME/aliases.local"
+test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
-eval "$@"
-cmds=($@)
+case $(ostype) in
+    macos )
+        eval "$@"
+        cmds=($@)
+        osascript -e "display notification \"$@\" with title \"${cmds[0]} finished\""
+        ;;
 
-osascript -e "display notification \"$@\" with title \"${cmds[0]} finished\""
+    arch )
+        cmds=($@)
+        eval "$@" && notify-send "[ok] ${cmds[*]}" || notify-send "[ERROR] ${cmds[*]}"
+        ;;
+
+    * )
+        echo "OS not supported" && exit 1
+        ;;
+esac
 
