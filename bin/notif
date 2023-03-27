@@ -16,7 +16,7 @@ case $(ostype) in
     macos )
         eval "$@"
         cmds=($@)
-        osascript -e "display notification \"$@\" with title \"${cmds[0]} finished\""
+        osascript -e "display notification \"${cmds[*]}\" with title \"${cmds[0]} finished\""
         ;;
 
     arch )
