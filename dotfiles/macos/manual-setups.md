@@ -81,7 +81,7 @@ About my favorite keyboard configuration: <https://ryym.tokyo/posts/ideal-keyboa
         - `gpg --export-secret-keys ID > private.key`
         - `gpg --import private.key`
     - Trust my key ultimately: <https://unix.stackexchange.com/a/407070>
-        - `gpg --edit-key`
+        - `gpg --edit-key user@example.com`
         - `> trust`
 
 ## Others
