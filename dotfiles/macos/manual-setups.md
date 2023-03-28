@@ -9,7 +9,7 @@ Though there are some customizations and installations that can be automated, it
     - Check `Tap to click`
     - Drag by Double tap
         - Accessibility > Pointer Control > Trackpad Options
-        - Check `Enable dragging` and select `with drag lock`
+        - Check `Enable dragging` and select `without drag lock`
             - about drag lock: <https://apple.stackexchange.com/a/7195>
 - Finder
     - Show home directory in sidebar
