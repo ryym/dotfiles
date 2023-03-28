@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-# NOTE that this is MacOS only.
-
 # Display desktop notification.
 # Usage: notif sleep 3
-# https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-applescript-or-shel
 
 source "$DOTPATH/lib/vitalize.sh"
 
