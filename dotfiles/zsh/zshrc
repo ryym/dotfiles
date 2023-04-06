@@ -36,15 +36,13 @@ autoload -Uz add-zsh-hook
 zstyle ':vcs_info:*' formats '%F{blue}(%b)%f'
 zstyle ':vcs_info:*' actionformats '%F{red}(%b|%a)%f'
 
-function _update_vcs_info_msg() {
+function _update_prompt() {
     LANG=en_US.UTF-8 vcs_info
-    PROMPT="%{${fg[green]}%}[%n@%m] ${vcs_info_msg_0_}%{${reset_color}%} %~
+    ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
+    PROMPT="%{${fg[green]}%}[%n@%m]%{${fg[red]%}$ssh_info ${vcs_info_msg_0_}%{${reset_color}%} %~
 %# "
 }
-add-zsh-hook precmd _update_vcs_info_msg
-
-PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~
-%# "
+add-zsh-hook precmd _update_prompt
 
 setopt hist_ignore_dups
 setopt share_history
