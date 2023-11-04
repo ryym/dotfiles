@@ -118,9 +118,9 @@ class Main
 
     current_branch, branches = list_local_branches
     existing_branch = branches.find { |b| b.start_with?("p#{pr_number}") }
-    is_current = current_branch == existing_branch
     if existing_branch
       puts "The branch #{existing_branch} already exists"
+      system("git switch #{existing_branch}")
       return
     end
 
