@@ -9,6 +9,8 @@ install() {
 if is_dryrun || has cargo; then
     install bat
     install fd-find
+    install ripgrep
+    install hgrep
     install git-delta
 else
     log_error 'Rust is not available'

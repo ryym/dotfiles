@@ -87,6 +87,11 @@ zle -N fzf-ghq
 bindkey '^]' fzf-ghq
 bindkey '^g' fzf-ghq
 
+# https://github.com/rhysd/hgrep
+function hgrep() {
+    command hgrep --term-width "$COLUMNS" "$@"
+}
+
 # https://github.com/direnv/direnv
 if has direnv; then
     eval "$(direnv hook zsh)"
