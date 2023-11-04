@@ -25,6 +25,8 @@ if [ -d "$ANYENV_PATH" ]; then
     source "$DOTPATH/lib/anyenv-init.sh"
 fi
 
+export EDITOR=vi
+
 # # Anyenv
 # if [ -d "$ANYENV_PATH" ] && [ ! -e /tmp/_anyenv_loaded ]; then
 #     echo "anyenvvv $__ANYENV_LOADED"
