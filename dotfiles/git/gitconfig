@@ -30,7 +30,7 @@
     bd     = branch -d
     bmd    = branch --merged
     bnmd   = branch --no-merged
-    bp     = !git branch -d `git branch --merged | grep -v '*'` # prune branches
+    bp     = !git branch -d `git branch --merged | grep -vE '^(\\*|\\+)'` # prune branches
 
     # Delete the PR tracking branches.
     bppr   = !git branch -D `git branch | grep 'p\\d\\+'`
