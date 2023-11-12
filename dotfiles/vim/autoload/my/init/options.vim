@@ -99,6 +99,10 @@ function! my#init#options#setup() abort
   set ttimeoutlen =10 " To eliminate delays on <Esc> in terminal.
   set gdefault
 
+  if $COLORTERM == 'truecolor'
+    set termguicolors
+  endif
+
   " Indent counts of leading backslash for line continuations in vim script.
   let g:vim_indent_cont = 2
 endfunction
