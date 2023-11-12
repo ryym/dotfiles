@@ -39,7 +39,7 @@ zstyle ':vcs_info:*' actionformats '%F{red}(%b|%a)%f'
 function _update_prompt() {
     LANG=en_US.UTF-8 vcs_info
     ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
-    PROMPT="%{${fg[green]}%}[%n@%m]%{${fg[red]%}$ssh_info ${vcs_info_msg_0_}%{${reset_color}%} %~
+    PROMPT="%{${fg[green]}%}[%n@%m]%{${fg[red]}%}$ssh_info ${vcs_info_msg_0_}%{${reset_color}%} %~
 %# "
 }
 add-zsh-hook precmd _update_prompt
