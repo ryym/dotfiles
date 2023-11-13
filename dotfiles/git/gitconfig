@@ -8,7 +8,7 @@
     editor = vim
     quotepath = false
     excludesfile = ~/.gitignore
-    pager = delta --syntax-theme 'zenburn'
+    pager = delta
 [rebase]
     autosquash = true
 [merge]
@@ -126,3 +126,8 @@
 	ff = only
 [commit]
 	gpgsign = true
+
+# https://github.com/dandavison/delta
+[delta]
+    syntax-theme = zenburn
+    line-numbers = true
