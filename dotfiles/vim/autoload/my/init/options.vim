@@ -42,11 +42,14 @@ function! my#init#options#setup() abort
   set noswapfile
 
   if has('persistent_undo')
-    if ! isdirectory($VIMLOCAL . '/undo')
-      call mkdir($VIMLOCAL . '/undo')
+    " Use the different directory in Neovim becasue the undo file format is incompatible.
+    let undo_dir = has('nvim') ? '/undo-nvim' : '/undo'
+    let $VIMUNDODIR = expand($VIMLOCAL . undo_dir)
+    if !isdirectory($VIMUNDODIR)
+      call mkdir($VIMUNDODIR)
     endif
     set undofile
-    set undodir =$VIMLOCAL/undo
+    set undodir =$VIMUNDODIR
   endif
 
   " Briefly jump to the matching bracket.
