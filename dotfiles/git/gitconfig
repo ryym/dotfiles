@@ -131,3 +131,9 @@
 [delta]
     syntax-theme = zenburn
     line-numbers = true
+
+    # Adjust for iTerm2 where the colors are not as bright as in other terminals.
+    # (https://gitlab.com/gnachman/iterm2/-/issues/9652)
+    plus-style = syntax "#103d11"
+    plus-emph-style = syntax "#0d6e10"
+    minus-style = syntax auto
