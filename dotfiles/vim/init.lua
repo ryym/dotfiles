@@ -5,7 +5,7 @@ vim.cmd('source ' .. vim_dir .. '/vimrc')
 local packadd = function (name)
     vim.cmd('packadd ' .. name)
     local doc_dir = vim_dir .. '/pack/neovim/opt/' .. name .. '/doc'
-    if vim.fn.isdirectory(doc_dir) then
+    if vim.fn.isdirectory(doc_dir) == 1 then
         vim.cmd('helptags ' .. doc_dir)
     end
 end
