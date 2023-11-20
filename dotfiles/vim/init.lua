@@ -2,7 +2,8 @@ local vim_dir = os.getenv("HOME") .. '/.vim'
 vim.cmd('source ' .. vim_dir .. '/vimrc')
 
 -- To use Neovim plugins, install by 'git clone' in 'pack/neovim/opt' manually for now.
-local packadd = function (name)
+
+local function packadd (name)
     vim.cmd('packadd ' .. name)
     local doc_dir = vim_dir .. '/pack/neovim/opt/' .. name .. '/doc'
     if vim.fn.isdirectory(doc_dir) == 1 then
