@@ -1,6 +1,7 @@
 function! my#plug#indent_guides#configure(conf) abort
   let a:conf.repo = 'nathanaelkane/vim-indent-guides'
   let a:conf.before_load = function('my#plug#indent_guides#before_load')
+  let a:conf.skip_load = has('nvim')
 endfunction
 
 function! my#plug#indent_guides#before_load()
