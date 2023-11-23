@@ -94,6 +94,7 @@ function! my#init#options#setup() abort
   set laststatus  =2
   set cmdheight   =2
   set completeopt =longest,menuone
+  set complete =.,w,b,u,t,i
   set whichwrap   =b,s,<,>,[,]
   set statusline  =%f%m%r%h%w\ -\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ %Y]\ [%Llines\]\ (%04l,%04v)
   set formatoptions =croql
