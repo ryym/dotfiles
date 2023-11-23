@@ -63,3 +63,7 @@ require('ibl').setup({
         show_start = false,
     }
 })
+
+-- https://github.com/uga-rosa/ccc.nvim
+packadd('ccc.nvim')
+require('ccc').setup({})
