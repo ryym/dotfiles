@@ -102,6 +102,7 @@ function! my#init#options#setup() abort
   set timeoutlen  =1200
   set ttimeoutlen =10 " To eliminate delays on <Esc> in terminal.
   set gdefault
+  set signcolumn  =yes
 
   if $COLORTERM == 'truecolor'
     set termguicolors
