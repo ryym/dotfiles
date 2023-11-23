@@ -67,3 +67,86 @@ require('ibl').setup({
 -- https://github.com/uga-rosa/ccc.nvim
 packadd('ccc.nvim')
 require('ccc').setup({})
+
+-- https://github.com/neovim/nvim-lspconfig
+packadd('nvim-lspconfig')
+local lspconfig = require('lspconfig')
+
+lspconfig.rust_analyzer.setup({})
+lspconfig.tsserver.setup({})
+lspconfig.gopls.setup({})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    vim.keymap.set('n', '<Space>vh', vim.lsp.buf.hover, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vv', vim.lsp.buf.definition, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vt', vim.lsp.buf.type_definition, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vr', vim.lsp.buf.rename, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vR', vim.lsp.buf.references, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vs', vim.lsp.buf.signature_help, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vI', vim.lsp.buf.implementation, { buffer = event.buf })
+    vim.keymap.set('n', '<Space>vd', vim.diagnostic.open_float, { buffer = event.buf })
+
+    vim.cmd([[
+        hi VirtualTextError ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
+        hi VirtualTextWarning ctermfg=214 guifg=#dbbc7f guibg=#4d4c43 gui=italic
+    ]])
+  end,
+})
+
+-- Enable LSP autocompletion. (https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion)
+packadd('nvim-cmp')
+packadd('cmp-nvim-lsp')
+packadd('LuaSnip')
+packadd('cmp_luasnip')
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+for _, lsp in ipairs({ 'rust_analyzer', 'tsserver' }) do
+  lspconfig[lsp].setup {
+    capabilities = capabilities,
+  }
+end
+
+local luasnip = require('luasnip')
+local cmp = require('cmp')
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+    }),
+    mapping = {
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+
+        -- Use fallback() for <C-n> and <C-p> to use ins-completion when LSP is not enabled.
+        ['<C-n>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+        ['<C-p>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+
+        ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.confirm({ select = true })
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+    },
+})

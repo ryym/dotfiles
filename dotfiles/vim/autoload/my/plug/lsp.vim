@@ -3,6 +3,9 @@ function! my#plug#lsp#configure(conf) abort
   let a:conf.depends = ['async']
   let a:conf.async.enabled = 0
   let a:conf.after_load = function('my#plug#lsp#after_load')
+
+  " We use builtin LSP in Neovim.
+  let a:conf.skip_load = has('nvim')
 endfunction
 
 function! my#plug#lsp#after_load()
@@ -103,4 +106,8 @@ function s:configure_lsp()
   Map n (buffer) gD ::LspReferences
   Map n (buffer) gD ::LspReferences
   Map n (buffer) K ::LspHover
+
+  hi LspErrorText ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
+  hi LspHintText ctermfg=245 guifg=fg guibg=#4f585e gui=italic
+  hi LspWarningText ctermfg=214 guifg=#dbbc7f guibg=#4d4c43 gui=italic
 endfunction
