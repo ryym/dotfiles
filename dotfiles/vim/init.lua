@@ -20,6 +20,10 @@ vim.cmd([[
     let g:lightline = { 'colorscheme': 'one' }
     let g:lightline.enable = { 'statusline': 1, 'tabline': 0 }
     call lightline#init()
+
+    hi Normal ctermfg=none guifg=none
+    hi NormalNC ctermfg=none guifg=none
+    hi Fg ctermfg=none guifg=none
 ]])
 
 -- https://github.com/nvim-treesitter/nvim-treesitter/
