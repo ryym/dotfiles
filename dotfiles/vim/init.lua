@@ -39,6 +39,10 @@ require('nvim-treesitter.configs').setup({
     },
     highlight = {
         enable = true,
+        disable = {
+            -- TS does not highlight constants and symbols so make code less readable.
+            "ruby",
+        }
     },
 })
 
