@@ -56,6 +56,10 @@ end)
 require('ibl').setup({
     indent = {
         char = '▏',
+        tab_char = '▏',
         highlight = { "IndentLine1", "IndentLine2" },
     },
+    scope = {
+        show_start = false,
+    }
 })
