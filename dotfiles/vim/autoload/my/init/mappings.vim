@@ -8,7 +8,7 @@ function! my#init#mappings#setup() abort
 
   " Define 'mapleader' before all mappings usiing <Leader>.
   let g:mapleader = "-"
-  Map nv - <Nop>
+  Map nx - <Nop>
 
   " Use these keys as main leader keys.
   Map n m       <Nop>
@@ -17,7 +17,7 @@ function! my#init#mappings#setup() abort
   " Invert numbers by <Space> (mainly to type 6 - 9 by left hand).
   " For example we can jump 9 lines upward by typing '<Space>1k'.
   for n in range(1, 9)
-    execute 'Map nvo <Space>' . n . ' ' . (10 - n)
+    execute 'Map nxo <Space>' . n . ' ' . (10 - n)
   endfor
 
   " Mark and jump.
@@ -56,12 +56,12 @@ function! my#init#mappings#setup() abort
   " Fix the direction of ';', ',', 'n', 'N'.
   " For example ';' key always move to the right regardless of
   " whether the last key is 'f' or 'F'.
-  Map nvo (expr) f <SID>map_repeat_keys_and_move_to_occurrence(1, 'f')
-  Map nvo (expr) F <SID>map_repeat_keys_and_move_to_occurrence(0, 'F')
-  Map nvo (expr) t <SID>map_repeat_keys_and_move_to_occurrence(1, 't')
-  Map nvo (expr) T <SID>map_repeat_keys_and_move_to_occurrence(0, 'T')
-  Map nvo (expr) n <SID>search_pattern_to_fixed_direction('n', 'N')
-  Map nvo (expr) N <SID>search_pattern_to_fixed_direction('N', 'n')
+  Map nxo (expr) f <SID>map_repeat_keys_and_move_to_occurrence(1, 'f')
+  Map nxo (expr) F <SID>map_repeat_keys_and_move_to_occurrence(0, 'F')
+  Map nxo (expr) t <SID>map_repeat_keys_and_move_to_occurrence(1, 't')
+  Map nxo (expr) T <SID>map_repeat_keys_and_move_to_occurrence(0, 'T')
+  Map nxo (expr) n <SID>search_pattern_to_fixed_direction('n', 'N')
+  Map nxo (expr) N <SID>search_pattern_to_fixed_direction('N', 'n')
 
   " Define easy text object aliases.
   call s:map_text_object('d', '"')
@@ -82,16 +82,16 @@ function! my#init#mappings#setup() abort
   " I rarely want this behavior.
   for lkey in ['s', 'x']
     let ukey = toupper(lkey)
-    execute 'Map nv' lkey '"_' . lkey
-    execute 'Map nv' ukey '"_' . ukey
+    execute 'Map nx' lkey '"_' . lkey
+    execute 'Map nx' ukey '"_' . ukey
   endfor
 
   " Delete text without changing the clipboard.
   " This is handy when you want to keep the content of clipboard over deletions.
-  Map nv md "_d
-  Map nv mD "_D
-  Map nv mc "_c
-  Map nv mC "_C
+  Map nx md "_d
+  Map nx mD "_D
+  Map nx mc "_c
+  Map nx mC "_C
 
   " Grep by various programs.
   MapNamedKey <Space>s grep
@@ -148,8 +148,8 @@ function! my#init#mappings#setup() abort
   call s:map_unified_win_switches()
 
   " Reselect visual block after indent.
-  Map v < <gv
-  Map v > >gv
+  Map x < <gv
+  Map x > >gv
 
   " In command line, be like emacs.
   Map c <C-a> <Home>
@@ -247,11 +247,11 @@ endfunction
 
 function! s:map_repeat_keys_and_move_to_occurrence(direct_to_right, command)
   if a:direct_to_right
-    Map nvo ; ;
-    Map nvo , ,
+    Map nxo ; ;
+    Map nxo , ,
   else
-    Map nvo ; ,
-    Map nvo , ;
+    Map nxo ; ,
+    Map nxo , ;
   endif
   return a:command
 endfunction
