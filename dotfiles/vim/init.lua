@@ -202,5 +202,10 @@ vim.schedule(function ()
                 end
             end, { 'i', 's' }),
         },
+        confirmation = {
+            get_commit_characters = function(_args)
+                return { '(', '.', ':' }
+            end,
+        },
     })
 end)
