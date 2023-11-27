@@ -183,14 +183,14 @@ vim.schedule(function ()
                 else
                     fallback()
                 end
-            end, { 'i', 's' }),
+            end, { 'i' }),
             ['<C-p>'] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_prev_item()
                 else
                     fallback()
                 end
-            end, { 'i', 's' }),
+            end, { 'i' }),
 
             ['<Tab>'] = cmp.mapping(function(fallback)
                 if cmp.visible() then
