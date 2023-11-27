@@ -148,6 +148,7 @@ function! my#plug#fzf#_plugin_confs() abort
     \   'source': src,
     \   'dir': $MYVIMDIR . '/autoload/my/plug',
     \   'up': '35%',
+    \   'options': s:bat_preview_opt,
     \ })
 endfunction
 
