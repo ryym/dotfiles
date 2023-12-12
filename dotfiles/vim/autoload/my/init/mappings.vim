@@ -195,13 +195,14 @@ function! my#init#mappings#setup() abort
   execute 'Map i (silent) <C-v> <C-o>:set paste<CR><C-r>' . sys_register . '<C-o>:set nopaste<CR>'
   execute 'Map c <C-v> <C-r>' . sys_register
 
-  if !g:is_gui
-    " I don't know why but `Ctrl+Space` pastes text in clipboard
-    " only when I use Vim on the terminal.
-    " This is annoying so just insert a space instead.
-    " (ref: http://h-miyako.hatenablog.com/entry/2014/01/20/053327)
-    Map i <Nul> <Space>
-  endif
+  " In some terminal, <C-Space> is recognized as <Nul> which is equivalent to <C-@>.
+  " <C-@> inserts the last inserted text (:help ctrl-@). But I rarely use it. On the other hand,
+  " I often accidentally type <C-Space> when typing a Space after some keystrokes using Ctrl.
+  " So I want Vim to recognize <C-Space> just as <Space>.
+  Map i <Nul> <Space>
+  " In other environments such as gVim or other terminal emulators, <C-Space> is recognized as-is.
+  " So map it to <Space> as well.
+  Map i <C-Space> <Space>
 endfunction
 
 function! s:SID()
