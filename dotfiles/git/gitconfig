@@ -80,7 +80,7 @@
     mab    = merge --abort
     remoterepo = !git_remote_repo_name
     remotebranch = !git_remote_branch_name
-    rs     = reset --mixed
+    rs     = reset
     rsh    = reset --hard
     rsrmt  = !git reset --hard `git_remote_branch_name`
     rsi    = !zsh -c 'source $HOME/.dotfiles/lib/gitfuncs && gitfunc_reset_interactive'
