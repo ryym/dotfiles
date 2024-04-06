@@ -4,15 +4,15 @@ function! my#plug#easymotion#configure(conf) abort
 endfunction
 
 function!  my#plug#easymotion#before_load()
-  Remap nvo ms <Plug>(easymotion-s2)
-  Remap nvo mf <Plug>(easymotion-fl2)
-  Remap nvo mF <Plug>(easymotion-Fl2)
-  Remap nvo mt <Plug>(easymotion-tl2)
-  Remap nvo mT <Plug>(easymotion-Tl2)
-  Remap nvo m/ <Plug>(easymotion-fn)
-  Remap nvo m? <Plug>(easymotion-Fn)
-  Remap nvo m: <Plug>(easymotion-next)
-  Remap nvo m, <Plug>(easymotion-prev)
+  Remap nxo ms <Plug>(easymotion-s2)
+  Remap nxo mf <Plug>(easymotion-fl2)
+  Remap nxo mF <Plug>(easymotion-Fl2)
+  Remap nxo mt <Plug>(easymotion-tl2)
+  Remap nxo mT <Plug>(easymotion-Tl2)
+  Remap nxo m/ <Plug>(easymotion-fn)
+  Remap nxo m? <Plug>(easymotion-Fn)
+  Remap nxo m: <Plug>(easymotion-next)
+  Remap nxo m, <Plug>(easymotion-prev)
 
   let g:EasyMotion_do_mapping = 0
   let g:EasyMotion_space_jump_first = 1
