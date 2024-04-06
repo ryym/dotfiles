@@ -67,7 +67,6 @@ vim.cmd([[
     let g:everforest_transparent_background = 1
     colorscheme everforest
     " Adjust statusline and tabline styles for everforest.
-    let g:lightline = { 'colorscheme': 'one' }
     let g:lightline.enable = { 'statusline': 1, 'tabline': 0 }
     call lightline#init()
 
