@@ -32,11 +32,6 @@ function! my#init#commands#setup() abort
   " Remove trailing whitespaces without cursor moving.
   command! RmTrailingSpaces :%s/\v\s+$// | let v:hlsearch = 0 | normal! ``
 
-  " (Experimental) Remove trailing spaces on save.
-  augroup vimrc
-    autocmd BufWritePre *.rb :silent! %s/\v\s+$//
-  augroup END
-
   " Grep by various programs.
   command! -bang -nargs=+ GitGrep call my#init#func#grep#by(0, '<bang>', 'git', <q-args>)
   command! -bang -nargs=+ GitGrepAdd call my#init#func#grep#by(1, '<bang>', 'git', <q-args>)
