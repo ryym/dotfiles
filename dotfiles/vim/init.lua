@@ -90,10 +90,8 @@ vim.schedule(function ()
         },
         highlight = {
             enable = true,
-            disable = {
-                -- TS does not highlight constants and symbols so make code less readable.
-                "ruby",
-            }
+            -- Disable some filetypes if non-treesitter's syntax highlight seems better.
+            disable = { "ruby", "yaml" }
         },
     })
 
