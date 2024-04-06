@@ -5,7 +5,7 @@
 [push]
     default = upstream
 [core]
-    editor = vim
+    editor = nvim
     quotepath = false
     excludesfile = ~/.gitignore
     pager = delta

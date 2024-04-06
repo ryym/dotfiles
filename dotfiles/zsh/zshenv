@@ -25,7 +25,7 @@ if [ -d "$ANYENV_PATH" ]; then
     source "$DOTPATH/lib/anyenv-init.sh"
 fi
 
-export EDITOR=vi
+export EDITOR=nvim
 
 # # Anyenv
 # if [ -d "$ANYENV_PATH" ] && [ ! -e /tmp/_anyenv_loaded ]; then
