@@ -7,10 +7,10 @@ function! my#init#plugins#setup() abort
   " https://github.com/ryym/vim-plugger
   call my#init#func#iniplug#load('vim-plugger')
 
+  packadd! matchit
+
   call plugger#enable({
     \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
     \   'autoload_prefix': 'my#plug#',
     \ })
-
-  runtime macros/matchit.vim
 endfunction
