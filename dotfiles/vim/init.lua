@@ -125,6 +125,9 @@ vim.schedule(function ()
     lspconfig.tsserver.setup({})
     lspconfig.gopls.setup({})
 
+    -- https://github.com/hrsh7th/vscode-langservers-extracted
+    lspconfig.cssls.setup({})
+
     vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(event)
             vim.keymap.set('n', '<Space>vh', vim.lsp.buf.hover, { buffer = event.buf })
@@ -150,7 +153,7 @@ vim.schedule(function ()
     packadd('cmp_luasnip')
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    for _, lsp in ipairs({ 'rust_analyzer', 'tsserver' }) do
+    for _, lsp in ipairs({ 'rust_analyzer', 'tsserver', 'cssls' }) do
         lspconfig[lsp].setup {
             capabilities = capabilities,
         }
