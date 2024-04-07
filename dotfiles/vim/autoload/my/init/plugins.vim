@@ -9,8 +9,13 @@ function! my#init#plugins#setup() abort
 
   packadd! matchit
 
+  if has('nvim')
+    lua package.path = package.path .. ';' .. os.getenv('MYVIMDIR') .. '/autoload/?.lua'
+  endif
+
   call plugger#enable({
     \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
     \   'autoload_prefix': 'my#plug#',
+    \   'lua_require_prefix': 'my.plug.',
     \ })
 endfunction

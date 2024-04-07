@@ -2,6 +2,9 @@ function! my#plug#hybrid#configure(conf) abort
   let a:conf.repo = 'w0ng/vim-hybrid'
   let a:conf.async.enabled = 0
   let a:conf.after_load = function('my#plug#hybrid#after_load')
+
+  " Use different theme in Vim and Neovim to easily distinguish wether I am using.
+  let a:conf.skip_load = has('nvim')
 endfunction
 
 function! my#plug#hybrid#after_load() abort
