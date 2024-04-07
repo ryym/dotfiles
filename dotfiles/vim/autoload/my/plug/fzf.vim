@@ -153,11 +153,15 @@ function! my#plug#fzf#_plugin_confs() abort
 endfunction
 
 function! my#plug#fzf#_init_scripts() abort
-  let root = $MYVIMDIR . '/autoload/my/init'
-  let files = [$MYVIMRC, root . '.vim'] + globpath(root, '**', 0, 1)
+  let main_files = [$MYVIMDIR . '/vimrc']
+  if has('nvim')
+    call add(main_files, $MYVIMDIR . '/init.vim')
+  endif
+  let init_root = $MYVIMDIR . '/autoload/my/init'
+  let init_files = [init_root . '.vim'] + globpath(init_root, '**', 0, 1)
   call fzf#run({
     \   'sink': 'edit',
-    \   'source': files,
+    \   'source': main_files + init_files,
     \   'up': '35%',
     \ })
 endfunction
