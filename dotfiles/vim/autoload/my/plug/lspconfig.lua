@@ -5,11 +5,27 @@ local function configure()
         after_load = function()
             local lspconfig = require('lspconfig')
 
+            -- Plugins to enable LSP auto-complation
+            -- (https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion)
+            local luasnip = require('luasnip')
+            local cmp = require('cmp')
+            local cmp_nvim_lsp = require('cmp_nvim_lsp')
+
+            local capabilities = cmp_nvim_lsp.default_capabilities()
+
             -- Set up language servers.
-            lspconfig.rust_analyzer.setup({})
-            lspconfig.tsserver.setup({})
-            lspconfig.gopls.setup({})
-            lspconfig.cssls.setup({})
+            lspconfig.rust_analyzer.setup({
+                capabilities = capabilities,
+            })
+            lspconfig.tsserver.setup({
+                capabilities = capabilities,
+            })
+            lspconfig.gopls.setup({
+                capabilities = capabilities,
+            })
+            lspconfig.cssls.setup({
+                capabilities = capabilities,
+            })
 
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
@@ -30,17 +46,6 @@ local function configure()
                 end,
             })
 
-            -- Enable LSP autocompletion. (https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion)
-
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            for _, lsp in ipairs({ 'rust_analyzer', 'tsserver', 'cssls' }) do
-                lspconfig[lsp].setup {
-                    capabilities = capabilities,
-                }
-            end
-
-            local luasnip = require('luasnip')
-            local cmp = require('cmp')
             cmp.setup({
                 snippet = {
                     expand = function(args)
