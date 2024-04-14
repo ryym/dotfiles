@@ -13,6 +13,10 @@ function! my#init#plugins#setup() abort
     lua package.path = package.path .. ';' .. os.getenv('MYVIMDIR') .. '/autoload/?.lua'
   endif
 
+  augroup vimrc
+    autocmd User plugger_async_load_post echomsg 'Plugins loaded:' reltimestr(reltime(g:startuptime))
+  augroup END
+
   call plugger#enable({
     \   'conf_root': $MYVIMDIR . '/autoload/my/plug/',
     \   'autoload_prefix': 'my#plug#',

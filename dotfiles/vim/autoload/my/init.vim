@@ -22,10 +22,9 @@ function! my#init#setup() abort
   if has('vim_starting')
     autocmd vimrc VimEnter * call <SID>display_startup_time()
 
-    let s:startuptime = reltime()
+    let g:startuptime = reltime()
     function! s:display_startup_time()
-      echomsg 'Startup time:' reltimestr(reltime(s:startuptime))
-      unlet s:startuptime
+      echomsg 'Startup time:' reltimestr(reltime(g:startuptime))
     endfunction
   endif
 
