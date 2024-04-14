@@ -16,6 +16,13 @@ local function configure()
             -- Set up language servers.
             lspconfig.rust_analyzer.setup({
                 capabilities = capabilities,
+                settings = {
+                    ['rust-analyzer'] = {
+                        cargo = {
+                            features = 'all',
+                        },
+                    },
+                },
             })
             lspconfig.tsserver.setup({
                 capabilities = capabilities,
