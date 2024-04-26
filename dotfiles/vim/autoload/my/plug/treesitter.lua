@@ -4,8 +4,10 @@ local function configure()
         after_load = function()
             require('nvim-treesitter.configs').setup({
                 ensure_installed = {
+                    "css",
                     "go",
                     "javascript",
+                    "html",
                     "lua",
                     "ruby",
                     "rust",

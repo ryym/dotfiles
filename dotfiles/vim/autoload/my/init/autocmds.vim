@@ -38,8 +38,10 @@ function! s:customize_per_filetype() abort
     " Show relative line numbers in help files.
     autocmd FileType help setlocal relativenumber
 
-    " Set commentstring correctly for JS and CSS in HTML and Vue files.
-    autocmd CursorMoved *.html,*.vue call <SID>adjust_commentstring_in_html()
+    if !has('nvim')
+      " Set commentstring correctly for JS and CSS in HTML and Vue files.
+      autocmd CursorMoved *.html,*.vue call <SID>adjust_commentstring_in_html()
+    endif
 
     autocmd FileType ocaml setlocal commentstring=(*%s*)
 
