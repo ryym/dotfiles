@@ -1,6 +1,7 @@
 function! my#plug#viler#configure(conf) abort
   let a:conf.repo = 'ryym/vim-viler'
   let a:conf.after_load = function('my#plug#viler#after_load')
+  let a:conf.async.enabled = 0
 endfunction
 
 function! my#plug#viler#after_load() abort

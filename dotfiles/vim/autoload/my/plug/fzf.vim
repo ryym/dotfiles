@@ -3,6 +3,7 @@
 function! my#plug#fzf#configure(conf) abort
   let a:conf.repo = 'junegunn/fzf'
   let a:conf.install_if = executable('fzf')
+  let a:conf.async.enabled = 0
   let a:conf.after_load = function('my#plug#fzf#after_load')
 endfunction
 
