@@ -45,6 +45,7 @@ local function configure()
                     vim.keymap.set('n', '<Space>vs', vim.lsp.buf.signature_help, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vI', vim.lsp.buf.implementation, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vd', vim.diagnostic.open_float, { buffer = event.buf })
+                    vim.keymap.set('n', '<Space>vD', vim.diagnostic.setqflist, { buffer = event.buf })
 
                     vim.cmd([[
                         highlight VirtualTextError ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
