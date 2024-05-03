@@ -1,3 +1,5 @@
+# vi: filetype=gitconfig
+
 [user]
     name = ryym
     email = ryym.64@gmail.com
