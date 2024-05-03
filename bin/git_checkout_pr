@@ -51,7 +51,7 @@ class RemoteRepo
 
   def initialize(nickname, url)
     @nickname = nickname
-    @url = url
+    @url = url.sub(/\.git$/, '')
   end
 
   def repo_name
@@ -138,7 +138,8 @@ class Main
     res = http.request(req)
 
     unless res.code == "200"
-      p res.body
+      STDERR.puts req.path
+      STDERR.puts res.body
       raise "failed to fetch pull request"
     end
 
