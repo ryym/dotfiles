@@ -27,9 +27,6 @@
     h      = help
     b      = branch
     bm     = branch -m
-    bd     = branch -d
-    bmd    = branch --merged
-    bnmd   = branch --no-merged
     bp     = !git branch -d `git branch --merged | grep -vE '^(\\*|\\+)'` # prune branches
 
     # Delete the PR tracking branches.
@@ -43,7 +40,6 @@
             echo $branch; \
         done"
     a      = add
-    aa     = add --all
     ap     = add -p
     au     = add -u
     ai     = !zsh -c 'source $HOME/.dotfiles/lib/gitfuncs && gitfunc_add_interactive'
@@ -66,7 +62,6 @@
     sw     = switch
     f      = fetch
     fu     = fetch upstream
-    fa     = fetch --all
     fp     = fetch --prune
     fr     = !git fetch `git_remote_repo_name`
     pp     = pull --prune
@@ -78,7 +73,7 @@
     m      = merge
     mnf    = merge --no-ff
     mab    = merge --abort
-    remoterepo = !git_remote_repo_name
+    remoterepo   = !git_remote_repo_name
     remotebranch = !git_remote_branch_name
     rs     = reset
     rsh    = reset --hard
@@ -87,24 +82,17 @@
     st     = stash
     stl    = stash list
     sts    = stash save
-    stu    = stash -u
     stp    = stash pop
     gconf  = config --global
     lconf  = config --local
-    gconfs = config --global --list
-    lconfs = config --local --list
     ls     = ls-files
     re     = log --oneline --pretty=format:'%C(auto)%h %C(bold blue)<%an>%C(auto)%d %s %Cgreen(%ci)' -10
     tree   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     sh     = show
-    shm    = !git_show_merge_commit
     shfs   = !git --no-pager show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
     d      = diff
     dc     = diff --cached
-    dfs    = !git --no-pager diff --name-only
-    dgvi   = difftool --tool=gvimdiff
     sbm    = submodule
-    lsstg  = diff --name-only --cached # List staged files.
 
     diffbase = "!f() { git diff `git merge-base @ $1` @ ${@:2}; }; f"
 
