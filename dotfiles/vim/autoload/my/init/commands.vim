@@ -35,12 +35,12 @@ function! my#init#commands#setup() abort
   " Grep by various programs.
   command! -bang -nargs=+ GitGrep call my#init#func#grep#by(0, '<bang>', 'git', <q-args>)
   command! -bang -nargs=+ GitGrepAdd call my#init#func#grep#by(1, '<bang>', 'git', <q-args>)
-  command! -bang -nargs=+ AgGrep call my#init#func#grep#by(0, '<bang>', 'ag', <q-args>)
-  command! -bang -nargs=+ AgGrepAdd call my#init#func#grep#by(1, '<bang>', 'ag', <q-args>)
+  command! -bang -nargs=+ RgGrep call my#init#func#grep#by(0, '<bang>', 'rg', <q-args>)
+  command! -bang -nargs=+ RgGrepAdd call my#init#func#grep#by(1, '<bang>', 'rg', <q-args>)
   command! -bang -nargs=+ VimGrep call my#init#func#grep#by(0, '<bang>', 'vim', <q-args>)
   command! -bang -nargs=+ VimGrepAdd call my#init#func#grep#by(1, '<bang>', 'vim', <q-args>)
 
-  command! ShowGreps echo 'Available greps: ' my#init#func#grep#avaiable_greps()
+  command! ShowGreps echo 'Available greps: ' my#init#func#grep#available_greps()
   command! -nargs=1 ChangeGrep call my#init#func#grep#change_grep(<q-args>)
 endfunction
 

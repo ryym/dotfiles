@@ -12,11 +12,10 @@ endfunction
 
 let s:grepprgs = {
   \ 'current': 'git',
-  \ 'order' : ['git', 'ag', 'pt', 'vim'],
+  \ 'order' : ['git', 'rg', 'vim'],
   \ 'prgs' : {
   \   'git' : s:make_grepprg_obj('git', 'GitGrep', 'git grep -n'),
-  \   'ag'  : s:make_grepprg_obj('ag', 'AgGrep', 'ag --nocolor --nogroup'),
-  \   'pt'  : s:make_grepprg_obj('pt', 'PtGrep', 'pt --nocolor --nogroup'),
+  \   'rg'  : s:make_grepprg_obj('rg', 'RgGrep', 'rg --vimgrep'),
   \   'vim' : s:make_grepprg_obj('vim', 'VimGrep', 'internal')
   \  }
   \ }

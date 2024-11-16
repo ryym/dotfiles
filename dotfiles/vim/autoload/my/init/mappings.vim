@@ -98,9 +98,9 @@ function! my#init#mappings#setup() abort
   Map n (expr) \[grep]s my#init#func#grep#by_current(0)
   Map n (expr) \[grep]+ my#init#func#grep#by_current(1)
   Map n \[grep]l ::ShowGreps
-  Map n \[grep]a ::ChangeGrep ag
   Map n \[grep]g ::ChangeGrep git
-  Map n \[grep]v ::ChangeGrep git
+  Map n \[grep]r ::ChangeGrep rg
+  Map n \[grep]v ::ChangeGrep vim
 
   " Quickfix
   Map n q <Nop>
