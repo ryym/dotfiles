@@ -4,6 +4,7 @@ local function configure()
         after_load = function()
             require('ts_context_commentstring').setup({
                 languages = {
+                    css = '/* %s */',
                     ruby = '# %s',
                     rust = '// %s',
                 },
