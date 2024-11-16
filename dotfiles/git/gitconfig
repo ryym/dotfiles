@@ -123,3 +123,5 @@
     # plus-emph-style = syntax "#0d6e10"
 
     minus-style = syntax auto
+[rerere]
+	enabled = true
