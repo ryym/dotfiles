@@ -1,5 +1,4 @@
 function! my#init#options#setup() abort
-  language C
   set helplang =en,ja
 
   set encoding      =utf-8
