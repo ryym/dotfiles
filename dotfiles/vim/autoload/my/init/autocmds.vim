@@ -45,6 +45,7 @@ function! s:customize_per_filetype() abort
 
     autocmd FileType ocaml setlocal commentstring=(*%s*)
     autocmd FileType gitconfig setlocal commentstring=#%s
+    autocmd FileType sql setlocal commentstring=--%s
 
     " The textwidth is set as 78 by default.
     autocmd FileType vim setlocal textwidth=0
