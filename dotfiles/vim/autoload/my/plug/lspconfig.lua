@@ -33,6 +33,9 @@ local function configure()
             lspconfig.cssls.setup({
                 capabilities = capabilities,
             })
+            lspconfig.pylsp.setup({
+                capabilities = capabilities,
+            })
 
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
