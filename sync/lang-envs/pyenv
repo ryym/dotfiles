@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 VERSIONS=(
-    '3.7.3'
+    '3.13.0'
 )
 
 set +u

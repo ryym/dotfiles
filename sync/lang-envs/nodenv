@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 VERSIONS=(
-    '18.12.1'
-    '16.18.0'
-    '14.17.2'
+    '22.12.0'
 )
 
 for version in ${VERSIONS[@]}; do
