@@ -1,5 +1,9 @@
 " https://github.com/tridactyl/tridactyl
 
+" NOTE that you have to install the native messenger to load this file.
+" Run `:native` in Firefox and follow the instruction.
+" https://github.com/tridactyl/tridactyl/issues/3902
+
 " It seems that Tridactyl keeps settings after quitting Firefox.
 " This is sometimes confusing so reset keybindings everytime.
 unset nmaps
