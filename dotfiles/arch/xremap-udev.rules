@@ -1,8 +1,14 @@
+# vim:set filetype=udev:
+
 # Change the group of /dev/uinput so that non-root user can use it.
 # (Of course the user must be a member of the input group)
 KERNEL=="uinput", GROUP="input", MODE="0660"
 
-# Create a systemd device unit when a keyboard is connected.
+# If the above rule does not work, you may have to load the uinput kernel module explicitly.
+# `echo uinput > /etc/modules-load.d/uinput.conf`
+# https://github.com/chrippa/ds4drv/issues/93#issuecomment-265300511
+
+# Create a Systemd device unit when a keyboard is connected.
 # These are ids of Dygma Raise keyboard. You can inspect it using lsusb command.
 # (ref: https://qiita.com/caad1229/items/309be550441515e185c0)
 SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="2201", TAG+="systemd", ENV{SYSTEMD_ALIAS}+="/sys/keyboard"
