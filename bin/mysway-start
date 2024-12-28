@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# An entrypoint of Sway.
+
+# To change the default web browser, set it by xdg-settings.
+# xdg-settings set default-web-browser firefox.desktop
+
+# Prefer dark theme.
+export GTK_THEME=Adwaita:dark
+export QT_STYLE_OVERRIDE=Adwaita-Dark
+
+# Launch Electron apps with Wayland protocol.
+export ELECTRON_OZONE_PLATFORM_HINT=wayland
+
+sway 2> /tmp/sway-stderr.log
+systemctl --user stop sway-session.target

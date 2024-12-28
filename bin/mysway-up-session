@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# A script to start the Systemd sway-session.target unit after Sway launched.
+
+until swaymsg -t get_tree > /dev/null 2>&1 ; do
+    echo 'waiting for Sway to launch...'
+    sleep 0.5
+done
+
+systemctl --user start sway-session.target
+echo 'started sway-session'

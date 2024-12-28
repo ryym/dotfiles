@@ -24,6 +24,7 @@ LINKS=(
 case $(ostype) in
     arch)
         LINKS+=(
+            'arch/sway-config:.config/sway/config'
             'arch/xremap.yml:.config/xremap.yml'
             'arch/xremap.service:.config/systemd/user/xremap.service'
             'arch/chromium-flags.conf:.config/chromium-flags.conf'
