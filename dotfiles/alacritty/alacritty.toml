@@ -1,0 +1,23 @@
+# https://alacritty.org/config-alacritty.html
+
+[general]
+import = [
+    "~/.config/alacritty/alacritty-theme/themes/everforest_dark.toml",
+    "~/.config/alacritty/local.toml",
+]
+
+[window]
+opacity = 0.97
+
+[font]
+normal = { family = "IntelOneMono", style = "Regular" }
+
+[keyboard]
+bindings = [
+    { key = "v", mods = "Command", action = "Paste" },
+    { key = "c", mods = "Command", action = "Copy" },
+
+    { key = "[", mods = "Control|Command", mode = "~Vi", action = "ToggleViMode" },
+    { key = "[", mods = "Control", mode = "Vi", action = "ClearSelection" },
+    { key = "q", mode = "Vi", action = "ToggleViMode" },
+]

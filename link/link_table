@@ -18,6 +18,7 @@ LINKS=(
     'tmux:.tmux'
     'ctags:.ctags'
     'prettierrc.json:.prettierrc'
+    'alacritty/alacritty.toml:.config/alacritty/alacritty.toml'
 )
 
 case $(ostype) in
