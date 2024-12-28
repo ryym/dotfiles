@@ -12,6 +12,14 @@ if is_dryrun || has cargo; then
     install ripgrep
     install hgrep
     install git-delta
+
+    case $(ostype) in
+        arch)
+            # Xremap have to be installed per feature, so we put it into local/bin.
+            run cargo install --root "$HOME/local" xremap --features wlroots
+            mv "$HOME/local/bin/xremap" "$HOME/local/bin/xremap-wlroots"
+            ;;
+    esac
 else
     log_error 'Rust is not available'
     exit 1

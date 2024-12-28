@@ -4,17 +4,19 @@
 [Unit]
 Description=Xremap
 
-# Wait for keyboard connection and stop on disconnection.
-# The sys-keyboard device is created via udev rule.
+# Once the keyboard is disconnected, Xremap stops working.
+# So we have to restart Xremap whenever the keyboard is connected.
+# The sys-keyboard device is created via the udev rule.
 After=sys-keyboard.device
-BindsTo=sys-keyboard.device
+After=sway-session.target
+
+StopPropagatedFrom=sys-keyboard.device
+StopPropagatedFrom=sway-session.target
 
 [Service]
-ExecStart=/home/ryu/.cargo/bin/xremap /home/ryu/.config/xremap.yml
-Restart=always
+ExecStart=%h/.dotfiles/bin/auto-xremap
+Restart=on-failure
 
 [Install]
-WantedBy=default.target
-
-# Start when the keyboard is connected.
 WantedBy=sys-keyboard.device
+WantedBy=sway-session.target
