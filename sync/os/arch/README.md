@@ -1,7 +1,17 @@
 ## OS Installation
 
 - Official guide: <https://wiki.archlinux.org/title/installation_guide>
-- Disk partitioning and bootloader settings: <https://itsfoss.com/install-arch-linux/>
+
+# Before synchronizing dotfiles
+
+You have to install them to run the scripts.
+
+- git
+- make
+- sudo
+- which
+
+# GNOME configuration
 
 ## Configure touchpad
 
