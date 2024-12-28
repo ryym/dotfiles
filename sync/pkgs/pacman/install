@@ -14,40 +14,69 @@ if is_dryrun || has pacman; then
     # Note that this needs interactive inputs.
     run sudo pacman -Syu
 
-    # Basic tools
-    install autoconf
+    # For building AUR packages
+    install base-devel
+
+    # Basic development tools
+    install alacritty
+    install clang
     install docker
     install docker-compose
+    install foot
     install fzf
+    install ghq
     install git
     install go
-    install iwd
+    install gvim
+    install jq
     install make
+    install man-db
+    install neovim
     install sudo
+    install tailscale
     install tmux
     install tree
     install which
-    install wget
-    install wl-clipboard
     install zsh
 
-    # For Japanese inputs
-    install adobe-source-han-sans-jp-fonts
+    # For building Ruby 3.2 or later
+    install libyaml
+
+    # Utilities
+    install iwd
+    install pamixer
+    install pulseaudio-bluetooth
+
+    # Sway and Wayland
+    install blueberry
+    install chromium
+    install firefox
+    install polkit-gnome
+    install grim
+    install rofi-wayland
+    install slurp
+    install sway
+    install swaybg
+    install swayimg
+    install wev
+    install wl-clipboard
+    install wob
+    install xorg-xwayland
+
+    # Japanese input
     install fcitx5-im
     install fcitx5-mozc
+    install noto-fonts-cjk
 
-    # For desktop (GUI) environments
-    # They should be performed interactively with care.
-    # See for latest info: https://wiki.archlinux.org/title/GNOME
-    #
-    # firefox
-    # gnome
-    # xf86-video-intel
-    # xorg-servder
+    # For running AppImage (https://github.com/AppImage/AppImageKit/wiki/FUSE)
+    install fuse2
+
+    # GNOME
+    # install gnome
 
     # AUR
-    # gnome-browser-connector (for managing GNOME shell extensions in browser)
-
+    # https://aur.archlinux.org/packages/slack-desktop
+    # https://aur.archlinux.org/packages/gnome-browser-connector-git
 else
     log_error 'pacman not found'
     exit 1
