@@ -33,7 +33,10 @@ keymap:
     #   - Changing Ctrl key behavior breaks many operations, espetially in Vim.
     #   - We can customize copy-paste key by preferences.
     application:
-      not: gnome-terminal-server
+      not:
+      - gnome-terminal-server
+      - Alacritty
+      - foot
     remap:
       Ctrl-B: Left
       Ctrl-F: Right
