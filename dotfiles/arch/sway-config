@@ -41,11 +41,11 @@ output * bg $SWAY_BACKGROUND fill
 
 ### Options
 
-font 'IntelOneMono 8'
+font 'Intel One Mono 8'
 
 bar {
     position top
-    font 'IntelOneMono 8'
+    font 'Intel One Mono 8'
     icon_theme 'Adwaita'
     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
     colors {

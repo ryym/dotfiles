@@ -10,7 +10,7 @@ import = [
 opacity = 0.97
 
 [font]
-normal = { family = "IntelOneMono", style = "Regular" }
+normal = { family = "Intel One Mono", style = "Regular" }
 
 [keyboard]
 bindings = [
