@@ -22,7 +22,7 @@ if [ -d "$ANYENV_PATH" ]; then
 
     # Source the customize initialization script
     # instead of `eval "$(anyenv init - zsh)"`.
-    source "$DOTPATH/lib/anyenv-init.sh"
+    source "$HOME/.config/anyenv/init.sh"
 fi
 
 # Local executables
