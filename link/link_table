@@ -26,6 +26,7 @@ case $(ostype) in
         LINKS+=(
             'arch/xremap.yml:.config/xremap.yml'
             'arch/xremap.service:.config/systemd/user/xremap.service'
+            'arch/chromium-flags.conf:.config/chromium-flags.conf'
             'fcitx5/config:.config/fcitx5/config'
             'fcitx5/profile:.config/fcitx5/profile'
             '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
