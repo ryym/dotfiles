@@ -8,6 +8,8 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 log_start "Install for Arch Linux"
 
+mkdir -p "$HOME/local/bin"
+
 load pkgs/pacman/install
 
 load lib/rustup

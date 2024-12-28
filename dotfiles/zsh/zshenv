@@ -25,6 +25,9 @@ if [ -d "$ANYENV_PATH" ]; then
     source "$DOTPATH/lib/anyenv-init.sh"
 fi
 
+# Local executables
+export PATH="$HOME/local/bin:$PATH"
+
 export EDITOR=nvim
 
 # Prevent Homebrew from updating everything when installing a library.

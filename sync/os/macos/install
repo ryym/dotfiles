@@ -8,6 +8,8 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 log_start "Install for macOS"
 
+mkdir -p "$HOME/local/bin"
+
 if ! has brew; then
     load os/macos/install-brew
 fi
