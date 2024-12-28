@@ -20,6 +20,9 @@ alias manv='() { vim -c "exe \"PluggerLoad man\" | Man $1 | only" }'
 alias tf='terraform'
 alias y='yarn'
 
+# For Linux
+alias sysu='systemctl --user'
+
 # We use tmux-256color in tmux but tig does not support it.
 # https://github.com/jonas/tig/issues/559
 alias tig='TERM=xterm-256color tig'
