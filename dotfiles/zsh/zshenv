@@ -27,14 +27,6 @@ fi
 
 export EDITOR=nvim
 
-# # Anyenv
-# if [ -d "$ANYENV_PATH" ] && [ ! -e /tmp/_anyenv_loaded ]; then
-#     echo "anyenvvv $__ANYENV_LOADED"
-#     export PATH="$ANYENV_PATH/bin:$PATH"
-#     eval "$(anyenv init - zsh)"
-#     touch /tmp/_anyenv_loaded
-# fi
-
 # Prevent Homebrew from updating everything when installing a library.
 HOMEBREW_NO_AUTO_UPDATE=1
 
