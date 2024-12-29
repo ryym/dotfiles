@@ -18,12 +18,6 @@ keymap:
       F22: Shift-Minus
       Shift-F22: Grave
 
-      # Mimic 英数/かな in Apple keyboard JIS layout.
-      F20:
-        launch: ["fcitx5-remote", "-s", "keyboard-us"]
-      F21:
-        launch: ["fcitx5-remote", "-s", "mozc"]
-
   # Mimic macOS keybindings:
   #   - Use Super (Win/Cmd) as basic modifier instead of Ctrl.
   #   - Use Ctrl to move cursor (as known as Emacs keybindings) anywhere.
