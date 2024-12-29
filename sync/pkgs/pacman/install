@@ -63,10 +63,11 @@ if is_dryrun || has pacman; then
     install wob
     install xorg-xwayland
 
-    # Japanese input
+    # Japanese input and Emoji
     install fcitx5-im
     install fcitx5-mozc
     install noto-fonts-cjk
+    install noto-fonts-emoji
 
     # For running AppImage (https://github.com/AppImage/AppImageKit/wiki/FUSE)
     install fuse2
