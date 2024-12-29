@@ -30,7 +30,6 @@ case $(ostype) in
             'arch/chromium-flags.conf:.config/chromium-flags.conf'
             'arch/rofi-config.rasi:.config/rofi/config.rasi'
             'fcitx5/config:.config/fcitx5/config'
-            'fcitx5/profile:.config/fcitx5/profile'
             '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
         )
         ;;
