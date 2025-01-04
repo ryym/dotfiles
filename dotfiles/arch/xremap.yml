@@ -1,6 +1,6 @@
 # https://github.com/k0kubun/xremap
 
-# Note that you need to disable GNOME mutter overlay key to change Super key behavior.
+# In GNOME, you need to disable the mutter overlay key to change the Super key behavior.
 # ```zsh
 # % gsettings set org.gnome.mutter overlay-key '' # deafult is 'Super_L'
 # ```
@@ -13,10 +13,12 @@ keymap:
       Shift-Minus: Shift-Backslash
       Shift-Backspace: Shift-Grave
 
-      # Currently I make my US keyboard emit F22 on single right shift keypress
-      # to mimic the RO key on JIS that can input an uderscore without shift key.
-      F22: Shift-Minus
-      Shift-F22: Grave
+      # Enter an underscore and a tilde by the right shift key.
+      # In JIS keyboard, you can input an underscore without shift key.
+      # I find it very useful so I made my US keyboard emit F22 when
+      # pressing the right shift key to mimic the JIS keyboard.
+      F22: Shift-Minus # Underscore
+      Shift-F22: Grave # Tilde
 
   # Mimic macOS keybindings:
   #   - Use Super (Win/Cmd) as basic modifier instead of Ctrl.
