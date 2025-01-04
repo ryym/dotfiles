@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# A script to open a new terminal window in Sway, with keeping the working directory.
+#   - The only supported terminal is Alacritty for now.
+#   - It does not work with tmux.
+#   - It may not work in any OS other than Arch Linux.
+
+# Get the pid of the currently focused Sway window.
+PID=$(
+    swaymsg -t get_tree | jq '
+        recurse(.nodes[])
+        | select(.focused and .pid != null and .app_id == "Alacritty")
+        | .pid
+    '
+)
+
+if [ -n "$PID" ] && pgrep -P "$PID" > /dev/null; then
+    # Get the pid of the shell which is open in the terminal.
+    # We assume that it is a child process of the terminal.
+    PID=$(pgrep -P "$PID")
+    CWD=$(readlink -e /proc/$PID/cwd)
+fi
+
+if [ -n "$CWD" ]; then
+    alacritty --working-directory "$CWD" "$@"
+else
+    alacritty "$@"
+fi

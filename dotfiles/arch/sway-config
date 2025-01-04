@@ -61,7 +61,7 @@ for_window [app_id="blueberry"] {
 
 ### Key bindings
 
-set $term alacritty
+set $term 'mysway-term-wd'
 set $menu 'rofi -show run'
 
 # Use 英数 key as a modifier.
