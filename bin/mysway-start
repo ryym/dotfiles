@@ -12,5 +12,5 @@ export QT_STYLE_OVERRIDE=Adwaita-Dark
 # Launch Electron apps with Wayland protocol.
 export ELECTRON_OZONE_PLATFORM_HINT=wayland
 
-sway 2> /tmp/sway-stderr.log
+sway > /tmp/sway.log 2>&1
 systemctl --user stop sway-session.target
