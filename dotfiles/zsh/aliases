@@ -19,6 +19,7 @@ alias cg='cargo'
 alias manv='() { vim -c "exe \"PluggerLoad man\" | Man $1 | only" }'
 alias tf='terraform'
 alias y='yarn'
+alias k='kubectl'
 
 # For Linux
 alias sysu='systemctl --user'
