@@ -78,7 +78,6 @@ function! my#init#options#setup() abort
   set showmode
   set autoread
   set nostartofline
-  set title
   set wildmenu
   set list
   set listchars   =tab:>\ "
