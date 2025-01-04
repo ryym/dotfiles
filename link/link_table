@@ -27,6 +27,8 @@ case $(ostype) in
             'arch/sway-config:.config/sway/config'
             'arch/xremap.yml:.config/xremap.yml'
             'arch/xremap.service:.config/systemd/user/xremap.service'
+            'arch/fcitx5.service:.config/systemd/user/fcitx5.service'
+            'arch/wob.service:.config/systemd/user/wob.service'
             'arch/chromium-flags.conf:.config/chromium-flags.conf'
             'arch/rofi-config.rasi:.config/rofi/config.rasi'
             'fcitx5/config:.config/fcitx5/config'

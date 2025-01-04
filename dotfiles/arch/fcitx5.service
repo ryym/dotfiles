@@ -1,0 +1,12 @@
+# vim:set filetype=systemd:
+
+[Unit]
+Description=Fcitx5
+BindsTo=sway-session.target
+
+[Service]
+ExecStart=fcitx5
+Restart=always
+
+[Install]
+WantedBy=sway-session.target

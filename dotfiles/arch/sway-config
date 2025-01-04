@@ -1,13 +1,6 @@
 # vim:set filetype=swayconfig:
 
-### Child processes
-
-exec "fcitx5"
 exec "mysway-up-session > /tmp/mysway-up-session.log"
-
-# Graphical indicator of volume or anything (https://github.com/francma/wob)
-set $wobpipe /tmp/wobpipe
-exec_always "rm -f $wobpipe && mkfifo $wobpipe && tail -f $wobpipe | wob"
 
 ### Inputs and Outputs
 
@@ -159,6 +152,10 @@ mode "resize" {
 
     bindsym q mode "default"
 }
+
+# Graphical indicator of volume or anything (https://github.com/francma/wob)
+# The named pipe is created by wob.service in systemd.
+set $wobpipe /tmp/wobpipe
 
 # Control the audio volume and display the value via wob.
 bindsym --locked XF86AudioMute exec \

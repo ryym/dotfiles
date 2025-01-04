@@ -1,0 +1,12 @@
+# vim:set filetype=systemd:
+
+[Unit]
+Description=Wob
+BindsTo=sway-session.target
+
+[Service]
+ExecStart=sh -c 'rm -f /tmp/wobpipe && mkfifo /tmp/wobpipe && tail -f /tmp/wobpipe | wob'
+Restart=always
+
+[Install]
+WantedBy=sway-session.target
