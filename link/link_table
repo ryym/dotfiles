@@ -32,6 +32,7 @@ case $(ostype) in
             'arch/sway-session.target:.config/systemd/user/sway-session.target'
             'arch/chromium-flags.conf:.config/chromium-flags.conf'
             'arch/rofi-config.rasi:.config/rofi/config.rasi'
+            'arch/foot.ini:.config/foot/foot.ini'
             'fcitx5/config:.config/fcitx5/config'
             'zsh/zkbd/linux-pc-linux-gnu:.zkbd/linux-pc-linux-gnu'
             '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
