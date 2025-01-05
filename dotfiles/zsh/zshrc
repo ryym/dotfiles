@@ -87,6 +87,22 @@ zle -N fzf-ghq
 bindkey '^]' fzf-ghq
 bindkey '^g' fzf-ghq
 
+zkbd_file="$HOME/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+if [ -f $zkbd_file ]; then
+    # Load a dictionary of special keys for the current terminal.
+    # You can build a directory interactively by running `autoload zkbd; zkbd`.
+    source $zkbd_file
+
+    # Remap navigation keys to ensure consistent behavior across applications.
+    # See ryym/dotfiles/sync/os/arch/README.md#key-binding-strategy for details.
+    # While these bindings are rarely used since they are remapped at the terminal emulator level,
+    # they are still useful in terminals that doesn't remap keys like tty1.
+    bindkey "${key[Home]}" beginning-of-line
+    bindkey "${key[End]}" end-of-line
+    bindkey "${key[Up]}" history-beginning-search-backward-end
+    bindkey "${key[Down]}" history-beginning-search-forward-end
+fi
+
 # https://github.com/rhysd/hgrep
 function hgrep() {
     command hgrep --term-width "$COLUMNS" "$@"
