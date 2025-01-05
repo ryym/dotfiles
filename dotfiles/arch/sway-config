@@ -6,12 +6,13 @@ exec "mysway-up-session > /tmp/mysway-up-session.log"
 
 input "type:touchpad" {
     tap enabled
+    drag_lock enabled
 }
 
 input "1452:613:Apple_Inc._Magic_Trackpad" {
     natural_scroll enabled
     pointer_accel -0.1
-    scroll_factor 0.2
+    scroll_factor 0.3
 }
 
 input "4617:8705:Dygma_Raise_Mouse" {
