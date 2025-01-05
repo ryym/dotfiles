@@ -63,6 +63,21 @@ for_window [app_id="blueberry"] {
     resize set height 50ppt
 }
 
+# A variable to classify newly created windows.
+# Set value to this variable right before opening a new window.
+set $inimark _
+for_window [all] {
+    mark --add $$inimark
+    set $$inimark _
+}
+
+for_window [con_mark="ini-mini-v"] {
+    resize set height 30ppt
+}
+for_window [con_mark="ini-mini-h"] {
+    resize set width 30ppt
+}
+
 ### Key bindings
 
 set $term 'mysway-term-wd'
@@ -70,16 +85,12 @@ set $menu 'rofi -show run'
 
 # Use 英数 key as a modifier.
 set $mod Hangul_Hanja
+set $alt Mod1
 set $super Mod4
-
-# Mod1 ... Alt
-# Mod2 ... NumLock
-# Mod4 ... Super
-# (man 5 sway)
 
 # An emergency exit key for the case where the main modifier key is unavailable
 # due to some accidental keyboard settings change, etc.
-bindsym $super+Shift+z exec swaymsg exit
+bindsym $super+Shift+z exit
 
 # For compatibility with macOS.
 bindsym $super+q kill
@@ -87,6 +98,8 @@ bindsym $super+Space exec $menu
 
 bindsym $mod+apostrophe exec $term
 bindsym $mod+o exec $menu
+bindsym $mod+Shift+q exit
+
 bindsym $mod+q kill
 bindsym $mod+Shift+r reload
 
@@ -116,14 +129,21 @@ bindsym $mod+Shift+Right focus right; splitv; focus left; move right
 
 bindsym $mod+u splitv
 bindsym $mod+i splith
-bindsym $mod+0 split none
+bindsym $mod+Control+u splitv; set $$inimark "ini-mini-v"
+bindsym $mod+Control+i splith; set $$inimark "ini-mini-h"
+bindsym $mod+0 split none; set $$inimark "_"
 
-bindsym $mod+f fullscreen
 bindsym $mod+y layout toggle stacking tabbed
-bindsym $mod+control+y layout toggle split
+bindsym $mod+Control+y layout toggle split
+bindsym $mod+Control+Return fullscreen
 
-bindsym $mod+d focus mode_toggle
-bindsym $mod+Shift+d floating toggle
+bindsym $mod+f mode "float"
+mode "float" {
+    bindsym f focus mode_toggle; mode "default"
+    bindsym m floating toggle; mode "default"
+
+    bindsym q mode "default"
+}
 
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
@@ -144,11 +164,6 @@ mode "resize" {
     bindsym $mod+k focus up
     bindsym $mod+l focus right
 
-    # Divide the width/height equally.
-    # XXX: I want to make it work regardless of the number of containers.
-    bindsym Shift+w resize set width 50ppt
-    bindsym Shift+h resize set height 50ppt
-
     bindsym h resize shrink width 10px
     bindsym j resize grow height 10px
     bindsym k resize shrink height 10px
@@ -156,6 +171,23 @@ mode "resize" {
 
     bindsym q mode "default"
 }
+
+bindsym $mod+Equal mode "resize-equally"
+mode "resize-equally" {
+    # Divide the width/height equally.
+    # I want to make it work regardless of the number of containers.
+    bindsym w resize set width 50ppt; mode "default"
+    bindsym h resize set height 50ppt; mode "default"
+
+    bindsym q mode "default"
+}
+
+# Quickly resize a floating window to fit it in the fixed area of the screen.
+bindsym $alt+Control+h resize set width 50ppt; resize set height 100ppt; move position 0px 0px
+bindsym $alt+Control+l resize set width 50ppt; resize set height 100ppt; move position 50ppt 0px
+bindsym $alt+Control+j resize set width 100ppt; resize set height 50ppt; move position 0px 50ppt
+bindsym $alt+Control+k resize set width 100ppt; resize set height 50ppt; move position 0px 0px
+bindsym $alt+Control+Return resize set width 100ppt; resize set height 100ppt; move position 0px 0px
 
 # Graphical indicator of volume or anything (https://github.com/francma/wob)
 # The named pipe is created by wob.service in systemd.
