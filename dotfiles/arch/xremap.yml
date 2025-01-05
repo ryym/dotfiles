@@ -20,9 +20,6 @@ keymap:
       F22: Shift-Minus # Underscore
       Shift-F22: Grave # Tilde
 
-  # Mimic macOS keybindings:
-  #   - Use Super (Win/Cmd) as basic modifier instead of Ctrl.
-  #   - Use Ctrl to move cursor (as known as Emacs keybindings) anywhere.
   - name: Like macOS
     # Apply the keybindings except for GNOME terminal.
     #   - It already support Emacs-like keybindings.
@@ -34,14 +31,6 @@ keymap:
       - Alacritty
       - foot
     remap:
-      Ctrl-B: Left
-      Ctrl-F: Right
-      Ctrl-P: Up
-      Ctrl-N: Down
-      Ctrl-A: Home
-      Ctrl-E: End
-      Ctrl-K: [Shift-End, Delete]
-
       Super-A: Ctrl-A
       Super-C: Ctrl-C
       Super-E: Ctrl-E
@@ -56,6 +45,16 @@ keymap:
       Super-W: Ctrl-W
       Super-X: Ctrl-X
       Super-Z: Ctrl-Z
-
       # Open browser's developer tool.
       Super-LeftAlt-I: Ctrl-Shift-I
+
+  - name: Like Emacs or terminals
+    exact_match: true
+    remap:
+      Ctrl-B: Left
+      Ctrl-F: Right
+      Ctrl-P: Up
+      Ctrl-N: Down
+      Ctrl-A: Home
+      Ctrl-E: End
+      Ctrl-K: [Shift-End, Delete]
