@@ -1,22 +1,11 @@
-# Use 'systemctl --user link' to put this service.
-# Note that we need to use real path when enable/disable this service.
+# vim:set filetype=systemd:
 
 [Unit]
 Description=Xremap
 
-# Once the keyboard is disconnected, Xremap stops working.
-# So we have to restart Xremap whenever the keyboard is connected.
-# The sys-keyboard device is created via the udev rule.
-After=sys-keyboard.device
-After=sway-session.target
-
-StopPropagatedFrom=sys-keyboard.device
-StopPropagatedFrom=sway-session.target
-
 [Service]
-ExecStart=%h/.dotfiles/bin/auto-xremap
+ExecStart=%h/.cargo/bin/xremap --watch %h/.config/xremap.yml
 Restart=on-failure
 
 [Install]
-WantedBy=sys-keyboard.device
-WantedBy=sway-session.target
+WantedBy=default.target

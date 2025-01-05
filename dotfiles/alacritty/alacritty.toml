@@ -14,10 +14,20 @@ normal = { family = "Intel One Mono", style = "Regular" }
 
 [keyboard]
 bindings = [
-    { key = "v", mods = "Command", action = "Paste" },
-    { key = "c", mods = "Command", action = "Copy" },
+    { key = "v", mods = "Control|Shift", action = "Paste" },
+    { key = "c", mods = "Control|Shift", action = "Copy" },
 
     { key = "[", mods = "Control|Command", mode = "~Vi", action = "ToggleViMode" },
+    { key = "Space", mods = "Control|Command", mode = "~Vi", action = "ToggleViMode" },
     { key = "[", mods = "Control", mode = "Vi", action = "ClearSelection" },
     { key = "q", mode = "Vi", action = "ToggleViMode" },
+
+    # Remap navigation keys to ensure consistent behavior across applications.
+    # See ryym/dotfiles/sync/os/arch/README.md#key-binding-strategy for details.
+    { key = "Home", chars = "\u0001" }, # Ctrl-a
+    { key = "End", chars = "\u0005" }, # Ctrl-e
+    { key = "End", mods = "Shift", chars = "\u000b" }, # Ctrl-k
+    { key = "Delete", action = "None" },
+    { key = "Down", chars = "\u000e" }, # Ctrl-n
+    { key = "Up", chars = "\u0010" }, # Ctrl-p
 ]

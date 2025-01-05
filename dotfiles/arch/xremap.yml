@@ -21,15 +21,6 @@ keymap:
       Shift-F22: Grave # Tilde
 
   - name: Like macOS
-    # Apply the keybindings except for GNOME terminal.
-    #   - It already support Emacs-like keybindings.
-    #   - Changing Ctrl key behavior breaks many operations, espetially in Vim.
-    #   - We can customize copy-paste key by preferences.
-    application:
-      not:
-      - gnome-terminal-server
-      - Alacritty
-      - foot
     remap:
       Super-A: Ctrl-A
       Super-C: Ctrl-C

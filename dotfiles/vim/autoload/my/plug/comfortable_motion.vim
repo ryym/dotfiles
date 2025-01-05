@@ -9,6 +9,11 @@ function! my#plug#comfortable_motion#before_load()
   Map n (silent) <C-f> :f:comfortable_motion#flick(200)
   Map n (silent) <C-b> :f:comfortable_motion#flick(-200)
 
+  " Remap some keys to ensure consistent behavior across applications.
+  " See ryym/dotfiles/sync/os/arch/README.md#key-binding-strategy for details.
+  Map n (silent) <Right> :f:comfortable_motion#flick(200)
+  Map n (silent) <Left> :f:comfortable_motion#flick(-200)
+
   let g:comfortable_motion_no_default_key_mappings = 1
   let g:comfortable_motion_friction = 800
 endfunction
