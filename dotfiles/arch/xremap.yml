@@ -8,11 +8,6 @@
 keymap:
   - name: Global
     remap:
-      Semicolon: Shift-Semicolon
-      Shift-Semicolon: Semicolon
-      Shift-Minus: Shift-Backslash
-      Shift-Backspace: Shift-Grave
-
       # Enter an underscore and a tilde by the right shift key.
       # In JIS keyboard, you can input an underscore without shift key.
       # I find it very useful so I made my US keyboard emit F22 when
