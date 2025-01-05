@@ -34,7 +34,7 @@ let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :100
 function! my#plug#fzf#_without_ignored_files() abort
   " https://github.com/sharkdp/fd
   " fd is so fast and it respects .gitignore by default.
-  let src = s:fd_available ? 'fd --hidden --type f --exclude .git' : 'git ls-files'
+  let src = s:fd_available ? 'fd --hidden -tf -tl --exclude .git' : 'git ls-files'
   call fzf#run({
     \   'sink': 'edit',
     \   'source': src,
