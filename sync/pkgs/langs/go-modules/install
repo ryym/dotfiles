@@ -10,6 +10,7 @@ if is_dryrun || has go; then
     install golang.org/x/tools/gopls@latest
     install github.com/pocke/whichpr@latest
     install github.com/ryym/slv@latest
+    install github.com/ryym/gits@latest
 else
     log_error 'Go is not available'
     exit 1
