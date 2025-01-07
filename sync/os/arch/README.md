@@ -1,4 +1,4 @@
-## OS Installation
+# OS Installation
 
 - Official guide: <https://wiki.archlinux.org/title/installation_guide>
 
