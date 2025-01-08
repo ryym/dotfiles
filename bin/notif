@@ -9,16 +9,17 @@ shopt -s expand_aliases
 source "$DOTPATH/dotfiles/zsh/aliases"
 test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
+cmds=($@)
+eval "$@"
+prefix=$(test $? -eq 0 && echo 'ok:' || echo 'ERR:')
+
 case $(ostype) in
     macos )
-        eval "$@"
-        cmds=($@)
-        osascript -e "display notification \"${cmds[*]}\" with title \"${cmds[0]} finished\""
+        osascript -e "display notification \"${cmds[*]}\" with title \"$prefix ${cmds[0]}\""
         ;;
 
     arch )
-        cmds=($@)
-        eval "$@" && notify-send "[ok] ${cmds[*]}" || notify-send "[ERROR] ${cmds[*]}"
+        notify-send "$prefix ${cmds[*]}"
         ;;
 
     * )
