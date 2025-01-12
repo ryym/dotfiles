@@ -98,7 +98,8 @@ bindsym $super+q kill
 bindsym $super+Space exec $menu
 
 bindsym $mod+apostrophe exec $term
-bindsym $mod+o exec $menu
+bindsym $mod+Control+apostrophe exec $term
+bindsym $mod+colon exec $menu
 bindsym $mod+Shift+q exit
 
 bindsym $mod+q kill
@@ -117,25 +118,21 @@ bindsym $mod+Down move down
 bindsym $mod+Up move up
 bindsym $mod+Right move right
 
-bindsym $mod+Control+h move left
-bindsym $mod+Control+j move down
-bindsym $mod+Control+k move up
-bindsym $mod+Control+l move right
-
 # Try to merge the containers. It would not work as intended in the complex layout.
 bindsym $mod+Shift+Left focus left; splitv; focus right; move left
 bindsym $mod+Shift+Down focus down; splith; focus up; move down
 bindsym $mod+Shift+Up focus up; splith; focus down; move up
 bindsym $mod+Shift+Right focus right; splitv; focus left; move right
 
+bindsym $mod+o exec "mysway-auto-split"
 bindsym $mod+u splitv
 bindsym $mod+i splith
 bindsym $mod+Control+u splitv; set $$inimark "ini-mini-v"
 bindsym $mod+Control+i splith; set $$inimark "ini-mini-h"
 bindsym $mod+0 split none; set $$inimark "_"
 
-bindsym $mod+y layout toggle stacking tabbed
-bindsym $mod+Control+y layout toggle split
+bindsym $mod+t layout toggle stacking tabbed
+bindsym $mod+Control+t layout toggle split
 bindsym $mod+Control+Return fullscreen
 
 bindsym $mod+f mode "float"
@@ -150,9 +147,9 @@ bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
 bindsym $mod+3 workspace number 3
 
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+1 move container to workspace number 1; workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2; workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3; workspace number 3
 
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+bracketleft workspace prev
