@@ -1,7 +1,7 @@
 @theme "material"
 
 configuration {
-    modi: "run,window";
+    modi: "drun,run,window";
 
     font: "Intel One Mono 12";
 

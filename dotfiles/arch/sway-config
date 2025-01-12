@@ -82,7 +82,7 @@ for_window [con_mark="ini-mini-h"] {
 ### Key bindings
 
 set $term 'mysway-term-wd'
-set $menu 'rofi -show run'
+set $menu 'rofi -show drun'
 
 # Use 英数 key as a modifier.
 set $mod Hangul_Hanja
