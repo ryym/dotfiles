@@ -21,6 +21,11 @@ dot() {
     cd ~/.dotfiles
 }
 
+# Go to .config quickly
+dotc() {
+    cd ~/.config
+}
+
 # Detect OS type
 ostype() {
     if test $(uname) == 'Darwin'; then
