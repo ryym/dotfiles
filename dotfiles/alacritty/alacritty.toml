@@ -30,4 +30,6 @@ bindings = [
     { key = "Delete", action = "None" },
     { key = "Down", chars = "\u000e" }, # Ctrl-n
     { key = "Up", chars = "\u0010" }, # Ctrl-p
+    { key = "Left", chars = "\u0002" }, # Ctrl-f
+    { key = "Right", chars = "\u0006" }, # Ctrl-b
 ]

@@ -5,9 +5,22 @@ configuration {
 
     font: "Intel One Mono 12";
 
-    // Key bindings
-    // https://github.com/davatorium/rofi/blob/next/doc/rofi-keys.5.markdown
-    // rofi -list-keybindings
-    kb-mode-next: "Tab";
-    kb-element-next: "";
+    // About Key bindings:
+    //   - https://github.com/davatorium/rofi/blob/next/doc/rofi-keys.5.markdown
+    //   - rofi -list-keybindings
+
+    kb-mode-next: "Control+Right";
+    kb-mode-previous: "Control+Left";
+
+    // Remove default bindings of Control+Left,Right
+    kb-move-word-back: "Alt+b";
+    kb-move-word-forward: "Alt+f";
+
+    kb-move-front: "Control+a,Home";
+    kb-move-end: "Control+e,End";
+    kb-remove-to-eol: "Shift+End";
+
+    // Remove default bindings of Home,End
+    kb-row-first: "Alt+Up";
+    kb-row-last: "Alt+Down";
 }
