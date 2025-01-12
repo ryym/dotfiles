@@ -17,6 +17,7 @@ input "1452:613:Apple_Inc._Magic_Trackpad" {
 
 input "4617:8705:Dygma_Raise_Mouse" {
     scroll_factor 2.0
+    pointer_accel -0.8
 }
 
 input "type:keyboard" {
