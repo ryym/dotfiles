@@ -170,6 +170,9 @@ function! my#init#mappings#setup() abort
   Map i <C-a> <Esc><S-i>
   Map i <C-e> <End>
 
+  Map i <C-b> <Left>
+  Map i <C-f> <Right>
+
   " Unfortunately this does works only on gvim.
   Remap i <C-CR> <End><CR>
   Remap i <S-CR> <C-o>O
