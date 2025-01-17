@@ -5,6 +5,13 @@
 # % gsettings set org.gnome.mutter overlay-key '' # deafult is 'Super_L'
 # ```
 
+# Add a small delay for synthesized key events.
+# Without this, some remappings don't work on Hyprland and Alacritty on X11.
+# For example, `Semicolon` which remapped to `Shift-Semicolon` still emits `Semicolon` .
+# I suspect that a Shift input cannot be recognized if it is released too quickly.
+# https://github.com/xremap/xremap/issues/179
+keypress_delay_ms: 20
+
 keymap:
   - name: Global
     remap:
