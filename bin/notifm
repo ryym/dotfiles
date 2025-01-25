@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Display a desktop notification with the given message.
+# Usage: notifm hello world
+#
+# I usually use `bin/notif` but notifm is useful when I forgot to use notif.
+# Example:
+#   docker pull big-image
+#   # Realize I forgot to use notif.
+#   # Suspend the command by Ctrl-z.
+#   # Resume the command and run notifm after that.
+#   fg %1; notifm docker pull finish
+#   # Now I can see the notification when the command complete!
+
+source "$DOTPATH/lib/vitalize.sh"
+
+case $(ostype) in
+    macos )
+        osascript -e "display notification \"${*}\" with title \"message\""
+        ;;
+
+    arch )
+        notify-send "${*}"
+        ;;
+
+    * )
+        echo "OS not supported" && exit 1
+        ;;
+esac

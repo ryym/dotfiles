@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Display desktop notification.
+# Display a desktop notification when the execution of the specified command is complete.
 # Usage: notif sleep 3
 
 source "$DOTPATH/lib/vitalize.sh"
