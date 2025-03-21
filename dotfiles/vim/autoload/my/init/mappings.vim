@@ -226,9 +226,12 @@ function! s:map_unified_win_switches() abort
   Map n <C-w>- ::split
   Map n <C-w>\| ::vsplit
 
+  Map n <C-w>u ::split
+  Map n <C-w>i ::vsplit
+
   " Split equally from terminal. This always open a new normal buffer.
-  Map t <C-w>- <C-\><C-n>:call my#init#func#window#split_from_term({})<CR>
-  Map t <C-w>\| <C-\><C-n>:call my#init#func#window#split_from_term({'vert': 1})<CR>
+  Map t <C-w>u <C-\><C-n>:call my#init#func#window#split_from_term({})<CR>
+  Map t <C-w>i <C-\><C-n>:call my#init#func#window#split_from_term({'vert': 1})<CR>
 
   " Split and open a small new normal buffer.
   Map n <C-w>v ::call my#init#func#window#split_from_buf({'ratio': 0.35})
@@ -237,10 +240,10 @@ function! s:map_unified_win_switches() abort
   Map t <C-w>V <C-\><C-n>:call my#init#func#window#split_from_term({'ratio': 0.35, 'vert': 1})<CR>
 
   " Split equally and open a new terminal.
-  Map n <C-w>t- ::call my#init#func#window#split_from_buf({'term': 1})
-  Map n <C-w>t\| ::call my#init#func#window#split_from_buf({'term': 1, 'vert': 1})
-  Map t <C-w>t- <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1})<CR>
-  Map t <C-w>t\| <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1, 'vert': 1})<CR>
+  Map n <C-w>tu ::call my#init#func#window#split_from_buf({'term': 1})
+  Map n <C-w>ti ::call my#init#func#window#split_from_buf({'term': 1, 'vert': 1})
+  Map t <C-w>tu <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1})<CR>
+  Map t <C-w>ti <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1, 'vert': 1})<CR>
 
   " Split and open a small terminal.
   Map t <C-w>tv <C-\><C-n>:call my#init#func#window#split_from_term({'term': 1, 'ratio': 0.35})<CR>
