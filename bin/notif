@@ -9,8 +9,10 @@ shopt -s expand_aliases
 source "$DOTPATH/dotfiles/zsh/aliases"
 test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
+printf -v escaped '%q ' "$@"
+eval "$escaped"
+
 cmds=($@)
-eval "$@"
 prefix=$(test $? -eq 0 && echo 'ok:' || echo 'ERR:')
 
 case $(ostype) in
