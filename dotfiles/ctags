@@ -1,2 +1,4 @@
 --exclude=node_modules
 --exclude=.git
+--languages=Ruby
+--ruby-kinds=+cfmF
