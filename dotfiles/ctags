@@ -1,6 +1,2 @@
---langmap=javascript:+.jsx
---regex-javascript=/(var|const)[ \t]+([A-Z0-9]+)[ \t]*/\2/t,constant/
---regex-javascript=/class[ \t]+([A-Za-z0-9._$]+)[ \t]*/\1/c,class/
---regex-javascript=/[ \t]*([A-Za-z$_][A-Za-z0-9_$]+)\([^)]*\)[ \t]*\{/\1/f,function/
---regex-javascript=/function[ \t]+([A-Za-z0-9._$]+)[ \t]*\(/\1/f,function/
 --exclude=node_modules
+--exclude=.git
