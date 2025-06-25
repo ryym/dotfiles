@@ -36,5 +36,8 @@ HOMEBREW_NO_AUTO_UPDATE=1
 # Rust
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
+# Deno
+export PATH="$HOME/.deno/bin:$PATH"
+
 # Load the local settings.
 [ -f ~/.zshenv.local ] && source ~/.zshenv.local
