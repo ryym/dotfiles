@@ -55,6 +55,7 @@ setopt auto_pushd
 setopt nocorrect
 setopt list_packed
 setopt nolistbeep
+setopt interactivecomments
 
 unsetopt nomatch
 
