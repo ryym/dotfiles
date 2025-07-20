@@ -64,6 +64,7 @@ function! s:customize_per_filetype() abort
       \ '*.purs'       : 'haskell',
       \ '*.tsx'        : 'typescript.tsx',
       \ '*.json'       : 'json5',
+      \ '*.mdc'       : 'markdown',
       \ })
   augroup END
 endfunction
