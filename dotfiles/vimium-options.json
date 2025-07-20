@@ -1,0 +1,15 @@
+{
+  "keyMappings": "# Insert your preferred key mappings here.\n\nmap <C-j> scrollDown count=3\nmap <C-k> scrollUp count=3\n\nmap <C-f> scrollPageDown\nmap <C-b> scrollPageUp\n\nmap <C-o> goBack\nmap <C-i> goForward",
+  "smoothScroll": false,
+  "settingsVersion": "2.3",
+  "exclusionRules": [
+    {
+      "passKeys": "",
+      "pattern": "https?://mail.google.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https://docs.google.com/*"
+    }
+  ]
+}
