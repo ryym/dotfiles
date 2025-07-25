@@ -17,8 +17,15 @@ local function configure()
                 highlight = {
                     enable = true,
                     -- Disable them whose syntax highlight seems better than the treesitter's one.
-                    disable = { "ruby", "yaml" }
+                    disable = { "yaml" }
                 },
+            })
+
+            -- Set the syntax option explicitly to make matchit ("%" jump on do/end) work.
+            -- https://github.com/nvim-treesitter/nvim-treesitter/issues/584
+            vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+                pattern = '*.rb',
+                command = 'set syntax=ruby',
             })
         end,
     }
