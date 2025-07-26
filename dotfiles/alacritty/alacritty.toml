@@ -12,6 +12,10 @@ opacity = 0.98
 [font]
 normal = { family = "Intel One Mono", style = "Regular" }
 
+[terminal.shell]
+program = "/bin/zsh"
+args = ["--login", "-c", "tmux"]
+
 [keyboard]
 bindings = [
     { key = "v", mods = "Control|Shift", action = "Paste" },
