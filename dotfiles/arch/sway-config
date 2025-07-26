@@ -42,7 +42,7 @@ bar {
     position top
     font 'Intel One Mono 10'
     icon_theme 'Adwaita'
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    status_command while date +'%Y-%m-%d %H:%M %a'; do sleep 10; done
     colors {
         statusline #ffffff
         background #323232
