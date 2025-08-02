@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'apt'
+
+install() {
+    run sudo apt install -y "$@"
+}
+
+if is_dryrun || has apt; then
+    run sudo apt update
+    run sudo apt upgrade -y
+
+    # Basic development tools
+    install alacritty
+    install clang
+
+    # XXX: 何か追加で必要だったっけ？
+    install docker
+    install docker-compose
+
+    install fzf
+    install ghq
+    install git
+    install go
+    install gvim
+    install jq
+    install make
+    # install man-db XXX: 必要？
+    install neovim
+    install tailscale
+    install tmux
+    install tree
+    install zsh
+
+    install google-chrome-stable
+    install chrome-extensions-shell
+
+    # # For building Ruby 3.2 or later
+    # install libyaml
+
+    # Japanese input and Emoji
+    install fcitx5-mozc
+    # install noto-fonts-cjk
+    # install noto-fonts-emoji
+
+else
+    log_error 'apt not found'
+    exit 1
+fi
+
+log_finish 'apt'

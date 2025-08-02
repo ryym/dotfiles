@@ -38,4 +38,9 @@ case $(ostype) in
             '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
         )
         ;;
+    ubuntu)
+        LINKS+=(
+            'xremap/xremap.yml:.config/xremap.yml'
+        )
+        ;;
 esac

@@ -32,6 +32,8 @@ ostype() {
         echo 'macos'
     elif test -f /etc/arch-release; then
         echo 'arch'
+    elif (test -f /etc/os-release && . /etc/os-release && test "$ID" = "ubuntu"); then
+        echo 'ubuntu'
     elif test -f /etc/debian_version; then
         echo 'debian'
     elif test -f /etc/centos-release; then

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Install libraries for Ubuntu.
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start "Install for Ubuntu"
+
+mkdir -p "$HOME/local/bin"
+
+load pkgs/apt/install
+
+# XXX: gnome-extensionもやりたい
+
+load lib/rustup
+
+load lang-envs/install
+
+load pkgs/langs/install
+
+if [ ${SHELL##*/} != 'zsh' ]; then
+    run ch-sh zsh
+fi
+
+log_finish "Install for Ubuntu"
