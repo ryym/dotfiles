@@ -19,6 +19,9 @@ if is_dryrun || has cargo; then
             run cargo install --root "$HOME/local" xremap --features wlroots
             mv "$HOME/local/bin/xremap" "$HOME/local/bin/xremap-wlroots"
             ;;
+        ubuntu)
+            install xremap
+            ;;
     esac
 else
     log_error 'Rust is not available'
