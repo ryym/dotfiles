@@ -13,24 +13,22 @@ mkdir -p "$HOME/local/bin"
 load pkgs/apt/install
 
 log_start "Install Go"
-(
-    # Official instruction: https://go.dev/doc/install
-    GO_LIB_DIR=/usr/local/go
-    GO_ARCHIVE=go1.24.5.linux-amd64.tar.gz
-    if test -d $GO_LIB_DIR; then
-        log_info "Go is already installed"
-    else
-        run wget https://go.dev/dl/$GO_ARCHIVE
-        run sudo rm -rf $GO_LIB_DIR
-        run sudo tar -C $(dirname $GO_LIB_DIR) -xzf $GO_ARCHIVE
-        run rm $GO_ARCHIVE
-        # Alternatively, we can simply run `apt install golang` to get Go
-        # but its Go version is typically old.
-    fi
-    if [[ ":$PATH:" != *":$GO_LIB_DIR/bin:"* ]]; then
-        run export PATH="$PATH:$GO_LIB_DIR/bin"
-    fi
-);
+# Official instruction: https://go.dev/doc/install
+GO_LIB_DIR=/usr/local/go
+GO_ARCHIVE=go1.24.5.linux-amd64.tar.gz
+if test -d $GO_LIB_DIR; then
+    log_info "Go is already installed"
+else
+    run wget https://go.dev/dl/$GO_ARCHIVE
+    run sudo rm -rf $GO_LIB_DIR
+    run sudo tar -C $(dirname $GO_LIB_DIR) -xzf $GO_ARCHIVE
+    run rm $GO_ARCHIVE
+    # Alternatively, we can simply run `apt install golang` to get Go
+    # but its Go version is typically old.
+fi
+if [[ ":$PATH:" != *":$GO_LIB_DIR/bin:"* ]]; then
+    run export PATH="$PATH:$GO_LIB_DIR/bin"
+fi
 log_finish "Install Go"
 
 # XXX: gnome-extensionもやりたい
