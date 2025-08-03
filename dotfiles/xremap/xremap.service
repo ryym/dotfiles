@@ -5,7 +5,7 @@ Description=Xremap
 After=default.target
 
 [Service]
-ExecStart=%h/.cargo/bin/xremap --watch=device %h/.config/xremap.yml
+ExecStart=%h/.cargo/bin/xremap --watch=device %h/.config/xremap/xremap.yml
 Restart=on-failure
 
 [Install]
