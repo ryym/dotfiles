@@ -40,7 +40,8 @@ case $(ostype) in
         ;;
     ubuntu)
         LINKS+=(
-            'xremap/xremap.yml:.config/xremap.yml'
+            'xremap/xremap.yml:.config/xremap/xremap.yml'
+            'xremap/xremap.service:.config/systemd/user/xremap.service'
         )
         ;;
 esac
