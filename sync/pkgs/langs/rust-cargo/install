@@ -20,7 +20,7 @@ if is_dryrun || has cargo; then
             mv "$HOME/local/bin/xremap" "$HOME/local/bin/xremap-wlroots"
             ;;
         ubuntu)
-            install xremap
+            run cargo install xremap --features gnome
             ;;
     esac
 else

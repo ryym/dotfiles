@@ -12,8 +12,8 @@ mkdir -p "$HOME/local/bin"
 
 load pkgs/apt/install
 
-log_start "Install Go"
 # Official instruction: https://go.dev/doc/install
+log_start "Install Go"
 GO_LIB_DIR=/usr/local/go
 GO_ARCHIVE=go1.24.5.linux-amd64.tar.gz
 if test -d $GO_LIB_DIR; then
