@@ -16,22 +16,27 @@ if is_dryrun || has apt; then
 
     # Basic development tools
     install alacritty
-    install clang
+    install curl
 
-    # XXX: 何か追加で必要だったっけ？
-    install docker
-    install docker-compose
+    # install clang
+
+    # # XXX: require setup
+    # install docker
+    # install docker-compose
 
     install fzf
     install ghq
     install git
     install go
-    install gvim
+    # install gvim
     install jq
     install make
     # install man-db XXX: 必要？
     install neovim
-    install tailscale
+
+    # XXX: require setup
+    # install tailscale
+
     install tmux
     install tree
     install zsh
