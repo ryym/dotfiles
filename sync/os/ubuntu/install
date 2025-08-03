@@ -24,11 +24,11 @@ log_start "Install Go"
         run sudo rm -rf $GO_LIB_DIR
         run sudo tar -C $(dirname $GO_LIB_DIR) -xzf $GO_ARCHIVE
         run rm $GO_ARCHIVE
-        if [[ ":$PATH:" != *":$GO_LIB_DIR/bin:"* ]]; then
-            run export PATH="$PATH:$GO_LIB_DIR/bin"
-        fi
         # Alternatively, we can simply run `apt install golang` to get Go
         # but its Go version is typically old.
+    fi
+    if [[ ":$PATH:" != *":$GO_LIB_DIR/bin:"* ]]; then
+        run export PATH="$PATH:$GO_LIB_DIR/bin"
     fi
 );
 log_finish "Install Go"
