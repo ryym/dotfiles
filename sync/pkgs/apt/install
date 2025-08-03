@@ -41,6 +41,10 @@ if is_dryrun || has apt; then
     install tree
     install zsh
 
+    # Required to build Ruby
+    install libyaml-dev
+    install zlib1g-dev
+
     install google-chrome-stable
     install chrome-gnome-shell
 
