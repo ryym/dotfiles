@@ -12,14 +12,20 @@ mkdir -p "$HOME/local/bin"
 
 load pkgs/apt/install
 
-# Install Go. https://go.dev/doc/install
-GO_ARCHIVE=go1.24.5.linux-amd64.tar.gz
-wget https://go.dev/dl/$GO_ARCHIVE
-sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf $GO_ARCHIVE
-rm $GO_ARCHIVE
-if [[ ":$PATH:" != *":/usr/local/go/bin:"* ]]; then
-    export PATH="$PATH:/usr/local/go/bin"
+log_start "Install Go"
+if has go; then
+    log_info "Go is already installed"
+else
+    # Install Go. https://go.dev/doc/install
+    GO_ARCHIVE=go1.24.5.linux-amd64.tar.gz
+    wget https://go.dev/dl/$GO_ARCHIVE
+    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf $GO_ARCHIVE
+    rm $GO_ARCHIVE
+    if [[ ":$PATH:" != *":/usr/local/go/bin:"* ]]; then
+        export PATH="$PATH:/usr/local/go/bin"
+    fi
 fi
+log_finish "Install Go"
 
 # XXX: gnome-extensionもやりたい
 
