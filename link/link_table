@@ -35,13 +35,14 @@ case $(ostype) in
             'arch/foot.ini:.config/foot/foot.ini'
             'fcitx5/config:.config/fcitx5/config'
             'zsh/zkbd/linux-pc-linux-gnu:.zkbd/linux-pc-linux-gnu'
-            '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
+            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
         )
         ;;
     ubuntu)
         LINKS+=(
             'xremap/xremap.yml:.config/xremap/xremap.yml'
             'xremap/xremap.service:.config/systemd/user/xremap.service'
+            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
         )
         ;;
 esac
