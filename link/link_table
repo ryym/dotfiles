@@ -26,7 +26,7 @@ case $(ostype) in
         LINKS+=(
             'arch/sway-config:.config/sway/config'
             'xremap/xremap.yml:.config/xremap/xremap.yml'
-            'arch/xremap.service:.config/systemd/user/xremap.service'
+            'xremap/xremap.service:.config/systemd/user/xremap.service'
             'arch/fcitx5.service:.config/systemd/user/fcitx5.service'
             'arch/wob.service:.config/systemd/user/wob.service'
             'arch/sway-session.target:.config/systemd/user/sway-session.target'
