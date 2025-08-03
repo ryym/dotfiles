@@ -42,7 +42,7 @@ if is_dryrun || has apt; then
     install zsh
 
     install google-chrome-stable
-    install chrome-extensions-shell
+    install chrome-gnome-shell
 
     # # For building Ruby 3.2 or later
     # install libyaml
