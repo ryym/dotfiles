@@ -27,7 +27,7 @@ if is_dryrun || has apt; then
     install fzf
     # install ghq
     install git
-    install go
+    # install go
     # install gvim
     install jq
     install make
