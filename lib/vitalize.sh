@@ -32,6 +32,8 @@ ostype() {
         echo 'macos'
     elif test -f /etc/arch-release; then
         echo 'arch'
+    elif grep -q '^ID=fedora' /etc/os-release; then
+        echo 'fedora'
     elif test -f /etc/debian_version; then
         echo 'debian'
     elif test -f /etc/centos-release; then
