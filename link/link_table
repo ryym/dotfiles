@@ -25,8 +25,6 @@ case $(ostype) in
     arch)
         LINKS+=(
             'arch/sway-config:.config/sway/config'
-            'arch/xremap.yml:.config/xremap.yml'
-            'arch/xremap.service:.config/systemd/user/xremap.service'
             'arch/fcitx5.service:.config/systemd/user/fcitx5.service'
             'arch/wob.service:.config/systemd/user/wob.service'
             'arch/sway-session.target:.config/systemd/user/sway-session.target'
@@ -35,7 +33,9 @@ case $(ostype) in
             'arch/foot.ini:.config/foot/foot.ini'
             'fcitx5/config:.config/fcitx5/config'
             'zsh/zkbd/linux-pc-linux-gnu:.zkbd/linux-pc-linux-gnu'
-            '!sudo:arch/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
+            'xremap/xremap.yml:.config/xremap.yml'
+            'xremap/xremap.service:.config/systemd/user/xremap.service'
+            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
         )
         ;;
 esac
