@@ -24,7 +24,6 @@ if is_dryrun || has pacman; then
     install docker-compose
     install foot
     install fzf
-    install ghq
     install git
     install go
     install gvim
