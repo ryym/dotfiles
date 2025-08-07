@@ -1,8 +1,10 @@
 # vim:set filetype=udev:
 
-# Change the group of /dev/uinput so that non-root user can use it.
-# (Of course the user must be a member of the input group)
-KERNEL=="uinput", GROUP="input", MODE="0660"
+# Enable to run Xremap without sudo by:
+# 1. Add you to the input group: `sudo gpasswd -a <user> input`
+# 2. Register the following udev rule.
+# https://github.com/xremap/xremap?tab=readme-ov-file#running-xremap-without-sudo
+KERNEL=="uinput", GROUP="input", TAG+="uaccess"
 
 # If the above rule does not work, you may have to load the uinput kernel module explicitly.
 # `echo uinput > /etc/modules-load.d/uinput.conf`
