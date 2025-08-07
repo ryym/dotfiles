@@ -4,6 +4,8 @@
 # # (Of course the user must be a member of the input group)
 # KERNEL=="uinput", GROUP="input", MODE="0660"
 
+# https://github.com/xremap/xremap?tab=readme-ov-file#running-xremap-without-sudo
+# sudo gpasswd -a YOUR_USER input
 KERNEL=="uinput", GROUP="input", TAG+="uaccess"
 
 # If the above rule does not work, you may have to load the uinput kernel module explicitly.

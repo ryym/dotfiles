@@ -15,7 +15,6 @@ if is_dryrun || has apt; then
     run sudo apt upgrade -y
 
     # Basic development tools
-    install alacritty
     install curl
 
     # install clang
@@ -44,6 +43,15 @@ if is_dryrun || has apt; then
     # Required to build Ruby
     install libyaml-dev
     install zlib1g-dev
+
+    # Required to install Alacritty
+    install cmake
+    install g++
+    install pkg-config
+    install libfontconfig1-dev
+    install libxcb-xfixes0-dev
+    install libxkbcommon-dev
+    install python3
 
     install google-chrome-stable
     install chrome-gnome-shell
