@@ -10,6 +10,8 @@ log_start "Install for Fedora"
 
 mkdir -p "$HOME/local/bin"
 
+load pkgs/dnf/install
+
 load lib/rustup
 
 load lang-envs/install

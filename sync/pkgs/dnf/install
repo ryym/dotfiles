@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'dnf'
+
+install() {
+    run sudo dnf install -y "$@"
+}
+
+if is_dryrun || has dnf; then
+    # Basic development tools
+    install alacritty
+    install clang
+    install fcitx5-mozc
+    install fcitx5-autostart
+    install fzf
+    install golang
+    install jq
+    install make
+    install neovim
+    install tmux
+    install zsh
+
+    # Fonts
+    install intel-one-mono-fonts
+
+    # Required to build Ruby
+    install perl
+    install zlib-devel
+    install libffi-devel
+    install libyaml-devel
+else
+    log_error 'dnf not found'
+    exit 1
+fi
+
+log_finish 'dnf'
