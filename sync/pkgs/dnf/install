@@ -27,6 +27,16 @@ if is_dryrun || has dnf; then
     # Fonts
     install intel-one-mono-fonts
 
+    if ! has docker; then
+        # Docker: https://docs.docker.com/engine/install/linux-postinstall/
+        run sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
+        install docker-ce
+        install docker-ce-cli
+        install containerd.io
+        install docker-buildx-plugin
+        install docker-compose-plugin
+    fi
+
     # Required to build Ruby
     install perl
     install zlib-devel
