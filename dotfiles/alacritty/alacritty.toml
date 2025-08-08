@@ -12,9 +12,9 @@ opacity = 0.98
 [font]
 normal = { family = "Intel One Mono", style = "Regular" }
 
-[terminal.shell]
-program = "/bin/zsh"
-args = ["--login", "-c", "tmux"]
+# [terminal.shell]
+# program = "/bin/zsh"
+# args = ["--login", "-c", "tmux"]
 
 [keyboard]
 bindings = [
