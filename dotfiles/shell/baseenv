@@ -1,0 +1,37 @@
+#!/bin/sh
+
+source "$DOTPATH/lib/vitalize.sh"
+
+# Disallow duplicate paths in the '$PATH'.
+typeset -U PATH
+
+# Go
+export PATH="$GOPATH/bin:$PATH"
+
+export PATH="/usr/sbin:/sbin:$PATH"
+
+# Homebrew
+export PATH="/usr/local/bin:$PATH"
+
+# Anyenv
+if test -d "$ANYENV_PATH"; then
+    export PATH="$ANYENV_PATH/bin:$PATH"
+
+    # Source the customize initialization script
+    # instead of `eval "$(anyenv init - zsh)"`.
+    source "$HOME/.config/anyenv/init.sh"
+fi
+
+# Local executables
+export PATH="$HOME/local/bin:$PATH"
+
+export EDITOR=nvim
+
+# Prevent Homebrew from updating everything when installing a library.
+HOMEBREW_NO_AUTO_UPDATE=1
+
+# Rust
+test -f $HOME/.cargo/env && source $HOME/.cargo/env
+
+# Deno
+export PATH="$HOME/.deno/bin:$PATH"

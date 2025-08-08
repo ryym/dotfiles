@@ -6,6 +6,8 @@ source "$DOTPATH/lib/vitalize.sh"
 LINKS=(
     'ruby/gemrc:.gemrc'
     'ruby/pryrc:.pryrc'
+    'shell/bashrc:.bashrc'
+    'shell/profile:.profile'
     'shell/zshrc:.zshrc'
     'shell/zshenv:.zshenv'
     'git/gitconfig:.gitconfig'

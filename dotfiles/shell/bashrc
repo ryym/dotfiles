@@ -1,0 +1,5 @@
+# Aliases
+source "$DOTPATH/dotfiles/shell/aliases"
+
+
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
