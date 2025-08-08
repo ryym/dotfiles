@@ -6,7 +6,7 @@
 source "$DOTPATH/lib/vitalize.sh"
 
 shopt -s expand_aliases
-source "$DOTPATH/dotfiles/zsh/aliases"
+source "$DOTPATH/dotfiles/shell/aliases"
 test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
 printf -v escaped '%q ' "$@"
