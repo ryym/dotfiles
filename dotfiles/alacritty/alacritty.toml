@@ -18,7 +18,7 @@ normal = { family = "Intel One Mono", style = "Regular" }
 
 [keyboard]
 bindings = [
-    { key = "v", mods = "Control|Shift", action = "Paste" },
+    { key = "v", mods = "Control", action = "Paste" },
     { key = "c", mods = "Control|Shift", action = "Copy" },
 
     { key = "[", mods = "Control|Command", mode = "~Vi", action = "ToggleViMode" },
