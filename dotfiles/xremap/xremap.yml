@@ -46,6 +46,11 @@ keymap:
       # Open browser's developer tool.
       Super-LeftAlt-I: Ctrl-Shift-I
 
+      # Common zoom-in/out keys.
+      Super-Minus: Ctrl-Minus
+      Super-Shift-Equal: Ctrl-Shift-Equal
+      Super-0: Ctrl-0
+
   - name: Like Emacs or terminals
     exact_match: true
     remap:
