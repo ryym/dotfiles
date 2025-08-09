@@ -6,7 +6,7 @@ function! my#init#mappings#setup() abort
   call mapping#set_sid(s:SID())
   let g:mapping_named_key_format = '\[%s]'
 
-  " Define 'mapleader' before all mappings usiing <Leader>.
+  " Define 'mapleader' before all mappings using <Leader>.
   let g:mapleader = "-"
   Map nx - <Nop>
 
