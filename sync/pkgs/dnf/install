@@ -14,10 +14,9 @@ if is_dryrun || has dnf; then
     # Basic development tools
     install alacritty
     install clang
-    install fcitx5-mozc
-    install fcitx5-autostart
     install fzf
     install golang
+    install ibus-mozc
     install jq
     install make
     install neovim
