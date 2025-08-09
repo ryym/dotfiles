@@ -27,6 +27,14 @@ gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag true
 gsettings set org.gnome.desktop.peripherals.touchpad speed 0.018
 ```
 
+## Back/Forward history by two-finger swipe in Chrome
+
+To do that, you need to launch Chrome with the command line flag.
+
+1. Do `cp /usr/share/applications/google-chrome.desktop ~/.local/share/applications/google-chrome.desktop`.
+2. Edit the copied file and add `--enable-features=TouchpadOverscrollHistoryNavigation` to all `google-chrome` in each `Exec` line.
+3. Reboot
+
 ## Favorite extensions
 
 ### Install Tiling Assistant
