@@ -1,15 +1,4 @@
 {
-  "keyMappings": "# Insert your preferred key mappings here.\n\nmap <C-j> scrollDown count=3\nmap <C-k> scrollUp count=3\n\nmap <C-f> scrollPageDown\nmap <C-b> scrollPageUp\n\nmap <C-o> goBack\nmap <C-i> goForward",
-  "smoothScroll": false,
-  "settingsVersion": "2.3",
-  "exclusionRules": [
-    {
-      "passKeys": "",
-      "pattern": "https?://mail.google.com/*"
-    },
-    {
-      "passKeys": "",
-      "pattern": "https://docs.google.com/*"
-    }
-  ]
+  "keyMappings": "# Insert your preferred key mappings here.\n\nmap <C-j> scrollDown count=3\nmap <C-k> scrollUp count=3\n# For Linux with Xremap\nmap <delete> scrollUp count=3\n\nmap J scrollPageDown\nmap K scrollPageUp\n\nmap <C-o> goBack\nmap <C-i> goForward\n\n# I used to these key bindings but am trying to stop it because it is hard to use them on non-macOS.\n# map <C-f> scrollPageDown\n# map <C-b> scrollPageUp",
+  "settingsVersion": "2.3"
 }
