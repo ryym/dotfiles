@@ -20,7 +20,7 @@ case $(ostype) in
         osascript -e "display notification \"${cmds[*]}\" with title \"$prefix ${cmds[0]}\""
         ;;
 
-    arch )
+    arch | fedora )
         notify-send "$prefix ${cmds[*]}"
         ;;
 

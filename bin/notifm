@@ -19,7 +19,7 @@ case $(ostype) in
         osascript -e "display notification \"${*}\" with title \"message\""
         ;;
 
-    arch )
+    arch | fedora )
         notify-send "${*}"
         ;;
 
