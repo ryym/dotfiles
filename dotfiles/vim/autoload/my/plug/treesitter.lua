@@ -13,6 +13,7 @@ local function configure()
                     "rust",
                     "tsx",
                     "typescript",
+                    "markdown",
                 },
                 highlight = {
                     enable = true,
