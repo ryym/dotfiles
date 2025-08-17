@@ -37,6 +37,7 @@ if is_dryrun || has pacman; then
     install tmux
     install tree
     install which
+    install wl-clipboard
     install zsh
 
     # For building Ruby 3.2 or later
