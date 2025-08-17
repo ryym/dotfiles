@@ -29,7 +29,6 @@ if is_dryrun || has pacman; then
     install fzf
     install git
     install go
-    install gvim
     install jq
     install make
     install man-db
