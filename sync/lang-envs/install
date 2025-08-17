@@ -33,8 +33,8 @@ run eval "\"\$($ANYENV init -)\""
 # Generate anyenv init script beforehand to not slow down the startup time of shells.
 # Especially rehash commands are slow while unnecessary in most cases, so we strip them.
 # We load it on a shell initialization instead of running `$(anyenv init -)` every time.
-mkdir -p "$HOME/.config/anyenv"
-$ANYENV init - zsh | sed -E '/^command .+env rehash/d' > "$HOME/.config/anyenv/init.sh"
+run mkdir -p "$HOME/.config/anyenv"
+run "$ANYENV init - zsh | sed -E '/^command .+env rehash/d' > $HOME/.config/anyenv/init.sh"
 
 # Install languages.
 for envpath in "$DOTPATH"/sync/lang-envs/*env; do
