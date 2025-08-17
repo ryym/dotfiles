@@ -21,6 +21,7 @@ if is_dryrun || has pacman; then
     install alacritty
     install clang
     install docker
+    install docker-buildx
     install docker-compose
     install foot
     install fzf
