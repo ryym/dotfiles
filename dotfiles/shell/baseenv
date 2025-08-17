@@ -13,6 +13,11 @@ export PATH="/usr/sbin:/sbin:$PATH"
 # Homebrew
 export PATH="/usr/local/bin:$PATH"
 
+# Mise
+if test -f "$MISE_EXE_PATH"; then
+    eval "$($MISE_EXE_PATH activate zsh)"
+fi
+
 # Anyenv
 if test -d "$ANYENV_PATH"; then
     export PATH="$ANYENV_PATH/bin:$PATH"

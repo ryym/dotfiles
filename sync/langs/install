@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Use Mise to manage multiple versions of some programming languages.
+# https://mise.jdx.dev/
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'Mise'
+
+# Install Mise.
+if [ ! -f "$MISE_EXE_PATH" ]; then
+    run "curl https://mise.run | MISE_INSTALL_PATH=$MISE_EXE_PATH sh"
+fi
+
+# Set the global configuration file.
+if [ ! -f "$MISE_CONFIG_PATH/config.toml" ]; then
+    run "mkdir -p $MISE_CONFIG_PATH"
+    run ln -s "$DOTPATH/dotfiles/mise/config.toml" "$MISE_CONFIG_PATH/config.toml"
+fi
+
+# Install and activate global defaults.
+run "$MISE_EXE_PATH" install
+run eval "$($MISE_EXE_PATH activate --shims)"
+
+log_finish 'Mise'

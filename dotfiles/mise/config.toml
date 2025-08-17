@@ -1,0 +1,6 @@
+# https://mise.jdx.dev/configuration.html
+
+[tools]
+node = "lts"
+python = "latest"
+ruby = "latest"

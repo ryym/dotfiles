@@ -20,6 +20,7 @@ LINKS=(
     'ctags:.ctags'
     'prettierrc.json:.prettierrc'
     'alacritty/alacritty.toml:.config/alacritty/alacritty.toml'
+    'mise/config.toml:.config/mise/config.toml'
 )
 
 case $(ostype) in
