@@ -13,7 +13,6 @@ LINKS=(
     'git/gitconfig:.gitconfig'
     'vim:.vim'
     'vim:.config/nvim'
-    'cvimrc:.cvimrc'
     'tridactylrc:.tridactylrc'
     'tridactylrc.js:.tridactylrc.js'
     'tmux/tmux.conf:.tmux.conf'
