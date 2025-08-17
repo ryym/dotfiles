@@ -46,10 +46,13 @@ if is_dryrun || has pacman; then
     install libyaml
 
     # Japanese input and Emoji
-    install fcitx5-im
-    install fcitx5-mozc
+    install ibus-anthy # ibus-mozc is in AUR
     install noto-fonts-cjk
     install noto-fonts-emoji
+
+    # Fcitx5 is often instable compared to ibus.
+    # install fcitx5-im
+    # install fcitx5-mozc
 
     # Utilities
     install iwd
