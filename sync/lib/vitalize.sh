@@ -19,7 +19,7 @@ DOTFILES_LOGO='
 
 # Source the specified file from $DOTPATH/sync.
 load() {
-    source "$DOTPATH/sync/$1"
+    source "$DOTPATH/sync/$1" "${@:2}"
 }
 
 # Run given commands or just echo them on dryrun mode.

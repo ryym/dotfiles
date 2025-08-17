@@ -10,7 +10,7 @@ log_start "Install for Arch Linux"
 
 mkdir -p "$HOME/local/bin"
 
-load pkgs/pacman/install
+load pkgs/pacman/install with=sway
 
 load lib/rustup
 

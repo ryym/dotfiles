@@ -10,6 +10,8 @@ install() {
     run sudo pacman --noconfirm -S "$@"
 }
 
+mode="$1"
+
 if is_dryrun || has pacman; then
     # Note that this needs interactive inputs.
     run sudo pacman -Syu
@@ -43,38 +45,36 @@ if is_dryrun || has pacman; then
     # For building Ruby 3.2 or later
     install libyaml
 
-    # Utilities
-    install iwd
-    install pamixer
-    install pulseaudio-bluetooth
-
-    # Sway and Wayland
-    install blueberry
-    install chromium
-    install firefox
-    install polkit-gnome
-    install grim
-    install rofi-wayland
-    install slurp
-    install sway
-    install swaybg
-    install swayimg
-    install wev
-    install wl-clipboard
-    install wob
-    install xorg-xwayland
-
     # Japanese input and Emoji
     install fcitx5-im
     install fcitx5-mozc
     install noto-fonts-cjk
     install noto-fonts-emoji
 
+    # Utilities
+    install iwd
+
     # For running AppImage (https://github.com/AppImage/AppImageKit/wiki/FUSE)
     install fuse2
 
-    # GNOME
-    # install gnome
+    # Sway
+    if [ "$mode" = "with=sway" ]; then
+        install blueberry
+        install chromium
+        install firefox
+        install grim
+        install pamixer
+        install polkit-gnome
+        install pulseaudio-bluetooth
+        install rofi-wayland
+        install slurp
+        install sway
+        install swaybg
+        install swayimg
+        install wev
+        install wob
+        install xorg-xwayland
+    fi
 
     # AUR
     # https://aur.archlinux.org/packages/slack-desktop
