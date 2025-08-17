@@ -4,3 +4,5 @@ export DOTPATH=$HOME/.dotfiles
 
 # Load basic environment variables and configure the PATH.
 source "$DOTPATH/dotfiles/shell/baseenv"
+
+[ -f ~/.profile.local ] && source ~/.profile.local
