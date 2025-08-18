@@ -48,12 +48,6 @@ function! my#init#mappings#setup() abort
   Map nvo <C-j> }
   Map nvo <C-k> {
 
-  " Experimental
-  Map nx <Leader>j J
-  Map nx <Leader>k K
-  Map nx J <C-f>
-  Map nx K <C-b>
-
   " Misc
   Map n (silent) <Leader>c ::RmTrailingSpaces
   Map n <Leader>d ::pwd
