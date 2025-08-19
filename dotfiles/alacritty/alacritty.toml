@@ -9,8 +9,8 @@ import = [
 [window]
 opacity = 0.98
 
-[font]
-normal = { family = "Intel One Mono", style = "Regular" }
+# [font]
+# normal = { family = "Intel One Mono", style = "Regular" }
 
 # [terminal.shell]
 # program = "/bin/zsh"
