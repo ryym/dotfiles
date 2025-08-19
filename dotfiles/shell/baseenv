@@ -30,6 +30,17 @@ fi
 # Local executables
 export PATH="$HOME/local/bin:$PATH"
 
+# Colorize man pages using bat.
+if command -v bat > /dev/null 2>&1; then
+    export MANPAGER='bat -l man --style=plain'
+fi
+
+# Open a man page in Neovim.
+# Tips: you can view the outline of the page by gO.
+manv() {
+    MANPAGER='nvim +Man!' man "$@"
+}
+
 export EDITOR=nvim
 
 # Prevent Homebrew from updating everything when installing a library.
