@@ -37,22 +37,22 @@ case $(ostype) in
             'shell/zkbd/linux-pc-linux-gnu:.zkbd/linux-pc-linux-gnu'
             'xremap/xremap.yml:.config/xremap.yml'
             'xremap/xremap.service:.config/systemd/user/xremap.service'
-            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
+            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/99-xremap-udev.rules'
         )
         ;;
     cachyos)
         LINKS+=(
-            'fontconfig/00-cjk-fallback.conf:.config/fontconfig/conf.d/00-cjk-fallback.conf'
+            'fontconfig/cjk-fallback.conf:.config/fontconfig/conf.d/99-cjk-fallback.conf'
             'xremap/xremap.yml:.config/xremap.yml'
             'xremap/xremap.service:.config/systemd/user/xremap.service'
-            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
+            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/99-xremap-udev.rules'
         )
         ;;
     fedora)
         LINKS+=(
-            'fontconfig/00-cjk-fallback.conf:.config/fontconfig/conf.d/00-cjk-fallback.conf'
+            'fontconfig/cjk-fallback.conf:.config/fontconfig/conf.d/99-cjk-fallback.conf'
             'xremap/xremap.yml:.config/xremap.yml'
             'xremap/xremap.service:.config/systemd/user/xremap.service'
-            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/00-xremap-udev.rules'
+            '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/99-xremap-udev.rules'
         );
 esac
