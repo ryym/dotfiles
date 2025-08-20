@@ -37,16 +37,16 @@ zstyle ':vcs_info:*' formats '%F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f'
 
 # A prompt inspired by https://github.com/sindresorhus/pure
-is_first_prompt=1
+_is_first_prompt=1
 function _update_prompt() {
-    symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
-    if [[ $is_first_prompt == 1 ]]; then
-        is_first_prompt=0
+    local symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
+    if [[ $_is_first_prompt == 1 ]]; then
+        _is_first_prompt=0
     else
         print ''
     fi
     LANG=en_US.UTF-8 vcs_info
-    ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
+    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
     PROMPT="%F{246}%~%f ${vcs_info_msg_0_}
 %F{$symbol_color}❯%f "
 }
