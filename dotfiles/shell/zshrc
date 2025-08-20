@@ -46,14 +46,24 @@ zstyle ':vcs_info:*' actionformats '%F{red}%b|%a%f'
 
 # ---
 
-function _update_prompt() {
-    LANG=en_US.UTF-8 vcs_info
-    ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
-    PROMPT="%F{blue}%~%f ${vcs_info_msg_0_}
-%F{cyan}❯%f "
-}
-add-zsh-hook precmd _update_prompt
-hash -d github=$HOME/ghq/src/github.com
+# function _update_prompt() {
+#     LANG=en_US.UTF-8 vcs_info
+#     ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
+#     PROMPT="%F{blue}%~%f ${vcs_info_msg_0_}
+# %F{cyan}❯%f "
+# }
+# add-zsh-hook precmd _update_prompt
+# hash -d github=$HOME/ghq/src/github.com
+
+# ---
+
+fpath+=($HOME/ghq/src/github.com/sindresorhus/pure)
+autoload -U promptinit
+promptinit
+prompt pure
+zstyle :prompt:pure:git:action color red
+zstyle :prompt:pure:git:branch color green
+export PURE_GIT_PULL=0
 
 # ---
 
