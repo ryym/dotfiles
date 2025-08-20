@@ -14,6 +14,9 @@ bind <C-k> scrollline -20
 bind <C-o> back
 bind <C-i> forward
 
+bind J scrollpage 1
+bind K scrollpage -1
+
 bind <Space>ba tab #
 
 " Use JavaScript for more complex customization.
