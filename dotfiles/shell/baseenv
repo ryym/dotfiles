@@ -32,7 +32,15 @@ export PATH="$HOME/local/bin:$PATH"
 
 # Colorize man pages using bat.
 if command -v bat > /dev/null 2>&1; then
-    export MANPAGER='bat -l man --style=plain'
+    # todo: investigate why outputs are different.
+    case $(uname) in
+    Darwin)
+        export MANPAGER='col -bx | bat -l man --style=plain'
+        ;;
+    *)
+        export MANPAGER='bat -l man --style=plain'
+        ;;
+    esac
 fi
 
 # Open a man page in Neovim.
