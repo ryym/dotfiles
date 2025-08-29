@@ -20,6 +20,7 @@ function my#plug#ale#before_load()
   let g:ale_fixers.json5 = ['prettier']
   let g:ale_fixers.html = ['prettier']
   let g:ale_fixers.graphql = ['prettier']
+  let g:ale_fixers.markdown = ['prettier']
   let g:ale_fixers.go = ['goimports']
 
   " https://github.com/dense-analysis/ale/issues/3814
