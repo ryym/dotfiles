@@ -74,7 +74,7 @@ function _search_history_by_fzf() {
 zle -N _search_history_by_fzf
 bindkey '^r' _search_history_by_fzf
 
-setopt hist_ignore_dups
+setopt hist_ignore_all_dups
 setopt share_history
 
 # Options
