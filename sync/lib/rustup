@@ -6,6 +6,7 @@ if ! has cargo; then
     # https://www.rust-lang.org/tools/install
     run "curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path"
     run "source $HOME/.cargo/env"
+    rustup component add rust-analyzer
 fi
 
 log_finish 'Rustup'
