@@ -40,7 +40,7 @@ keymap:
       Super-R: Ctrl-R
       Super-S: Ctrl-S
       Super-T: Ctrl-T
-      Super-V: Ctrl-V
+      Super-V: Ctrl-Shift-V
       Super-W: Ctrl-W
       Super-X: Ctrl-X
       Super-Z: Ctrl-Z
