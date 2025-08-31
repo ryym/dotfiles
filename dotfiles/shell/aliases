@@ -4,6 +4,7 @@
 alias ls='ls -F --color=auto'
 alias ll='ls -lF --color=auto'
 alias la='ls -laF --color=auto'
+alias less='less -F'
 alias g='git'
 alias reload='exec $SHELL -l'
 alias v='nvim'
