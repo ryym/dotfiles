@@ -18,15 +18,6 @@ if test -f "$MISE_EXE_PATH"; then
     eval "$($MISE_EXE_PATH activate zsh)"
 fi
 
-# Anyenv
-if test -d "$ANYENV_PATH"; then
-    export PATH="$ANYENV_PATH/bin:$PATH"
-
-    # Source the customize initialization script
-    # instead of `eval "$(anyenv init - zsh)"`.
-    source "$HOME/.config/anyenv/init.sh"
-fi
-
 # Local executables
 export PATH="$HOME/local/bin:$PATH"
 

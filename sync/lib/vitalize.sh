@@ -24,9 +24,9 @@ load() {
 
 # Run given commands or just echo them on dryrun mode.
 # Note that you need to escape characters in some cases.
-# For example, 'run eval $($ANYENV init -)' executes
-# '$ANYENV init -' first and passes its output to the 'run' function.
-# So if the $ANYENV path doesn't exist it causes an error.
+# For example, 'run eval $(rbenv init -)' executes
+# 'rbenv init -' first and passes its output to the 'run' function.
+# So if the rbenv path doesn't exist it causes an error.
 run() {
     local commands="$@"
     local cmd=${commands%% *}

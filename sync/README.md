@@ -13,11 +13,3 @@ use other install scripts in `pkgs/` or `lang-envs/`.
 
 This directory contains the installers which install some basic tools
 via a package manager that are usually used in the supported OSs.
-
-### lang-envs/
-
-This directory contains the installers of language version managers like [rbenv].
-All manager tools themselves are managed by [anyenv].
-
-[rbenv]: https://github.com/rbenv/rbenv
-[anyenv]: https://github.com/riywo/anyenv
