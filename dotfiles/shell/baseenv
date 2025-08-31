@@ -30,17 +30,12 @@ fi
 # Local executables
 export PATH="$HOME/local/bin:$PATH"
 
-# Colorize man pages using bat.
 if command -v bat > /dev/null 2>&1; then
-    # todo: investigate why outputs are different.
-    case $(uname) in
-    Darwin)
-        export MANPAGER='col -bx | bat -l man --style=plain'
-        ;;
-    *)
-        export MANPAGER='bat -l man --style=plain'
-        ;;
-    esac
+    # Colorize man pages using bat.
+    # `col` and `MANROFFORPT` are needed to remove some control chars.
+    # `sh` is needed to use pipe. (It seems that macOS can handle it without `sh`, though).
+    export MANPAGER="sh -c 'col -bx | bat -l man --style=plain'"
+    export MANROFFOPT="-c"
 fi
 
 # Open a man page in Neovim.
