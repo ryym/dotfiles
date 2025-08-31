@@ -2,3 +2,4 @@
 # https://github.com/sharkdp/bat#configuration-file
 --theme=TwoDark
 --style='header,numbers,grid,changes'
+--map-syntax "*tmux.*conf:Bourne Again Shell (bash)"
