@@ -1,0 +1,4 @@
+# vim:set filetype=sh:
+# https://github.com/sharkdp/bat#configuration-file
+--theme=TwoDark
+--style='header,numbers,grid,changes'
