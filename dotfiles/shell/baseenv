@@ -43,8 +43,12 @@ fi
 manv() {
     # Use the slightly reduced column size since Vim usually displays line numbers
     # which makes the available width smaller than the entire terminal width.
-    local term_width=$(tput cols)
-    MANWIDTH=$(($term_width - 5)) MANPAGER='nvim +Man!' man "$@"
+    MANWIDTH=$(($(tput cols) - 5)) MANPAGER='nvim +Man!' man "$@"
+}
+
+# Display the help information with auto pagination and colors.
+help() {
+    LESS_SHELL_LINES=$(($(tput lines) / 2)) "$@" --help | bat -l help --plain
 }
 
 export EDITOR=nvim
