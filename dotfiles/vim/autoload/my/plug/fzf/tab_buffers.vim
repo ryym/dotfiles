@@ -11,16 +11,9 @@ endfunction
 
 function! my#plug#fzf#tab_buffers#list_others(tabnr) abort
   let bufs = gettabvar(a:tabnr, 'tab_buffers', {})
-
   let bufnrs = values(bufs)
     \ ->sort({a, b -> a.displayed < b.displayed ? 1 : -1})
     \ ->map('v:val.nr')
-
-  " The current buffer must be displayed most recently.
-  " We remove it from list because we use this list to switch
-  " to another buffer.
-  let bufnrs = bufnrs[1:]
-
   return bufnrs->filter('buflisted(v:val)')->map('bufname(v:val)')
 endfunction
 
