@@ -53,7 +53,10 @@ local function configure()
                             end,
                         }
                     },
-                    lualine_b = {'branch', 'diff', 'diagnostics'},
+                    lualine_b = {
+                        {'diff', icon = ''},
+                        'diagnostics',
+                    },
                     lualine_c = {
                         {
                             'filename',
