@@ -100,7 +100,16 @@ export FZF_DEFAULT_OPTS="
     --cycle
     --reverse
     --ansi
-    --bind=ctrl-k:kill-line,ctrl-s:select-all,ctrl-d:deselect-all
+    --bind=ctrl-k:kill-line
+    --bind=ctrl-d:half-page-down
+    --bind=ctrl-u:half-page-up
+    --bind=up:preview-up
+    --bind=down:preview-down
+    --bind=left:preview-half-page-up
+    --bind=right:preview-half-page-down
+    --bind=alt-up:preview-top
+    --bind=alt-down:preview-bottom
+    --bind=ctrl-/:toggle-preview
 "
 
 # Make fzf super faster
