@@ -96,6 +96,7 @@
     dc     = diff --cached
     sbm    = submodule
 
+    hi       = "!f() { git_history_filter $@; }; f"
     diffbase = "!f() { git diff `git merge-base @ $1` @ ${@:2}; }; f"
 
     # https://developer.atlassian.com/blog/2015/04/force-with-lease/
