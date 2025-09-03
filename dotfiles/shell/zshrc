@@ -93,7 +93,12 @@ unsetopt nomatch
 source "$DOTPATH/dotfiles/shell/aliases"
 
 ## FZF
-export FZF_DEFAULT_OPTS="-i --cycle --reverse --bind=ctrl-k:kill-line,ctrl-s:select-all,ctrl-d:deselect-all"
+export FZF_DEFAULT_OPTS="
+    --ignore-case
+    --cycle
+    --reverse
+    --bind=ctrl-k:kill-line,ctrl-s:select-all,ctrl-d:deselect-all
+"
 
 # Make fzf super faster
 # - https://github.com/junegunn/fzf#respecting-gitignore
