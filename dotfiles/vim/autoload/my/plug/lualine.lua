@@ -1,6 +1,7 @@
 local function configure()
     return {
         repo = 'nvim-lualine/lualine.nvim',
+        async = { enabled = 0 },
         after_load = function()
             local everforest = (function()
                 -- The everforest theme with small tweaks.
