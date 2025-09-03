@@ -55,4 +55,5 @@ manv() {
 help() {
     "$@" --help | bat -l help --plain
 }
+alias h='help'
 
