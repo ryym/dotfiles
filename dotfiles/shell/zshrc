@@ -97,6 +97,7 @@ export FZF_DEFAULT_OPTS="
     --ignore-case
     --cycle
     --reverse
+    --ansi
     --bind=ctrl-k:kill-line,ctrl-s:select-all,ctrl-d:deselect-all
 "
 
