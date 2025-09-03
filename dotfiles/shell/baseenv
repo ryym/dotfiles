@@ -29,6 +29,9 @@ export PATH="$HOME/local/bin:$PATH"
 
 export EDITOR=nvim
 
+# Define the number of lines of shell prompt (details: "man less").
+export LESS_SHELL_LINES=3
+
 # Prevent Homebrew from updating everything when installing a library.
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -50,6 +53,6 @@ manv() {
 
 # Display the help information with auto pagination and colors.
 help() {
-    LESS_SHELL_LINES=$(($(tput lines) / 2)) "$@" --help | bat -l help --plain
+    "$@" --help | bat -l help --plain
 }
 
