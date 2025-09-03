@@ -13,6 +13,12 @@ export PATH="/usr/sbin:/sbin:$PATH"
 # Homebrew
 export PATH="/usr/local/bin:$PATH"
 
+# Deno
+export PATH="$HOME/.deno/bin:$PATH"
+
+# Rust
+test -f $HOME/.cargo/env && source $HOME/.cargo/env
+
 # Mise
 if test -f "$MISE_EXE_PATH"; then
     eval "$($MISE_EXE_PATH activate zsh)"
@@ -20,6 +26,11 @@ fi
 
 # Local executables
 export PATH="$HOME/local/bin:$PATH"
+
+export EDITOR=nvim
+
+# Prevent Homebrew from updating everything when installing a library.
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 if command -v bat > /dev/null 2>&1; then
     # Colorize man pages using bat.
@@ -42,13 +53,3 @@ help() {
     LESS_SHELL_LINES=$(($(tput lines) / 2)) "$@" --help | bat -l help --plain
 }
 
-export EDITOR=nvim
-
-# Prevent Homebrew from updating everything when installing a library.
-HOMEBREW_NO_AUTO_UPDATE=1
-
-# Rust
-test -f $HOME/.cargo/env && source $HOME/.cargo/env
-
-# Deno
-export PATH="$HOME/.deno/bin:$PATH"
