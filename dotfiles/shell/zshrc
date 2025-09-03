@@ -47,7 +47,9 @@ function _update_prompt() {
     fi
     LANG=en_US.UTF-8 vcs_info
     local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '(SSH)')
-    PROMPT="%F{246}%~%f ${vcs_info_msg_0_}
+    # Use as a jump marker in tmux's copy-mode.
+    local prompt_sequence=$'\033]133;A\033\\'
+    PROMPT="$prompt_sequence%F{246}%~%f ${vcs_info_msg_0_}
 %F{$symbol_color}❯%f "
 }
 add-zsh-hook precmd _update_prompt
