@@ -57,18 +57,23 @@ add-zsh-hook precmd _update_prompt
 # Shorten long and frequently used paths.
 hash -d github=$HOME/ghq/src/github.com
 
-# https://zenn.dev/nokogiri/articles/ec99e40df54555
 function _search_history_by_fzf() {
-    BUFFER=$(
+    local result=$(
         # List the history in the reversed order.
         history -n -r 1 |
         # Filter the history by the current input.
-        fzf --height 40% --query "$LBUFFER" --exact --no-sort
+        fzf --height 40% --query "$LBUFFER" --exact --no-sort --expect=tab
     )
-    # If any entry is selected, execut it.
-    if [[ -n $BUFFER ]]; then
+    if [[ -n $result ]]; then
+        local key=$(echo "$result" | head -1)
+        local selected=$(echo "$result" | tail -1)
+        BUFFER="$selected"
         CURSOR=$#BUFFER
-        zle accept-line
+        if [[ "$key" == "tab" ]]; then
+            zle redisplay
+        else
+            zle accept-line
+        fi
     else
         zle reset-prompt
     fi
