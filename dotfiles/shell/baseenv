@@ -46,6 +46,32 @@ if command -v bat > /dev/null 2>&1; then
     export MANROFFOPT="-c"
 fi
 
+# Display the help information with auto pagination and colors.
+help() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: help <command> [args...]"
+        return 1
+    fi
+
+    local cmd="$1"
+    local cmd_type=$(command -v "$cmd" 2>/dev/null)
+    case "$cmd_type" in
+        'alias '*)
+            # If the given command for help is an alias, `command -v` will print a value
+            # like "alias g=git" or "alias ls='ls -F'". This sed tries to extract the actual
+            # command by stripping the parts of "alias ls=" and "'" in the last.
+            cmd=$(echo "$cmd_type" | sed "s/^alias [^=]*='*//; s/'*$//")
+            ;;
+    esac
+
+    shift
+    echo "$cmd $@ --help"
+
+    # Use eval for the case where $cmd resolved from alias contains a space.
+    eval "$cmd $@ --help | bat -l help --plain"
+}
+alias h='help'
+
 # Open a man page in Neovim.
 # Tips: you can view the outline of the page by gO.
 manv() {
@@ -53,10 +79,3 @@ manv() {
     # which makes the available width smaller than the entire terminal width.
     MANWIDTH=$(($(tput cols) - 5)) MANPAGER='nvim +Man!' man "$@"
 }
-
-# Display the help information with auto pagination and colors.
-help() {
-    "$@" --help 2>&1 | bat -l help --plain
-}
-alias h='help'
-
