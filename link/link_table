@@ -22,6 +22,7 @@ LINKS=(
     'alacritty/alacritty.toml:.config/alacritty/alacritty.toml'
     'mise/config.toml:.config/mise/config.toml'
     'bat/config:.config/bat/config'
+    'ghostty/config:.config/ghostty/config'
 )
 
 case $(ostype) in
