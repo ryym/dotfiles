@@ -53,7 +53,7 @@ manv() {
 
 # Display the help information with auto pagination and colors.
 help() {
-    "$@" --help | bat -l help --plain
+    "$@" --help 2>&1 | bat -l help --plain
 }
 alias h='help'
 
