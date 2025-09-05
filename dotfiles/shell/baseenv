@@ -27,6 +27,9 @@ fi
 # Local executables
 export PATH="$HOME/local/bin:$PATH"
 
+# https://specifications.freedesktop.org/basedir-spec/latest/
+export XDG_CONFIG_HOME="$HOME/.config"
+
 export EDITOR=nvim
 
 # Define the number of lines of shell prompt (details: "man less").
