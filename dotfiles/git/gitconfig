@@ -11,6 +11,8 @@
     quotepath = false
     excludesfile = ~/.gitignore
     pager = delta
+[interactive]
+    diffFilter = delta --color-only
 [rebase]
     autosquash = true
 [merge]
