@@ -72,6 +72,7 @@ function _search_history_by_fzf() {
         if [[ "$key" == "tab" ]]; then
             zle redisplay
         else
+            zle redisplay
             zle accept-line
         fi
     else
