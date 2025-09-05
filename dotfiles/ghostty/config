@@ -1,0 +1,24 @@
+# Ghostty configuration
+# Viwe available config with default values:
+#   `ghostty +show-config --default --docs`
+# Details:
+#   https://ghostty.org/docs/config
+
+macos-option-as-alt = true
+
+# # My default font config.
+# font-family = "IntoneMono NF"
+# font-family = "HackGen"
+# font-size = 14
+# # Disable ligatures.
+# font-feature = -calt
+# font-feature = -dlig
+# font-feature = -liga
+
+background = #2d353b
+foreground = #d3c6aa
+
+# Treat Ctrl-Enter as the same as Enter.
+keybind = ctrl+enter=text:\r
+
+config-file = ?local
