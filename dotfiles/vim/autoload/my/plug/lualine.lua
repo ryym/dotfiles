@@ -17,7 +17,7 @@ local function configure()
                     normal = {
                         a = {bg = palette.statusline1[1], fg = palette.bg0[1], gui = 'bold'},
                         b = {bg = palette.bg4[1], fg = palette.grey2[1]},
-                        c = {bg = palette.bg2[1], fg = palette.grey2[1]}
+                        c = {bg = palette.bg2[1], fg = palette.grey2[1]},
                     },
                     insert = {
                         a = {bg = palette.statusline2[1], fg = palette.bg0[1], gui = 'bold'},
