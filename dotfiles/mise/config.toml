@@ -7,3 +7,6 @@ ruby = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby", "node"]
+
+[settings.status]
+missing_tools = "never"
