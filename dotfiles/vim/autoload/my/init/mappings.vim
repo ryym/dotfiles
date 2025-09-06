@@ -206,6 +206,15 @@ function! my#init#mappings#setup() abort
   " In other environments such as gVim or other terminal emulators, <C-Space> is recognized as-is.
   " So map it to <Space> as well.
   Map i <C-Space> <Space>
+
+  " Disable default key mappings for man pages since it maps `q` to close Vim
+  " but I use `q` as a prefix of quickfix list shortcuts.
+  let g:no_man_maps = 1
+  " And keep some useful default key bindings.
+  " The mapping command is copied from <vim-repo>/runtime/ftplugin/man.vim.
+  augroup vimrc
+    autocmd FileType man nnoremap <silent> <buffer> gO :lua require'man'.show_toc()<CR>
+  augroup END
 endfunction
 
 function! s:SID()
