@@ -23,6 +23,7 @@ LINKS=(
     'mise/config.toml:.config/mise/config.toml'
     'bat/config:.config/bat/config'
     'ghostty/config:.config/ghostty/config'
+    'lazygit/config.yml':'.config/lazygit/config.yml'
 )
 
 case $(ostype) in

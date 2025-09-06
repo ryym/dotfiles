@@ -1,0 +1,23 @@
+# https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+
+promptToReturnFromSubprocess: false
+
+# https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
+git:
+  paging:
+    colorArg: always
+    pager: delta --paging=never
+
+gui:
+  # https://github.com/sainnhe/everforest
+  theme:
+    activeBorderColor:
+      - green
+    inactiveBorderColor:
+      - '#425047' # bg_green
+    optionsTextColor:
+      - '#9da9a0' # grey2
+    selectedLineBgColor:
+      - '#3a515d'
+    inactiveViewSelectedLineBgColor:
+      - '#3a515d' # bg_blue
