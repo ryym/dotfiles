@@ -12,6 +12,8 @@ if [ $# -eq 0 ]; then
 fi
 
 cmd="$1"
+
+# Resolve alias.
 cmd_type=$(command -v "$cmd" 2>/dev/null)
 case "$cmd_type" in
     'alias '*)
@@ -23,7 +25,26 @@ case "$cmd_type" in
 esac
 
 shift
-echo "$cmd $@ --help"
 
-# Use eval for the case where $cmd resolved from an alias contains a space like "bundle exec".
-eval "$cmd $@ --help 2>&1 | bat -l help --plain"
+# - $cmd may contain multiple commands if it is resolved from an alias (e.g. "bundle exec").
+# - $@ may contain sub commands (e.g. "status" of "git").
+# Build a cmds array from $cmd and $@ while excluding options which starts with "-".
+# If $cmd="bundle exec" and $@="rails server", $cmds=("bundle", "exec", "rails", "server").
+cmds=()
+words=($cmd)
+for w in "${words[@]}"; do
+    [[ $w =~ ^- ]] && break
+    cmds+=("$w")
+done
+for w in "$@"; do
+    [[ $w =~ ^- ]] && break
+    cmds+=("$w")
+done
+
+output=$("${cmds[@]}" --help 2>&1)
+nlines=$(echo "$output" | wc -l)
+title="📖 ${cmds[@]} --help ($nlines lines)"
+
+echo "$title
+
+$output" | bat -l help --plain
