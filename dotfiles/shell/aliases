@@ -19,6 +19,7 @@ alias cg='cargo'
 alias tf='terraform'
 alias y='yarn'
 alias k='kubectl'
+alias h='help'
 
 # For Linux
 alias sysu='systemctl --user'

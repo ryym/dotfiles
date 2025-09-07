@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Display the help information with auto pagination and colors.
+# Usage: "help bat", "help git status"
+
+shopt -s expand_aliases
+source "$DOTPATH/dotfiles/shell/aliases"
+
+if [ $# -eq 0 ]; then
+    echo "Usage: help <command> [args...]"
+    return 1
+fi
+
+cmd="$1"
+cmd_type=$(command -v "$cmd" 2>/dev/null)
+case "$cmd_type" in
+    'alias '*)
+        # If the given command for help is an alias, `command -v` will print a value
+        # like "alias g=git" or "alias ls='ls -F'". This sed tries to extract the actual
+        # command by stripping the parts of "alias ls=" and "'" in the last.
+        cmd=$(echo "$cmd_type" | sed "s/^alias [^=]*='*//; s/'*$//")
+        ;;
+esac
+
+shift
+echo "$cmd $@ --help"
+
+# Use eval for the case where $cmd resolved from an alias contains a space like "bundle exec".
+eval "$cmd $@ --help 2>&1 | bat -l help --plain"
