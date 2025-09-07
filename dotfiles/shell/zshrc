@@ -62,7 +62,7 @@ function _search_history_by_fzf() {
         # List the history in the reversed order.
         history -n -r 1 |
         # Filter the history by the current input.
-        fzf --height 40% --query "$LBUFFER" --exact --no-sort --expect=tab
+        fzf --height 40% --query "$LBUFFER" --exact --scheme=history --expect=tab
     )
     if [[ -n $result ]]; then
         local key=$(echo "$result" | head -1)
@@ -106,6 +106,9 @@ export FZF_DEFAULT_OPTS="
     --cycle
     --reverse
     --ansi
+    --highlight-line
+    --prompt='❯ '
+    --color=current-bg:#3d484d,gutter:-1
     --bind=ctrl-k:kill-line
     --bind=ctrl-d:half-page-down
     --bind=ctrl-u:half-page-up
@@ -116,6 +119,7 @@ export FZF_DEFAULT_OPTS="
     --bind=alt-l:preview-half-page-down
     --bind=alt-up:preview-top
     --bind=alt-down:preview-bottom
+    --bind=alt-/:toggle-wrap
 "
 
 # Make fzf super faster
