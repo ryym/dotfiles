@@ -67,7 +67,7 @@ help() {
     shift
     echo "$cmd $@ --help"
 
-    # Use eval for the case where $cmd resolved from alias contains a space.
+    # Use eval for the case where $cmd resolved from an alias contains a space like "bundle exec".
     eval "$cmd $@ --help 2>&1 | bat -l help --plain"
 }
 alias h='help'

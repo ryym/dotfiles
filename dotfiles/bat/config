@@ -3,3 +3,6 @@
 --theme=TwoDark
 --style='header,numbers,grid,changes'
 --map-syntax "*tmux.*conf:Bourne Again Shell (bash)"
+
+# Make bat work with tools built by Node.js (https://github.com/sharkdp/bat/issues/1006).
+--pager 'less -RF'
