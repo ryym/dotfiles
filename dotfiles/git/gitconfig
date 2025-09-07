@@ -27,7 +27,6 @@
     setup  = !git init && touch .gitignore && git add .gitignore \
              && git commit -m 'Init repository'
     s      = status
-    ss     = !tig status
     h      = help
     b      = branch
     bd     = branch -d
@@ -47,7 +46,6 @@
     a      = add
     ap     = add -p
     au     = add -u
-    ai     = !zsh -c 'source $HOME/.dotfiles/lib/gitfuncs && gitfunc_add_interactive'
     cm     = commit
     cmm    = commit -m
     cma    = commit -a
@@ -83,7 +81,6 @@
     rs     = reset
     rsh    = reset --hard
     rsrmt  = !git reset --hard `git_remote_branch_name`
-    rsi    = !zsh -c 'source $HOME/.dotfiles/lib/gitfuncs && gitfunc_reset_interactive'
     st     = stash
     stl    = stash list
     sts    = stash save
@@ -99,7 +96,9 @@
     dc     = diff --cached
     sbm    = submodule
 
-    hi       = "!f() { git_history_filter $@; }; f"
+    shortstatus = !git -c color.ui=always status --short -u
+    si     = "!f() { git_interactive_status $@; }; f"
+    hi       = "!f() { git_interactive_history $@; }; f"
     diffbase = "!f() { git diff `git merge-base @ $1` @ ${@:2}; }; f"
 
     # https://developer.atlassian.com/blog/2015/04/force-with-lease/

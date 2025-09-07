@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# A script to stage or unstage files in Git interactively.
+
+# Key bindings of fzf:
+# Tab: Stage or unstage a file.
+# Ctrl-h: Run `git add --patch`
+# Ctrl-e: Edit the file
+# Ctrl-o: Clear changes of the file (`git checkout`)
+# Ctrl-d: Remove the file
+
+preview_cmd="
+case {} in
+    '??'*|'A '*)
+        bat --style=numbers --color=always {2}
+        ;;
+    ' D'*|D*)
+        git show @^:{2} | bat --style=numbers --color=always --file-name {2}
+        ;;
+    MM*)
+        echo 󰕜 Staged
+        git diff --cached --color=always {2} | delta
+        echo; echo 󰕛 Unstaged
+        git diff --color=always {2} | delta
+        ;;
+    ' '*)
+        git diff --color=always {2} | delta
+        ;;
+    *)
+        git diff --cached --color=always {2} | delta
+        ;;
+esac
+# "
+git shortstatus | fzf \
+    --no-sort --track --tmux 80% \
+    --preview "$preview_cmd" \
+    --bind "tab:execute-silent(
+        if [[ {s} = ' '* ]] || [[ {s} = '?'* ]]; then
+            git add {2}
+        else
+            git reset -- {2}
+        fi
+    )+reload(git shortstatus)" \
+    --bind 'shift-tab:execute-silent(git reset -- {2})+reload-sync(git shortstatus)' \
+    --bind 'ctrl-h:execute(clear; git add --patch {2})+reload-sync(git shortstatus)' \
+    --bind 'ctrl-e:execute(nvim {2} < /dev/tty > /dev/tty)+reload-sync(git shortstatus)' \
+    --bind 'ctrl-o:execute-silent(git checkout {2})+reload-sync(git shortstatus)' \
+    --bind 'ctrl-d:execute-silent(rm {2})+reload-sync(git shortstatus)' \
+    > /dev/null
+git status
