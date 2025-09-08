@@ -100,7 +100,7 @@ function! my#plug#fzf#_lines() abort
   call fzf#run({
     \   'sink*': funcref('my#plug#fzf#_lines_on_select', [scale]),
     \   'source': lines,
-    \   'options': '--multi --reverse --expect=ctrl-y',
+    \   'options': '--multi --reverse --no-sort --expect=ctrl-y',
     \ })
 endfunction
 function! my#plug#fzf#_lines_on_select(width, lines) abort
