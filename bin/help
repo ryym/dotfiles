@@ -41,10 +41,17 @@ for w in "$@"; do
     cmds+=("$w")
 done
 
-output=$("${cmds[@]}" --help 2>&1)
+case "${cmds[0]}" in
+    npm | aws)
+        cmds=("${cmds[0]}" 'help' ${cmds[@]:1})
+        ;;
+    *)
+        cmds=("${cmds[@]}" '--help')
+esac
+
+output=$("${cmds[@]}" 2>&1)
 nlines=$(echo "$output" | wc -l | sed 's/^[[:space:]]*//')
-title="📖 ${cmds[@]} --help ($nlines lines)"
+title="📖 ${cmds[@]} ($nlines lines)"
 
 echo "$title
-
 $output" | bat -l help --plain
