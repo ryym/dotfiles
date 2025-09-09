@@ -9,7 +9,7 @@
 copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
 git re -100 --color=always "$@" \
     | nl -w 3 -s ' ' \
-    | fzf --ansi --no-sort --tmux 80% --nth 2.. --track \
+    | fzf --ansi --no-sort --tmux 90% --nth 2.. --track \
         --preview 'echo {2} | xargs git show | delta' \
         --bind "ctrl-y:become(echo {2} | tr -d '\n' | $copy_cmd)" \
         --bind 'ctrl-r:become(echo {2}^ | xargs git rebase -i)'

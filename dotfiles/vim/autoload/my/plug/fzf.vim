@@ -38,7 +38,7 @@ function! my#plug#fzf#_without_ignored_files() abort
   call fzf#run({
     \   'sink': 'edit',
     \   'source': src,
-    \   'up': '35%',
+    \   'up': '45%',
     \   'options': s:bat_preview_opt,
     \ })
 endfunction
@@ -66,7 +66,7 @@ function! my#plug#fzf#_tab_buffers() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
     \   'source': my#plug#fzf#tab_buffers#list_others(tabpagenr()),
-    \   'up': '35%',
+    \   'up': '45%',
     \   'options': '--multi --expect=ctrl-d ' . s:bat_preview_opt
     \ })
 endfunction
@@ -89,7 +89,7 @@ function! my#plug#fzf#_outputs(cmd) abort
   let outputs = split(execute(a:cmd), '\n')
   call fzf#run({
     \   'source': outputs,
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
 
@@ -122,7 +122,7 @@ function! my#plug#fzf#_ghq() abort
   call fzf#run({
     \   'sink': 'cd',
     \   'source': 'ghq list -p',
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
 
@@ -130,7 +130,7 @@ function! my#plug#fzf#_gosrc() abort
   call fzf#run({
     \   'sink': 'cd',
     \   'source': 'gits -p $GOPATH/src',
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
 
@@ -138,7 +138,7 @@ function! my#plug#fzf#_most_recently_used() abort
   call fzf#run({
     \   'sink': 'edit',
     \   'source': v:oldfiles,
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
 
@@ -148,7 +148,7 @@ function! my#plug#fzf#_plugin_confs() abort
     \   'sink': 'edit',
     \   'source': src,
     \   'dir': $MYVIMDIR . '/autoload/my/plug',
-    \   'up': '35%',
+    \   'up': '45%',
     \   'options': s:bat_preview_opt,
     \ })
 endfunction
@@ -163,7 +163,7 @@ function! my#plug#fzf#_init_scripts() abort
   call fzf#run({
     \   'sink': 'edit',
     \   'source': main_files + init_files,
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
 
@@ -172,7 +172,7 @@ function! my#plug#fzf#_plugin_dirs() abort
   call fzf#run({
     \   'sink': funcref('my#plug#fzf#_open_file_or_dir', [packdir]),
     \   'source': 'gits ' . packdir,
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
 
@@ -181,6 +181,6 @@ function! my#plug#fzf#_runtimepaths() abort
   call fzf#run({
     \   'sink': 'cd',
     \   'source': paths,
-    \   'up': '35%',
+    \   'up': '45%',
     \ })
 endfunction
