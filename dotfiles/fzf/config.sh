@@ -51,20 +51,13 @@ function _search_history_by_fzf() {
 zle -N _search_history_by_fzf
 bindkey '^r' _search_history_by_fzf
 
-# http://qiita.com/strsk/items/9151cef7e68f0746820d
-# http://qiita.com/udzura/items/3f120b5e4733fe85078d
-function fzf-src() {
-    local selected_dir=$(eval "$1" | fzf --query "$LBUFFER")
+function _list_ghq_sources() {
+    local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
     fi
     zle clear-screen
 }
-
-function fzf-ghq() {
-    fzf-src 'ghq list -p'
-}
-zle -N fzf-ghq
-bindkey '^]' fzf-ghq
-bindkey '^g' fzf-ghq
+zle -N _list_ghq_sources
+bindkey '^]' _list_ghq_sources
