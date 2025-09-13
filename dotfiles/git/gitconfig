@@ -101,7 +101,7 @@
     si = "!f() { git_interactive_status $@; }; f"
     hi = "!f() { git_interactive_history $@; }; f"
     status-i-list  = !git -c color.ui=always status --short -u
-    history-i-list = !git re -500 --color=always "$@" | nl -w 3 -s ' '
+    history-i-list = "!f() { git re -500 --color=always $@ | nl -w 3 -s ' '; }; f"
 
     # https://developer.atlassian.com/blog/2015/04/force-with-lease/
     pushfw = push --force-with-lease

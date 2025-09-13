@@ -3,6 +3,7 @@
 # A script to filter and operate Git logs interactively.
 
 copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
+files_and_dirs_in_git="(git ls-files; git ls-tree -r -d --name-only @ | awk '{print \$0\"/\"}')"
 fzf_options=(
     --no-sort
     --track
@@ -10,7 +11,9 @@ fzf_options=(
     --tmux=90%,border-native
     --preview='git show {2} | delta'
     --bind='start:ignore'
+
     --bind='s:become(git si)'
+    # Copy the commit hash.
     --bind="y:become(echo {2} | tr -d '\n' | $copy_cmd)"
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git history-i-list)'
     --bind='R:become(git reset --soft {2}^ && git status)'
@@ -19,6 +22,8 @@ fzf_options=(
     --bind='S:execute(git commit --squash {2})'
     --bind='v:execute(git show {2} | LESS="-Ri" delta --paging always)'
     --bind='z:execute(zsh)+reload-sync(git history-i-list)'
+    # Filter commits that changed selected files.
+    --bind="f:become(git hi -- \$($files_and_dirs_in_git | fzf --multi --tmux=90%,border-native))"
 )
 
 # Show the number of unstaged files as well.
@@ -27,4 +32,4 @@ if ! git diff --quiet; then
     fzf_options+=(--header="! $n_unstaged_files Unstaged files")
 fi
 
-git history-i-list | fzf "${fzf_options[@]}"
+git history-i-list "$@" | fzf "${fzf_options[@]}"
