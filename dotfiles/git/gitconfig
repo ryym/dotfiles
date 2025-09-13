@@ -116,7 +116,7 @@
 
 # https://github.com/dandavison/delta
 [delta]
-    syntax-theme = zenburn
+    syntax-theme = TwoDark
     line-numbers = true
 
     # Currently we use everforest colorscheme so the non-bright colors are fine.
