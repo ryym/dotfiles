@@ -24,7 +24,7 @@ fzf_options=(
 # Show the number of unstaged files as well.
 if ! git diff --quiet; then
     n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
-    fzf_options+=(--header="⚠️ $n_unstaged_files Unstaged files")
+    fzf_options+=(--header="! $n_unstaged_files Unstaged files")
 fi
 
 git history-i-list | fzf "${fzf_options[@]}"
