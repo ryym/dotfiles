@@ -2,6 +2,8 @@
 
 # A script to stage or unstage files in Git interactively.
 
+git_whitespace_opt='$([ -z "$FZF_PREVIEW_LABEL" ] && echo "" || echo "-w")'
+
 preview_cmd="
     case {} in
         '??'*|'A '*)
@@ -12,15 +14,15 @@ preview_cmd="
             ;;
         MM*)
             echo 󰕜 Staged
-            git diff --cached --color=always {2} | delta
+            git diff --cached --color=always $git_whitespace_opt {2} | delta
             echo; echo 󰕛 Unstaged
             git diff --color=always {2} | delta
             ;;
         ' '*)
-            git diff --color=always {2} | delta
+            git diff --color=always $git_whitespace_opt {2} | delta
             ;;
         *)
-            git diff --cached --color=always {2} | delta
+            git diff --cached --color=always $git_whitespace_opt {2} | delta
             ;;
     esac
 "
@@ -33,18 +35,32 @@ fzf_options=(
     --preview="$preview_cmd"
     --bind='start:ignore'
     --bind='h:become(git hi)'
-    --bind='enter:execute(git add {+2})+accept'
     --bind='e:execute(nvim {+2})+reload-sync(git status-i-list)'
+    --bind='z:execute(zsh)+reload-sync(git status-i-list)'
+    --bind='ctrl-l:change-preview-window(down|right)'
+
+    # Stage files.
+    --bind='enter:execute(git add {+2})+accept'
     --bind='a:execute-silent(git add {+2})+reload-sync(git status-i-list)'
     --bind='A:execute-silent(git add -u)+reload-sync(git status-i-list)'
     --bind='p:execute(clear; git add --patch {+2})+reload-sync(git status-i-list)'
+
+    # Unstage files.
     --bind='u:execute-silent(git reset -- {+2})+reload-sync(git status-i-list)'
     --bind='U:execute-silent(git reset .)+reload-sync(git status-i-list)'
+
+    # Revert changes.
     --bind='o:execute-silent(git checkout {+2})+reload-sync(git status-i-list)'
-    --bind='D:execute(git diff)'
-    --bind='C:execute(git diff --cached)'
+
+    # View the entire diff.
+    --bind="D:execute(git diff $git_whitespace_opt | LESS='-Ri' delta --paging always)"
+    --bind="C:execute(git diff --cached $git_whitespace_opt | LESS='-Ri' delta --paging always)"
     --bind='N:execute(bat $(git ls-files --others --exclude-standard))'
-    --bind='z:execute(zsh)+reload-sync(git status-i-list)'
+    # Toggle whitespace ignorance.
+    --bind='w:transform([ -z "$FZF_PREVIEW_LABEL" ] &&
+        echo "change-preview-label(-w)" ||
+        echo "change-preview-label()"
+    )+refresh-preview'
 )
 
 git status-i-list | fzf "${fzf_options[@]}" > /dev/null
