@@ -2,6 +2,15 @@
 
 # A script to filter and operate Git logs interactively.
 
+preview_cmd="
+    case {} in
+        '󰍟'*)
+            ;;
+        *)
+            git show {2} | delta
+            ;;
+    esac
+"
 copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
 files_and_dirs_in_git="(git ls-files; git ls-tree -r -d --name-only @ | awk '{print \$0\"/\"}')"
 fzf_options=(
@@ -9,7 +18,7 @@ fzf_options=(
     --track
     --nth 2..
     --tmux=90%,border-native
-    --preview='git show {2} | delta'
+    --preview="$preview_cmd"
     --bind='start:ignore'
 
     --bind='s:become(git si)'
@@ -24,6 +33,18 @@ fzf_options=(
     --bind='z:execute(zsh)+reload-sync(git history-i-list)'
     # Filter commits that changed selected files.
     --bind="f:become(git hi -- \$($files_and_dirs_in_git | fzf --multi --tmux=90%,border-native))"
+
+    # (experimental) Run action by selecting a special entry.
+    --bind="enter:transform(
+        case {} in
+            '󰍟 view another branch')
+                echo \"become(git hi \\\$(git branch -a --format='%(refname:short)' | fzf --tmux=90%,border-native))\"
+                ;;
+            *)
+                echo 'ignore'
+                ;;
+        esac
+    )"
 )
 
 # Show the number of unstaged files as well.
@@ -32,4 +53,4 @@ if ! git diff --quiet; then
     fzf_options+=(--header="! $n_unstaged_files Unstaged files")
 fi
 
-git history-i-list "$@" | fzf "${fzf_options[@]}"
+(echo '󰍟 view another branch'; git history-i-list "$@") | fzf "${fzf_options[@]}"
