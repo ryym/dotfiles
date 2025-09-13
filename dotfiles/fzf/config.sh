@@ -1,25 +1,32 @@
 #!/usr/bin/env zsh
 
-export FZF_DEFAULT_OPTS="
-    --ignore-case
-    --cycle
-    --reverse
-    --ansi
-    --highlight-line
-    --prompt='❯ '
-    --color=current-bg:#3d484d,pointer:#e67e80,marker:#d699b6,gutter:-1
-    --bind=ctrl-k:kill-line
-    --bind=ctrl-d:half-page-down
-    --bind=ctrl-u:half-page-up
-    --bind=ctrl-/:toggle-preview
-    --bind=alt-k:preview-up
-    --bind=alt-j:preview-down
-    --bind=alt-h:preview-half-page-up
-    --bind=alt-l:preview-half-page-down
-    --bind=alt-up:preview-top
-    --bind=alt-down:preview-bottom
-    --bind=alt-/:toggle-wrap
-"
+export FZF_DEFAULT_OPTS=$(
+    fzf_options=(
+        '--ignore-case'
+        '--cycle'
+        # Styles
+        '--layout=reverse'
+        '--ansi'
+        '--highlight-line'
+        "--prompt='❯ '"
+        '--color=current-bg:#3d484d,pointer:#e67e80,marker:#d699b6,gutter:-1'
+        # Key bindings
+        '--bind=ctrl-k:kill-line'
+        '--bind=ctrl-d:half-page-down'
+        '--bind=ctrl-u:half-page-up'
+        '--bind=ctrl-/:toggle-preview'
+        '--bind=alt-k:preview-up'
+        '--bind=alt-j:preview-down'
+        '--bind=alt-h:preview-half-page-up'
+        '--bind=alt-l:preview-half-page-down'
+        '--bind=alt-up:preview-top'
+        '--bind=alt-down:preview-bottom'
+        '--bind=alt-/:toggle-wrap'
+    )
+    echo "${fzf_options[@]}"
+)
+
+
 
 # Make fzf super faster
 # - https://github.com/junegunn/fzf#respecting-gitignore
