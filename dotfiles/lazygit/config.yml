@@ -4,17 +4,22 @@ promptToReturnFromSubprocess: false
 
 # https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
 git:
+  truncateCopiedCommitHashesTo: 8
   paging:
     colorArg: always
     pager: delta --paging=never
 
 gui:
+  scrollPastBottom: false
+  scrollHeight: 3
+  showRandomTip: false
+  showCommandLog: false
   # https://github.com/sainnhe/everforest
   theme:
     activeBorderColor:
       - green
     inactiveBorderColor:
-      - '#425047' # bg_green
+      - '#7a8478' # bg_green
     optionsTextColor:
       - '#9da9a0' # grey2
     selectedLineBgColor:
