@@ -4,6 +4,15 @@ function! my#plug#lexima#configure(conf) abort
 endfunction
 
 function! my#plug#lexima#after_load() abort
+  " For RBS
+  call lexima#add_rule({
+    \ 'char'        : '<CR>',
+    \ 'input_after' : '<CR>end',
+    \ 'at'          : '^\s*\%(module\|def\|class\|if\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#$',
+    \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1end',
+    \ 'filetype'    : 'rbs'
+    \ })
+
   " For vspec
   call lexima#add_rule({
     \ 'char'        : '<CR>',
