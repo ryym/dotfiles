@@ -37,8 +37,8 @@ export FZF_DEFAULT_OPTS=$(
         fzf_options+=("--bind='$key:ignore'")
     done
     fzf_options+=(
-        "--prompt='$filter_mode_prompt'"
-        # Start with the filter mode.
+        "--prompt='$custom_mode_prompt'"
+        # Start with the filter mode. To start with the custom mode, specify '--bind=start:ignore'.
         "--bind='start:change-prompt($filter_mode_prompt)+unbind($keys)'"
         # Switch modes by `i` and `Esc`.
         "--bind='i:change-prompt($filter_mode_prompt)+unbind($keys)'"
@@ -60,8 +60,6 @@ export FZF_DEFAULT_OPTS=$(
 
     echo "${fzf_options[*]}"
 )
-
-
 
 # Make fzf super faster
 # - https://github.com/junegunn/fzf#respecting-gitignore

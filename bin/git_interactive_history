@@ -2,14 +2,29 @@
 
 # A script to filter and operate Git logs interactively.
 
-# Key bindings of fzf:
-# Ctrl-y: Copy the commit hash.
-# Ctrl-r: Start the interactive rebase from the *previous* commit of the selected one.
-
 copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
-git re -100 --color=always "$@" \
-    | nl -w 3 -s ' ' \
-    | fzf --ansi --no-sort --tmux 90% --nth 2.. --track \
-        --preview 'echo {2} | xargs git show | delta' \
-        --bind "ctrl-y:become(echo {2} | tr -d '\n' | $copy_cmd)" \
-        --bind 'ctrl-r:become(echo {2}^ | xargs git rebase -i)'
+fzf_options=(
+    --no-sort
+    --track
+    --nth 2..
+    --tmux=90%,border-native
+    --preview='git show {2} | delta'
+    --bind='start:ignore'
+    --bind='s:become(git si)'
+    --bind="y:become(echo {2} | tr -d '\n' | $copy_cmd)"
+    --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git history-i-list)'
+    --bind='R:become(git reset --soft {2}^ && git status)'
+    # --bind='r:execute(git reset $(printf "%s\n" --soft --mixed | fzf --header "git reset...") {2}^)+become(git status)'
+    --bind='F:execute(git commit --fixup {2})'
+    --bind='S:execute(git commit --squash {2})'
+    --bind='v:execute(git show {2} | LESS="-Ri" delta --paging always)'
+    --bind='z:execute(zsh)+reload-sync(git history-i-list)'
+)
+
+# Show the number of unstaged files as well.
+if ! git diff --quiet; then
+    n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
+    fzf_options+=(--header="⚠️ $n_unstaged_files Unstaged files")
+fi
+
+git history-i-list | fzf "${fzf_options[@]}"
