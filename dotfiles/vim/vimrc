@@ -25,6 +25,8 @@ call my#init#autocmds#setup()
 
 call my#init#mappings#setup()
 
+call my#init#experimental#git_rebase_preview#setup()
+
 call my#init#plugins#setup()
 
 if filereadable($VIMLOCAL . '/vimrc')
