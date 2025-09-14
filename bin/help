@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
 # Display the help information with auto pagination and colors.
-# Usage: "help bat", "help git status"
+# Usage: "help bat", "help git status", or "fzf --help | help"
 
 shopt -s expand_aliases
 source "$DOTPATH/dotfiles/shell/aliases"
+
+# Stdin is redirected or piped.
+if [ ! -t 0 ]; then
+    bat -l help --plain
+    exit
+fi
 
 if [ $# -eq 0 ]; then
     echo "Usage: help <command> [args...]"
