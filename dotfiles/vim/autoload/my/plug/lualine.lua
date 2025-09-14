@@ -44,6 +44,9 @@ local function configure()
                     component_separators = { left = '|', right = '|'},
                     section_separators = { left = '', right = ''},
                     globalstatus = true,
+                    disabled_filetypes = {
+                        winbar = {'terminal', 'qf', 'fzf', 'viler'},
+                    },
                 },
                 sections = {
                     lualine_a = {
@@ -68,12 +71,12 @@ local function configure()
                     lualine_y = {'progress'},
                     lualine_z = {'%l:%c /%L'},
                 },
-                -- winbar = {
-                --     lualine_c = {'filename'}
-                -- },
-                -- inactive_winbar = {
-                --     lualine_c = {'filename'}
-                -- },
+                winbar = {
+                    lualine_c = {'filename'},
+                },
+                inactive_winbar = {
+                    lualine_c = {'filename'},
+                },
             }
         end,
     }
