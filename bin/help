@@ -56,8 +56,10 @@ case "${cmds[0]}" in
 esac
 
 output=$("${cmds[@]}" 2>&1)
-nlines=$(echo "$output" | wc -l | sed 's/^[[:space:]]*//')
-title="📖 ${cmds[@]} ($nlines lines)"
-
-echo "$title
-$output" | bat -l help --plain
+if [ $? -eq 0 ]; then
+    nlines=$(echo "$output" | wc -l | sed 's/^[[:space:]]*//')
+    title="📖 ${cmds[@]} ($nlines lines)"
+    (echo "$title"; echo "$output") | bat -l help --plain
+else
+    echo "$output"
+fi
