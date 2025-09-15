@@ -23,6 +23,7 @@ fzf_options=(
     --bind='s:become(git si)'
     --bind='z:execute(zsh)+reload-sync(git history-i-list)'
     --bind='ctrl-l:change-preview-window(down|right)'
+    --bind='?:execute(bat $(command -v git_interactive_history))'
 
     # Copy the commit hash.
     --bind="y:become(echo {2} | tr -d '\n' | $copy_cmd)"
