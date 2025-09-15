@@ -29,7 +29,7 @@ endfunction
 let s:fd_available = executable('fd')
 
 let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :100 {}'"
+let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :10000 {}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
   " https://github.com/sharkdp/fd
