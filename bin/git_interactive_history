@@ -27,8 +27,8 @@ fzf_options=(
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git history-i-list)'
     --bind='R:become(git reset --soft {2}^ && git status)'
     # --bind='r:execute(git reset $(printf "%s\n" --soft --mixed | fzf --header "git reset...") {2}^)+become(git status)'
-    --bind='F:execute(git commit --fixup {2})'
-    --bind='S:execute(git commit --squash {2})'
+    --bind='F:execute(git commit --fixup {2})+reload-sync(git history-i-list)'
+    --bind='S:execute(git commit --squash {2})+reload-sync(git history-i-list)'
     --bind='v:execute(git show {2} | LESS="-Ri" delta --paging always)'
     --bind='z:execute(zsh)+reload-sync(git history-i-list)'
     # Filter commits that changed selected files.
