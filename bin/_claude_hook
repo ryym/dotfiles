@@ -1,0 +1,43 @@
+#!/usr/bin/ruby
+
+# A script to handle Claude Code hooks.
+# https://docs.anthropic.com/en/docs/claude-code/hooks
+#
+# To use this script, specify in the .claude/settings.json like below:
+#   "hooks": {
+#     "Notification": [
+#       { "hooks": [{ "type": "command", "command": "_claude_hook" }] }
+#     ],
+#     "Stop": [
+#       { "hooks": [{ "type": "command", "command": "_claude_hook" }] }
+#     ]
+#   }
+
+require "json"
+
+class Main
+  def run(json)
+    input = JSON.parse(json)
+    event_name = input['hook_event_name']
+    case event_name
+    when 'Notification'
+      handle_notification_event(input)
+    when 'Stop'
+      handle_stop_event(input)
+    else
+      raise "unsupported Claude hook: #{event_name}"
+    end
+  end
+
+  private
+
+  def handle_notification_event(input)
+    system "notifm #{input['message']}"
+  end
+
+  def handle_stop_event(_input)
+    system "notifm Claude finished task"
+  end
+end
+
+Main.new.run(STDIN.read)
