@@ -68,8 +68,10 @@ local function configure()
                         },
                     },
                     lualine_x = {'encoding', 'fileformat', 'filetype'},
-                    lualine_y = {'progress'},
-                    lualine_z = {'%l:%c /%L'},
+                    -- progress percentage and total line
+                    lualine_y = {'%p%% / %LL'},
+                    -- current line and column
+                    lualine_z = {'%l:%c'},
                 },
                 winbar = {
                     lualine_c = {'filename'},
