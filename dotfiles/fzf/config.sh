@@ -19,6 +19,7 @@ export FZF_DEFAULT_OPTS=$(
         '--bind=alt-up:preview-top'
         '--bind=alt-down:preview-bottom'
         '--bind=alt-/:toggle-wrap'
+        "--bind='shift-tab:transform([ \$FZF_SELECT_COUNT -eq 0 ] && echo select-all || echo deselect-all)'"
     )
 
     # Enable Vim-like modal behavior using unbind/rebind actions.
