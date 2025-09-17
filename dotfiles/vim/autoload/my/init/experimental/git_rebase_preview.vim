@@ -112,9 +112,9 @@ function! s:get_commit_hash_from(line) abort
   endif
 
   " Examples:
-  " pick abc123 # commit message
-  " f -c abc 123 # commit message
-  let previewable_line = '\v^\s*([a-z]*)\s+(-[cC]\s+)?([a-f0-9]{6,40})\s#\s.*$'
+  " pick abc123 commit message
+  " f -c abc 123 commit message
+  let previewable_line = '\v^\s*([a-z]*)\s+(-[cC]\s+)?([a-f0-9]{6,40})\s.*$'
 
   let matches = matchlist(a:line, previewable_line)
   if empty(matches)
