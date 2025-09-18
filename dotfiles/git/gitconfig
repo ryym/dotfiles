@@ -97,8 +97,8 @@
     dc     = diff --cached
     sbm    = submodule
 
-    si = "!f() { git_interactive_status $@; }; f"
-    hi = "!f() { git_interactive_history $@; }; f"
+    si = !git_interactive_status
+    hi = !git_interactive_history
     status-i-list  = !git -c color.ui=always status --short -u
     history-i-list = "!f() { git re -500 --color=always $@ | nl -w 3 -s ' '; }; f"
 
