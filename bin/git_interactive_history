@@ -11,9 +11,20 @@ preview_cmd="
             ;;
     esac
 "
+show_diff="
+f() {
+    if [[ \$# -eq 1 ]]; then
+        git show \$1 | LESS='-Ri' delta --paging always
+    else
+        local latest=\$1
+        local oldest=\${@: -1}
+        git diff \$oldest..\$latest | LESS='-Ri' delta --paging always
+    fi
+};f"
 copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
 files_and_dirs_in_git="(git ls-files; git ls-tree -r -d --name-only @ | awk '{print \$0\"/\"}')"
 fzf_options=(
+    --multi
     --no-sort
     --track
     --nth 2..
@@ -25,8 +36,8 @@ fzf_options=(
     --bind='ctrl-l:change-preview-window(down|right)'
     --bind='?:execute(bat $(command -v git_interactive_history))'
 
-    # Copy the commit hash.
-    --bind="y:become(echo {2} | tr -d '\n' | $copy_cmd)"
+    --bind="y:become(echo {+2} | tr -d '\n' | $copy_cmd)"
+    --bind="d:execute($show_diff {+2})"
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git history-i-list)'
     --bind='A:execute(git rebase --autosquash {2}^)+reload-sync(git history-i-list)'
     --bind='R:become(git reset --soft {2}^ && git status)'
