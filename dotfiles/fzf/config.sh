@@ -58,6 +58,7 @@ export FZF_DEFAULT_OPTS=$(
         "--bind='L:preview-half-page-down'"
         "--bind='<:preview-top'"
         "--bind='>:preview-bottom'"
+        "--bind='q:abort'"
     )
 
     echo "${fzf_options[*]}"
