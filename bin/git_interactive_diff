@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# A script to view Git diff per file interactively.
+
+fzf_options=(
+    # --tmux=90%,border-native
+    --bind='start:ignore'
+)
+
+if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
+    git_show_file_only="git show --pretty='' $1 -- {2}"
+    fzf_options+=(
+        --preview="$git_show_file_only | delta"
+        --bind="A:execute(git show $1 | LESS='-Ri' delta --paging always)"
+        --bind="v:execute($git_show_file_only | LESS='-Ri' delta --paging always)"
+    )
+    content=$(git -c color.ui=always show --pretty=format:'%Cred%h%Creset %Cgreen%s%Creset' --name-status "$@")
+    commit_summary=$(echo "$content" | awk 'NR==1')
+    files=$(echo "$content" | awk 'NR>1 {print $1 " " $2}')
+    echo "$files" | fzf "${fzf_options[@]}" --header="$commit_summary"
+else
+    fzf_options+=(
+        --preview="git diff $@ -- {2} | delta"
+        --bind="A:execute(git diff $@ | LESS='-Ri' delta --paging always)"
+        --bind="v:execute(git diff $@ -- {2} | LESS='-Ri' delta --paging always)"
+    )
+    git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}" --header="$@"
+fi
