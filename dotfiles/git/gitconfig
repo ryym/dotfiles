@@ -92,7 +92,7 @@
     re     = log --oneline --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(auto)%h %C(auto)%s %Cgreen%cd %C(bold blue)%an%C(auto)%d' -10
     tree   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     sh     = show
-    shfs   = !git --no-pager show --pretty=format:'%Cred%h%Creset - %Cgreen%s' --name-status
+    shfs   = !git --no-pager show --pretty=format:'%Cred%h%Creset - %Cgreen%s%Creset' --name-status
     d      = diff
     dc     = diff --cached
     sbm    = submodule
