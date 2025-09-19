@@ -37,7 +37,6 @@ fzf_options=(
     --bind='h:become(git hi)'
     --bind='e:execute(nvim {+2})+reload-sync(git status-i-list)'
     --bind='z:execute(zsh)+reload-sync(git status-i-list)'
-    --bind='ctrl-l:change-preview-window(down|right)'
     --bind='?:execute(bat $(command -v git_interactive_status))'
 
     # Stage files.

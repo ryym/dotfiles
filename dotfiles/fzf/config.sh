@@ -12,6 +12,7 @@ export FZF_DEFAULT_OPTS=$(
         '--bind=ctrl-d:half-page-down'
         '--bind=ctrl-u:half-page-up'
         '--bind=ctrl-/:toggle-preview'
+        "--bind='ctrl-l:change-preview-window(down|right)'"
         '--bind=alt-k:preview-up'
         '--bind=alt-j:preview-down'
         '--bind=alt-h:preview-half-page-up'
