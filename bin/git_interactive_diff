@@ -2,6 +2,25 @@
 
 # A script to view Git diff per file interactively.
 
+function main() {
+    cmd="$1"
+    shift
+    case "$cmd" in
+        run) cmd_run "$@" ;;
+        *)
+            echo 'specify valid command'
+            exit 1
+    esac
+}
+
+function cmd_run() {
+    if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
+        handle_single_commit "${1:-@}"
+    else
+        handle_diff_between_commits "$@"
+    fi
+}
+
 fzf_options=(
     # --tmux=90%,border-native
     --bind='start:ignore'
@@ -29,8 +48,4 @@ function handle_diff_between_commits() {
     git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}" --header="$*"
 }
 
-if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
-    handle_single_commit "${1:-@}"
-else
-    handle_diff_between_commits "$@"
-fi
+main "$@"

@@ -99,7 +99,7 @@
 
     si = !git_interactive_status
     hi = !git_interactive_history
-    di = !git_interactive_diff
+    di = !git_interactive_diff run
     status-i-list  = !git -c color.ui=always status --short -u
     history-i-list = "!f() { git re -500 --color=always $@ | nl -w 3 -s ' '; }; f"
 
