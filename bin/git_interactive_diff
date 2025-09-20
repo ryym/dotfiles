@@ -7,7 +7,7 @@ fzf_options=(
     --bind='start:ignore'
 )
 
-if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
+function handle_single_commit() {
     git_show_file_only="git show --pretty='' $1 -- {2}"
     fzf_options+=(
         --preview="$git_show_file_only | delta"
@@ -18,11 +18,19 @@ if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
     commit_summary=$(echo "$content" | awk 'NR==1')
     files=$(echo "$content" | awk 'NR>1 {print $1 " " $2}')
     echo "$files" | fzf "${fzf_options[@]}" --header="$commit_summary"
-else
+}
+
+function handle_diff_between_commits() {
     fzf_options+=(
         --preview="git diff $@ -- {2} | delta"
         --bind="A:execute(git diff $@ | LESS='-Ri' delta --paging always)"
         --bind="v:execute(git diff $@ -- {2} | LESS='-Ri' delta --paging always)"
     )
     git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}" --header="$@"
+}
+
+if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
+    handle_single_commit "${1:-@}"
+else
+    handle_diff_between_commits "$@"
 fi
