@@ -53,3 +53,8 @@ manv() {
     # which makes the available width smaller than the entire terminal width.
     MANWIDTH=$(($(tput cols) - 5)) MANPAGER='nvim +Man!' man "$@"
 }
+
+# Print JSON with formatting and colors.
+pjson() {
+    jq . "$@" | bat -l json
+}
