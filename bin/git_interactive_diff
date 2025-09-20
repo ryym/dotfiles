@@ -22,11 +22,11 @@ function handle_single_commit() {
 
 function handle_diff_between_commits() {
     fzf_options+=(
-        --preview="git diff $@ -- {2} | delta"
-        --bind="A:execute(git diff $@ | LESS='-Ri' delta --paging always)"
-        --bind="v:execute(git diff $@ -- {2} | LESS='-Ri' delta --paging always)"
+        --preview="git diff $* -- {2} | delta"
+        --bind="A:execute(git diff $* | LESS='-Ri' delta --paging always)"
+        --bind="v:execute(git diff $* -- {2} | LESS='-Ri' delta --paging always)"
     )
-    git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}" --header="$@"
+    git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}" --header="$*"
 }
 
 if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
