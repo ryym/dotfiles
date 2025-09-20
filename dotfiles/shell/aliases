@@ -24,8 +24,11 @@ alias h='help'
 # For Linux
 alias sysu='systemctl --user'
 alias journalu='journalctl --user'
-
 command -v xdg-open > /dev/null 2>&1 && alias open='xdg-open'
+if command -v wl-copy > /dev/null 2>&1; then
+    alias pbcopy='wl-copy'
+    alias pbpaste='wl-paste'
+fi
 
 # We use tmux-256color in tmux but tig does not support it.
 # https://github.com/jonas/tig/issues/559
