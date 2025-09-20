@@ -7,14 +7,14 @@ preview_cmd="
         '󰍟'*)
             ;;
         *)
-            git show {2} | delta
+            git show -m {2} | delta
             ;;
     esac
 "
 show_diff="
 f() {
     if [[ \$# -eq 1 ]]; then
-        git show \$1 | LESS='-Ri' delta --paging always
+        git show -m \$1 | LESS='-Ri' delta --paging always
     else
         local latest=\$1
         local oldest=\${@: -1}

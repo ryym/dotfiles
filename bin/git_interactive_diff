@@ -6,18 +6,33 @@ function main() {
     cmd="$1"
     shift
     case "$cmd" in
-        run) cmd_run "$@" ;;
+        run) run "$@" ;;
+        _fzf_parent_switch) _fzf_parent_switch "$@" ;;
         *)
             echo 'specify valid command'
             exit 1
     esac
 }
 
-function cmd_run() {
-    if [[ $# -eq 1 ]] && [[ "$1" != *".."* ]] || [[ $# -eq 0 ]]; then
-        handle_single_commit "${1:-@}"
-    else
+function run() {
+    if [[ $# -ge 2 ]] || [[ "$1" == *".."* ]]; then
         handle_diff_between_commits "$@"
+        return
+    fi
+    local commit="${1:-@}"
+
+    # List parent commit hashes which has any diff from the target commit.
+    local parent_commits=$(git show --pretty='%p' --no-patch $commit)
+    local parents_with_diff=()
+    for parent in $parent_commits; do
+        n_diff_files=$(git diff --name-only $parent $commit | wc -l)
+        [[ $n_diff_files -ge 1 ]] && parents_with_diff+=($parent)
+    done
+
+    if [[ ${#parents_with_diff[@]} -ge 2 ]]; then
+        handle_multi_parents_commit "$commit" ${#parents_with_diff[@]}
+    else
+        handle_single_commit "$commit"
     fi
 }
 
@@ -26,26 +41,67 @@ fzf_options=(
     --bind='start:ignore'
 )
 
-function handle_single_commit() {
-    git_show_file_only="git show --pretty='' $1 -- {2}"
-    fzf_options+=(
-        --preview="$git_show_file_only | delta"
-        --bind="A:execute(git show $1 | LESS='-Ri' delta --paging always)"
-        --bind="v:execute($git_show_file_only | LESS='-Ri' delta --paging always)"
-    )
-    content=$(git -c color.ui=always show --pretty=format:'%Cred%h%Creset %Cgreen%s%Creset' --name-status "$@")
-    commit_summary=$(echo "$content" | awk 'NR==1')
-    files=$(echo "$content" | awk 'NR>1 {print $1 " " $2}')
-    echo "$files" | fzf "${fzf_options[@]}" --header="$commit_summary"
-}
-
 function handle_diff_between_commits() {
     fzf_options+=(
+         --header="$*"
         --preview="git diff $* -- {2} | delta"
         --bind="A:execute(git diff $* | LESS='-Ri' delta --paging always)"
         --bind="v:execute(git diff $* -- {2} | LESS='-Ri' delta --paging always)"
     )
-    git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}" --header="$*"
+    git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}"
+}
+
+function _git_show_color() {
+    git -c color.ui=always show --pretty='format:%Cred%h%Creset %Cgreen%s%Creset' "$@"
+}
+
+function handle_single_commit() {
+    content=$(_git_show_color -m --name-status "$@")
+    commit_summary=$(echo "$content" | awk 'NR==1')
+    files=$(echo "$content" | awk 'NR>1 {print $1 " " $2}')
+    fzf_options+=(
+        --header="$commit_summary"
+        --preview="git show -m --pretty='' $1 -- {2} | delta"
+        --bind="A:execute(git show -m $1 | LESS='-Ri' delta --paging always)"
+        --bind="v:execute(git show -m --pretty='' $1 -- {2} | LESS='-Ri' delta --paging always)"
+    )
+    echo "$files" | fzf "${fzf_options[@]}"
+}
+
+function handle_multi_parents_commit() {
+    local commit=$1
+    local n_parents=$2
+    local parent_idx=1
+    local commit_header=$(_git_show_color --no-patch $commit)
+    local parent_header=$(_git_show_color --no-patch $commit^$parent_idx)
+    local files=$(git diff --name-status $commit^$parent_idx $commit | awk '{print $1 " " $2}')
+    fzf_options+=(
+        --header="$commit_header"$'\n'"parent($parent_idx/$n_parents): $parent_header"
+        # Use the header label as a stateful variable. It is displayed only if `--header-border` is specified.
+        --header-label=$parent_idx
+        --bind="t:transform(git_interactive_diff _fzf_parent_switch $commit $n_parents)"
+        --preview="git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta"
+        --bind="A:execute(git diff $commit^\$FZF_HEADER_LABEL $commit | LESS='-Ri' delta --paging always)"
+        --bind="v:execute(git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | LESS='-Ri' delta --paging always)"
+    )
+    echo "$files" | fzf "${fzf_options[@]}"
+}
+
+function _fzf_parent_switch() {
+    local commit=$1
+    local n_parents=$2
+    local parent_idx=$(($FZF_HEADER_LABEL + 1))
+    [[ $parent_idx -gt $n_parents ]] && parent_idx=1
+    local commit_header=$(_git_show_color --no-patch $commit)
+    local parent_header=$(_git_show_color --no-patch $commit^$parent_idx)
+    local header="$commit_header"$'\n'"parent($parent_idx/$n_parents): $parent_header"
+    local actions=(
+        "change-header($header)"
+        "change-header-label($parent_idx)"
+        "reload(git diff --name-status $commit^$parent_idx $commit | awk '{print \$1 \" \" \$2}')"
+    )
+    IFS='+' action="${actions[*]}"
+    echo "$action"
 }
 
 main "$@"
