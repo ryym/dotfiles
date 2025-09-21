@@ -2,7 +2,7 @@
 
 # A script to view Git diff per file interactively.
 
-function main() {
+main() {
     cmd="$1"
     shift
     case "$cmd" in
@@ -14,7 +14,7 @@ function main() {
     esac
 }
 
-function run() {
+run() {
     if [[ $# -ge 2 ]] || [[ "$1" == *".."* ]]; then
         handle_diff_between_commits "$@"
         return
@@ -41,7 +41,7 @@ fzf_options=(
     --bind='start:ignore'
 )
 
-function handle_diff_between_commits() {
+handle_diff_between_commits() {
     fzf_options+=(
          --header="$*"
         --preview="git diff $* -- {2} | delta"
@@ -51,11 +51,11 @@ function handle_diff_between_commits() {
     git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}"
 }
 
-function _git_show_color() {
+_git_show_color() {
     git -c color.ui=always show --pretty='format:%Cred%h%Creset %Cgreen%s%Creset' "$@"
 }
 
-function handle_single_commit() {
+handle_single_commit() {
     content=$(_git_show_color -m --name-status "$@")
     commit_summary=$(echo "$content" | awk 'NR==1')
     files=$(echo "$content" | awk 'NR>1 {print $1 " " $2}')
@@ -68,7 +68,7 @@ function handle_single_commit() {
     echo "$files" | fzf "${fzf_options[@]}"
 }
 
-function handle_multi_parents_commit() {
+handle_multi_parents_commit() {
     local commit=$1
     local n_parents=$2
     local parent_idx=1
@@ -87,7 +87,7 @@ function handle_multi_parents_commit() {
     echo "$files" | fzf "${fzf_options[@]}"
 }
 
-function _fzf_parent_switch() {
+_fzf_parent_switch() {
     local commit=$1
     local n_parents=$2
     local parent_idx=$(($FZF_HEADER_LABEL + 1))
