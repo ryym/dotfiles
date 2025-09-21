@@ -29,7 +29,3 @@ if command -v wl-copy > /dev/null 2>&1; then
     alias pbcopy='wl-copy'
     alias pbpaste='wl-paste'
 fi
-
-# We use tmux-256color in tmux but tig does not support it.
-# https://github.com/jonas/tig/issues/559
-alias tig='TERM=xterm-256color tig'
