@@ -98,9 +98,8 @@
     sbm    = submodule
 
     si = !git_interactive_status run
-    hi = !git_interactive_history
+    hi = !git_interactive_history run
     di = !git_interactive_diff run
-    history-i-list = "!f() { git re -500 --color=always $@ | nl -w 3 -s ' '; }; f"
 
     # We can view the equivalent diff by:
     #   - `git diff main...` (three dot)

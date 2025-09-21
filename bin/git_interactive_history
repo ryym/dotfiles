@@ -2,6 +2,19 @@
 
 # A script to filter and operate Git logs interactively.
 
+main() {
+    cmd="$1"
+    shift
+    case "$cmd" in
+        run) run "$@" ;;
+        _list) _list "$@" ;;
+        _diff) _diff "$@" ;;
+        *)
+            echo 'specify valid command'
+            exit 1
+    esac
+}
+
 preview_cmd="
     case {} in
         '󰍟'*)
@@ -11,16 +24,6 @@ preview_cmd="
             ;;
     esac
 "
-show_diff="
-f() {
-    if [[ \$# -eq 1 ]]; then
-        git show -m \$1 | LESS='-Ri' delta --paging always
-    else
-        local latest=\$1
-        local oldest=\${@: -1}
-        git diff \$oldest..\$latest | LESS='-Ri' delta --paging always
-    fi
-};f"
 copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
 files_and_dirs_in_git="(git ls-files; git ls-tree -r -d --name-only @ | awk '{print \$0\"/\"}')"
 fzf_options=(
@@ -32,18 +35,18 @@ fzf_options=(
     --preview="$preview_cmd"
     --bind='start:ignore'
     --bind='s:become(git si)'
-    --bind='z:execute(zsh)+reload-sync(git history-i-list)'
+    --bind='z:execute(zsh)+reload-sync(git_interactive_history _list)'
     --bind='?:execute(bat $(command -v git_interactive_history))'
 
     --bind="y:become(echo {+2} | tr -d '\n' | $copy_cmd)"
-    --bind="D:execute($show_diff {+2})"
+    --bind="D:execute(git_interactive_history _diff {+2})"
     --bind="d:execute(git di {+2})"
-    --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git history-i-list)'
-    --bind='A:execute(git rebase --autosquash {2}^)+reload-sync(git history-i-list)'
+    --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git_interactive_history _list)'
+    --bind='A:execute(git rebase --autosquash {2}^)+reload-sync(git_interactive_history _list)'
     --bind='R:become(git reset --soft {2}^ && git status)'
     # --bind='r:execute(git reset $(printf "%s\n" --soft --mixed | fzf --header "git reset...") {2}^)+become(git status)'
-    --bind='F:execute(git commit --fixup {2})+reload-sync(git history-i-list)'
-    --bind='S:execute(git commit --squash {2})+reload-sync(git history-i-list)'
+    --bind='F:execute(git commit --fixup {2})+reload-sync(git_interactive_history _list)'
+    --bind='S:execute(git commit --squash {2})+reload-sync(git_interactive_history _list)'
 
     # Filter commits that changed selected files.
     --bind="f:become(git hi -- \$($files_and_dirs_in_git | fzf --multi --tmux=90%,border-native))"
@@ -61,10 +64,27 @@ fzf_options=(
     )"
 )
 
-# Show the number of unstaged files as well.
-if ! git diff --quiet; then
-    n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
-    fzf_options+=(--header="! $n_unstaged_files Unstaged files")
-fi
+run() {
+    # Show the number of unstaged files.
+    if ! git diff --quiet; then
+        local n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
+        fzf_options+=(--header="! $n_unstaged_files Unstaged files")
+    fi
+    (echo '󰍟 view another branch'; _list "$@") | fzf "${fzf_options[@]}"
+}
 
-(echo '󰍟 view another branch'; git history-i-list "$@") | fzf "${fzf_options[@]}"
+_list() {
+    git re -500 --color=always "$@" | nl -w 3 -s ' '
+}
+
+_diff() {
+    if [[ $# -eq 1 ]]; then
+        git show -m $1 | LESS='-Ri' delta --paging always
+    else
+        local latest=$1
+        local oldest=${@: -1}
+        git diff $oldest..$latest | LESS='-Ri' delta --paging always
+    fi
+}
+
+main "$@"
