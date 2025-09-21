@@ -6,12 +6,22 @@ main() {
     cmd="$1"
     shift
     case "$cmd" in
+        popup) popup "$@" ;;
         run) run "$@" ;;
         _fzf_parent_switch) _fzf_parent_switch "$@" ;;
         *)
             echo 'specify valid command'
             exit 1
     esac
+}
+
+fzf_options=(
+    --bind='start:ignore'
+)
+
+popup() {
+    fzf_options+=(--tmux=90%,border-native)
+    run "$@"
 }
 
 run() {
@@ -35,11 +45,6 @@ run() {
         handle_single_commit "$commit"
     fi
 }
-
-fzf_options=(
-    # --tmux=90%,border-native
-    --bind='start:ignore'
-)
 
 handle_diff_between_commits() {
     fzf_options+=(

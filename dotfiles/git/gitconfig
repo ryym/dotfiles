@@ -97,9 +97,9 @@
     dc     = diff --cached
     sbm    = submodule
 
-    si = !git_interactive_status run
-    hi = !git_interactive_history run
-    di = !git_interactive_diff run
+    si = !git_interactive_status popup
+    hi = !git_interactive_history popup
+    di = !git_interactive_diff popup
 
     # We can view the equivalent diff by:
     #   - `git diff main...` (three dot)
