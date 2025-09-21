@@ -2,59 +2,48 @@
 
 # A script to stage or unstage files in Git interactively.
 
-git_whitespace_opt='$([ -z "$FZF_PREVIEW_LABEL" ] && echo "" || echo "-w")'
-
-preview_cmd="
-    case {} in
-        '??'*|'A '*)
-            bat --style=numbers --color=always {2}
-            ;;
-        ' D'*|D*)
-            git show @^:{2} | bat --style=numbers --color=always --file-name {2}
-            ;;
-        MM*)
-            echo 󰕜 Staged
-            git diff --cached --color=always $git_whitespace_opt {2} | delta
-            echo; echo 󰕛 Unstaged
-            git diff --color=always {2} | delta
-            ;;
-        ' '*)
-            git diff --color=always $git_whitespace_opt {2} | delta
-            ;;
+main() {
+    cmd="$1"
+    shift
+    case "$cmd" in
+        run) run "$@" ;;
+        _list) _list "$@" ;;
+        _preview) _preview "$@" ;;
+        _diff) _diff "$@" ;;
         *)
-            git diff --cached --color=always $git_whitespace_opt {2} | delta
-            ;;
+            echo 'specify valid command'
+            exit 1
     esac
-"
+}
 
 fzf_options=(
     --multi
     --no-sort
     --track
     --tmux=90%,border-native
-    --preview="$preview_cmd"
+    --preview="git_interactive_status _preview {} {2}"
     --bind='start:ignore'
     --bind='h:become(git hi)'
-    --bind='e:execute(nvim {+2})+reload-sync(git status-i-list)'
-    --bind='z:execute(zsh)+reload-sync(git status-i-list)'
+    --bind='e:execute(nvim {+2})+reload-sync(git_interactive_status _list)'
+    --bind='z:execute(zsh)+reload-sync(git_interactive_status _list)'
     --bind='?:execute(bat $(command -v git_interactive_status))'
 
     # Stage files.
     --bind='enter:execute(git add {+2})+accept'
-    --bind='a:execute-silent(git add {+2})+reload-sync(git status-i-list)'
-    --bind='A:execute-silent(git add -u)+reload-sync(git status-i-list)'
-    --bind='p:execute(clear; git add --patch {+2})+reload-sync(git status-i-list)'
+    --bind='a:execute-silent(git add {+2})+reload-sync(git_interactive_status _list)'
+    --bind='A:execute-silent(git add -u)+reload-sync(git_interactive_status _list)'
+    --bind='p:execute(clear; git add --patch {+2})+reload-sync(git_interactive_status _list)'
 
     # Unstage files.
-    --bind='u:execute-silent(git reset -- {+2})+reload-sync(git status-i-list)'
-    --bind='U:execute-silent(git reset .)+reload-sync(git status-i-list)'
+    --bind='u:execute-silent(git reset -- {+2})+reload-sync(git_interactive_status _list)'
+    --bind='U:execute-silent(git reset .)+reload-sync(git_interactive_status _list)'
 
     # Revert changes.
-    --bind='o:execute-silent(git checkout {+2})+reload-sync(git status-i-list)'
+    --bind='o:execute-silent(git checkout {+2})+reload-sync(git_interactive_status _list)'
 
     # View the entire diff.
-    --bind="D:execute(git diff $git_whitespace_opt | LESS='-Ri' delta --paging always)"
-    --bind="C:execute(git diff --cached $git_whitespace_opt | LESS='-Ri' delta --paging always)"
+    --bind="D:execute(git_interactive_status _diff | LESS='-Ri' delta --paging always)"
+    --bind="C:execute(git_interactive_status _diff --cached | LESS='-Ri' delta --paging always)"
     --bind='N:execute(bat $(git ls-files --others --exclude-standard))'
     # Toggle whitespace ignorance.
     --bind='w:transform([ -z "$FZF_PREVIEW_LABEL" ] &&
@@ -63,5 +52,43 @@ fzf_options=(
     )+refresh-preview'
 )
 
-git status-i-list | fzf "${fzf_options[@]}" > /dev/null
-git status
+run() {
+    _list "$@" | fzf "${fzf_options[@]}" > /dev/null
+    git status
+}
+
+_list() {
+    git -c color.ui=always status --short -u "$@"
+}
+
+_preview() {
+    local line="$1"
+    local filename="$2"
+    case "$line" in
+        '??'*|'A '*)
+            bat --style=numbers --color=always "$filename"
+            ;;
+        ' D'*|D*)
+            git show @^:{2} | bat --style=numbers --color=always --file-name "$filename"
+            ;;
+        MM*)
+            echo 󰕜 Staged
+            git_interactive_status _diff --cached "$filename" | delta
+            echo; echo 󰕛 Unstaged
+            git_interactive_status _diff "$filename" | delta
+            ;;
+        ' '*)
+            git_interactive_status _diff "$filename" | delta
+            ;;
+        *)
+            git_interactive_status _diff --cached "$filename" | delta
+            ;;
+    esac
+}
+
+_diff() {
+    whitespace=$([ -z "$FZF_PREVIEW_LABEL" ] || echo "-w")
+    git diff --color=always $whitespace "$@"
+}
+
+main "$@"
