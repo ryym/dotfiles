@@ -95,16 +95,12 @@
     shfs   = !git --no-pager show --pretty=format:'%Cred%h%Creset - %Cgreen%s%Creset' --name-status
     d      = diff
     dc     = diff --cached
+    dbase  = diff --merge-base
     sbm    = submodule
 
     si = !git_interactive_status popup
     hi = !git_interactive_history popup
     di = !git_interactive_diff popup
-
-    # We can view the equivalent diff by:
-    #   - `git diff main...` (three dot)
-    #   - `git --merge-base main`
-    # diffbase = "!f() { git diff `git merge-base @ $1` @ ${@:2}; }; f"
 
     # https://developer.atlassian.com/blog/2015/04/force-with-lease/
     pushfw = push --force-with-lease
