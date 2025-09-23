@@ -1,0 +1,5 @@
+# Configuration for less.
+
+#env
+
+LESS = -F -R --ignore-case

@@ -2,7 +2,6 @@
 # man zsh
 
 export LANG=en_US.UTF-8
-export LESS='-F -R --ignore-case'
 
 bindkey -e # Like Emacs.
 

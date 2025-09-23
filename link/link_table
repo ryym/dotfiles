@@ -24,6 +24,7 @@ LINKS=(
     'bat/config:.config/bat/config'
     'ghostty/config:.config/ghostty/config'
     'lazygit/config.yml':'.config/lazygit/config.yml'
+    'lesskey':'.config/lesskey'
 )
 
 case $(ostype) in
