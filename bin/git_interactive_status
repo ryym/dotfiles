@@ -74,7 +74,7 @@ _preview() {
             bat --style=numbers --color=always "$filename"
             ;;
         ' D'*|D*)
-            git show @^:{2} | bat --style=numbers --color=always --file-name "$filename"
+            git show @^:"$filename" | bat --style=numbers --color=always --file-name "$filename"
             ;;
         MM*)
             echo 󰕜 Staged
