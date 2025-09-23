@@ -1,5 +1,19 @@
 # Configuration for less.
 
+#line-edit
+# (Key binding for the search mode)
+
+^P up
+^N down
+^A home
+^B left
+^F right
+^W word-backspace
+\e abort
+
+# This mapping doesn't work but I don't know why.
+^E end
+
 #env
 
 LESS = -F -R --ignore-case
