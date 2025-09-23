@@ -16,4 +16,4 @@
 
 #env
 
-LESS = -F -R --ignore-case
+LESS = -M -F -R --ignore-case
