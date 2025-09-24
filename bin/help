@@ -59,7 +59,7 @@ output=$("${cmds[@]}" 2>&1)
 if [ $? -eq 0 ]; then
     nlines=$(echo "$output" | wc -l | sed 's/^[[:space:]]*//')
     title="📖 ${cmds[@]} ($nlines lines)"
-    (echo "$title"; echo "$output") | bat -l help --plain "$@"
+    (echo "$title"; echo "$output") | bat -l help --plain
 else
     echo "$output"
 fi
