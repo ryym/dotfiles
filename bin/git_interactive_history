@@ -10,6 +10,7 @@ main() {
         run) run "$@" ;;
         _list) _list "$@" ;;
         _diff) _diff "$@" ;;
+        _menu) _menu "$@" ;;
         *)
             echo 'specify valid command'
             exit 1
@@ -36,6 +37,7 @@ fzf_options=(
     --bind='start:ignore'
     --bind='s:become(git_interactive_status popup)'
     --bind='z:execute(zsh)+reload-sync(git_interactive_history _list)'
+    --bind="m:execute(git_interactive_history _menu)"
     --bind='?:execute(bat $(command -v git_interactive_history))'
 
     --bind="y:become(echo {+2} | tr -d '\n' | $copy_cmd)"
@@ -44,24 +46,8 @@ fzf_options=(
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git_interactive_history _list)'
     --bind='A:execute(git rebase --autosquash {2}^)+reload-sync(git_interactive_history _list)'
     --bind='R:become(git reset --soft {2}^ && git status)'
-    # --bind='r:execute(git reset $(printf "%s\n" --soft --mixed | fzf --header "git reset...") {2}^)+become(git status)'
     --bind='F:execute(git commit --fixup {2})+reload-sync(git_interactive_history _list)'
     --bind='S:execute(git commit --squash {2})+reload-sync(git_interactive_history _list)'
-
-    # Filter commits that changed selected files.
-    --bind="f:become(git hi -- \$($files_and_dirs_in_git | fzf --multi --tmux=90%,border-native))"
-
-    # (experimental) Run action by selecting a special entry.
-    --bind="enter:transform(
-        case {} in
-            '󰍟 view another branch')
-                echo \"become(git hi \\\$(git branch -a --format='%(refname:short)' | fzf --tmux=90%,border-native))\"
-                ;;
-            *)
-                echo 'ignore'
-                ;;
-        esac
-    )"
 )
 
 popup() {
@@ -75,7 +61,7 @@ run() {
         local n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
         fzf_options+=(--header="! $n_unstaged_files Unstaged files")
     fi
-    (echo '󰍟 view another branch'; _list "$@") | fzf "${fzf_options[@]}"
+    _list "$@" | fzf "${fzf_options[@]}"
 }
 
 _list() {
@@ -90,6 +76,41 @@ _diff() {
         local oldest=${@: -1}
         git diff $oldest..$latest | LESS='-Ri' delta --paging always
     fi
+}
+
+_menu() {
+    local result=`
+        (
+            echo '[1] Switch branch'
+            echo '[2] Filter by files'
+        ) | fzf --header=Menu --bind='start:ignore'
+    `
+    if [ -z "$result" ]; then
+        return
+    fi
+    case $result in
+        '[1]'*)
+            local branch=`
+                git branch -a --format='%(refname:short)' | \
+                fzf --header='Select Branch' --bind='start:ignore'
+            `
+            if [ -n "$branch" ]; then
+                git_interactive_history run "$branch"
+                return
+            fi
+            ;;
+        '[2]'*)
+            local files=`
+                (git ls-files; git ls-tree -r -d --name-only @ | awk '{print $0"/"}') | \
+                fzf --multi --bind='start:ignore'
+            `
+            if [ -n "$files" ]; then
+                echo "$files" | xargs git_interactive_history run --
+                return
+            fi
+            ;;
+    esac
+    git_interactive_history _menu "$@"
 }
 
 main "$@"
