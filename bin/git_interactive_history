@@ -2,6 +2,10 @@
 
 # A script to filter and operate Git logs interactively.
 
+# XXX: diff の whitespace 切り替え
+# preview: をファイルの一覧に切り替え
+# lazygit だと show の一部にファイル一覧が含まれてる感じ？　どうやるんだろう
+
 main() {
     cmd="$1"
     shift
