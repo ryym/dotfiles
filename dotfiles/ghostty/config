@@ -22,3 +22,5 @@ foreground = #d3c6aa
 keybind = ctrl+enter=text:\r
 
 config-file = ?local
+
+desktop-noifications = false
