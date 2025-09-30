@@ -72,10 +72,10 @@ _preview() {
     local filename="$2"
     case "$line" in
         '??'*|'A '*)
-            bat --style=numbers --color=always "$filename"
+            git diff --no-index /dev/null "$filename" | delta
             ;;
         ' D'*|D*)
-            git show @^:"$filename" | bat --style=numbers --color=always --file-name "$filename"
+            git diff @ -- "$filename" | delta
             ;;
         MM*)
             echo 󰕜 Staged
