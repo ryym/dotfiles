@@ -13,6 +13,7 @@ export FZF_DEFAULT_OPTS=$(
         '--bind=ctrl-u:half-page-up'
         '--bind=ctrl-/:toggle-preview'
         "--bind='ctrl-l:change-preview-window(down|right)'"
+        "--bind='ctrl-y:become(echo {+} | sed \"s/^ *//\" | tr -d \"\n\" | pbcopy)'"
         '--bind=alt-k:preview-up'
         '--bind=alt-j:preview-down'
         '--bind=alt-h:preview-half-page-up'
@@ -44,6 +45,7 @@ export FZF_DEFAULT_OPTS=$(
         "--bind='start:change-prompt($filter_mode_prompt)+unbind($keys)'"
         # Switch modes by `i` and `Esc`.
         "--bind='i:change-prompt($filter_mode_prompt)+unbind($keys)'"
+        "--bind='/:change-prompt($filter_mode_prompt)+unbind($keys)'"
         "--bind='esc:change-prompt($custom_mode_prompt)+rebind($keys)'"
         # Define default key bindings for the custom mode.
         "--bind='j:down'"
