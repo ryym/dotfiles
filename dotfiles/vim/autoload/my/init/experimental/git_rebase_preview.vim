@@ -10,7 +10,7 @@ endfunction
 
 let s:bufnr_by_commit = {}
 let s:preview_placeholder_bufnr = -1
-let s:preview_winnr = -1
+let s:preview_win_id = -1
 let s:preview_enabled = 1
 
 function! s:enable_preview() abort
@@ -33,7 +33,7 @@ function! s:update_preview() abort
   if s:preview_enabled == 0
     return
   endif
-  if s:preview_winnr == -1 || winwidth(s:preview_winnr) <= 0
+  if s:preview_win_id == -1 || winwidth(s:preview_win_id) <= 0
     call s:create_preview_window()
   endif
 
@@ -54,7 +54,7 @@ function! s:create_preview_window() abort
     let s:preview_placeholder_bufnr = s:create_placeholder_buffer()
   endif
 
-  let s:preview_winnr = winnr()
+  let s:preview_win_id = win_getid()
   wincmd p
 endfunction
 
@@ -93,17 +93,14 @@ endfunction
 
 function! s:show_buffer_in_preview(buffer_num) abort
   let current_win = winnr()
-  execute s:preview_winnr . 'wincmd w'
-  execute 'buffer ' . a:buffer_num
-  execute current_win . 'wincmd w'
+  call win_execute(s:preview_win_id, 'buffer ' . a:buffer_num)
 endfunction
 
 function! s:close_preview() abort
-  if s:preview_winnr != -1 && winwidth(s:preview_winnr) > 0
-    execute s:preview_winnr . 'wincmd w'
-    quit
+  if s:preview_win_id != -1 && winwidth(s:preview_win_id) > 0
+    call win_execute(s:preview_win_id, 'quit')
   endif
-  let s:preview_winnr = -1
+  let s:preview_win_id = -1
 endfunction
 
 function! s:toggle_preview_enabled() abort
