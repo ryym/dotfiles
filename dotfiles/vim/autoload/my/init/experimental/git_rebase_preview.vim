@@ -3,13 +3,7 @@
 " this script will display preview of the commit at the cursor line.
 
 function! my#init#experimental#git_rebase_preview#setup() abort
-  augroup vimrc
-    autocmd!
-    autocmd FileType gitrebase call <SID>update_preview()
-    autocmd FileType gitrebase autocmd CursorMoved,CursorMovedI <buffer> call <SID>update_preview()
-    autocmd WinClosed * if &filetype == 'gitrebase' | qa | endif
-  augroup END
-
+  call s:enable_preview()
   nnoremap <leader>t :call <SID>toggle_preview_enabled()<CR>
   command! TogglePreviewEnabled call <SID>toggle_preview_enabled()
 endfunction
@@ -18,6 +12,22 @@ let s:bufnr_by_commit = {}
 let s:preview_placeholder_bufnr = -1
 let s:preview_winnr = -1
 let s:preview_enabled = 1
+
+function! s:enable_preview() abort
+  augroup exp_git_rebase_preview
+    autocmd!
+    autocmd FileType gitrebase call <SID>update_preview()
+    autocmd FileType gitrebase autocmd CursorMoved,CursorMovedI <buffer> call <SID>update_preview()
+    autocmd WinClosed * if &filetype == 'gitrebase' | qa | endif
+  augroup END
+endfunction
+
+function! s:disable_preview() abort
+  call s:close_preview()
+  augroup exp_git_rebase_preview
+    autocmd!
+  augroup END
+endfunction
 
 function! s:update_preview() abort
   if s:preview_enabled == 0
@@ -98,10 +108,11 @@ endfunction
 
 function! s:toggle_preview_enabled() abort
   if s:preview_enabled == 1
-    call s:close_preview()
+    call s:disable_preview()
     let s:preview_enabled = 0
   else
     let s:preview_enabled = 1
+    call s:enable_preview()
     call s:update_preview()
   endif
 endfunction
