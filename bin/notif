@@ -11,8 +11,9 @@ test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
 printf -v escaped '%q ' "$@"
 eval "$escaped"
+exit_code=$?
 
-prefix=$(test $? -eq 0 && echo 'ok:' || echo 'ERR:')
+prefix=$(test $exit_code -eq 0 && echo 'ok:' || echo 'ERR:')
 cmds=($@)
 
 case $(ostype) in
@@ -29,3 +30,4 @@ case $(ostype) in
         ;;
 esac
 
+exit $exit_code
