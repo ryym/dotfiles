@@ -34,6 +34,7 @@ fzf_options=(
     --track
     --nth 2..
     --preview="$preview_cmd"
+    --expect='ctrl-g'
     --bind='start:ignore'
     --bind='s:become(git_interactive_status popup)'
     --bind='z:execute(zsh)+reload-sync(git_interactive_history _list)'
@@ -61,7 +62,11 @@ run() {
         local n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
         fzf_options+=(--header="! $n_unstaged_files Unstaged files")
     fi
-    _list "$@" | fzf "${fzf_options[@]}"
+    result=$(_list "$@" | fzf "${fzf_options[@]}")
+    key=$(head -n 1 <<< "$result")
+    if [ $key = 'ctrl-g' ]; then
+        exit 0
+    fi
 }
 
 _list() {

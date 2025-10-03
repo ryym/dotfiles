@@ -21,6 +21,7 @@ fzf_options=(
     --multi
     --no-sort
     --track
+    --expect='ctrl-g'
     --preview="git_interactive_status _preview {} {2}"
     --bind='start:ignore'
     --bind='h:become(git_interactive_history popup)'
@@ -59,8 +60,12 @@ popup() {
 }
 
 run() {
-    _list "$@" | fzf "${fzf_options[@]}" > /dev/null
+    result=$(_list "$@" | fzf "${fzf_options[@]}")
+    key=$(head -n 1 <<< "$result")
     git status
+    if [ $key = 'ctrl-g' ]; then
+        exit 0
+    fi
 }
 
 _list() {
