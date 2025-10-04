@@ -22,7 +22,7 @@ preview_cmd="
         '󰍟'*)
             ;;
         *)
-            git show -m {2} | delta
+            git -c color.ui=always show --stat --patch -m {2} | delta
             ;;
     esac
 "
@@ -75,7 +75,7 @@ _list() {
 
 _diff() {
     if [[ $# -eq 1 ]]; then
-        git show -m $1 | LESS='-Ri' delta --paging always
+        git -c color.ui=always show --stat --patch -m $1 | LESS='-Ri' delta --paging always
     else
         local latest=$1
         local oldest=${@: -1}
