@@ -10,6 +10,7 @@ main() {
         run) run "$@" ;;
         _list) _list "$@" ;;
         _diff) _diff "$@" ;;
+        _diff_i) _diff_i "$@" ;;
         _menu) _menu "$@" ;;
         *)
             echo 'specify valid command'
@@ -42,7 +43,7 @@ fzf_options=(
 
     --bind="y:become(echo {+2} | tr -d '\n' | $copy_cmd)"
     --bind="D:execute(git_interactive_history _diff {+2})"
-    --bind="d:execute(git_interactive_diff run {+2})"
+    --bind='d:execute(git_interactive_history _diff_i {+2})'
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git_interactive_history _list)'
     --bind='A:execute(git rebase --autosquash {2}^)+reload-sync(git_interactive_history _list)'
     --bind='R:become(git reset --soft {2}^ && git status)'
@@ -78,6 +79,14 @@ _diff() {
         local latest=$1
         local oldest=${@: -1}
         git diff $oldest..$latest | delta --pager 'less -+F'
+    fi
+}
+
+_diff_i() {
+    if [[ $# -eq 1 ]]; then
+        git_interactive_show run "$@"
+    else
+        git_interactive_diff run "$@"
     fi
 }
 
