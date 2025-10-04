@@ -34,7 +34,6 @@ fzf_options=(
     --track
     --nth 2..
     --preview="$preview_cmd"
-    --expect='ctrl-g'
     --bind='start:ignore'
     --bind='s:become(git_interactive_status popup)'
     --bind='z:execute(zsh)+reload-sync(git_interactive_history _list)'
@@ -49,6 +48,9 @@ fzf_options=(
     --bind='R:become(git reset --soft {2}^ && git status)'
     --bind='F:execute(git commit --fixup {2})+reload-sync(git_interactive_history _list)'
     --bind='S:execute(git commit --squash {2})+reload-sync(git_interactive_history _list)'
+
+    # Make exit code 0 for these cancel keys.
+    --expect='q,ctrl-g'
 )
 
 popup() {
@@ -62,11 +64,7 @@ run() {
         local n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
         fzf_options+=(--header="! $n_unstaged_files Unstaged files")
     fi
-    result=$(_list "$@" | fzf "${fzf_options[@]}")
-    key=$(head -n 1 <<< "$result")
-    if [ $key = 'ctrl-g' ]; then
-        exit 0
-    fi
+    _list "$@" | fzf "${fzf_options[@]}" > /dev/null
 }
 
 _list() {
