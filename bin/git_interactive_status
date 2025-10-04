@@ -43,9 +43,9 @@ fzf_options=(
     --bind='o:execute-silent(git checkout {+2})+reload-sync(git_interactive_status _list)'
 
     # View diff.
-    --bind="d:execute(git_interactive_status _diff {+2} | LESS='-Ri' delta --paging always)"
-    --bind="D:execute(git_interactive_status _diff | LESS='-Ri' delta --paging always)"
-    --bind="C:execute(git_interactive_status _diff --cached | LESS='-Ri' delta --paging always)"
+    --bind="d:execute(git_interactive_status _diff {+2} | delta --pager 'less -+F')"
+    --bind="D:execute(git_interactive_status _diff | delta --pager 'less -+F')"
+    --bind="C:execute(git_interactive_status _diff --cached | delta --pager 'less -+F')"
     --bind='N:execute(bat $(git ls-files --others --exclude-standard))'
     # Toggle whitespace ignorance.
     --bind='w:transform([ -z "$FZF_PREVIEW_LABEL" ] &&

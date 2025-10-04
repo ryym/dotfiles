@@ -50,8 +50,8 @@ handle_diff_between_commits() {
     fzf_options+=(
          --header="$*"
         --preview="git diff $* -- {2} | delta"
-        --bind="A:execute(git diff $* | LESS='-Ri' delta --paging always)"
-        --bind="v:execute(git diff $* -- {2} | LESS='-Ri' delta --paging always)"
+        --bind="A:execute(git diff $* | delta --pager 'less -+F')"
+        --bind="v:execute(git diff $* -- {2} | delta --pager 'less -+F')"
     )
     git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}"
 }
@@ -67,8 +67,8 @@ handle_single_commit() {
     fzf_options+=(
         --header="$commit_summary"
         --preview="git show -m --pretty='' $1 -- {2} | delta"
-        --bind="A:execute(git show -m $1 | LESS='-Ri' delta --paging always)"
-        --bind="v:execute(git show -m --pretty='' $1 -- {2} | LESS='-Ri' delta --paging always)"
+        --bind="A:execute(git show -m $1 | delta --pager 'less -+F')"
+        --bind="v:execute(git show -m --pretty='' $1 -- {2} | delta --pager 'less -+F')"
     )
     echo "$files" | fzf "${fzf_options[@]}"
 }
@@ -86,8 +86,8 @@ handle_multi_parents_commit() {
         --header-label=$parent_idx
         --bind="t:transform(git_interactive_diff _fzf_parent_switch $commit $n_parents)"
         --preview="git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta"
-        --bind="A:execute(git diff $commit^\$FZF_HEADER_LABEL $commit | LESS='-Ri' delta --paging always)"
-        --bind="v:execute(git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | LESS='-Ri' delta --paging always)"
+        --bind="A:execute(git diff $commit^\$FZF_HEADER_LABEL $commit | delta --pager 'less -+F')"
+        --bind="v:execute(git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta --pager 'less -+F')"
     )
     echo "$files" | fzf "${fzf_options[@]}"
 }

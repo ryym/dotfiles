@@ -75,11 +75,11 @@ _list() {
 
 _diff() {
     if [[ $# -eq 1 ]]; then
-        git -c color.ui=always show --stat --patch -m $1 | LESS='-Ri' delta --paging always
+        git -c color.ui=always show --stat --patch -m $1 | delta --pager 'less -+F'
     else
         local latest=$1
         local oldest=${@: -1}
-        git diff $oldest..$latest | LESS='-Ri' delta --paging always
+        git diff $oldest..$latest | delta --pager 'less -+F'
     fi
 }
 
