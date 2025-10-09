@@ -60,11 +60,6 @@ popup() {
 }
 
 run() {
-    # Show the number of unstaged files.
-    if ! git diff --quiet; then
-        local n_unstaged_files=$(git status --porcelain | grep -v '^??' | wc -l | tr -d ' ')
-        fzf_options+=(--header="! $n_unstaged_files Unstaged files")
-    fi
     _list "$@" | fzf "${fzf_options[@]}" > /dev/null
 }
 
