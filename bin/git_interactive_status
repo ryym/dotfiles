@@ -23,7 +23,7 @@ fzf_options=(
     --track
     --preview="git_interactive_status _preview {} {2}"
     --bind='start:ignore'
-    --bind='H:become(git_interactive_history popup)'
+    --bind='t:become(git_interactive_history popup)'
     --bind='e:execute(nvim {+2})+reload-sync(git_interactive_status _list)'
     --bind='z:execute(zsh)+reload-sync(git_interactive_status _list)'
     --bind='?:execute(bat $(command -v git_interactive_status))'

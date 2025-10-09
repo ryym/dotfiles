@@ -56,7 +56,7 @@ handle_single_parent_commit() {
         --preview="git show -m --pretty='' $1 -- {2} | delta"
         --bind="A:execute(git show -m $1 | delta --pager 'less -+F')"
         --bind="v:execute(git show -m --pretty='' $1 -- {2} | delta --pager 'less -+F')"
-        --bind="H:become(git_interactive_history popup $1)"
+        --bind="t:become(git_interactive_history popup $1)"
     )
     echo "$files" | fzf "${fzf_options[@]}"
 }
@@ -72,11 +72,11 @@ handle_multi_parents_commit() {
         --header="$commit_header"$'\n'"parent($parent_idx/$n_parents): $parent_header"
         # Use the header label as a stateful variable. It is displayed only if `--header-border` is specified.
         --header-label=$parent_idx
-        --bind="t:transform(git_interactive_show _fzf_parent_switch $commit $n_parents)"
+        --bind="c:transform(git_interactive_show _fzf_parent_switch $commit $n_parents)"
         --preview="git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta"
         --bind="A:execute(git diff $commit^\$FZF_HEADER_LABEL $commit | delta --pager 'less -+F')"
         --bind="v:execute(git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta --pager 'less -+F')"
-        --bind="H:become(git_interactive_history popup $commit)"
+        --bind="t:become(git_interactive_history popup $commit)"
     )
     echo "$files" | fzf "${fzf_options[@]}"
 }
