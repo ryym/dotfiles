@@ -10,7 +10,7 @@ function! my#plug#fzf#tab_buffers#enable() abort
   augroup END
 endfunction
 
-function! my#plug#fzf#tab_buffers#list_others(tabnr) abort
+function! my#plug#fzf#tab_buffers#list(tabnr) abort
   let bufs = gettabvar(a:tabnr, 'tab_buffers', {})
   let bufnrs = values(bufs)
     \ ->sort({a, b -> a.displayed < b.displayed ? 1 : -1})

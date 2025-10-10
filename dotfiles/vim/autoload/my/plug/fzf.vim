@@ -65,7 +65,7 @@ endfunction
 function! my#plug#fzf#_tab_buffers() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
-    \   'source': my#plug#fzf#tab_buffers#list_others(tabpagenr()),
+    \   'source': my#plug#fzf#tab_buffers#list(tabpagenr()),
     \   'up': '45%',
     \   'options': '--multi --expect=ctrl-d ' . s:bat_preview_opt
     \ })
