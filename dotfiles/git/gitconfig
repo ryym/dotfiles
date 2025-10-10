@@ -32,6 +32,7 @@
     bd     = branch -d
     bm     = branch -m
     bp     = !git branch -d `git branch --merged | grep -vE '^(\\*|\\+)'` # prune branches
+    bcur   = branch --show-current
 
     # Delete the PR tracking branches.
     bppr   = !git branch -D `git branch | grep 'p\\d\\+'`
@@ -96,6 +97,7 @@
     d      = diff
     dc     = diff --cached
     dbase  = diff --merge-base
+    dnames = diff --name-only
     sbm    = submodule
 
     si = !git_interactive_status popup
