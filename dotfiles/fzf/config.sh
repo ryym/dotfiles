@@ -7,12 +7,14 @@ export FZF_DEFAULT_OPTS=$(
         '--layout=reverse'
         '--ansi'
         '--highlight-line'
+        '--preview-window right:wrap'
+        '--wrap'
         '--color=current-bg:#3d484d,pointer:#e67e80,marker:#d699b6,gutter:-1'
         '--bind=ctrl-k:kill-line'
         '--bind=ctrl-d:half-page-down'
         '--bind=ctrl-u:half-page-up'
         '--bind=ctrl-/:toggle-preview'
-        "--bind='ctrl-l:change-preview-window(down|right)'"
+        "--bind='ctrl-l:change-preview-window(down:wrap,80%|right:wrap)'"
         "--bind='ctrl-y:become(echo {+} | sed \"s/^ *//\" | tr -d \"\n\" | pbcopy)'"
         '--bind=alt-k:preview-up'
         '--bind=alt-j:preview-down'
