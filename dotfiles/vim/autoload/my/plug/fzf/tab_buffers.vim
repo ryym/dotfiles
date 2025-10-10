@@ -4,6 +4,7 @@
 function! my#plug#fzf#tab_buffers#enable() abort
   augroup my_fzf_tab_buffer
     autocmd!
+    autocmd VimEnter * call s:append_initialBuffers()
     autocmd BufEnter,BufWinEnter,BufFilePost * call s:append_buffer(expand('<abuf>'))
     autocmd BufDelete * call s:remove_buffer(expand('<abuf>'))
   augroup END
@@ -15,6 +16,16 @@ function! my#plug#fzf#tab_buffers#list_others(tabnr) abort
     \ ->sort({a, b -> a.displayed < b.displayed ? 1 : -1})
     \ ->map('v:val.nr')
   return bufnrs->filter('buflisted(v:val)')->map('bufname(v:val)')
+endfunction
+
+function! s:append_initialBuffers() abort
+  let t:tab_buffers = {}
+  for buf in getbufinfo()
+    let t:tab_buffers[buf.bufnr] = {
+      \   'nr': buf.bufnr,
+      \   'displayed': 0,
+      \ }
+  endfor
 endfunction
 
 function! s:append_buffer(bufnr) abort
