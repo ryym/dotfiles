@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 # A script to handle Claude Code hooks.
 # https://docs.anthropic.com/en/docs/claude-code/hooks
