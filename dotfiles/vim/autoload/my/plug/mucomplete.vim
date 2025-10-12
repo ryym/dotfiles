@@ -5,14 +5,9 @@ endfunction
 
 function! my#plug#mucomplete#before_load() abort
   let g:mucomplete#no_mappings = 1
-
   iunmap <tab>
   imap <tab> <plug>(MUcompleteFwd)
 
-  let target_filetypes = ['lua', 'ruby', 'sql', 'vim']
-  augroup vimrc
-    for ft in target_filetypes
-      execute 'autocmd FileType' ft ':MUcompleteAutoOn'
-    endfor
-  augroup END
+  " Enable auto completion for all files unless LSP is attached.
+  " It is configured in vim/autoload/my/plug/lspconfig.lua.
 endfunction

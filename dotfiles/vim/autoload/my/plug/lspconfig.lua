@@ -37,6 +37,28 @@ local function configure()
                 capabilities = capabilities,
             })
 
+            -- Use LSP for these files while keep using MUcomplete for others.
+            -- See vim/autoload/my/plug/mucomplete.vim.
+            local lsp_enabled_filetypes = {
+                'rust',
+                'javascript',
+                'typescript',
+                'typescript.tsx',
+                'go',
+                'css',
+                'python',
+            }
+            vim.api.nvim_create_autocmd('BufEnter', {
+                group = 'vimrc',
+                callback = function(event)
+                    if vim.tbl_contains(lsp_enabled_filetypes, vim.bo.filetype) then
+                        vim.cmd('MUcompleteAutoOff')
+                    else
+                        vim.cmd('MUcompleteAutoOn')
+                    end
+                end,
+            })
+
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = 'vimrc',
