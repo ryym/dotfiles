@@ -25,6 +25,7 @@ local function configure()
             -- Set the syntax option explicitly to make matchit ("%" jump on do/end) work.
             -- https://github.com/nvim-treesitter/nvim-treesitter/issues/584
             vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+                group = 'vimrc',
                 pattern = '*.rb',
                 command = 'set syntax=ruby',
             })

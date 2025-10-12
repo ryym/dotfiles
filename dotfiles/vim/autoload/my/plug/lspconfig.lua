@@ -39,6 +39,7 @@ local function configure()
 
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
+                group = 'vimrc',
                 callback = function(event)
                     vim.keymap.set('n', '<Space>vh', vim.lsp.buf.hover, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vv', vim.lsp.buf.definition, { buffer = event.buf })
