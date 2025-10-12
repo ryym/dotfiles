@@ -63,12 +63,6 @@ function! my#init#options#setup() abort
   " This makes splitting be more Tmux-like.
   set noequalalways
 
-  " Do not show the welcome message on startup.
-  " This is because I load most of the plugins asynchronously.
-  " Therefore the screen will be redrawn soon after plugins are loaded
-  " and the message is displayed for a moment. This is annoying.
-  set shortmess=I
-
   set cursorline
   set number
   set relativenumber
@@ -91,10 +85,11 @@ function! my#init#options#setup() abort
   set history     =50
   set laststatus  =2
   set cmdheight   =2
-  set completeopt =longest,menuone
-  set complete =.,w,b,u,t,i
+  set completeopt =longest,menuone,noselect
+  set complete    =.,w,b,u,t,i
   set whichwrap   =b,s,<,>,[,]
   set statusline  =%f%m%r%h%w\ -\ [%{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ %Y]\ [%Llines\]\ (%04l,%04v)
+  set shortmess   =Ic
   set formatoptions =croqlj
   set fileignorecase
   set timeoutlen  =1200
