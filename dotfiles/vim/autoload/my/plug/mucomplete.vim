@@ -5,6 +5,7 @@ endfunction
 
 function! my#plug#mucomplete#before_load() abort
   let g:mucomplete#no_mappings = 1
+  let g:mucomplete#minimum_prefix_length = 3
   iunmap <tab>
   imap <tab> <plug>(MUcompleteFwd)
 
