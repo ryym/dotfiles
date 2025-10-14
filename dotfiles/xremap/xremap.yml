@@ -30,6 +30,7 @@ keymap:
   - name: Like macOS
     remap:
       Super-A: Ctrl-A
+      Super-B: Ctrl-B
       Super-C: Ctrl-C
       Super-E: Ctrl-E
       Super-F: Ctrl-F
@@ -41,6 +42,7 @@ keymap:
       Super-S: Ctrl-S
       Super-T: Ctrl-T
       Super-V: Ctrl-Shift-V
+      Super-Shift-V: Ctrl-v
       Super-W: Ctrl-W
       Super-X: Ctrl-X
       Super-Z: Ctrl-Z
