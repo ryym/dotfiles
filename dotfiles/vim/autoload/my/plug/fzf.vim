@@ -39,7 +39,7 @@ function! my#plug#fzf#_without_ignored_files() abort
     \   'sink': 'edit',
     \   'source': src,
     \   'up': '45%',
-    \   'options': s:bat_preview_opt,
+    \   'options': '--header [files] ' . s:bat_preview_opt,
     \ })
 endfunction
 
@@ -67,7 +67,7 @@ function! my#plug#fzf#_tab_buffers() abort
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
     \   'source': my#plug#fzf#tab_buffers#list(tabpagenr()),
     \   'up': '45%',
-    \   'options': '--multi --expect=ctrl-d ' . s:bat_preview_opt
+    \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt
     \ })
 endfunction
 
