@@ -58,3 +58,7 @@ manv() {
 pjson() {
     jq . "$@" | bat -l json
 }
+
+chomp() {
+    tr -d '\n'
+}
