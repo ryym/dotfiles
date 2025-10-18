@@ -33,12 +33,12 @@ function! my#init#commands#setup() abort
   command! RmTrailingSpaces :%s/\v\s+$// | let v:hlsearch = 0 | normal! ``
 
   " Grep by various programs.
-  command! -bang -nargs=+ GitGrep call my#init#func#grep#by(0, '<bang>', 'git', <q-args>)
-  command! -bang -nargs=+ GitGrepAdd call my#init#func#grep#by(1, '<bang>', 'git', <q-args>)
-  command! -bang -nargs=+ RgGrep call my#init#func#grep#by(0, '<bang>', 'rg', <q-args>)
-  command! -bang -nargs=+ RgGrepAdd call my#init#func#grep#by(1, '<bang>', 'rg', <q-args>)
-  command! -bang -nargs=+ VimGrep call my#init#func#grep#by(0, '<bang>', 'vim', <q-args>)
-  command! -bang -nargs=+ VimGrepAdd call my#init#func#grep#by(1, '<bang>', 'vim', <q-args>)
+  command! -bang -nargs=+ -complete=file GitGrep call my#init#func#grep#by(0, '<bang>', 'git', <q-args>)
+  command! -bang -nargs=+ -complete=file GitGrepAdd call my#init#func#grep#by(1, '<bang>', 'git', <q-args>)
+  command! -bang -nargs=+ -complete=file RgGrep call my#init#func#grep#by(0, '<bang>', 'rg', <q-args>)
+  command! -bang -nargs=+ -complete=file RgGrepAdd call my#init#func#grep#by(1, '<bang>', 'rg', <q-args>)
+  command! -bang -nargs=+ -complete=file VimGrep call my#init#func#grep#by(0, '<bang>', 'vim', <q-args>)
+  command! -bang -nargs=+ -complete=file VimGrepAdd call my#init#func#grep#by(1, '<bang>', 'vim', <q-args>)
 
   command! ShowGreps echo 'Available greps: ' my#init#func#grep#available_greps()
   command! -nargs=1 ChangeGrep call my#init#func#grep#change_grep(<q-args>)
