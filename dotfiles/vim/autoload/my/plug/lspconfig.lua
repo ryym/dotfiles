@@ -36,6 +36,9 @@ local function configure()
             lspconfig.pylsp.setup({
                 capabilities = capabilities,
             })
+            lspconfig.clangd.setup({
+                capabilities = capabilities,
+            })
 
             -- Use LSP for these files while keep using MUcomplete for others.
             -- See vim/autoload/my/plug/mucomplete.vim.
