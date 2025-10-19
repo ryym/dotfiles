@@ -13,7 +13,10 @@ function! my#plug#mucomplete#before_load() abort
   let g:mucomplete#chains = {
     \   'ruby' : {
     \     'default': ['path', 'c-n'],
-    \   }
+    \     'rubyComment': [],
+    \   },
+    \  'markdown': [],
+    \  'text': [],
     \ }
 
   " Enable auto completion for all files unless LSP is attached.
