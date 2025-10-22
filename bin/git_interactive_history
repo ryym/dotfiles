@@ -41,7 +41,7 @@ fzf_options=(
     --bind="m:execute(git_interactive_history _menu)"
     --bind='?:execute(bat $(command -v git_interactive_history))'
 
-    --bind="y:become(echo {+2} | tr -d '\n' | $copy_cmd)"
+    --bind="y:execute-silent(echo {+2} | tr -d '\n' | $copy_cmd)"
     --bind="D:execute(git_interactive_history _diff {+2})"
     --bind='d:execute(git_interactive_history _diff_i {+2})'
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git_interactive_history _list)'
