@@ -13,8 +13,10 @@ function! my#plug#fzf#after_load()
   MapNamedKey <Space>u fzf
 
   Map n \[fzf]f ::call my#plug#fzf#_without_ignored_files()
+  Map n \[fzf]_f ::call my#plug#fzf#_without_ignored_files_normal_path()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
   Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
+  Map n \[fzf]_b ::call my#plug#fzf#_tab_buffers_normal_path()
   Map n \[fzf]m ::call my#plug#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
@@ -30,10 +32,30 @@ let s:fd_available = executable('fd')
 
 let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :10000 {}'"
+let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {2}/{1}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
-  " https://github.com/sharkdp/fd
-  " fd is so fast and it respects .gitignore by default.
+  " List file paths as "file directory-path" format. It passes raw escape sequences like "\033m..." to fd.
+  let src = 'fd --hidden -tf -tl --exclude .git --format "{/} [38;5;245m{//}[0m"'
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_without_ignored_files_on_select'),
+    \   'source': src,
+    \   'up': '45%',
+    \   'options': '--header [files] ' . s:bat_preview_opt_new_fmt,
+    \ })
+endfunction
+
+function! my#plug#fzf#_without_ignored_files_on_select(names) abort
+  execute 'edit' s:fmt_to_filepath(a:names[0])
+endfunction
+
+function! s:fmt_to_filepath(line) abort
+  let parts = split(a:line, '\s')
+  return fnameescape(parts[1] . '/' . parts[0])
+endfunction
+
+function! my#plug#fzf#_without_ignored_files_normal_path() abort
+  " List file paths normally.
   let src = s:fd_available ? 'fd --hidden -tf -tl --exclude .git' : 'git ls-files'
   call fzf#run({
     \   'sink': 'edit',
@@ -65,13 +87,35 @@ endfunction
 function! my#plug#fzf#_tab_buffers() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
+    \   'source': my#plug#fzf#tab_buffers#list_formatted(tabpagenr()),
+    \   'up': '45%',
+    \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt_new_fmt
+    \ })
+endfunction
+
+function! my#plug#fzf#_tab_buffers_on_select(names) abort
+  if len(a:names) == 0
+    return
+  endif
+  if a:names[0] == 'ctrl-d'
+    for name in a:names[1:]
+      execute 'bdelete' s:fmt_to_filepath(name)
+    endfor
+  else
+    execute 'edit' s:fmt_to_filepath(a:names[1])
+  endif
+endfunction
+
+function! my#plug#fzf#_tab_buffers_normal_path() abort
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_tab_buffers_normal_path_on_select'),
     \   'source': my#plug#fzf#tab_buffers#list(tabpagenr()),
     \   'up': '45%',
     \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt
     \ })
 endfunction
 
-function! my#plug#fzf#_tab_buffers_on_select(names) abort
+function! my#plug#fzf#_tab_buffers_normal_path_on_select(names) abort
   if len(a:names) == 0
     return
   endif
