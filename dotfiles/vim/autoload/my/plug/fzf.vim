@@ -31,7 +31,6 @@ endfunction
 
 let s:fd_available = executable('fd')
 
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :10000 {}'"
 let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {2}/{1}'"
 
