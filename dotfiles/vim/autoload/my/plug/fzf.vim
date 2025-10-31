@@ -13,7 +13,8 @@ function! my#plug#fzf#after_load()
   MapNamedKey <Space>u fzf
 
   Map n \[fzf]f ::call my#plug#fzf#_without_ignored_files()
-  Map n \[fzf]_f ::call my#plug#fzf#_without_ignored_files_normal_path()
+  Map n \[fzf]_f ::call my#plug#fzf#_without_ignored_files_no_buffers()
+  Map n \[fzf]__f ::call my#plug#fzf#_without_ignored_files_normal_path()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
   Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
   Map n \[fzf]_b ::call my#plug#fzf#_tab_buffers_normal_path()
@@ -35,6 +36,17 @@ let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :100
 let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {2}/{1}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
+  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
+  let src = '_vim_fzf_list_files ' . join(buffiles, ' ')
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_without_ignored_files_on_select'),
+    \   'source': src,
+    \   'up': '45%',
+    \   'options': '--header [files] ' . s:bat_preview_opt_new_fmt,
+    \ })
+endfunction
+
+function! my#plug#fzf#_without_ignored_files_no_buffers() abort
   " List file paths as "file directory-path" format. It passes raw escape sequences like "\033m..." to fd.
   let src = 'fd --hidden -tf -tl --exclude .git --format "{/} [38;5;245m{//}[0m"'
   call fzf#run({

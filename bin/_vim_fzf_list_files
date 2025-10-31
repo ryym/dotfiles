@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+# A script called from Vim's fzf utility. See: ./dotfiles/vim/autoload/my/plug/fzf.vim
+# The purpose of this script is to:
+#   - list all files as well as currently open buffers in Vim
+#   - list buffers first and list other files excluding buffers
+# Buffers are passed as arguments.
+
+excludes=()
+for filepath in "$@"; do
+    printf "\033[33m%s\033[0m \033[38;5;245m%s\033[0m\n" "$(basename "$filepath")" "$(dirname "$filepath")"
+    excludes+=("-E" "$filepath")
+done
+
+fd --hidden -tf -tl -E .git ${excludes[@]} --format "{/} [38;5;245m{//}[0m"
+
