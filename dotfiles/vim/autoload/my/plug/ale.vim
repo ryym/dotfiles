@@ -23,8 +23,7 @@ function my#plug#ale#before_load()
   let g:ale_fixers.markdown = ['prettier']
   let g:ale_fixers.go = ['goimports']
 
-  " https://github.com/dense-analysis/ale/issues/3814
-  let g:ale_rust_rustfmt_options = '--edition 2018'
+  let g:ale_rust_rustfmt_options = '--edition 2024'
 
   MapNamedKey <Leader>a ale
   Map n \[ale]f ::ALEFix
