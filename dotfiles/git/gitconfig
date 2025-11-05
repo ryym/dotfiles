@@ -33,6 +33,7 @@
     bm     = branch -m
     bp     = !git branch -d `git branch --merged | grep -vE '^(\\*|\\+)'` # prune branches
     bcur   = branch --show-current
+    bcopy  = !git branch --show-current | tr -d '\n' | ccopy
 
     # Delete the PR tracking branches.
     bppr   = !git branch -D `git branch | grep 'p\\d\\+'`
