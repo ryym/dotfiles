@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# An OS-agnostic copy-to-clipboard command.
+command -v wl-copy > /dev/null 2>&1 && wl-copy || pbcopy

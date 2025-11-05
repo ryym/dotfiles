@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# An OS-agnostic paste-from-clipboard command.
+command -v wl-paste > /dev/null 2>&1 && wl-paste || pbpaste

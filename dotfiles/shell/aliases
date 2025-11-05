@@ -27,7 +27,3 @@ alias popup='tmux popup -E -d `pwd` -w 90% -h 90%'
 alias sysu='systemctl --user'
 alias journalu='journalctl --user'
 command -v xdg-open > /dev/null 2>&1 && alias open='xdg-open'
-if command -v wl-copy > /dev/null 2>&1; then
-    alias pbcopy='wl-copy'
-    alias pbpaste='wl-paste'
-fi

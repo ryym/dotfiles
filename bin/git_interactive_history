@@ -27,7 +27,6 @@ preview_cmd="
             ;;
     esac
 "
-copy_cmd=$(command -v wl-copy > /dev/null 2>&1 && echo wl-copy || echo pbcopy)
 files_and_dirs_in_git="(git ls-files; git ls-tree -r -d --name-only @ | awk '{print \$0\"/\"}')"
 fzf_options=(
     --multi
@@ -41,7 +40,7 @@ fzf_options=(
     --bind="m:execute(git_interactive_history _menu)"
     --bind='?:execute(bat $(command -v git_interactive_history))'
 
-    --bind="y:execute-silent(echo {+2} | tr -d '\n' | $copy_cmd)"
+    --bind="y:execute-silent(echo {+2} | tr -d '\n' | ccopy)"
     --bind="D:execute(git_interactive_history _diff {+2})"
     --bind='d:execute(git_interactive_history _diff_i {+2})'
     --bind='b:execute(git rebase -i {2}^ || zsh)+reload-sync(git_interactive_history _list)'
