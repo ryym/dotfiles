@@ -16,6 +16,7 @@ endfunction
 function! s:configure_viler_buffer() abort
   Map n (buffer nowait) <CR> ::call viler#open_cursor_file('edit')
   Remap n (buffer nowait) <C-l> <Plug>(viler-open-file)
+  Remap n (buffer nowait) <C-h> <Plug>(viler-cd-up)
   Remap n (buffer nowait) L <Plug>(viler-open-file)
   Remap n (buffer nowait) H <Plug>(viler-cd-up)
   Remap n (buffer nowait) t <Plug>(viler-toggle-tree)
