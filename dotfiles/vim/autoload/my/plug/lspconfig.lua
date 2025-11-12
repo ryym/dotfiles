@@ -1,7 +1,7 @@
 local function configure()
     return {
         repo = 'neovim/nvim-lspconfig',
-        depends = {'cmp', 'cmp-lsp', 'luasnip', 'cmp-luasnip'},
+        depends = {'cmp', 'cmp-lsp', 'luasnip', 'cmp-luasnip', 'mucomplete'},
         after_load = function()
             local lspconfig = require('lspconfig')
 
