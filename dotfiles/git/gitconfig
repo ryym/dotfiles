@@ -105,6 +105,7 @@
     hi = !git_interactive_history popup
     di = !git_interactive_diff popup
     shi = !git_interactive_show popup
+    bi = !git_interactive_branches popup
 
     # https://developer.atlassian.com/blog/2015/04/force-with-lease/
     pushfw = push --force-with-lease

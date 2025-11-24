@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# A script to view Git branches interactively.
+
+main() {
+    cmd="$1"
+    shift
+    case "$cmd" in
+        popup) popup "$@" ;;
+        run) run "$@" ;;
+        _list) _list "$@" ;;
+        _preview) _preview "$@" ;;
+        _branch_name) _branch_name "$@" ;;
+        *)
+            echo 'specify valid command'
+            exit 1
+    esac
+}
+
+fzf_options=(
+    --multi
+    --no-wrap
+    --track
+    --preview="git_interactive_branches _preview {}"
+    --bind='start:ignore'
+    --bind='t:execute(git_interactive_history run $(git_interactive_branches _branch_name {}))'
+    --bind='?:execute(bat $(command -v git_interactive_branches))'
+
+    --bind='y:execute-silent(echo $(git_interactive_branches _branch_name {+}) | tr -d "\n" | ccopy)'
+
+    # Make exit code 0 for these cancel keys.
+    --expect='q,ctrl-g'
+)
+
+popup() {
+    fzf_options+=(--tmux=90%,border-native)
+    run "$@"
+}
+
+run() {
+    _list "$@" | fzf "${fzf_options[@]}" > /dev/null
+}
+
+_list() {
+    # 1. List all branches with each last commit date.
+    paste -d ' ' \
+        <(git branch "$@" --format '%(committerdate:short)') \
+        <(git -c color.ui=always branch "$@" --verbose) | \
+        # 2. Add 0/1 prefix to each line to indicate whether it is a remote branch.
+        awk '{
+            if ($2 ~ /remotes\//) {
+              print "1", $0
+            } else {
+              print "0", $0
+            }
+        }' | \
+        # 3. Sort by remote or not first, and then a last commit date.
+        sort -k1,1 -k2,2r | \
+        # 4. Remove the remote branch indicator (0/1).
+        cut -d ' ' -f '2-'
+}
+
+_preview() {
+    git -c color.ui=always re -50 $(_branch_name "$1")
+}
+
+_branch_name() {
+    for line in "$@"; do
+        # The format of a line: "2025-01-23 (*/+) branch-name detail..."
+        branch=$(echo "$line" | awk '{print $2}')
+        # branch="$1"
+        if [[ $branch == '+' || $branch == '*' ]]; then
+            branch=$(echo "$1" | awk '{print $3}')
+        fi
+        echo "$branch"
+    done
+}
+
+main "$@"
