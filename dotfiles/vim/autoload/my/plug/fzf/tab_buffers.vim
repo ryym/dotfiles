@@ -18,16 +18,6 @@ function! my#plug#fzf#tab_buffers#list(tabnr) abort
   return bufnrs->filter('buflisted(v:val)')->map('bufname(v:val)')
 endfunction
 
-function! my#plug#fzf#tab_buffers#list_formatted(tabnr) abort
-  let bufnames = my#plug#fzf#tab_buffers#list(a:tabnr)
-  let options = []
-  for bufname in bufnames
-    let option = fnamemodify(bufname, ':t') . ' ' . '[38;5;245m' . fnamemodify(bufname, ':h') . '[0m'
-    call add(options, option)
-  endfor
-  return options
-endfunction
-
 function! s:append_initialBuffers() abort
   let t:tab_buffers = {}
   for buf in getbufinfo()

@@ -13,8 +13,7 @@ function! my#plug#fzf#after_load()
   MapNamedKey <Space>u fzf
 
   Map n \[fzf]f ::call my#plug#fzf#_without_ignored_files()
-  Map n \[fzf]_f ::call my#plug#fzf#_without_ignored_files_no_buffers()
-  Map n \[fzf]__f ::call my#plug#fzf#_without_ignored_files_normal_path()
+  Map n \[fzf]_f ::call my#plug#fzf#_without_ignored_files_normal_path()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
   Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
   Map n \[fzf]_b ::call my#plug#fzf#_tab_buffers_normal_path()
@@ -32,22 +31,11 @@ endfunction
 let s:fd_available = executable('fd')
 
 let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :10000 {}'"
-let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {2}/{1}'"
+let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {3}/{2}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
   let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
-  let src = '_vim_fzf_list_files ' . join(buffiles, ' ')
-  call fzf#run({
-    \   'sink*': function('my#plug#fzf#_without_ignored_files_on_select'),
-    \   'source': src,
-    \   'up': '45%',
-    \   'options': '--header [files] ' . s:bat_preview_opt_new_fmt,
-    \ })
-endfunction
-
-function! my#plug#fzf#_without_ignored_files_no_buffers() abort
-  " List file paths as "file directory-path" format. It passes raw escape sequences like "\033m..." to fd.
-  let src = 'fd --hidden -tf -tl --exclude .git --format "{/} [38;5;245m{//}[0m"'
+  let src = '_vim_fzf_list_files buffers_and_files ' . join(buffiles, ' ')
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_without_ignored_files_on_select'),
     \   'source': src,
@@ -62,7 +50,7 @@ endfunction
 
 function! s:fmt_to_filepath(line) abort
   let parts = split(a:line, '\s')
-  return fnameescape(parts[1] . '/' . parts[0])
+  return fnameescape(parts[2] . '/' . parts[1])
 endfunction
 
 function! my#plug#fzf#_without_ignored_files_normal_path() abort
@@ -96,9 +84,11 @@ function! my#plug#fzf#_open_file_or_dir(...)
 endfunction
 
 function! my#plug#fzf#_tab_buffers() abort
+  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
+  let src = '_vim_fzf_list_files buffers ' . join(buffiles, ' ')
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
-    \   'source': my#plug#fzf#tab_buffers#list_formatted(tabpagenr()),
+    \   'source': src,
     \   'up': '45%',
     \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt_new_fmt
     \ })
