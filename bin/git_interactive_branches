@@ -19,6 +19,7 @@ main() {
 
 fzf_options=(
     --multi
+    --no-sort
     --no-wrap
     --track
     --preview="git_interactive_branches _preview {}"
