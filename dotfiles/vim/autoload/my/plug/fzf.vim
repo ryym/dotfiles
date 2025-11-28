@@ -21,6 +21,7 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
   Map n \[fzf]G ::call my#plug#fzf#_gosrc()
+  Map n \[fzf]d ::call my#plug#fzf#_dotfiles()
   Map n \[fzf]i ::call my#plug#fzf#_init_scripts()
   Map n \[fzf]p ::call my#plug#fzf#_plugin_confs()
   Map n \[fzf]P ::call my#plug#fzf#_plugin_dirs()
@@ -37,14 +38,14 @@ function! my#plug#fzf#_without_ignored_files() abort
   let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
   let src = '_vim_fzf_list_files buffers_and_files ' . join(buffiles, ' ')
   call fzf#run({
-    \   'sink*': function('my#plug#fzf#_without_ignored_files_on_select'),
+    \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': src,
     \   'up': '45%',
     \   'options': '--header [files] ' . s:bat_preview_opt_new_fmt,
     \ })
 endfunction
 
-function! my#plug#fzf#_without_ignored_files_on_select(names) abort
+function! my#plug#fzf#_open_file(names) abort
   execute 'edit' s:fmt_to_filepath(a:names[0])
 endfunction
 
@@ -184,6 +185,16 @@ function! my#plug#fzf#_most_recently_used() abort
     \   'sink': 'edit',
     \   'source': v:oldfiles,
     \   'up': '45%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_dotfiles() abort
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_open_file'),
+    \   'source': '_vim_fzf_list_files fd_formatted',
+    \   'dir': '~/.dotfiles',
+    \   'up': '45%',
+    \   'options': '--header [dotfiles] ' . s:bat_preview_opt_new_fmt,
     \ })
 endfunction
 

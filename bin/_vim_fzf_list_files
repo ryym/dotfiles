@@ -8,6 +8,7 @@ main() {
     case "$cmd" in
         buffers) buffers "$@" ;;
         buffers_and_files) buffers_and_files "$@" ;;
+        fd_formatted) fd_formatted "$@" ;;
         *)
             echo 'specify valid command'
             exit 1
@@ -34,5 +35,8 @@ buffers_and_files() {
     fd --hidden -tf -tl -E .git ${excludes[@]} --format "[38;5;245m=[0m {/} [38;5;245m{//}[0m"
 }
 
+fd_formatted() {
+    fd --hidden -tf -tl -E .git "$@" --format "[38;5;245m=[0m {/} [38;5;245m{//}[0m"
+}
 
 main "$@"
