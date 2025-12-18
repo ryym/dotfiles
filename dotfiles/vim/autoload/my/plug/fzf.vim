@@ -32,7 +32,7 @@ endfunction
 let s:fd_available = executable('fd')
 
 let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :10000 {}'"
-let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {3}/{2}'"
+let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {3}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
   let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
@@ -51,7 +51,7 @@ endfunction
 
 function! s:fmt_to_filepath(line) abort
   let parts = split(a:line, '\s')
-  return fnameescape(parts[2] . '/' . parts[1])
+  return fnameescape(parts[2])
 endfunction
 
 function! my#plug#fzf#_without_ignored_files_normal_path() abort
