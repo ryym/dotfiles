@@ -40,9 +40,13 @@ local function configure()
                 capabilities = capabilities,
             })
 
-            -- Use LSP for these files while keep using MUcomplete for others.
+            lspconfig.rubocop.setup({
+                capabilities = capabilities,
+            })
+
+            -- Use LSP completion for these files while keep using MUcomplete for others.
             -- See vim/autoload/my/plug/mucomplete.vim.
-            local lsp_enabled_filetypes = {
+            local filetypes_using_lsp_completion = {
                 'rust',
                 'javascript',
                 'typescript',
@@ -54,7 +58,7 @@ local function configure()
             vim.api.nvim_create_autocmd('BufEnter', {
                 group = 'vimrc',
                 callback = function(event)
-                    if vim.tbl_contains(lsp_enabled_filetypes, vim.bo.filetype) then
+                    if vim.tbl_contains(filetypes_using_lsp_completion, vim.bo.filetype) then
                         vim.cmd('MUcompleteAutoOff')
                     else
                         vim.cmd('MUcompleteAutoOn')
