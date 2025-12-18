@@ -85,6 +85,13 @@ local function configure()
                         highlight VirtualTextError ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
                         highlight VirtualTextWarning ctermfg=214 guifg=#dbbc7f guibg=#4d4c43 gui=italic
                     ]])
+
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        pattern = {"*.rs"},
+                        callback = function()
+                            vim.lsp.buf.format()
+                        end,
+                    })
                 end,
             })
 
