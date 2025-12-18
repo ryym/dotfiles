@@ -18,7 +18,10 @@ macos-option-as-alt = true
 background = #2d353b
 foreground = #d3c6aa
 
-# Treat Ctrl-Enter as the same as Enter.
+# Override some default key bindings related to Enter and let them just emits Enter.
+# By pressing Enter immediately after some keys using Ctrl or Super,
+# I sometimes accidentally input these bindings but I always just want to input Enter.
 keybind = ctrl+enter=text:\r
+keybind = super+enter=text:\r
 
 config-file = ?local
