@@ -7,6 +7,7 @@ function my#plug#ale#before_load()
   let g:ale_linters_explicit = 1
   let g:ale_fix_on_save = 1
   let g:ale_fixers = {
+    \ 'rust': ['rustfmt'],
     \ 'elm': ['elm-format'],
     \ 'terraform': ['terraform'],
     \ }
@@ -21,6 +22,8 @@ function my#plug#ale#before_load()
   let g:ale_fixers.graphql = ['prettier']
   let g:ale_fixers.markdown = ['prettier']
   let g:ale_fixers.go = ['goimports']
+
+  let g:ale_rust_rustfmt_options = '--edition 2024'
 
   MapNamedKey <Leader>a ale
   Map n \[ale]f ::ALEFix
