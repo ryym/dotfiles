@@ -32,6 +32,9 @@ class Main
   private
 
   def handle_notification_event(input)
+    # Ignore "Claude is waiting for your input".
+    return if input['notification_type'] == 'idle_prompt'
+
     system "notifm #{input['message']}"
   end
 
