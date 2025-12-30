@@ -30,8 +30,13 @@ link_dotfile() {
             local cmd="ln -nsf $srcpath $destpath"
             ;;
         systemd)
-            local user=$($sudo && echo '' || echo '--user')
-            local cmd="systemctl $user link $srcpath"
+            if has systemctl; then
+                local user=$($sudo && echo '' || echo '--user')
+                local cmd="systemctl $user link $srcpath"
+            else
+                echo "no systemctl, skip link: $srcpath"
+                return
+            fi
             ;;
     esac
 
