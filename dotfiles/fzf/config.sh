@@ -9,7 +9,7 @@ export FZF_DEFAULT_OPTS=$(
         '--highlight-line'
         '--preview-window right:wrap'
         '--wrap'
-        '--color=current-bg:#3d484d,pointer:#e67e80,marker:#d699b6,gutter:-1'
+        '--color=current-bg:#3d484d,pointer:#e67e80,marker:#d699b6'
         '--bind=ctrl-k:kill-line'
         '--bind=ctrl-d:half-page-down'
         '--bind=ctrl-u:half-page-up'
