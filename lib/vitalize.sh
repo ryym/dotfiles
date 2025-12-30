@@ -4,7 +4,7 @@
 # Note that this script adds '$DOTPATH/bin' to the '$PATH'
 # automatically if it isn't in the '$PATH'.
 
-if ! $(which __dot_bin_enabled) >/dev/null 2>&1; then
+if ! $(which __dot_bin_enabled >/dev/null 2>&1); then
     PATH="$DOTPATH/bin:$PATH"
 fi
 
