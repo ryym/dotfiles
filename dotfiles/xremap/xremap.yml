@@ -54,6 +54,17 @@ keymap:
       Super-Shift-Equal: Ctrl-Shift-Equal
       Super-0: Ctrl-0
 
+      # Ignore modifier keys on pressing the `英数` and `かな` keys.
+      # Sometimes I accidentally press the keys with modifiers But some IME toos cannot handle them.
+      Shift-Hanja: Hanja
+      Ctrl-Hanja: Hanja
+      Super-Hanja: Hanja
+      Space-Hanja: Hanja
+      Shift-Hangeul: Hangeul
+      Ctrl-Hangeul: Hangeul
+      Super-Hangeul: Hangeul
+      Space-Hangeul: Hangeul
+
   - name: Like Emacs or terminals
     exact_match: true
     remap:
