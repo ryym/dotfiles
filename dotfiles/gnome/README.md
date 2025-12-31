@@ -3,9 +3,9 @@
 ## Change the hotkey for the overview screen (app launcher)
 
 1. Clear 'Super_L' from the overlay key setting.
-    ```
-    gsettings set org.gnome.mutter overlay-key ''
-    ```
+   ```
+   gsettings set org.gnome.mutter overlay-key ''
+   ```
 2. Open the shortcuts in Settings, find `Show the overview` and change it.
 
 ## Set up input methods like macOS
@@ -40,4 +40,3 @@ To do that, you need to launch Chrome with the command line flag.
 ### Install Tiling Assistant
 
 <https://extensions.gnome.org/extension/3733/tiling-assistant/>
-

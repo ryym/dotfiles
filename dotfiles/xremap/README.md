@@ -14,10 +14,10 @@ That's why I make them work in any applications in Linux as well by remapping ke
 ## Current remapping method
 
 1. Map `Ctrl-*` shortcuts to the keys that have the same functionality in Linux.
-    - Ctrl-a -> Home
-    - Ctrl-e -> End
-    - Ctrl-k -> Shift-End, Delete
-    - etc
+   - Ctrl-a -> Home
+   - Ctrl-e -> End
+   - Ctrl-k -> Shift-End, Delete
+   - etc
 1. In terminal emulators, remap those keys (Home, End, etc) again to restore the original behaviors.
 
 In Linux, standard navigation keys such as Home, End, Arrow keys, etc, provide expected functionality in most applications.
@@ -25,9 +25,9 @@ However, they don't work in terminals by default, in contrast of the `Ctrl` shor
 Therefore, we need to _map them back_ to their original behaviors in terminals.
 Fortunately, major terminal emulators allow such customization of key bindings. Examples:
 
-- Alacritty provides [`chars` mapping](<https://alacritty.org/config-alacritty.html#keyboard>)
-- Kitty provides [`send_key`](<https://sw.kovidgoyal.net/kitty/actions/#action-send_key>)
-- Foot provides [`text-bindings`](<https://codeberg.org/dnkl/foot/src/commit/42f78b7f9c755d5fa7e04f0cbbbf88c58dabd44d/foot.ini#L240>)
+- Alacritty provides [`chars` mapping](https://alacritty.org/config-alacritty.html#keyboard)
+- Kitty provides [`send_key`](https://sw.kovidgoyal.net/kitty/actions/#action-send_key)
+- Foot provides [`text-bindings`](https://codeberg.org/dnkl/foot/src/commit/42f78b7f9c755d5fa7e04f0cbbbf88c58dabd44d/foot.ini#L240)
 - etc
 
 That is how I realize the consistent `Ctrl` shortcuts across applications in Lnux.
@@ -58,7 +58,7 @@ Actually I had used this approach first, but stopped after a while. The reason i
 - It works most of the time, but some key mappings occasionally fail to work as expected.
 - Some key mappings doesn't work on [Hyprland] most of the time, even if I use Xremap built with the `--features hypr` flag.
 - It sometimes breaks my key inputs if I enter keys during its initialization.
-    - It seems to occur when I enter keys during it grabs the keyboard device.
+  - It seems to occur when I enter keys during it grabs the keyboard device.
 
 [Hyprland]: https://hyprland.org/
 
