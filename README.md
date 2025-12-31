@@ -11,20 +11,28 @@ This repository manages:
 ## Supported OS
 
 - macOS
+- Fedora
 - Arch Linux
 
 ## Prerequisites
 
-- [Git] - to download and update this repository.
-- [Bash] - to run install scripts written in Bash.
-- Package manager - to install basic libraries for your OS. You can use:
-  - [Homebrew][Homebrew] (macOS)
-  - [pacman][pacman] (Arch Linux)
+Necessary command line tools:
 
-[Git]: https://git-scm.com/
-[Bash]: https://www.gnu.org/software/bash/
+- `bash`
+- `git`
+- `make`
+- `sudo`
+- `which`
+
+Necessary package managers:
+
+- macOS: [Homebrew][Homebrew]
+- Fedora: [DNF][DNF]
+- Arch Linux: [pacman][pacman]
+
 [Homebrew]: http://brew.sh/
 [pacman]: https://wiki.archlinux.org/title/pacman
+[DNF]: https://docs.fedoraproject.org/en-US/quick-docs/dnf/
 
 ## Installation
 
