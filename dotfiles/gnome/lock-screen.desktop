@@ -1,0 +1,13 @@
+# A desktop environment to suspend.
+# Usually there is a default "Suspend" desktop entry but I want its name to start with "Lock"
+# because I'm used to typing "lock" in macOS. The same function is called "Lock Screen" in macOS.
+# ("Suspend" would be more accurate name, though)
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Lock and Suspend
+Comment=Suspend the system
+Exec=systemctl suspend
+Icon=system-suspend
+Terminal=false
+Keywords=suspend;sleep;power;

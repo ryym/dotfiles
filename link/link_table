@@ -55,6 +55,7 @@ case $(ostype) in
     fedora)
         LINKS+=(
             'fontconfig/cjk-fallback.conf:.config/fontconfig/conf.d/99-cjk-fallback.conf'
+            'gnome/lock-screen.desktop:.local/share/applications/lock-screen.desktop'
             'xremap/xremap.yml:.config/xremap.yml'
             'xremap/xremap.service:.config/systemd/user/xremap.service'
             '!sudo:xremap/xremap-udev.rules:/etc/udev/rules.d/99-xremap-udev.rules'
