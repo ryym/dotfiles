@@ -25,6 +25,9 @@ LINKS=(
     'ghostty/config:.config/ghostty/config'
     'lazygit/config.yml':'.config/lazygit/config.yml'
     'lesskey':'.config/lesskey'
+    'claude/CLAUDE.md':'.claude/CLAUDE.md'
+    'claude/settings.json':'.claude/settings.json'
+    'claude/statusline.sh':'.claude/statusline.sh'
 )
 
 case $(ostype) in

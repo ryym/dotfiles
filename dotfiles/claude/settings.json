@@ -1,0 +1,29 @@
+{
+  "sandbox": {
+    "enabled": true
+  },
+  "permissions": {
+    "deny": ["Read(//)", "Read(~/)", "Edit(//)", "Edit(~/)", "Write(//)", "Write(~/)"]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [{ "type": "command", "command": "_claude_hook" }]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [{ "type": "command", "command": "_claude_hook" }]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.dotfiles/dotfiles/claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  }
+}
