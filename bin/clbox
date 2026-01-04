@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# (Experimental)
+# A script to run Claude Code as securely as possible within an external and unfamiliar repository.
+# It launches a temporary container and run Claude Code within it.
+# It uses the development container maintained by the Claude Code team.
+# https://github.com/anthropics/claude-code/tree/d213a74fc8e3b6efd/.devcontainer
+#
+# However, as noted in the following page, a container is not a perfect solution.
+# https://code.claude.com/docs/en/devcontainer
+# For example, we can never prevent Claude Code from reading its own credentials.
+# Never use `--dangerously-skip-permissions` and always explicitly give permissions.
+#
+# To use this script, you first need to build a `claude-devcontainer` Docker image.
+# 1. git clone https://github.com/anthropics/claude-code
+# 2. cd claude-code/.devcontainer
+# 3. docker build -t claude-devcontainer:latest .
+
+# clbox --help #=> run "claude --help" in the container
+# clbox _ ls   #=> launch Bash and run "ls" in the container
+if [ "$1" = "_" ]; then
+    cmd="bash"
+else
+    cmd="claude"
+fi
+shift
+
+docker run --rm -it \
+    --workdir /host/$(pwd) \
+    --volume $(pwd):/host/$(pwd) \
+    --volume ~/local/volumes/claude-devcontainer-home:/home/node \
+    claude-devcontainer:latest "$cmd" "$@"
