@@ -3,7 +3,17 @@
     "enabled": true
   },
   "permissions": {
-    "deny": ["Read(//)", "Read(~/)", "Edit(//)", "Edit(~/)", "Write(//)", "Write(~/)"]
+    "deny": [
+      "Read(//)",
+      "Read(~/)",
+      "Edit(//)",
+      "Edit(~/)",
+      "Write(//)",
+      "Write(~/)",
+      "Bash(tmux list-panes:*)",
+      "Bash(tmux display-message:*)",
+      "Bash(tmux capture-pane:*)"
+    ]
   },
   "hooks": {
     "Notification": [
