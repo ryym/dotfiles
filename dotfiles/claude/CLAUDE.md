@@ -4,10 +4,14 @@
 
 If the instructions contain contradictions or you believe they won't work as directed, please clearly point out these issues.
 
-## Documentation
+## Temporary Files
 
-When instructed to compile anything like investigation results into a document,
-save it as a Markdown file within the `.local` directory.
+Unless otherwise specified, store temporary files like documents or scripts in the `.local/claude` directory.
+For example,
+
+- When instructed to compile anything like investigation results into a document.
+- When you create a temporary script and use it.
+
 The `.local` directory is excluded from Git so you don't need to commit it.
 
 ## Git Usage
