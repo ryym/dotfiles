@@ -1,15 +1,17 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(tmux list-panes:*)",
+      "Bash(tmux display-message:*)",
+      "Bash(tmux capture-pane:*)"
+    ],
     "deny": [
       "Read(//)",
       "Read(~/)",
       "Edit(//)",
       "Edit(~/)",
       "Write(//)",
-      "Write(~/)",
-      "Bash(tmux list-panes:*)",
-      "Bash(tmux display-message:*)",
-      "Bash(tmux capture-pane:*)"
+      "Write(~/)"
     ]
   },
   "hooks": {
