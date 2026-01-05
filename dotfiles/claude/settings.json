@@ -1,6 +1,10 @@
 {
   "permissions": {
     "allow": [
+      "Read(.local/claude/**)",
+      "Write(.local/claude/**)",
+      "Edit(.local/claude/**)",
+      "Bash(mkdir:*)",
       "Bash(tmux list-panes:*)",
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
