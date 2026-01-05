@@ -1,7 +1,4 @@
 {
-  "sandbox": {
-    "enabled": true
-  },
   "permissions": {
     "deny": [
       "Read(//)",
@@ -18,12 +15,22 @@
   "hooks": {
     "Notification": [
       {
-        "hooks": [{ "type": "command", "command": "_claude_hook" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook"
+          }
+        ]
       }
     ],
     "Stop": [
       {
-        "hooks": [{ "type": "command", "command": "_claude_hook" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook"
+          }
+        ]
       }
     ]
   },
@@ -35,5 +42,8 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true
   }
 }
