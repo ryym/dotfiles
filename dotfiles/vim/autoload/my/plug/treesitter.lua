@@ -14,6 +14,8 @@ local function configure()
                     "tsx",
                     "typescript",
                     "markdown",
+                    "python",
+                    "json",
                 },
                 highlight = {
                     enable = true,
