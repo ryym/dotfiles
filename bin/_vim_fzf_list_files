@@ -38,7 +38,7 @@ buffers_and_files() {
 }
 
 fd_formatted() {
-    fd --hidden -tf -tl -E .git ${excludes[@]} --format "[38;5;245m=[0m {/} [38;5;245m{//}/[38;5;240m{/}[0m"
+    fd --hidden -tf -tl -E .git ${excludes[@]} --format "[38;5;245m=[0m {/} [38;5;245m{//}/[38;5;240m{/}[0m" "$@"
 }
 
 main "$@"

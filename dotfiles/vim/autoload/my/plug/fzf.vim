@@ -17,6 +17,8 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
   Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
   Map n \[fzf]_b ::call my#plug#fzf#_tab_buffers_normal_path()
+  Map n \[fzf]w ::call my#plug#fzf#_local_files()
+  Map n \[fzf]D ::call my#plug#fzf#_downloads()
   Map n \[fzf]m ::call my#plug#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
   Map n \[fzf]g ::call my#plug#fzf#_ghq()
@@ -177,6 +179,26 @@ function! my#plug#fzf#_gosrc() abort
     \   'sink': 'cd',
     \   'source': 'gits -p $GOPATH/src',
     \   'up': '45%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_local_files() abort
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_open_file'),
+    \   'source': '_vim_fzf_list_files fd_formatted',
+    \   'dir': '.local',
+    \   'up': '45%',
+    \   'options': '--header [.local] ' . s:bat_preview_opt_new_fmt,
+    \ })
+endfunction
+
+function! my#plug#fzf#_downloads() abort
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_open_file'),
+    \   'source': '_vim_fzf_list_files fd_formatted',
+    \   'dir': '~/Downloads',
+    \   'up': '45%',
+    \   'options': '--header [Downloads] ' . s:bat_preview_opt_new_fmt,
     \ })
 endfunction
 
