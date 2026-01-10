@@ -6,13 +6,23 @@ If the instructions contain contradictions or you believe they won't work as dir
 
 ## Temporary Files
 
-Unless otherwise specified, store temporary files like documents or scripts in the `.local/claude` directory.
-For example,
-
-- When instructed to compile anything like investigation results into a document.
-- When you create a temporary script and use it.
-
+Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local/tmp` directory.
 The `.local` directory is excluded from Git so you don't need to commit it.
+
+## Documentation
+
+When you write documents, store them in the `.local/claude` directory.
+For example, you create a markdown document when instructed to investigate something and summarize results.
+
+### Format
+
+- A file name should be English in kebab-case like `.local/claude/research-result-of-something.md`.
+- For markdown, run `prettier --ignore-path /dev/null --write <filepath>` after writing the file to format it.
+
+### Version control
+
+The `.local/claude` directory itself is managed by Git without a remote repository.
+Whenever you create, update, or delete a file in it, you must commit it to Git.
 
 ## Git Usage
 

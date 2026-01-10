@@ -5,6 +5,10 @@
       "Write(.local/claude/**)",
       "Edit(.local/claude/**)",
       "Bash(mkdir:*)",
+      "Bash(prettier:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
       "Bash(tmux list-panes:*)",
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
