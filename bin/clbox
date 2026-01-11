@@ -20,10 +20,10 @@
 # clbox _ ls   #=> launch Bash and run "ls" in the container
 if [ "$1" = "_" ]; then
     cmd="bash"
+    shift
 else
     cmd="claude"
 fi
-shift
 
 docker run --rm -it \
     --workdir /host/$(pwd) \
