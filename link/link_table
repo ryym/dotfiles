@@ -27,7 +27,7 @@ LINKS=(
     'lesskey':'.config/lesskey'
     'claude/CLAUDE.md':'.claude/CLAUDE.md'
     'claude/settings.json':'.claude/settings.json'
-    'claude/settings.container.json':'local/volumes/claude-devcontainer-home/.claude/settings.json'
+    'claude/settings.container.json':'.local/volumes/claude-devcontainer-home/.claude/settings.json'
     'claude/statusline.sh':'.claude/statusline.sh'
     'claude/skills/tmux':'.claude/skills/tmux'
 )

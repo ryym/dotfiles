@@ -28,5 +28,5 @@ fi
 docker run --rm -it \
     --workdir /host/$(pwd) \
     --volume $(pwd):/host/$(pwd) \
-    --volume ~/local/volumes/claude-devcontainer-home:/home/node \
+    --volume ~/.local/volumes/claude-devcontainer-home:/home/node \
     claude-devcontainer:latest "$cmd" "$@"

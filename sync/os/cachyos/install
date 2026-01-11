@@ -8,7 +8,7 @@ source "$DOTPATH/sync/lib/vitalize.sh"
 
 log_start "Install for CachyOS"
 
-mkdir -p "$HOME/local/bin"
+mkdir -p "$HOME/.local/bin"
 
 load pkgs/pacman/install
 
