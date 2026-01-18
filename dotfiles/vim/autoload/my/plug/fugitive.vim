@@ -1,6 +1,7 @@
 function! my#plug#fugitive#configure(conf) abort
   let a:conf.repo = 'tpope/vim-fugitive'
   let a:conf.after_load = function('my#plug#fugitive#after_load')
+  let g:fugitive_no_maps = 1
 endfunction
 
 function! my#plug#fugitive#after_load()

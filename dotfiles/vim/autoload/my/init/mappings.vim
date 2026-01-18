@@ -86,6 +86,8 @@ function! my#init#mappings#setup() abort
     execute 'Map nx' ukey '"_' . ukey
   endfor
 
+  Map n (silent) y<C-g> ::call <SID>copy_current_file_path()
+
   " Delete text without changing the clipboard.
   " This is handy when you want to keep the content of clipboard over deletions.
   Map nx md "_d
@@ -275,6 +277,12 @@ function! s:map_repeat_keys_and_move_to_occurrence(direct_to_right, command)
     Map nxo , ;
   endif
   return a:command
+endfunction
+
+function! s:copy_current_file_path()
+  let path = fnamemodify(expand('%:p'), ':.')
+  call setreg(v:register, path)
+  echo "Copied: " . path
 endfunction
 
 function! s:search_pattern_to_fixed_direction(normal_key, reverse_key)
