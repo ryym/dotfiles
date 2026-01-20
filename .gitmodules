@@ -1,6 +1,3 @@
-[submodule "dotfiles/tmux/plugins/tpm"]
-	path = dotfiles/tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
 [submodule "dotfiles/vim/pack/init/opt/mapping.vim"]
 	path = dotfiles/vim/pack/init/opt/mapping.vim
 	url = https://github.com/ryym/mapping.vim
