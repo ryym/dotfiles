@@ -34,6 +34,17 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [

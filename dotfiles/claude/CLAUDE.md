@@ -13,22 +13,7 @@ The `.local` directory is excluded from Git so you don't need to commit it.
 
 When you write documents, store them in the `.local/claude` directory.
 For example, you create a markdown document when instructed to investigate something and summarize results.
-
-### Format
-
-- A file name should be English in kebab-case like `.local/claude/research-result-of-something.md`.
-- For markdown, run `prettier --ignore-path /dev/null --write <filepath>` after writing the file to format it.
-
-### Version control
-
-The `.local/claude` directory itself is managed by Git without a remote repository.
-Whenever you create, update, or delete a file in it, you must commit it to Git.
-
-## Git Usage
-
-When working on development in a directory with `.git/`,
-you MUST run `git commit` after completing each discrete step of work.
-Do not wait to accumulate multiple changes.
+A file name should be English in kebab-case like `.local/claude/research-result-of-something.md`.
 
 ### Commit Granularity
 

@@ -14,6 +14,7 @@
 #   }
 
 require 'json'
+require 'pathname'
 
 class Main
   def run(json)
@@ -24,6 +25,8 @@ class Main
       handle_notification_event(input)
     when 'Stop'
       handle_stop_event(input)
+    when 'PostToolUse'
+      handle_post_tool_use_event(input)
     else
       raise "unsupported Claude hook: #{event_name}"
     end
@@ -31,6 +34,11 @@ class Main
 
   private
 
+  def command_exists?(command)
+    system("command -v #{command} > /dev/null 2>&1")
+  end
+
+  # https://code.claude.com/docs/en/hooks#notification-input
   def handle_notification_event(input)
     # Ignore "Claude is waiting for your input".
     return if input['notification_type'] == 'idle_prompt'
@@ -38,8 +46,38 @@ class Main
     system "notifm #{input['message']}"
   end
 
+  # https://code.claude.com/docs/en/hooks#stop-and-subagentstop-input
   def handle_stop_event(_input)
     system 'notifm Claude finished task'
+  end
+
+  # https://code.claude.com/docs/en/hooks#posttooluse-input
+  def handle_post_tool_use_event(input)
+    file_path = input['tool_input']['file_path']
+    return if file_path.nil?
+
+    file_path = Pathname.new(file_path).expand_path
+    format_file(file_path)
+    commit_local_document_to_git(file_path)
+  end
+
+  private def format_file(file_path)
+    prettier_exts = %w[.js .jsx .ts .tsx .css .html .md]
+    if prettier_exts.include?(file_path.extname) && command_exists?('prettier')
+      File.write('hogehoge', file_path)
+      system("prettier --write #{file_path}")
+    end
+  end
+
+  private def commit_local_document_to_git(file_path)
+    claude_work_dir = Pathname.new("#{Dir.pwd}/.local/claude").expand_path
+    return unless file_path.ascend.any? { _1 == claude_work_dir }
+
+    git = "git -C #{claude_work_dir}"
+    system("#{git} init") unless File.exist?("#{claude_work_dir}/.git")
+
+    rel_path = file_path.relative_path_from(claude_work_dir)
+    system("#{git} add #{file_path} && #{git} commit -m '[hook] #{rel_path}'")
   end
 end
 
