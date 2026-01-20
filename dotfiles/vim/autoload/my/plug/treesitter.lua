@@ -16,6 +16,7 @@ local function configure()
                     "markdown",
                     "python",
                     "json",
+                    "sql"
                 },
                 highlight = {
                     enable = true,
