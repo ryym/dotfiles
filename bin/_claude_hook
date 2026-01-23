@@ -64,8 +64,7 @@ class Main
   private def format_file(file_path)
     prettier_exts = %w[.js .jsx .ts .tsx .css .html .md]
     if prettier_exts.include?(file_path.extname) && command_exists?('prettier')
-      File.write('hogehoge', file_path)
-      system("prettier --write #{file_path}")
+      system("prettier --ignore-path /dev/null --write #{file_path}")
     end
   end
 
