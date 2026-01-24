@@ -28,9 +28,6 @@ fzf_options=(
     --bind='?:execute(bat $(command -v git_interactive_branches))'
 
     --bind='y:execute-silent(echo $(git_interactive_branches _branch_name {+}) | tr -d "\n" | ccopy)'
-
-    # Make exit code 0 for these cancel keys.
-    --expect='q,ctrl-g'
 )
 
 popup() {
@@ -39,7 +36,9 @@ popup() {
 }
 
 run() {
-    _list "$@" | fzf "${fzf_options[@]}" > /dev/null
+    line=$(_list "$@" | fzf "${fzf_options[@]}" | awk 'NR==1')
+    branch=$(_branch_name "$line")
+    [[ -n "$branch" ]] && git switch "$branch"
 }
 
 _list() {
