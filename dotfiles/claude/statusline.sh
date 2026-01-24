@@ -7,22 +7,21 @@
 context=$(cat)
 
 # Extract values from JSON.
-   model=$(echo "$context" | jq -r '.model.display_name')
-    cost=$(echo "$context" | jq -r '.cost.total_cost_usd')
-duration=$(echo "$context" | jq -r '.cost.total_duration_ms')
-  tokens=$(echo "$context" | jq -r '.context_window.total_input_tokens')
-ctx_used=$(echo "$context" | jq '.context_window.used_percentage')
+     model=$(echo "$context" | jq -r '.model.display_name')
+      cost=$(echo "$context" | jq -r '.cost.total_cost_usd')
+  duration=$(echo "$context" | jq -r '.cost.total_duration_ms')
+    tokens=$(echo "$context" | jq -r '.context_window.total_input_tokens')
+ctx_amount=$(echo "$context" | jq '.context_window.remaining_percentage')
 
 # Format values.
 cost_formatted=$(awk "BEGIN {printf \"%.2f\", int($cost * 100 + 1) / 100}")
 duration_sec=$(awk "BEGIN {printf \"%.1f\", $duration / 1000}")
-if [ "$ctx_used" = "null" ]; then
-  ctx_used="0.0"
+if [ "$ctx_amount" = "null" ]; then
+  ctx_amount="100"
 fi
-ctx_used_formatted=$(awk "BEGIN {printf \"%.1f\", $ctx_used}")
 
 # Format output.
-echo "[$model] \$${cost_formatted} | ${duration_sec}s | ${tokens} tokens | ${ctx_used_formatted}% ctx used"
+echo "[$model] ctx:${ctx_amount}% | \$${cost_formatted} | ${duration_sec}s | ${tokens} tokens"
 
 # As a reference, context information Claude Code provides looks like below (as of 2026-01):
 # {
