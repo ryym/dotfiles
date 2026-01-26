@@ -62,3 +62,7 @@ pjson() {
 chomp() {
     tr -d '\n'
 }
+
+workroot() {
+    cd /home/ryu/ghq/src/github.com/ryym/work
+}
