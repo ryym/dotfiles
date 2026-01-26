@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+# A script to handle Codex notifications.
+# https://developers.openai.com/codex/config-advanced#notifications
+# Specify `notify = ["_codex_notify"]` in `~/.codex/config.toml`.
+
+require 'json'
+
+input = JSON.parse(ARGV[0])
+
+# As of Jan 2026, Codex can send notification only when it finishes a turn :(
+if input['type'] != 'agent-turn-complete'
+  raise "Wow, Codex supports another type of notification!: #{input[type]}"
+end
+
+# message = input['last-assistant-message']
+system("notifm 'Codex finished its turn'")
