@@ -31,8 +31,8 @@ bindings = [
     { key = "End", chars = "\u0005" }, # Ctrl-e
     { key = "End", mods = "Shift", chars = "\u000b" }, # Ctrl-k
     { key = "Delete", action = "None" },
-    { key = "Down", chars = "\u000e" }, # Ctrl-n
-    { key = "Up", chars = "\u0010" }, # Ctrl-p
+    { key = "Down", mods = "Control", chars = "\u000e" }, # Ctrl-n
+    { key = "Up", mods = "Control", chars = "\u0010" }, # Ctrl-p
     { key = "Left", chars = "\u0002" }, # Ctrl-f
     { key = "Right", chars = "\u0006" }, # Ctrl-b
 ]

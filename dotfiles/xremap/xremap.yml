@@ -70,8 +70,9 @@ keymap:
     remap:
       Ctrl-B: Left
       Ctrl-F: Right
-      Ctrl-P: Up
-      Ctrl-N: Down
+      Ctrl-P: Ctrl-Up
+      Ctrl-N: Ctrl-Down
       Ctrl-A: Home
       Ctrl-E: End
       Ctrl-K: [Shift-End, Delete]
+
