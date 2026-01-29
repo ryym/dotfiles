@@ -19,8 +19,9 @@ function! s:configure_viler_buffer() abort
   Remap n (buffer nowait) <C-h> <Plug>(viler-cd-up)
   Remap n (buffer nowait) L <Plug>(viler-open-file)
   Remap n (buffer nowait) H <Plug>(viler-cd-up)
-  Remap n (buffer nowait) t <Plug>(viler-toggle-tree)
+  Remap n (buffer nowait) ' <Plug>(viler-toggle-tree)
+  Remap n (buffer nowait) T <Plug>(viler-toggle-tree)
   Remap n (buffer nowait) . <Plug>(viler-toggle-dotfiles)
-  Remap n (buffer nowait) <M-r> <Plug>(viler-refresh)
+  Remap n (buffer nowait) R <Plug>(viler-refresh)
 endfunction
 
