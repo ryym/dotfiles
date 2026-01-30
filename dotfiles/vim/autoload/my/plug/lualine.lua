@@ -16,25 +16,28 @@ local function configure()
                     configuration.colors_override
                 )
                 return {
-                    normal = {
-                        a = {bg = palette.statusline1[1], fg = palette.bg0[1], gui = 'bold'},
-                        b = {bg = palette.bg4[1], fg = palette.grey2[1]},
-                        c = {bg = palette.bg2[1], fg = palette.grey2[1]},
-                    },
-                    insert = {
-                        a = {bg = palette.statusline2[1], fg = palette.bg0[1], gui = 'bold'},
-                    },
-                    visual = {
-                        a = {bg = palette.statusline3[1], fg = palette.bg0[1], gui = 'bold'},
-                    },
-                    replace = {
-                        a = {bg = palette.orange[1], fg = palette.bg0[1], gui = 'bold'},
-                    },
-                    command = {
-                        a = {bg = palette.aqua[1], fg = palette.bg0[1], gui = 'bold'},
-                    },
-                    terminal = {
-                        a = {bg = palette.purple[1], fg = palette.bg0[1], gui = 'bold'},
+                    palette = palette,
+                    lualine_theme = {
+                        normal = {
+                            a = {bg = palette.statusline1[1], fg = palette.bg0[1], gui = 'bold'},
+                            b = {bg = palette.bg4[1], fg = palette.grey2[1]},
+                            c = {bg = palette.bg2[1], fg = palette.grey2[1]},
+                        },
+                        insert = {
+                            a = {bg = palette.statusline2[1], fg = palette.bg0[1], gui = 'bold'},
+                        },
+                        visual = {
+                            a = {bg = palette.statusline3[1], fg = palette.bg0[1], gui = 'bold'},
+                        },
+                        replace = {
+                            a = {bg = palette.orange[1], fg = palette.bg0[1], gui = 'bold'},
+                        },
+                        command = {
+                            a = {bg = palette.aqua[1], fg = palette.bg0[1], gui = 'bold'},
+                        },
+                        terminal = {
+                            a = {bg = palette.purple[1], fg = palette.bg0[1], gui = 'bold'},
+                        },
                     },
                 }
             end)()
@@ -42,7 +45,7 @@ local function configure()
             -- https://github.com/nvim-lualine/lualine.nvim
             require('lualine').setup {
                 options = {
-                    theme = everforest,
+                    theme = everforest.lualine_theme,
                     component_separators = { left = '|', right = '|'},
                     section_separators = { left = '', right = ''},
                     globalstatus = true,
@@ -79,7 +82,11 @@ local function configure()
                 },
                 inactive_winbar = {
                     lualine_c = {
-                        {'filename', path = filename_opt_with_parent_dir},
+                        {
+                            'filename',
+                            path = filename_opt_with_parent_dir,
+                            color = { bg = everforest.palette.bg1[1] },
+                        },
                     },
                 },
             }
