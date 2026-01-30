@@ -209,10 +209,11 @@ function! my#init#mappings#setup() abort
   " So map it to <Space> as well.
   Map i <C-Space> <Space>
 
-  Map n <A-j> ::.m +1
-  Map n <A-k> ::.m -2
-  Map v <A-j> :'<,'>m '>+1<CR>gv
-  Map v <A-k> :'<,'>m '<-2<CR>gv
+  " Move a cursor line or selected lines up and down.
+  Map n <M-j> ::.m +1
+  Map n <M-k> ::.m -2
+  Map v <M-j> :'<,'>m '>+1<CR>gv
+  Map v <M-k> :'<,'>m '<-2<CR>gv
 
   " Disable default key mappings for man pages since it maps `q` to close Vim
   " but I use `q` as a prefix of quickfix list shortcuts.
