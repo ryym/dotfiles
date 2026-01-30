@@ -31,7 +31,7 @@ gsettings set org.gnome.desktop.peripherals.touchpad speed 0.018
 
 To do that, you need to launch Chrome with the command line flag.
 
-1. Do `cp /usr/share/applications/google-chrome.desktop ~/.local/share/applications/google-chrome.desktop`.
+1. Do `cp /usr/share/applications/com.google.Chrome.desktop ~/.local/share/applications/com.google.Chrome.desktop`.
 2. Edit the copied file and add `--enable-features=TouchpadOverscrollHistoryNavigation` to all `google-chrome` in each `Exec` line.
 3. Reboot
 
