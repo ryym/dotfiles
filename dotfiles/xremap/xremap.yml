@@ -65,6 +65,10 @@ keymap:
       Super-Hangeul: Hangeul
       Space-Hangeul: Hangeul
 
+      # I'm experimentally mapping the `かな` key to F20 on tap and Alt on hold by Dygma Raise's advanced modifier key.
+      # But it doesn't support sending `かな` directly on tap so use F20 and remap it by Xremap.
+      F20: Hangeul
+
   - name: Like Emacs or terminals
     exact_match: true
     remap:
