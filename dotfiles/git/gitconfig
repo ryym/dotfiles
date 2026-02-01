@@ -54,8 +54,8 @@
     cmam   = commit -am
     cmf    = commit --amend -C HEAD # Fixup changes to HEAD commit
     cmaf   = commit -a --amend -C HEAD
-    cmw    = commit -m 'WIP [ci skip]'
-    cmaw   = commit -am 'WIP [ci skip]'
+    cmw    = commit -m 'wip! [ci skip]'
+    cmaw   = commit -am 'wip! [ci skip]'
     amend  = commit --amend
     co     = checkout
     coi    = !git checkout $(git branch | fzf)
