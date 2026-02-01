@@ -9,6 +9,7 @@ main() {
         popup) popup "$@" ;;
         run) run "$@" ;;
         _list) _list "$@" ;;
+        _copy) _copy "$@" ;;
         _diff) _diff "$@" ;;
         _diff_i) _diff_i "$@" ;;
         _menu) _menu "$@" ;;
@@ -41,7 +42,7 @@ fzf_options=(
     --bind="m:execute(git_interactive_history _menu)"
     --bind='?:execute(bat $(command -v git_interactive_history))'
 
-    --bind="y:execute-silent(echo {+2} | tr -d '\n' | ccopy)"
+    --bind="y:execute-silent(git_interactive_history _copy {+2})"
     --bind="D:execute(git_interactive_history _diff {+2})"
     --bind='d:execute(git_interactive_history _diff_i {+2})'
     --bind='B:execute(git rebase -i {2}^ || zsh)+reload-sync(git_interactive_history _list)'
@@ -65,6 +66,10 @@ run() {
 
 _list() {
     git re -500 --color=always "$@" | nl -w 3 -s ' '
+}
+
+_copy() {
+    git rev-list --abbrev-commit --no-walk --topo-order --reverse "$@" | xargs | tr -d '\n' | ccopy
 }
 
 _diff() {
