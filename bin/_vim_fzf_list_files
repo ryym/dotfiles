@@ -26,12 +26,12 @@ buffers() {
 # - list buffers first and list other files excluding buffers
 # Buffers are passed as arguments.
 buffers_and_files() {
-    excludes=()
+    excludes=('-e' '_')
     for filepath in "$@"; do
         format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
-        excludes+=("-E" "$filepath")
+        excludes+=("-e" "$(format 0 '=' "$(basename "$filepath")" "$(dirname "$filepath")")")
     done
-    fd --hidden -tf -tl -E .git ${excludes[@]} --format "$(format 0 '=' '{/}' '{//}')"
+    fd --hidden -tf -tl -E .git --format "$(format 0 '=' '{/}' '{//}')" | grep -v -F -x "${excludes[@]}"
 }
 
 fd_formatted() {
