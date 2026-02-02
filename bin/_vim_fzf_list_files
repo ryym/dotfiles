@@ -18,9 +18,7 @@ main() {
 # Format buffers passed as arguments.
 buffers() {
     for filepath in "$@"; do
-        printf "\033[38;5;245m:\033[0m \033[33m%s\033[0m \033[38;5;245m%s/\033[38;5;240m%s\033[0m\n" \
-            "$(basename "$filepath")" "$(dirname "$filepath")" "$(basename "$filepath")"
-        excludes+=("-E" "$filepath")
+        format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
     done
 }
 
@@ -30,15 +28,23 @@ buffers() {
 buffers_and_files() {
     excludes=()
     for filepath in "$@"; do
-        printf "\033[38;5;245m:\033[0m \033[33m%s\033[0m \033[38;5;245m%s/\033[38;5;240m%s\033[0m\n" \
-            "$(basename "$filepath")" "$(dirname "$filepath")" "$(basename "$filepath")"
+        format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
         excludes+=("-E" "$filepath")
     done
-    fd --hidden -tf -tl -E .git ${excludes[@]} --format "[38;5;245m=[0m {/} [38;5;245m{//}/[38;5;240m{/}[0m"
+    fd --hidden -tf -tl -E .git ${excludes[@]} --format "$(format 0 '=' '{/}' '{//}')"
 }
 
 fd_formatted() {
-    fd --hidden -tf -tl -E .git ${excludes[@]} --format "[38;5;245m=[0m {/} [38;5;245m{//}/[38;5;240m{/}[0m" "$@"
+    fd --hidden -tf -tl -E .git --format "$(format 0 '=' '{/}' '{//}')" "$@"
+}
+
+format() {
+    color="$1"
+    mark="$2"
+    base="$3"
+    dir="$4"
+    # e.g. format 33 ':' 'index.js' 'src/auth' => ": index.js src.auth/index.js" with nice coloring
+    printf "[38;5;245m%s[0m [%sm%s[0m [38;5;245m%s/[38;5;240m%s[0m\n" "$mark" "$color" "$base" "$dir" "$base"
 }
 
 main "$@"
