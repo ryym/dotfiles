@@ -112,7 +112,7 @@ function! s:define_filetype_indents() abort
     autocmd FileType vue             ShortIndent
     autocmd FileType terraform       ShortIndent
     autocmd FileType firestore       ShortIndent
-    autocmd FileType markdown        ShortIndent
+    autocmd FileType markdown        MediumIndent
     autocmd FileType c               MediumIndent
     autocmd FileType cs              MediumIndent
     autocmd FileType vb              MediumIndent
