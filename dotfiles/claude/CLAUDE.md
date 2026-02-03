@@ -43,6 +43,8 @@ columns:
 Using this columns, we can ...
 ```
 
+## Git Usage
+
 ### Commit Granularity
 
 Commit changes in appropriate, focused chunks. Avoid large commits that mix multiple concerns.
@@ -63,3 +65,11 @@ Also, all tests should pass at each commit. Do NOT commit incomplete work.
 - Title: Concisely describe what was done
 - Body: Include decision-making context and complex implementation details that aren't obvious from the code diff
 - Language: English
+
+## Misc
+
+When you operate on a file like reading, editing, running, etc, always access it using a relative path.
+Using an absolute path can be risky so it is not allowed by default.
+
+- Good: `ls path/to/file`
+- Bad: `ls /Users/bob/ghq/github.com/bob/hello/path/to/file`
