@@ -13,7 +13,8 @@ local function configure()
 
             local capabilities = cmp_nvim_lsp.default_capabilities()
 
-            -- Set up language servers.
+            -- https://rust-analyzer.github.io/
+            -- rustup component add rust-analyzer
             lspconfig.rust_analyzer.setup({
                 capabilities = capabilities,
                 settings = {
@@ -24,22 +25,36 @@ local function configure()
                     },
                 },
             })
-            lspconfig.ts_ls.setup({
-                capabilities = capabilities,
-            })
+
+            -- https://go.dev/gopls/
+            -- go install golang.org/x/tools/gopls@latest
             lspconfig.gopls.setup({
                 capabilities = capabilities,
             })
+
+            -- https://github.com/typescript-language-server/typescript-language-server
+            -- npm i -g typescript-language-server
+            lspconfig.ts_ls.setup({
+                capabilities = capabilities,
+            })
+
+            -- https://github.com/hrsh7th/vscode-langservers-extracted
+            -- npm i -g vscode-langservers-extracted
             lspconfig.cssls.setup({
                 capabilities = capabilities,
             })
+
+            -- https://github.com/python-lsp/python-lsp-server
             lspconfig.pylsp.setup({
                 capabilities = capabilities,
             })
+
+            -- https://github.com/clangd/clangd
             lspconfig.clangd.setup({
                 capabilities = capabilities,
             })
 
+            -- https://docs.rubocop.org/rubocop/usage/lsp.html
             lspconfig.rubocop.setup({
                 capabilities = capabilities,
             })
