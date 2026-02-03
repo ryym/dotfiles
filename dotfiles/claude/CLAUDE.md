@@ -15,6 +15,34 @@ When you write documents, store them in the `.local/claude` directory.
 For example, you create a markdown document when instructed to investigate something and summarize results.
 A file name should be English in kebab-case like `.local/claude/research-result-of-something.md`.
 
+### Markdown Styles
+
+Always insert a blank line before and after a table so that Prettier can format it correctly.
+
+Good:
+
+```markdown
+columns:
+
+| Column | Type       |
+| ------ | ---------- |
+| id     | integer PK |
+| foo_id | integer FK |
+
+Using this columns, we can ...
+```
+
+Bad:
+
+```markdown
+columns:
+| Column | Type |
+| ------ | ---------- |
+| id | integer PK |
+| foo_id | integer FK |
+Using this columns, we can ...
+```
+
 ### Commit Granularity
 
 Commit changes in appropriate, focused chunks. Avoid large commits that mix multiple concerns.
