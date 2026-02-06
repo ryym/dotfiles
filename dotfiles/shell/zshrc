@@ -1,6 +1,8 @@
 # ZSHRC
 # man zsh
 
+zmodload zsh/zprof
+
 export LANG=en_US.UTF-8
 
 bindkey -e # Like Emacs.
@@ -11,8 +13,15 @@ bindkey "^t" backward-kill-word
 autoload -Uz colors
 colors
 
-autoload -U compinit
-compinit
+autoload -Uz compinit
+# Enable auto completion.
+# The compinit function refreshes the cache in ~/.zcompdump if it is stale but
+# the refresh takes a few seconds on my mac so instead let it refresh every 24 hours.
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 # Use completion with case-insensitivity.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -106,3 +115,5 @@ fi
 
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+zprof > /tmp/zprof.txt
