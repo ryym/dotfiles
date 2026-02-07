@@ -32,7 +32,12 @@ LINKS=(
     'claude/skills/tmux':'.claude/skills/tmux'
 )
 
-case $(ostype) in
+case "$(ostype)" in
+    macos)
+        LINKS+=(
+            'aerospace/aerospace.toml:.config/aerospace/aerospace.toml'
+        )
+        ;;
     arch)
         LINKS+=(
             'arch/sway-config:.config/sway/config'

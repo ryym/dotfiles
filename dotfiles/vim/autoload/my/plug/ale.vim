@@ -11,8 +11,8 @@ function my#plug#ale#before_load()
     \ 'elm': ['elm-format'],
     \ 'terraform': ['terraform'],
     \ }
-  let g:ale_fixers.javascript = ['prettier']
-  let g:ale_fixers.javascriptreact = ['prettier']
+  " let g:ale_fixers.javascript = ['prettier']
+  " let g:ale_fixers.javascriptreact = ['prettier']
   let g:ale_fixers.typescript = ['prettier']
   let g:ale_fixers.css = ['prettier']
   let g:ale_fixers.scss = ['prettier']

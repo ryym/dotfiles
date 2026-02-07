@@ -47,6 +47,15 @@ function! my#plug#submode#after_load()
   SbmTabEnter n tt
   SbmTab n l gt
   SbmTab n h gT
+
+  " Move a cursor line or selected lines up and down.
+  SbmDefine moveLines
+  SbmMoveLinesEnter n <Leader>m
+  SbmMoveLinesEnter v <Leader>m
+  call submode#map('moveLines', 'n', '', 'j', ':<C-u>.m +1<CR>')
+  call submode#map('moveLines', 'n', '', 'k', ':<C-u>.m -2<CR>')
+  call submode#map('moveLines', 'v', '', 'j', ":'<,'>m '>+1<CR>gv")
+  call submode#map('moveLines', 'v', '', 'k', ":'<,'>m '<-2<CR>gv")
 endfunction
 
 " Define ex commands which wraps functions of vim-submode.

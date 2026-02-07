@@ -1,10 +1,48 @@
+/*
+Karabiner-Elements configuration for US-recognized-JIS and US layout keyboards.
+
+This configuration is for two purposes:
+- 1. Restore some default JIS keyboard behaviors (e.g. `ろ` -> `_`)
+- 2. Customize some default US keyboard behaviors (e.g. CapsLock -> Control)
+
+## 1. Restore some default JIS keyboard behaviors
+
+I use Macbook when I'm out and it has a JIS layout keyboard.
+Although I slightly prefer the US layout than JIS, I have been using the JIS layout Macbook for years. 
+The reason is it has more keys than the US layout. Examples:
+- An underscore key. I really like it because underscore is frequently used in programming.
+- Two IME (language) switch keys on either side of the Space bar.
+  Once you get used to this, you can't live without these keys anymore. Typing with your thumbs is so effortless,
+  and I really feel it’s a waste that the space bar takes up so much room on a standard US keyboard.
+
+On the other hand, the JIS layout has some downsides compared to the US layout. Examples:
+- Weird keys for single and double quotes (`Shift-7` and `Shfit-2` respectively).
+- Shift is required to emit `=` (Shift-minus).
+
+The best way I've found so far is to use a JIS keyboard physically but have the PC recognize it as the US layout.
+This way, I can enjoy the intuitive US key mapping while using additional physical keys of the JIS layout. This is nice.
+But now the PC cannot recognize keys that exist only in JIS layout, so I need to remap them to their original JIS functions.
+
+## 2. Customize some default US keyboard behaviors
+
+At home, I use Dygma Raise 2. It is the US layout but I love it because it splits the space bar into 4 keys.
+It is a programmable keyboard so I can map those keys to IME switch keys or any arbitrary keys.
+This is really nice but it sill lacks some keys that a standard JIS keyboard has.
+And some remapping cannot be achieved with the keyboard's builtin remapping firmware.
+Therefore I customize it with Karabiner-Elements.
+*/
+
 {
   "title": "Custom US",
   "description": "Improve US / Use JIS as US",
+  // Each mapping description has prefixes like `[US]` and/or `[JIS]`.
+  // - [US]:
+
   "rules": [
     {
       "description": "[US] Colon<->Semicolon and Caplock->Ctrl",
       "manipulators": [
+        // Semicolon -> Colon (Shift-Semicolon)
         {
           "from": {
             "key_code": "semicolon"
@@ -23,6 +61,7 @@
             }
           ]
         },
+        // Colon (Shift-Semicolon) -> Semicolon
         {
           "from": {
             "key_code": "semicolon",
@@ -43,6 +82,7 @@
             }
           ]
         },
+        // CapsLock -> Control
         {
           "from": {
             "key_code": "caps_lock"
@@ -63,6 +103,7 @@
       ]
     },
     {
+      // The tilde key is difficult to press or lacked on some US keyboards.
       "description": "[US][JIS] Shift+Backspace->Tilde",
       "manipulators": [
         {
@@ -88,9 +129,9 @@
           ]
         },
         {
-          "description": "[JIS] Enable Tilde",
+          "description": "[JIS] Shift+¥->Tilde",
           "from": {
-            "key_code": "international3",
+            "key_code": "international3", // The `¥` key to the left of Backspace
             "modifiers": {
               "optional": ["left_shift", "right_shift"]
             }
@@ -114,6 +155,8 @@
     {
       "description": "[US][JIS] Underscore and Backquote",
       "manipulators": [
+        // I configure my Dygma Raise keyboard to emit `function 22` on tap of the right Shift key.
+        // I want to input `_` without Shift like JIS keyboard can.
         {
           "description": "[US] f22->underscore",
           "from": {
@@ -127,6 +170,8 @@
           ],
           "type": "basic"
         },
+        // I also want to emit "`" (backtick / backquote) with Shift-"_".
+        // The default position of the backtick in US layout is too far.
         {
           "description": "[US] f22+Shift->backquote",
           "from": {
@@ -302,6 +347,60 @@
           ],
           "type": "basic"
         }
+      ]
+    },
+    {
+      "description": "[experimental] dual kana key",
+      "manipulators": [
+        {
+          "description": "f20->Kana (for Dygma)",
+          "type": "basic",
+          "from": {
+            "key_code": "f20"
+          },
+          "to": [{ "key_code": "japanese_kana" }]
+        },
+
+        // {
+        //   "description": "kana -> alt",
+        //   "type": "basic",
+        //   "from": {
+        //     "key_code": "japanese_kana",
+        //     "modifiers": { "optional": ["any"] }
+        //   },
+        //   "to": [{ "key_code": "right_option" }]
+        // },
+        // {
+        //   "description": "right_option+eisuu -> kana",
+        //   "type": "basic",
+        //   "from": {
+        //     "key_code": "japanese_eisuu",
+        //     "modifiers": { "mandatory": ["right_option"] }
+        //   },
+        //   "to": [{ "key_code": "japanese_kana" }]
+        // }
+
+        {
+          "description": "kana -> kana / alt (Mac)",
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_kana",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "right_option", "lazy": true }],
+          "to_if_alone": [{ "key_code": "japanese_kana" }],
+          "parameters": {
+            "basic.to_if_alone_timeout_milliseconds": 200
+          }
+        }
+        // {
+        //   "description": "alt->f5",
+        //   "type": "basic",
+        //   "from": {
+        //     "key_code": "left_option"
+        //   },
+        //   "to": [{ "key_code": "f5" }]
+        // }
       ]
     }
   ]
