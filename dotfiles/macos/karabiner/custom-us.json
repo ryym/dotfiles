@@ -1,49 +1,14 @@
-/*
-Karabiner-Elements configuration for US-recognized-JIS and US layout keyboards.
-
-This configuration is for two purposes:
-- 1. Restore some default JIS keyboard behaviors (e.g. `ろ` -> `_`)
-- 2. Customize some default US keyboard behaviors (e.g. CapsLock -> Control)
-
-## 1. Restore some default JIS keyboard behaviors
-
-I use Macbook when I'm out and it has a JIS layout keyboard.
-Although I slightly prefer the US layout than JIS, I have been using the JIS layout Macbook for years. 
-The reason is it has more keys than the US layout. Examples:
-- An underscore key. I really like it because underscore is frequently used in programming.
-- Two IME (language) switch keys on either side of the Space bar.
-  Once you get used to this, you can't live without these keys anymore. Typing with your thumbs is so effortless,
-  and I really feel it’s a waste that the space bar takes up so much room on a standard US keyboard.
-
-On the other hand, the JIS layout has some downsides compared to the US layout. Examples:
-- Weird keys for single and double quotes (`Shift-7` and `Shfit-2` respectively).
-- Shift is required to emit `=` (Shift-minus).
-
-The best way I've found so far is to use a JIS keyboard physically but have the PC recognize it as the US layout.
-This way, I can enjoy the intuitive US key mapping while using additional physical keys of the JIS layout. This is nice.
-But now the PC cannot recognize keys that exist only in JIS layout, so I need to remap them to their original JIS functions.
-
-## 2. Customize some default US keyboard behaviors
-
-At home, I use Dygma Raise 2. It is the US layout but I love it because it splits the space bar into 4 keys.
-It is a programmable keyboard so I can map those keys to IME switch keys or any arbitrary keys.
-This is really nice but it sill lacks some keys that a standard JIS keyboard has.
-And some remapping cannot be achieved with the keyboard's builtin remapping firmware.
-Therefore I customize it with Karabiner-Elements.
-*/
-
 {
   "title": "Custom US",
-  "description": "Improve US / Use JIS as US",
-  // Each mapping description has prefixes like `[US]` and/or `[JIS]`.
-  // - [US]:
-
+  "description": "Enhance US keyboard and JIS keyboard recognized as US (see README)",
   "rules": [
     {
-      "description": "[US] Colon<->Semicolon and Caplock->Ctrl",
+      "description": "Improve default US keyboard behaviors",
       "manipulators": [
-        // Semicolon -> Colon (Shift-Semicolon)
+        // Swap Colon and Semicolon
+        // Semicolon => Colon (Shift-Semicolon)
         {
+          "type": "basic",
           "from": {
             "key_code": "semicolon"
           },
@@ -53,16 +18,11 @@ Therefore I customize it with Karabiner-Elements.
               "modifiers": ["left_shift"]
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
-        // Colon (Shift-Semicolon) -> Semicolon
+        // Colon (Shift-Semicolon) => Semicolon
         {
+          "type": "basic",
           "from": {
             "key_code": "semicolon",
             "modifiers": {
@@ -74,16 +34,12 @@ Therefore I customize it with Karabiner-Elements.
               "key_code": "semicolon"
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
-        // CapsLock -> Control
+
+        // CapsLock => Control
         {
+          "type": "basic",
           "from": {
             "key_code": "caps_lock"
           },
@@ -92,143 +48,12 @@ Therefore I customize it with Karabiner-Elements.
               "key_code": "left_control"
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      // The tilde key is difficult to press or lacked on some US keyboards.
-      "description": "[US][JIS] Shift+Backspace->Tilde",
-      "manipulators": [
-        {
-          "description": "[US] Shift+Backspace",
-          "from": {
-            "key_code": "delete_or_backspace",
-            "modifiers": {
-              "mandatory": ["left_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde",
-              "modifiers": ["left_shift"]
-            }
-          ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
+
+        // Shift-Hyphen => Bar
         {
-          "description": "[JIS] Shift+¥->Tilde",
-          "from": {
-            "key_code": "international3", // The `¥` key to the left of Backspace
-            "modifiers": {
-              "optional": ["left_shift", "right_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde",
-              "modifiers": ["left_shift"]
-            }
-          ],
           "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "description": "[US][JIS] Underscore and Backquote",
-      "manipulators": [
-        // I configure my Dygma Raise keyboard to emit `function 22` on tap of the right Shift key.
-        // I want to input `_` without Shift like JIS keyboard can.
-        {
-          "description": "[US] f22->underscore",
-          "from": {
-            "key_code": "f22"
-          },
-          "to": [
-            {
-              "key_code": "hyphen",
-              "modifiers": ["left_shift"]
-            }
-          ],
-          "type": "basic"
-        },
-        // I also want to emit "`" (backtick / backquote) with Shift-"_".
-        // The default position of the backtick in US layout is too far.
-        {
-          "description": "[US] f22+Shift->backquote",
-          "from": {
-            "key_code": "f22",
-            "modifiers": {
-              "mandatory": ["left_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "description": "[JIS] ろ->underscore",
-          "from": {
-            "key_code": "international1"
-          },
-          "to": [
-            {
-              "key_code": "hyphen",
-              "modifiers": ["left_shift"]
-            }
-          ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        },
-        {
-          "description": "[JIS] ろ+Shift->backquote",
-          "from": {
-            "key_code": "international1",
-            "modifiers": {
-              "mandatory": ["left_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde"
-            }
-          ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        },
-        {
-          "description": "Shift+Hyphen->Bar",
           "from": {
             "key_code": "hyphen",
             "modifiers": {
@@ -241,36 +66,136 @@ Therefore I customize it with Karabiner-Elements.
               "modifiers": "left_shift"
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         }
       ]
     },
+
     {
-      "description": "[US][JIS] Mini layer",
+      // Enable to emit `~` with Backspace.
+      // The default tilde key is difficult to press or lacked in some US keyboards.
+      "description": "Tilde by top-right key(s)",
       "manipulators": [
+        // Shift-Backspace => Tilde
         {
+          "type": "basic",
           "from": {
-            "key_code": "r",
+            "key_code": "delete_or_backspace",
             "modifiers": {
-              "mandatory": ["right_command"],
-              "optional": ["any"]
+              "mandatory": ["left_shift"]
             }
           },
           "to": [
             {
-              "key_code": "tab",
-              "modifiers": ["left_shift", "left_control"]
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": ["left_shift"]
             }
           ],
-          "type": "basic"
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
+
+        // Shift-¥ => Tilde
         {
+          "type": "basic",
+          "from": {
+            "key_code": "international3", // The `¥` key to the left of Backspace
+            "modifiers": {
+              "optional": ["left_shift", "right_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": ["left_shift"]
+            }
+          ],
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
+        }
+      ]
+    },
+
+    {
+      // Enable to emit `_` in the same operation both in US an JIS layouts.
+      "description": "Underscore/Backtick by left-bottom key",
+      "manipulators": [
+        // F22 => Underscore
+        // I configure my Dygma Raise keyboard to emit `F22` on tap of the right Shift key.
+        // By remapping it to `_`, I can type `_` without Shift.
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f22"
+          },
+          "to": [
+            {
+              "key_code": "hyphen",
+              "modifiers": ["left_shift"]
+            }
+          ]
+        },
+        // Shift-F22 => Backtick
+        // The default position of the backtick in a US layout is too far.
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f22",
+            "modifiers": {
+              "mandatory": ["left_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde"
+            }
+          ]
+        },
+        // ろ => Underscore
+        // `ろ` is located to the left of right Shift in a JIS layout and emits `_`.
+        // But the PC does not recognize it if I have it recognize the keyboard as a US layout (see README).
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international1"
+          },
+          "to": [
+            {
+              "key_code": "hyphen",
+              "modifiers": ["left_shift"]
+            }
+          ],
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
+        },
+        // Shift-ろ => Backtick
+        // This is not the default behavior of a JIS keyboard but is configured to
+        // be compatible with the US keyboard behavior configured for `F22`.
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international1",
+            "modifiers": {
+              "mandatory": ["left_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde"
+            }
+          ],
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
+        }
+      ]
+    },
+
+    {
+      // Add another "layer" that changes keys behaviors like Shift or Control.
+      // In Dygma Raise 2, I use a layer that is enabled by holding the right Command key.
+      // This brings the same behavior to the Macbook keyboard by customizing mappings of right Command.
+      "description": "Custom Layer",
+      "manipulators": [
+        // Shift-(Control)-Tab is mapped to switching tabs in many apps like browsers.
+        // Command_R+t => Shift-Tab
+        {
+          "type": "basic"
           "from": {
             "key_code": "t",
             "modifiers": {
@@ -284,10 +209,29 @@ Therefore I customize it with Karabiner-Elements.
               "modifiers": ["left_control"]
             }
           ],
+        },
+        // Command_R+r => Shift-Control-Tab
+        {
           "type": "basic"
+          "from": {
+            "key_code": "r",
+            "modifiers": {
+              "mandatory": ["right_command"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": ["left_shift", "left_control"]
+            }
+          ],
         },
 
+        // Map arrow keys with Command_R-{h,j,k,l}.
+        // Command_R-h => Left
         {
+          "type": "basic"
           "from": {
             "key_code": "h",
             "modifiers": {
@@ -300,9 +244,10 @@ Therefore I customize it with Karabiner-Elements.
               "key_code": "left_arrow"
             }
           ],
-          "type": "basic"
         },
+        // Command_R-j => Down
         {
+          "type": "basic"
           "from": {
             "key_code": "j",
             "modifiers": {
@@ -315,9 +260,10 @@ Therefore I customize it with Karabiner-Elements.
               "key_code": "down_arrow"
             }
           ],
-          "type": "basic"
         },
+        // Command_R-k => Up
         {
+          "type": "basic"
           "from": {
             "key_code": "k",
             "modifiers": {
@@ -330,9 +276,10 @@ Therefore I customize it with Karabiner-Elements.
               "key_code": "up_arrow"
             }
           ],
-          "type": "basic"
         },
+        // Command_R-l => Right
         {
+          "type": "basic"
           "from": {
             "key_code": "l",
             "modifiers": {
@@ -345,12 +292,46 @@ Therefore I customize it with Karabiner-Elements.
               "key_code": "right_arrow"
             }
           ],
+        }
+
+        // Mimic some Emacs-like movements with right Command.
+        // Command_R-a => Home
+        {
           "type": "basic"
+          "from": {
+            "key_code": "a",
+            "modifiers": {
+              "mandatory": ["right_command"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "home"
+            }
+          ],
+        },
+        // Command_R-e => End
+        {
+          "type": "basic"
+          "from": {
+            "key_code": "a",
+            "modifiers": {
+              "mandatory": ["right_command"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "end"
+            }
+          ],
         }
       ]
     },
+
     {
-      "description": "[experimental] dual kana key",
+      "description": "Dual Kana/Alt key",
       "manipulators": [
         {
           "description": "f20->Kana (for Dygma)",
@@ -362,7 +343,7 @@ Therefore I customize it with Karabiner-Elements.
         },
 
         // {
-        //   "description": "kana -> alt",
+        //   "description": "kana => alt",
         //   "type": "basic",
         //   "from": {
         //     "key_code": "japanese_kana",
@@ -371,7 +352,7 @@ Therefore I customize it with Karabiner-Elements.
         //   "to": [{ "key_code": "right_option" }]
         // },
         // {
-        //   "description": "right_option+eisuu -> kana",
+        //   "description": "right_option+eisuu => kana",
         //   "type": "basic",
         //   "from": {
         //     "key_code": "japanese_eisuu",
@@ -381,7 +362,7 @@ Therefore I customize it with Karabiner-Elements.
         // }
 
         {
-          "description": "kana -> kana / alt (Mac)",
+          "description": "kana => kana / alt (Mac)",
           "type": "basic",
           "from": {
             "key_code": "japanese_kana",

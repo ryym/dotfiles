@@ -1,19 +1,19 @@
-# Configure Pry.
-proc {
+# # Configure Pry.
+# proc {
 
-  if binding.respond_to?(:pry)
-    # Alias
-    {
-      c: 'continue',
-      n: 'next',
-      s: 'step'
-    }
-      .each do |als, command|
-      Pry.commands.alias_command als, command
-    end
-  end
+#   if binding.respond_to?(:pry)
+#     # Alias
+#     {
+#       c: 'continue',
+#       n: 'next',
+#       s: 'step'
+#     }
+#       .each do |als, command|
+#       Pry.commands.alias_command als, command
+#     end
+#   end
 
-  # Editor
-  Pry.editor = 'vim'
+#   # Editor
+#   Pry.editor = 'vim'
 
-}.call
+# }.call
