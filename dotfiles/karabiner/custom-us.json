@@ -1,11 +1,14 @@
 {
   "title": "Custom US",
-  "description": "Improve US / Use JIS as US",
+  "description": "Enhance both US keyboard and JIS keyboard that is recognized as US (see README)",
   "rules": [
     {
-      "description": "[US] Colon<->Semicolon and Caplock->Ctrl",
+      "description": "Improve default US keyboard behaviors",
       "manipulators": [
+        // Swap Colon and Semicolon
+        // Semicolon => Colon (Shift-Semicolon)
         {
+          "type": "basic",
           "from": {
             "key_code": "semicolon"
           },
@@ -15,15 +18,11 @@
               "modifiers": ["left_shift"]
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
+        // Colon (Shift-Semicolon) => Semicolon
         {
+          "type": "basic",
           "from": {
             "key_code": "semicolon",
             "modifiers": {
@@ -35,15 +34,12 @@
               "key_code": "semicolon"
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
+
+        // CapsLock => Control
         {
+          "type": "basic",
           "from": {
             "key_code": "caps_lock"
           },
@@ -52,138 +48,12 @@
               "key_code": "left_control"
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "description": "[US][JIS] Shift+Backspace->Tilde",
-      "manipulators": [
-        {
-          "description": "[US] Shift+Backspace",
-          "from": {
-            "key_code": "delete_or_backspace",
-            "modifiers": {
-              "mandatory": ["left_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde",
-              "modifiers": ["left_shift"]
-            }
-          ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
+
+        // Shift-Hyphen => Bar
         {
-          "description": "[JIS] Enable Tilde",
-          "from": {
-            "key_code": "international3",
-            "modifiers": {
-              "optional": ["left_shift", "right_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde",
-              "modifiers": ["left_shift"]
-            }
-          ],
           "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "description": "[US][JIS] Underscore and Backquote",
-      "manipulators": [
-        {
-          "description": "[US] f22->underscore",
-          "from": {
-            "key_code": "f22"
-          },
-          "to": [
-            {
-              "key_code": "hyphen",
-              "modifiers": ["left_shift"]
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "description": "[US] f22+Shift->backquote",
-          "from": {
-            "key_code": "f22",
-            "modifiers": {
-              "mandatory": ["left_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "description": "[JIS] ろ->underscore",
-          "from": {
-            "key_code": "international1"
-          },
-          "to": [
-            {
-              "key_code": "hyphen",
-              "modifiers": ["left_shift"]
-            }
-          ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        },
-        {
-          "description": "[JIS] ろ+Shift->backquote",
-          "from": {
-            "key_code": "international1",
-            "modifiers": {
-              "mandatory": ["left_shift"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "grave_accent_and_tilde"
-            }
-          ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
-        },
-        {
-          "description": "Shift+Hyphen->Bar",
           "from": {
             "key_code": "hyphen",
             "modifiers": {
@@ -196,36 +66,136 @@
               "modifiers": "left_shift"
             }
           ],
-          "type": "basic",
-          "conditions": [
-            {
-              "type": "keyboard_type_if",
-              "keyboard_types": ["ansi"]
-            }
-          ]
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         }
       ]
     },
+
     {
-      "description": "[US][JIS] Mini layer",
+      // Enable to emit `~` with Backspace.
+      // The default tilde key is difficult to press or lacked in some US keyboards.
+      "description": "Tilde by top-right key(s)",
       "manipulators": [
+        // Shift-Backspace => Tilde
         {
+          "type": "basic",
           "from": {
-            "key_code": "r",
+            "key_code": "delete_or_backspace",
             "modifiers": {
-              "mandatory": ["right_command"],
-              "optional": ["any"]
+              "mandatory": ["left_shift"]
             }
           },
           "to": [
             {
-              "key_code": "tab",
-              "modifiers": ["left_shift", "left_control"]
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": ["left_shift"]
             }
           ],
-          "type": "basic"
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
         },
+
+        // Shift-¥ => Tilde
         {
+          "type": "basic",
+          "from": {
+            "key_code": "international3", // The `¥` key to the left of Backspace
+            "modifiers": {
+              "optional": ["left_shift", "right_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": ["left_shift"]
+            }
+          ],
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
+        }
+      ]
+    },
+
+    {
+      // Enable to emit `_` in the same operation both in US an JIS layouts.
+      "description": "Underscore/Backtick by left-bottom key",
+      "manipulators": [
+        // F22 => Underscore
+        // I configure my Dygma Raise keyboard to emit `F22` on tap of the right Shift key.
+        // By remapping it to `_`, I can type `_` without Shift.
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f22"
+          },
+          "to": [
+            {
+              "key_code": "hyphen",
+              "modifiers": ["left_shift"]
+            }
+          ]
+        },
+        // Shift-F22 => Backtick
+        // The default position of the backtick in a US layout is too far.
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f22",
+            "modifiers": {
+              "mandatory": ["left_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde"
+            }
+          ]
+        },
+        // ろ => Underscore
+        // `ろ` is located to the left of right Shift in a JIS layout and emits `_`.
+        // But the PC does not recognize it if I have it recognize the keyboard as a US layout (see README).
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international1"
+          },
+          "to": [
+            {
+              "key_code": "hyphen",
+              "modifiers": ["left_shift"]
+            }
+          ],
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
+        },
+        // Shift-ろ => Backtick
+        // This is not the default behavior of a JIS keyboard but is configured to
+        // be compatible with the US keyboard behavior configured for `F22`.
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international1",
+            "modifiers": {
+              "mandatory": ["left_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde"
+            }
+          ],
+          "conditions": [{ "type": "keyboard_type_if", "keyboard_types": ["ansi"] }]
+        }
+      ]
+    },
+
+    {
+      // Add another "layer" that changes keys behaviors like Shift or Control.
+      // In Dygma Raise 2, I use a layer that is enabled by holding the right Command key.
+      // This brings the same behavior to the MacBook keyboard by customizing mappings of right Command.
+      "description": "Custom Layer",
+      "manipulators": [
+        // Shift-(Control)-Tab is mapped to switching tabs in many apps like browsers.
+        // Command_R+t => Shift-Tab
+        {
+          "type": "basic",
           "from": {
             "key_code": "t",
             "modifiers": {
@@ -238,11 +208,30 @@
               "key_code": "tab",
               "modifiers": ["left_control"]
             }
-          ],
-          "type": "basic"
+          ]
+        },
+        // Command_R+r => Shift-Control-Tab
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "r",
+            "modifiers": {
+              "mandatory": ["right_command"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "tab",
+              "modifiers": ["left_shift", "left_control"]
+            }
+          ]
         },
 
+        // Map arrow keys with Command_R-{h,j,k,l}.
+        // Command_R-h => Left
         {
+          "type": "basic",
           "from": {
             "key_code": "h",
             "modifiers": {
@@ -254,10 +243,11 @@
             {
               "key_code": "left_arrow"
             }
-          ],
-          "type": "basic"
+          ]
         },
+        // Command_R-j => Down
         {
+          "type": "basic",
           "from": {
             "key_code": "j",
             "modifiers": {
@@ -269,10 +259,11 @@
             {
               "key_code": "down_arrow"
             }
-          ],
-          "type": "basic"
+          ]
         },
+        // Command_R-k => Up
         {
+          "type": "basic",
           "from": {
             "key_code": "k",
             "modifiers": {
@@ -284,10 +275,11 @@
             {
               "key_code": "up_arrow"
             }
-          ],
-          "type": "basic"
+          ]
         },
+        // Command_R-l => Right
         {
+          "type": "basic",
           "from": {
             "key_code": "l",
             "modifiers": {
@@ -299,8 +291,7 @@
             {
               "key_code": "right_arrow"
             }
-          ],
-          "type": "basic"
+          ]
         }
       ]
     }
