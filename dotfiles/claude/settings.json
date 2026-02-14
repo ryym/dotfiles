@@ -5,6 +5,8 @@
       "Write(.local/claude/**)",
       "Edit(.local/claude/**)",
       "Bash(echo:*)",
+      "Bash(ls:*)",
+      "Bash(tree:*)",
       "Bash(mkdir:*)",
       "Bash(prettier:*)",
       "Bash(git status:*)",
