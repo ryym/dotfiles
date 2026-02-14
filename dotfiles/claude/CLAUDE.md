@@ -6,7 +6,7 @@ If the instructions contain contradictions or you believe they won't work as dir
 
 ## Temporary Files
 
-Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local/tmp` directory.
+Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local` directory.
 The `.local` directory is excluded from Git so you don't need to commit it.
 
 ## Documentation
