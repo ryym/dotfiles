@@ -59,6 +59,10 @@
       }
     ]
   },
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": ["Working"]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.dotfiles/dotfiles/claude/statusline.sh"
