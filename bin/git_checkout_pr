@@ -6,30 +6,9 @@
 # And this script automatically:
 #   - fetches the remote repository if it does not exist.
 #   - set the upstream branch.
-# You need a GitHub token to use this script.
+# You need the `gh` CLI to use this script.
 
-# GitHub 公式の gh はまだ黎明期っぽく remote branch のトラッキングができなくて不便だった。
-# 他にもブランチ名に PR 番号使いたかったので自作した。
-
-require 'net/http'
-require 'uri'
 require 'json'
-require 'yaml'
-
-class Config
-  def self.load
-    config = YAML.load_file("#{ENV['HOME']}/.my-git-tool-config.yml")
-    new(config)
-  end
-
-  def initialize(config)
-    @config = config
-  end
-
-  def github_token
-    @config.fetch("github_token")
-  end
-end
 
 # RemoteRepo is a value object that represents the remote repository.
 class RemoteRepo
@@ -78,10 +57,6 @@ end
 
 # Main is a main logic of this script.
 class Main
-  def initialize(config)
-    @config = config
-  end
-
   def run
     remote_repos = RemoteRepo.list_from_git
     if remote_repos.empty?
@@ -101,7 +76,8 @@ class Main
     pr_number, description = ARGV
     pr = get_pull_request(repo: main_remote_repo.repo_fullname, number: pr_number)
 
-    remote_org, remote_branch = pr["head"]["label"].split(":")
+    remote_org = pr["headRepositoryOwner"]["login"]
+    remote_branch = pr["headRefName"]
     puts "remote repo org: #{remote_org}, remote branch: #{remote_branch}"
 
     remote_repo_fullname = "#{remote_org}/#{main_remote_repo.repo_name}"
@@ -129,21 +105,12 @@ class Main
   end
 
   def get_pull_request(repo:, number:)
-    url = URI.parse('https://api.github.com')
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-
-    req = Net::HTTP::Get.new("/repos/#{repo}/pulls/#{number}")
-    req['Authorization'] = "token #{@config.github_token}"
-    res = http.request(req)
-
-    unless res.code == "200"
-      STDERR.puts req.path
-      STDERR.puts res.body
+    output = `gh pr view #{number} --repo #{repo} --json headRefName,headRepositoryOwner`
+    unless $?.success?
       raise "failed to fetch pull request"
     end
 
-    JSON.parse(res.body)
+    JSON.parse(output)
   end
 
   def list_local_branches
@@ -163,5 +130,4 @@ class Main
   end
 end
 
-config = Config.load
-Main.new(config).run
+Main.new.run
