@@ -100,10 +100,23 @@ if [ -f $zkbd_file ]; then
     bindkey "${key[Down]}" history-beginning-search-forward-end
 fi
 
-# Automatically route `--help` and `-h` through the `help` command for colorized output.
-# e.g. "git status --help" is rewritten to "help git status".
-# Prefix with a backslash to bypass: "\ git --help" runs git --help directly.
-function _auto_help_accept_line() {
+# Custom accept-line widget for command rewriting.
+function _custom_accept_line() {
+    # Empty Enter: show ls and git status.
+    if [[ -z "$BUFFER" ]]; then
+        echo
+        ls
+        if git rev-parse --is-inside-work-tree &>/dev/null; then
+            echo
+            git -c color.status=always status --short --branch
+        fi
+        zle reset-prompt
+        return
+    fi
+
+    # Automatically route `--help` and `-h` through the `help` command for colorized output.
+    # e.g. "git status --help" is rewritten to "help git status".
+    # Prefix with a backslash to bypass: "\ git --help" runs git --help directly.
     if [[ "$BUFFER" != *'|'* && "$BUFFER" != *';'* && "$BUFFER" != *'&&'* ]]; then
         if [[ "$BUFFER" == '\ '* ]]; then
             BUFFER="${BUFFER#\\ }"
@@ -113,9 +126,10 @@ function _auto_help_accept_line() {
             BUFFER="help ${BUFFER% -h}"
         fi
     fi
+
     zle .accept-line
 }
-zle -N accept-line _auto_help_accept_line
+zle -N accept-line _custom_accept_line
 
 # https://github.com/rhysd/hgrep
 function hgrep() {
