@@ -17,6 +17,7 @@ function! my#plug#mucomplete#before_load() abort
     \   },
     \  'markdown': ['path'],
     \  'text': ['path'],
+    \  'sql': ['path', 'keyn', 'c-n'],
     \ }
 
   " Enable auto completion for all files unless LSP is attached.
