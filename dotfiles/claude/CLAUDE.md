@@ -68,6 +68,20 @@ Also, all tests should pass at each commit. Do NOT commit incomplete work.
 
 ## Misc
 
+### English by default
+
+Regardless of the language used in a session, use English for development like below:
+
+- Code comment
+- Git commit messages
+
+Exceptions:
+
+- If the language is explicitly specified, use it.
+- If existing code base or commits doesn't use English, use the same language with them.
+
+### Use relative paths
+
 When you operate on a file like reading, editing, running, etc, always access it using a relative path.
 Using an absolute path can be risky so it is not allowed by default.
 
