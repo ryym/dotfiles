@@ -1,7 +1,16 @@
 local function configure()
     return {
         repo = 'neovim/nvim-lspconfig',
-        depends = {'cmp', 'cmp-lsp', 'luasnip', 'cmp-luasnip', 'mucomplete'},
+        depends = {
+            -- Not all of them are related to LSP but
+            -- configure all the completion behavior here for easiness.
+            'cmp',
+            'cmp-lsp',
+            'cmp-path',
+            'cmp-buffer',
+            'luasnip',
+            'cmp-luasnip',
+        },
         after_load = function()
             local lspconfig = require('lspconfig')
 
@@ -59,28 +68,6 @@ local function configure()
                 capabilities = capabilities,
             })
 
-            -- Use LSP completion for these files while keep using MUcomplete for others.
-            -- See vim/autoload/my/plug/mucomplete.vim.
-            local filetypes_using_lsp_completion = {
-                'rust',
-                'javascript',
-                'typescript',
-                'typescript.tsx',
-                'go',
-                'css',
-                'python',
-            }
-            vim.api.nvim_create_autocmd('BufEnter', {
-                group = 'vimrc',
-                callback = function(event)
-                    if vim.tbl_contains(filetypes_using_lsp_completion, vim.bo.filetype) then
-                        vim.cmd('MUcompleteAutoOff')
-                    else
-                        vim.cmd('MUcompleteAutoOn')
-                    end
-                end,
-            })
-
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = 'vimrc',
@@ -103,6 +90,7 @@ local function configure()
                 end,
             })
 
+            -- Completion settings
             cmp.setup({
                 snippet = {
                     expand = function(args)
@@ -121,22 +109,20 @@ local function configure()
                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
-                    -- Use fallback() for <C-n> and <C-p> to use ins-completion when LSP is not enabled.
-                    ['<C-n>'] = cmp.mapping(function(fallback)
+                    ['<C-n>'] = cmp.mapping(function()
                         if cmp.visible() then
                             cmp.select_next_item()
                         else
-                            fallback()
+                            cmp.complete()
                         end
                     end, { 'i' }),
-                    ['<C-p>'] = cmp.mapping(function(fallback)
+                    ['<C-p>'] = cmp.mapping(function()
                         if cmp.visible() then
                             cmp.select_prev_item()
                         else
-                            fallback()
+                            cmp.complete()
                         end
                     end, { 'i' }),
-
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.confirm({ select = true })
@@ -146,8 +132,62 @@ local function configure()
                             fallback()
                         end
                     end, { 'i', 's' }),
+
+                    -- Use the path completion based on the current buffer directory.
+                    -- This is the default behavior of cmp-path but I configure cmp-path to
+                    -- find paths based on cwd (see below) so added this to use buffer base path completion too.
+                    ['<C-f><C-n>'] = cmp.mapping(function()
+                        cmp.complete({
+                            config = {
+                                sources = {{ name = 'path' }},
+                            },
+                        })
+                    end, { 'i' }),
                 },
             })
+
+            -- Completion sources
+            local cmp_path = {
+                name = 'path', -- File path completion
+                option = {
+                    get_cwd = function()
+                        return vim.fn.getcwd()
+                    end,
+                },
+                -- Unlike MUComplete, it fires only on "/" or "./".
+                -- You can change the return value of `source._dirname` of `lua/cmp_path/init.lua` to improve this:
+                -- - Before: `return nil`
+                -- - After:  `return vim.fn.resolve(option.get_cwd(params))`
+            }
+            local cmp_buffer = {
+                name = 'buffer', -- Keyword completion
+                option = {
+                    get_bufnrs = function()
+                        return vim.api.nvim_list_bufs()
+                    end,
+                },
+            }
+
+            -- Completion settings for file types that don't use LSP.
+            cmp.setup.filetype('ruby', {
+                sources = cmp.config.sources(
+                    { cmp_path },
+                    { cmp_buffer }
+                ),
+            })
+            cmp.setup.filetype('sql', {
+                sources = cmp.config.sources(
+                    { cmp_path },
+                    { cmp_buffer }
+                ),
+            })
+            for _, ft in ipairs({ 'markdown', 'text' }) do
+                cmp.setup.filetype(ft, {
+                    sources = cmp.config.sources(
+                        { cmp_path }
+                    ),
+                })
+            end
         end,
     }
 end

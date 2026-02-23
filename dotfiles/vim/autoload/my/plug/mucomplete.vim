@@ -1,5 +1,6 @@
 function! my#plug#mucomplete#configure(conf) abort
   let a:conf.repo = 'lifepillar/vim-mucomplete'
+  let a:conf.skip_load = 1
   let a:conf.before_load = function('my#plug#mucomplete#before_load')
 endfunction
 

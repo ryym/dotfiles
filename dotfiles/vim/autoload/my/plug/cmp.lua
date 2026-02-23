@@ -1,7 +1,8 @@
 local function configure()
-    -- Used in lspconfig.lua
     return {
         repo = 'hrsh7th/nvim-cmp',
+        -- All completion configurations are defined in `lspconfig.lua`
+        -- because LSP configs involve completion settings.
     }
 end
 
