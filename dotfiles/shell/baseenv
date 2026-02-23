@@ -46,6 +46,17 @@ if command -v bat > /dev/null 2>&1; then
     export MANROFFOPT="-c"
 fi
 
+# A file path for notification handling on AI agent hooks.
+# If this file exists, the hook won't send a notification.
+# Notification can be annoying when you run an agent non-interactively in a short-running script.
+# You can disable the notification like this:
+#     # Disable the notification temporarily and enable it again after this script finishes.
+#     if [[ -n "$AGENT_NO_NOTIF_PATH" && ! -f "$AGENT_NO_NOTIF_PATH" ]]; then
+#         touch "$AGENT_NO_NOTIF_PATH"
+#         trap "rm -f $AGENT_NO_NOTIF_PATH" EXIT
+#     fi
+export AGENT_NO_NOTIF_PATH='/tmp/agent-no-notif'
+
 # Open a man page in Neovim.
 # Tips: you can view the outline of the page by gO.
 manv() {
