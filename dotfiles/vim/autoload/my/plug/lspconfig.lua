@@ -8,6 +8,7 @@ local function configure()
             'cmp-lsp',
             'cmp-path',
             'cmp-buffer',
+            'cmp-nvim-tags',
             'luasnip',
             'cmp-luasnip',
         },
@@ -167,12 +168,16 @@ local function configure()
                     end,
                 },
             }
+            local cmp_tags = {
+                name = 'tags', -- Ctags completion
+            }
 
             -- Completion settings for file types that don't use LSP.
             cmp.setup.filetype('ruby', {
                 sources = cmp.config.sources(
                     { cmp_path },
-                    { cmp_buffer }
+                    { cmp_buffer },
+                    { cmp_tags }
                 ),
             })
             cmp.setup.filetype('sql', {
