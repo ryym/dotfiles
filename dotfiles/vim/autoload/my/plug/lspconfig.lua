@@ -91,6 +91,34 @@ local function configure()
                 end,
             })
 
+            -- Completion sources
+            local cmp_lsp = {
+                name = 'nvim_lsp'
+            }
+            local cmp_path = {
+                name = 'path', -- File path completion
+                option = {
+                    get_cwd = function()
+                        return vim.fn.getcwd()
+                    end,
+                },
+                -- Unlike MUComplete, it fires only on "/" or "./".
+                -- You can change the return value of `source._dirname` of `lua/cmp_path/init.lua` to improve this:
+                -- - Before: `return nil`
+                -- - After:  `return vim.fn.resolve(option.get_cwd(params))`
+            }
+            local cmp_buffer = {
+                name = 'buffer', -- Keyword completion
+                option = {
+                    get_bufnrs = function()
+                        return vim.api.nvim_list_bufs()
+                    end,
+                },
+            }
+            local cmp_tags = {
+                name = 'tags', -- Ctags completion
+            }
+
             -- Completion settings
             cmp.setup({
                 snippet = {
@@ -98,9 +126,12 @@ local function configure()
                         luasnip.lsp_expand(args.body)
                     end,
                 },
-                sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                }),
+                sources = cmp.config.sources(
+                    -- Use LSP if possible and fallback to other completions.
+                    { cmp_lsp },
+                    { cmp_path },
+                    { cmp_buffer }
+                ),
                 confirmation = {
                     get_commit_characters = function(_args)
                         return { '(', '.', ':' }
@@ -147,43 +178,11 @@ local function configure()
                 },
             })
 
-            -- Completion sources
-            local cmp_path = {
-                name = 'path', -- File path completion
-                option = {
-                    get_cwd = function()
-                        return vim.fn.getcwd()
-                    end,
-                },
-                -- Unlike MUComplete, it fires only on "/" or "./".
-                -- You can change the return value of `source._dirname` of `lua/cmp_path/init.lua` to improve this:
-                -- - Before: `return nil`
-                -- - After:  `return vim.fn.resolve(option.get_cwd(params))`
-            }
-            local cmp_buffer = {
-                name = 'buffer', -- Keyword completion
-                option = {
-                    get_bufnrs = function()
-                        return vim.api.nvim_list_bufs()
-                    end,
-                },
-            }
-            local cmp_tags = {
-                name = 'tags', -- Ctags completion
-            }
-
-            -- Completion settings for file types that don't use LSP.
+            -- Customize completion sources for sopecific file types.
             cmp.setup.filetype('ruby', {
                 sources = cmp.config.sources(
                     { cmp_path },
-                    { cmp_buffer },
-                    { cmp_tags }
-                ),
-            })
-            cmp.setup.filetype('sql', {
-                sources = cmp.config.sources(
-                    { cmp_path },
-                    { cmp_buffer }
+                    { cmp_tags, cmp_buffer }
                 ),
             })
             for _, ft in ipairs({ 'markdown', 'text' }) do
