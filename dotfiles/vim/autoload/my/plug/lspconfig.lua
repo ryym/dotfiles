@@ -185,6 +185,9 @@ local function configure()
                     { cmp_tags, cmp_buffer }
                 ),
             })
+            cmp.setup.filetype('', {
+                sources = {},
+            })
             for _, ft in ipairs({ 'markdown', 'text' }) do
                 cmp.setup.filetype(ft, {
                     sources = cmp.config.sources(
