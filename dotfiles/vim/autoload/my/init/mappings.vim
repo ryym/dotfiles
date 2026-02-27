@@ -220,9 +220,12 @@ function! my#init#mappings#setup() abort
   let g:no_man_maps = 1
   " And keep some useful default key bindings.
   " The mapping command is copied from <vim-repo>/runtime/ftplugin/man.vim.
-  augroup vimrc
-    autocmd FileType man nnoremap <silent> <buffer> gO :lua require'man'.show_toc()<CR>
-  augroup END
+  autocmd vimrc FileType man nnoremap <silent> <buffer> gO :lua require'man'.show_toc()<CR>
+
+  " Override the default tag jump behavior to list all possible definitions in a quickfix list.
+  autocmd vimrc FileType ruby nnoremap <buffer> g] :call <SID>tag_jump_with_qf(expand('<cword>'))<CR>
+  " Use a custom tagfunc for Ruby to resolve qualified names like Foo::Bar.
+  autocmd vimrc FileType ruby setlocal tagfunc=my#init#mappings#ruby_tagfunc
 endfunction
 
 function! s:SID()
@@ -317,3 +320,80 @@ function! s:toggle_comment_continuation()
     echo 'Continue comment lines'
   endif
 endfunction
+
+function! s:map_tag_jumps() abort
+  nnoremap <buffer> g] :call <SID>tag_jump_with_qf(expand('<cword>'))<CR>
+endfunction
+
+function! s:tag_jump_with_qf(tag) abort
+  let tags = taglist('^' .. a:tag .. '$')
+  if empty(tags)
+    echohl ErrorMsg | echo 'tag not found: ' .. a:tag | echohl None
+    return
+  endif
+  if len(tags) == 1
+    execute 'tag' a:tag
+    return
+  endif
+  let items = map(tags, {_, t -> {
+    \ 'filename': t.filename,
+    \ 'pattern': s:tag_cmd_to_pattern(t.cmd),
+    \ 'text': get(t, 'kind', '') .. ' ' .. t.name,
+    \ }})
+  call setqflist([], ' ', {'title': 'tselect ' .. a:tag, 'items': items})
+  copen
+endfunction
+
+function! s:tag_cmd_to_pattern(cmd) abort
+  if a:cmd[0] == '/'
+    return a:cmd[1:-2]
+  endif
+  return a:cmd
+endfunction
+
+function! my#init#mappings#ruby_tagfunc(pattern, flags, info) abort
+  " Only handle normal tag jumps (e.g. <C-]>), not :tag command input.
+  if a:flags !~# 'c'
+    return v:null
+  endif
+
+  let line = getline('.')
+  let col = col('.') - 1
+
+  " Find the start of the word under cursor.
+  let word_start = col
+  while word_start > 0 && line[word_start - 1] =~# '\w'
+    let word_start -= 1
+  endwhile
+
+  " Walk backwards over ::Name segments to build the qualified name.
+  let qualified = a:pattern
+  let pos = word_start
+  while pos >= 2 && line[pos - 2 : pos - 1] ==# '::'
+    let prefix_end = pos - 2
+    let prefix_start = prefix_end
+    while prefix_start > 0 && line[prefix_start - 1] =~# '\w'
+      let prefix_start -= 1
+    endwhile
+    if prefix_start == prefix_end
+      break
+    endif
+    let qualified = line[prefix_start : prefix_end - 1] .. '::' .. qualified
+    let pos = prefix_start
+  endwhile
+
+  if qualified ==# a:pattern
+    return v:null
+  endif
+
+  let tags = taglist('^' .. escape(qualified, '.') .. '$')
+  if empty(tags)
+    return v:null
+  endif
+  return map(tags, {_, t -> {
+    \ 'name': t.name,
+    \ 'filename': t.filename,
+    \ 'cmd': t.cmd,
+    \ }})
+endfunction
+

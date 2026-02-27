@@ -69,6 +69,13 @@ local function configure()
                 capabilities = capabilities,
             })
 
+            -- XXX: <C-]> がうまく動かんのとメソッドジャンプが弱い
+            -- lspconfig.ruby_lsp.setup({
+            --     capabilities = capabilities,
+            -- })
+            -- ctags のデフォルト tagfunc を override してキーワードの前に :: があったらそれらも含むように変えられないかな？
+            -- ripper-tags --extra=q -R 結構よく出来てるかも。 ctags --extras=+q は駄目だった。これと tagfunc 組み合わせられないかな
+
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = 'vimrc',
@@ -111,10 +118,19 @@ local function configure()
                 name = 'buffer', -- Keyword completion
                 option = {
                     get_bufnrs = function()
-                        return vim.api.nvim_list_bufs()
+                        -- return vim.api.nvim_list_bufs()
+                        return { vim.api.nvim_get_current_buf() }
                     end,
                 },
             }
+            -- local cmp_buffer_current = {
+            --     name = 'buffer', -- Keyword completion (current buffer only)
+            --     option = {
+            --         get_bufnrs = function()
+            --             return { vim.api.nvim_get_current_buf() }
+            --         end,
+            --     },
+            -- }
             local cmp_tags = {
                 name = 'tags', -- Ctags completion
             }
@@ -187,6 +203,11 @@ local function configure()
             })
             cmp.setup.filetype('', {
                 sources = {},
+            })
+            cmp.setup.filetype('viler', {
+                sources = {
+                    { cmp_buffer },
+                }
             })
             for _, ft in ipairs({ 'markdown', 'text' }) do
                 cmp.setup.filetype(ft, {

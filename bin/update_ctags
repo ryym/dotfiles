@@ -1,0 +1,53 @@
+#!/bin/sh
+# Update ctags for configured directories via cron.
+#
+# Configuration file: ~/.config/ctags-updater/targets
+# Each line defines a target in the format:
+#   <directory> [--languages=<langs>] [--extra-flags...]
+#
+# Example ~/.config/ctags-updater/targets:
+#   ~/projects/myapp --languages=Ruby
+#   ~/work/api --languages=Ruby,Python
+#   ~/work/frontend --languages=JavaScript,TypeScript
+#
+# Crontab example (every 10 minutes):
+#   */10 * * * * ~/.dotfiles/bin/update_ctags
+
+set -eu
+
+CONFIG_FILE="${CTAGS_UPDATER_CONFIG:-$HOME/.config/ctags-updater/targets}"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "Config not found: $CONFIG_FILE" >&2
+  exit 1
+fi
+
+while IFS= read -r line || [ -n "$line" ]; do
+  # Skip blank lines and comments
+  case "$line" in
+    ''|\#*) continue ;;
+  esac
+
+  # Expand ~ to $HOME
+  line=$(echo "$line" | sed "s|^~|$HOME|")
+
+  # First token is the directory, rest are ctags flags
+  dir=$(echo "$line" | awk '{print $1}')
+  flags=$(echo "$line" | awk '{$1=""; print}' | sed 's/^ *//')
+
+  if [ ! -d "$dir" ]; then
+    echo "Directory not found, skipping: $dir" >&2
+    continue
+  fi
+
+  tags_file="$dir/tags"
+  tmp_file="$dir/tags.tmp.$$"
+
+  # shellcheck disable=SC2086
+  if ctags -R -f "$tmp_file" $flags "$dir" 2>/dev/null; then
+    mv "$tmp_file" "$tags_file"
+  else
+    echo "ctags failed for: $dir" >&2
+    rm -f "$tmp_file"
+  fi
+done < "$CONFIG_FILE"
