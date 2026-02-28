@@ -69,6 +69,13 @@ local function configure()
                 capabilities = capabilities,
             })
 
+            vim.lsp.config('rbtags', {
+                cmd = { 'rbtags', 'lsp' },
+                root_markers = { '.git' },
+                filetypes = { 'ruby' }
+            })
+            vim.lsp.enable('rbtags')
+
             -- XXX: <C-]> がうまく動かんのとメソッドジャンプが弱い
             -- lspconfig.ruby_lsp.setup({
             --     capabilities = capabilities,
