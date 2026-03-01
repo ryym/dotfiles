@@ -131,6 +131,12 @@ function _custom_accept_line() {
     elif [[ "$BUFFER" == *' -h' ]]; then
         BUFFER="help ${BUFFER% -h}"
     fi
+    # Strip "help " prefix when a trailing comma is appended.
+    # e.g. "help git," runs "git". Useful for recalling help history and running the command.
+    if [[ "$BUFFER" == 'help '*, ]]; then
+        BUFFER="${BUFFER#help }"
+        BUFFER="${BUFFER%,}"
+    fi
 
     zle .accept-line
 }
