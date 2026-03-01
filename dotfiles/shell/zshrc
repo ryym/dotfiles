@@ -102,7 +102,14 @@ fi
 
 # Custom accept-line widget for command rewriting.
 function _custom_accept_line() {
-    # Empty Enter: show ls and git status.
+    # Ignore complex lines (pipes, semicolons, &&, ||).
+    if [[ "$BUFFER" == *'|'* || "$BUFFER" == *';'* || "$BUFFER" == *'&&'* ]]; then
+        zle .accept-line
+        return
+    fi
+
+    ### Empty Enter
+    # Show `ls` and `git status` on empty line.
     if [[ -z "$BUFFER" ]]; then
         echo
         ls
@@ -114,17 +121,15 @@ function _custom_accept_line() {
         return
     fi
 
-    # Automatically route `--help` and `-h` through the `help` command for colorized output.
+    ### Auto Help Formatter
+    # Route `--help` and `-h` through the `help` command for colorized output.
     # e.g. "git status --help" is rewritten to "help git status".
-    # Prefix with a backslash to bypass: "\ git --help" runs git --help directly.
-    if [[ "$BUFFER" != *'|'* && "$BUFFER" != *';'* && "$BUFFER" != *'&&'* ]]; then
-        if [[ "$BUFFER" == '\ '* ]]; then
-            BUFFER="${BUFFER#\\ }"
-        elif [[ "$BUFFER" == *' --help' ]]; then
-            BUFFER="help ${BUFFER% --help}"
-        elif [[ "$BUFFER" == *' -h' ]]; then
-            BUFFER="help ${BUFFER% -h}"
-        fi
+    # You can avoid this auto conversion by adding an extra space to the end.
+    # e.g. "git status --help " runs as is without being rewritten.
+    if [[ "$BUFFER" == *' --help' ]]; then
+        BUFFER="help ${BUFFER% --help}"
+    elif [[ "$BUFFER" == *' -h' ]]; then
+        BUFFER="help ${BUFFER% -h}"
     fi
 
     zle .accept-line
