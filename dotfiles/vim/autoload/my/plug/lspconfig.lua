@@ -84,6 +84,11 @@ local function configure()
                     vim.keymap.set('n', '<Space>vD', vim.diagnostic.setqflist, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vf', vim.lsp.buf.format, { buffer = event.buf })
 
+                    -- Explicitly map <C-]> to the goto-definition.
+                    -- Although Neovim automatically sets vim.lsp.tagfunc to the `tagfunc` config,
+                    -- it sometimes doesn't work in Ruby files. I don't know the exact cause.
+                    vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, { buffer = event.buf })
+
                     vim.cmd([[
                         highlight VirtualTextError ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
                         highlight VirtualTextWarning ctermfg=214 guifg=#dbbc7f guibg=#4d4c43 gui=italic
