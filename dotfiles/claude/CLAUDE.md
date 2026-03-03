@@ -66,6 +66,17 @@ Also, all tests should pass at each commit. Do NOT commit incomplete work.
 - Body: Include decision-making context and complex implementation details that aren't obvious from the code diff
 - Language: English
 
+## Shell Script Rules
+
+Avoid the following actions unless they are really necessary because they require additional human approval.
+
+- Bad: Use advanced shell features
+  - Sub shell like `$(...)` or "`...`" (backticks)
+- Bad: Access outside of the current directory
+  - For example, you can just create temporary files in `.local` instead of `/tmp` or `/private`.
+- Bad: Use absolute path for the current directory
+  - When you take actions inside the current directory, you can always use a relative path like `path/to/file` instead of `/Users/bob/home/repo/path/to/file`
+
 ## Misc
 
 ### English by default
@@ -79,11 +90,3 @@ Exceptions:
 
 - If the language is explicitly specified, use it.
 - If existing code base or commits doesn't use English, use the same language with them.
-
-### Use relative paths
-
-When you operate on a file like reading, editing, running, etc, always access it using a relative path.
-Using an absolute path can be risky so it is not allowed by default.
-
-- Good: `ls path/to/file`
-- Bad: `ls /Users/bob/ghq/github.com/bob/hello/path/to/file`
