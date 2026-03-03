@@ -24,6 +24,7 @@
       "Bash(tmux capture-pane:*)"
     ],
     "deny": [
+      "Read(.local/human/**)",
       "Read(//)",
       "Read(~/)",
       "Edit(//)",
