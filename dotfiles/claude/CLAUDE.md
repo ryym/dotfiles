@@ -66,16 +66,19 @@ Also, all tests should pass at each commit. Do NOT commit incomplete work.
 - Body: Include decision-making context and complex implementation details that aren't obvious from the code diff
 - Language: English
 
+### Bash Usage
+
+Never use command substitutions like `$(cat <<'EOF'...)` or backticks on Git operation.
+Specify commit messages with simple strings like `git commit -m "..."`.
+
 ## Shell Script Rules
 
-Avoid the following actions unless they are really necessary because they require additional human approval.
+Follow these rules as much as possible when using Bash to avoid requiring additional human approval.
 
-- Bad: Use advanced shell features
-  - Sub shell like `$(...)` or "`...`" (backticks)
-- Bad: Access outside of the current directory
-  - For example, you can just create temporary files in `.local` instead of `/tmp` or `/private`.
-- Bad: Use absolute path for the current directory
-  - When you take actions inside the current directory, you can always use a relative path like `path/to/file` instead of `/Users/bob/home/repo/path/to/file`
+- Avoid accessing outside of the current directory
+  - For example, you can just create temporary files in `.local` instead of `/tmp`.
+- Avoid using absolute paths for the current directory
+  - When you take actions inside the current directory, use a relative path like `path/to/file` instead of `/Users/bob/home/repo/path/to/file`.
 
 ## Misc
 
