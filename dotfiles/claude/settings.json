@@ -67,10 +67,6 @@
       }
     ]
   },
-  "spinnerVerbs": {
-    "mode": "replace",
-    "verbs": ["Working"]
-  },
   "statusLine": {
     "type": "command",
     "command": "~/.dotfiles/dotfiles/claude/statusline.sh"
@@ -83,6 +79,12 @@
   },
   "sandbox": {
     "enabled": true
+  },
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Working"
+    ]
   },
   "effortLevel": "medium"
 }
