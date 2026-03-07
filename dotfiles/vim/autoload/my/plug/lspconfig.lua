@@ -69,6 +69,34 @@ local function configure()
                 capabilities = capabilities,
             })
 
+            -- https://github.com/ryym/rbtags
+            vim.lsp.config("rbtags", {
+                cmd = { "rbtags", "lsp" },
+                filetypes = { "ruby" },
+                root_markers = { '.git' },
+            })
+            vim.lsp.enable("rbtags")
+            -- Jump to the best match definition even if there are multiple candidates.
+            local function rbtags_best_definition()
+                local clients = vim.lsp.get_clients({ bufnr = 0, name = 'rbtags' })
+                if #clients == 0 then
+                    vim.notify('rbtags client not found', vim.log.levels.ERROR)
+                    return
+                end
+                local params = vim.lsp.util.make_position_params()
+                clients[1]:request('rbtags/bestDefinition', params, function(err, result)
+                    if err then
+                        vim.notify('rbtags/bestDefinition: ' .. err.message, vim.log.levels.ERROR)
+                        return
+                    end
+                    if result == nil then
+                        vim.notify('No location found', vim.log.levels.INFO)
+                        return
+                    end
+                    vim.lsp.util.show_document(result, 'utf-8')
+                end)
+            end
+
             -- Define key mappings.
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = 'vimrc',
@@ -83,11 +111,12 @@ local function configure()
                     vim.keymap.set('n', '<Space>vd', vim.diagnostic.open_float, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vD', vim.diagnostic.setqflist, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vf', vim.lsp.buf.format, { buffer = event.buf })
+                    vim.keymap.set('n', '<Space>vv', vim.lsp.buf.definition, { buffer = event.buf })
 
-                    -- Explicitly map <C-]> to the goto-definition.
-                    -- Although Neovim automatically sets vim.lsp.tagfunc to the `tagfunc` config,
-                    -- it sometimes doesn't work in Ruby files. I don't know the exact cause.
-                    vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, { buffer = event.buf })
+                    local filetype = vim.bo[event.buf].filetype
+                    if filetype == 'ruby' then
+                        vim.keymap.set('n', '<C-]>', rbtags_best_definition, { buffer = event.buf })
+                    end
 
                     vim.cmd([[
                         highlight VirtualTextError ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
