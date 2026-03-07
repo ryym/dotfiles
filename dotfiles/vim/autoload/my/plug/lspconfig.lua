@@ -83,7 +83,7 @@ local function configure()
                     vim.notify('rbtags client not found', vim.log.levels.ERROR)
                     return
                 end
-                local params = vim.lsp.util.make_position_params()
+                local params = vim.lsp.util.make_position_params(0, 'utf-8')
                 clients[1]:request('rbtags/bestDefinition', params, function(err, result)
                     if err then
                         vim.notify('rbtags/bestDefinition: ' .. err.message, vim.log.levels.ERROR)
