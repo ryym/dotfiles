@@ -8,6 +8,8 @@
       "Bash(ls:*)",
       "Bash(tree:*)",
       "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(grep:*)",
       "Bash(prettier:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
