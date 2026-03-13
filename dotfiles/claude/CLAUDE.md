@@ -75,10 +75,11 @@ Specify commit messages with simple strings like `git commit -m "..."`.
 
 Follow these rules as much as possible when using Bash to avoid requiring additional human approval.
 
-- Avoid accessing outside of the current directory
+- Avoid accessing outside of the current directory.
   - For example, you can just create temporary files in `.local` instead of `/tmp`.
-- Avoid using absolute paths for the current directory
+- Avoid using absolute paths for the current directory.
   - When you take actions inside the current directory, use a relative path like `path/to/file` instead of `/Users/bob/home/repo/path/to/file`.
+- Avoid using `cd` as it will confuse yourself.
 - Avoid chaining commands like `ls foo; echo "---"; ls bar` or `git add foo && git commit` unless you want to run commands conditionally.
   Otherwise, just run each command separately.
 - Avoid running `echo "---"` which triggers human approval as a false positive of quoted flag name.
