@@ -12,6 +12,8 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(fd:*)",
+      "Bash(cat:*)",
+      "Bash(bat:*)",
       "Bash(prettier:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
