@@ -10,6 +10,8 @@
       "Bash(mkdir:*)",
       "Bash(cp:*)",
       "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(fd:*)",
       "Bash(prettier:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
