@@ -34,16 +34,14 @@ shift
 
 # - $cmd may contain multiple commands if it is resolved from an alias (e.g. "bundle exec").
 # - $@ may contain sub commands (e.g. "status" of "git").
-# Build a cmds array from $cmd and $@ while excluding options which starts with "-".
+# Build a cmds array from $cmd and $@.
 # If $cmd="bundle exec" and $@="rails server", $cmds=("bundle", "exec", "rails", "server").
 cmds=()
 words=($cmd)
 for w in "${words[@]}"; do
-    [[ $w =~ ^- ]] && break
     cmds+=("$w")
 done
 for w in "$@"; do
-    [[ $w =~ ^- ]] && break
     cmds+=("$w")
 done
 
