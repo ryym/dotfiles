@@ -14,7 +14,7 @@ let s:grepprgs = {
   \ 'current': 'git',
   \ 'order' : ['git', 'rg', 'vim'],
   \ 'prgs' : {
-  \   'git' : s:make_grepprg_obj('git', 'GitGrep', 'git grep --line-number --column'),
+  \   'git' : s:make_grepprg_obj('git', 'GitGrep', 'git grep --line-number --column --recurse-submodules'),
   \   'rg'  : s:make_grepprg_obj('rg', 'RgGrep', 'rg --vimgrep'),
   \   'vim' : s:make_grepprg_obj('vim', 'VimGrep', 'internal')
   \  }
