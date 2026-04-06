@@ -13,8 +13,6 @@ local function configure()
             'cmp-luasnip',
         },
         after_load = function()
-            local lspconfig = require('lspconfig')
-
             -- Plugins to enable LSP auto-complation
             -- (https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion)
             local luasnip = require('luasnip')
@@ -36,7 +34,7 @@ local function configure()
 
             -- https://rust-analyzer.github.io/
             -- rustup component add rust-analyzer
-            lspconfig.rust_analyzer.setup({
+            vim.lsp.config('rust_analyzer', {
                 capabilities = capabilities,
                 settings = {
                     ['rust-analyzer'] = {
@@ -46,12 +44,14 @@ local function configure()
                     },
                 },
             })
+            vim.lsp.enable('rust_analyzer')
 
             -- https://go.dev/gopls/
             -- go install golang.org/x/tools/gopls@latest
-            lspconfig.gopls.setup({
+            vim.lsp.config('gopls', {
                 capabilities = capabilities,
             })
+            vim.lsp.enable('gopls')
 
             -- https://github.com/typescript-language-server/typescript-language-server
             -- npm i -g typescript-language-server
@@ -70,24 +70,28 @@ local function configure()
 
             -- https://github.com/hrsh7th/vscode-langservers-extracted
             -- npm i -g vscode-langservers-extracted
-            lspconfig.cssls.setup({
+            vim.lsp.config('cssls', {
                 capabilities = capabilities,
             })
+            vim.lsp.enable('cssls')
 
             -- https://github.com/python-lsp/python-lsp-server
-            lspconfig.pylsp.setup({
+            vim.lsp.config('pylsp', {
                 capabilities = capabilities,
             })
+            vim.lsp.enable('pylsp')
 
             -- https://github.com/clangd/clangd
-            lspconfig.clangd.setup({
+            vim.lsp.config('clangd', {
                 capabilities = capabilities,
             })
+            vim.lsp.enable('clangd')
 
             -- https://docs.rubocop.org/rubocop/usage/lsp.html
-            lspconfig.rubocop.setup({
+            vim.lsp.config('rubocop', {
                 capabilities = capabilities,
             })
+            vim.lsp.enable('rubocop')
 
             -- https://github.com/ryym/rbtags
             vim.lsp.config("rbtags", {
