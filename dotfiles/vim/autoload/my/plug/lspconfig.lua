@@ -23,6 +23,17 @@ local function configure()
 
             local capabilities = cmp_nvim_lsp.default_capabilities()
 
+            -- Return a root_dir function that activates the LSP only if
+            -- any parent directory has any "markers" files.
+            local function enable_in_root(markers)
+                return function(bufnr, on_dir)
+                    local root = vim.fs.root(bufnr, markers)
+                    if root then
+                        on_dir(root)
+                    end
+                end
+            end
+
             -- https://rust-analyzer.github.io/
             -- rustup component add rust-analyzer
             lspconfig.rust_analyzer.setup({
@@ -44,9 +55,18 @@ local function configure()
 
             -- https://github.com/typescript-language-server/typescript-language-server
             -- npm i -g typescript-language-server
-            lspconfig.ts_ls.setup({
+            vim.lsp.config('ts_ls', {
                 capabilities = capabilities,
+                root_dir = enable_in_root({ 'package.json', 'tsconfig.json' }),
             })
+            vim.lsp.enable('ts_ls')
+
+            -- https://docs.deno.com/runtime/reference/cli/lsp/
+            vim.lsp.config('denols', {
+                capabilities = capabilities,
+                root_dir = enable_in_root({ 'deno.json', 'deno.jsonc' }),
+            })
+            vim.lsp.enable('denols')
 
             -- https://github.com/hrsh7th/vscode-langservers-extracted
             -- npm i -g vscode-langservers-extracted
