@@ -64,9 +64,18 @@ Also, all tests should pass at each commit. Do NOT commit incomplete work.
 
 ### Commit Messages
 
-- Title: Concisely describe what was done
-- Body: Include decision-making context and complex implementation details that aren't obvious from the code diff
+Default format:
+
 - Language: English
+- Title: Concisely describe what was done in the present tense
+- Body: Include decision-making context and complex implementation details that aren't obvious from the code diff
+
+But prioritize the format and rules in the repository you are working on.
+
+### Fixing up Commits
+
+If you create a commit that should have been done in any previous commits, commit it with `--fixup` or `--fixup=ammend`.
+Human will clean up commits before push.
 
 ### Bash Usage
 
