@@ -73,7 +73,7 @@ class Main
       exit 1
     end
 
-    pr_number, description = ARGV
+    pr_number = ARGV[0]
     pr = get_pull_request(repo: main_remote_repo.repo_fullname, number: pr_number)
 
     remote_org = pr["headRepositoryOwner"]["login"]
@@ -100,7 +100,7 @@ class Main
       return
     end
 
-    local_branch_name = "p#{pr_number}" + (description ? "-#{description}" : "")
+    local_branch_name = "p#{pr_number}-#{remote_branch}"
     system("git checkout -b #{local_branch_name} #{target_remote_repo.nickname}/#{remote_branch}")
   end
 
