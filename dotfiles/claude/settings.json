@@ -1,5 +1,6 @@
 {
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
       "Read(.local/claude/**)",
       "Write(.local/claude/**)",
@@ -16,6 +17,7 @@
       "Bash(bat:*)",
       "Bash(prettier:*)",
       "Bash(git add:*)",
+      "Bash(git branch:*)",
       "Bash(git commit:*)",
       "Bash(git status:*)",
       "Bash(git log:*)",
@@ -25,6 +27,17 @@
       "Bash(git fetch:*)",
       "Bash(git stash:*)",
       "Bash(git pull:*)",
+      "Bash(git -c color.ui=never add:*)",
+      "Bash(git -c color.ui=never branch:*)",
+      "Bash(git -c color.ui=never commit:*)",
+      "Bash(git -c color.ui=never status:*)",
+      "Bash(git -c color.ui=never log:*)",
+      "Bash(git -c color.ui=never diff:*)",
+      "Bash(git -c color.ui=never show:*)",
+      "Bash(git -c color.ui=never checkout:*)",
+      "Bash(git -c color.ui=never fetch:*)",
+      "Bash(git -c color.ui=never stash:*)",
+      "Bash(git -c color.ui=never pull:*)",
       "Bash(tmux list-panes:*)",
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
