@@ -67,7 +67,7 @@ manv() {
 
 # Print JSON with formatting and colors.
 pjson() {
-    jq . "$@" | bat -l json
+    jq . "$@" | bat --plain -l json
 }
 
 chomp() {
