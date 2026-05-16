@@ -79,8 +79,9 @@ Human will clean up commits before push.
 
 ### Bash Usage
 
-Never use command substitutions like `$(cat <<'EOF'...)` or backticks on Git operation.
-Specify commit messages with simple strings like `git commit -m "..."`.
+- Never use command substitutions like `$(cat <<'EOF'...)` or backticks on Git operation.
+  Specify commit messages with simple strings like `git commit -m "..."`.
+- Never specify the Git directory like `git -C /path/to/dir`. You are allowed to run Git only in your current directory.
 
 ## Shell Script Rules
 
