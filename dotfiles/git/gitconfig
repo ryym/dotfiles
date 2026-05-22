@@ -11,7 +11,7 @@
     quotepath = false
     excludesfile = ~/.gitignore
     pager = delta --file-modified-label 'updated:' --pager 'toss -F --header 1 \
-        --heading "^(added:|updated:|renamed:|renamed:)" --heading-lines 2'
+        --heading "^(added:|updated:|renamed:|removed:)" --heading-lines 2'
 [pager]
     log = toss -F
 	branch = toss -F
