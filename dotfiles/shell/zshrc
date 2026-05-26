@@ -78,6 +78,8 @@ setopt list_packed
 setopt nolistbeep
 setopt interactivecomments
 
+setopt complete_aliases
+
 unsetopt nomatch
 
 source "$DOTPATH/dotfiles/shell/aliases"
