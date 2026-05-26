@@ -44,6 +44,7 @@
     ],
     "deny": [
       "Read(.local/human/**)",
+      "Read(.env*)",
       "Read(//)",
       "Read(~/)",
       "Edit(//)",
