@@ -49,6 +49,13 @@ case "${cmds[0]}" in
     npm | aws)
         cmds=("${cmds[0]}" 'help' ${cmds[@]:1})
         ;;
+    go)
+        if [ "${cmds[1]}" = 'tool' ] && [ ${#cmds[@]} -gt 2 ]; then
+            cmds=("${cmds[@]}" '--help')
+        else
+            cmds=("${cmds[0]}" 'help' ${cmds[@]:1})
+        fi
+        ;;
     *)
         cmds=("${cmds[@]}" '--help')
 esac
