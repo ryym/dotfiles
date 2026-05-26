@@ -18,5 +18,5 @@ function! s:configure_blame_buf() abort
 endfunction
 
 function! my#plug#fugitive#_open_pr(hash) abort
-  call system('whichpr open ' . a:hash)
+  call system('whichpr ' . a:hash)
 endfunction
