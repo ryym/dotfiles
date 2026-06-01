@@ -32,6 +32,7 @@ LINKS=(
     'claude/keybindings.json':'.claude/keybindings.json'
     'claude/statusline.sh':'.claude/statusline.sh'
     'claude/skills/tmux':'.claude/skills/tmux'
+    'npmrc':'.npmrc'
 )
 
 case $(ostype) in

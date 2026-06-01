@@ -1,0 +1,2 @@
+# Disable post-install scripts to mitigate security risks.
+ignore-scripts = true
