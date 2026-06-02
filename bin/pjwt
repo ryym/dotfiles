@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Decode a JWT and print its header and payload.
+# Usage:
+#   pjwt <token>          # decode the given token
+#   echo <token> | pjwt   # decode the token from stdin
+
+set -euo pipefail
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+    echo "Usage: pjwt <token>"
+    echo "       echo <token> | pjwt"
+    exit 0
+fi
+
+if [ $# -gt 0 ]; then
+    token="$1"
+else
+    # Read the token from stdin (strip surrounding whitespace/newlines).
+    token=$(cat | tr -d '[:space:]')
+fi
+
+if [ -z "${token:-}" ]; then
+    echo "Error: no JWT given." >&2
+    echo "Usage: pjwt <token>" >&2
+    exit 1
+fi
+
+# A JWT consists of "header.payload.signature".
+IFS='.' read -r header_b64 payload_b64 _signature <<< "$token"
+
+if [ -z "$payload_b64" ]; then
+    echo "Error: invalid JWT format (expected 'header.payload.signature')." >&2
+    exit 1
+fi
+
+# Decode a base64url string into raw bytes.
+# JWT uses URL-safe base64 without padding, so we convert it back to standard
+# base64 and re-add the padding that `base64 -d` requires.
+decode_b64url() {
+    local data="$1"
+    data="${data//-/+}"
+    data="${data//_/\/}"
+    case $((${#data} % 4)) in
+        2) data="${data}==" ;;
+        3) data="${data}=" ;;
+    esac
+    printf '%s' "$data" | base64 -d 2>/dev/null
+}
+
+echo "Header:"
+decode_b64url "$header_b64" | jq .
+echo
+echo "Payload:"
+decode_b64url "$payload_b64" | jq .
