@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Read(.local/claude/**)",
       "Write(.local/claude/**)",
@@ -38,6 +37,8 @@
       "Bash(git -c color.ui=never fetch:*)",
       "Bash(git -c color.ui=never stash:*)",
       "Bash(git -c color.ui=never pull:*)",
+      "Bash(git --no-pager diff:*)",
+      "Bash(git --no-pager show:*)",
       "Bash(tmux list-panes:*)",
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
@@ -51,7 +52,8 @@
       "Edit(~/)",
       "Write(//)",
       "Write(~/)"
-    ]
+    ],
+    "defaultMode": "acceptEdits"
   },
   "model": "opus",
   "hooks": {
