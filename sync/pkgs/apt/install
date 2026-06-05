@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'apt'
+
+install() {
+    run sudo apt-get install -y "$@"
+}
+
+if is_dryrun || has apt-get; then
+    run sudo apt-get update
+
+    # Basic development tools
+    # install alacritty
+    install clang
+    install fzf
+    install golang
+    install ibus-mozc
+    install jq
+    install make
+    install neovim
+    install tmux
+    install zsh
+
+    # if ! has docker; then
+    #     # Docker: https://docs.docker.com/engine/install/debian/
+    #     install ca-certificates
+    #     install curl
+    #     run sudo install -m 0755 -d /etc/apt/keyrings
+    #     run sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    #     run sudo chmod a+r /etc/apt/keyrings/docker.asc
+    #     run 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null'
+    #     run sudo apt-get update
+    #     install docker-ce
+    #     install docker-ce-cli
+    #     install containerd.io
+    #     install docker-buildx-plugin
+    #     install docker-compose-plugin
+    # fi
+
+    # # Required to build Ruby
+    # install build-essential
+    # install perl
+    # install zlib1g-dev
+    # install libffi-dev
+    # install libyaml-dev
+    # install libssl-dev
+else
+    log_error 'apt-get not found'
+    exit 1
+fi
+
+log_finish 'apt'
