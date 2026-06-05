@@ -17,7 +17,7 @@ if is_dryrun || has apt-get; then
     # install alacritty
     install clang
     install fzf
-    install golang
+    # install golang
     install ibus-mozc
     install jq
     install make

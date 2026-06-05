@@ -12,7 +12,7 @@ if is_dryrun || has gem; then
     install byebug
 else
     log_error 'gem command is not available'
-    exit 1
+    # exit 1
 fi
 
 log_finish 'Rubygems'
