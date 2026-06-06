@@ -1,9 +1,9 @@
 # https://mise.jdx.dev/configuration.html
 
 [tools]
-# node = "lts"
-# python = "latest"
-# ruby = "latest"
+node = "lts"
+python = "latest"
+ruby = "latest"
 go = "latest"
 
 [settings]
