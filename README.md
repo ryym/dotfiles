@@ -12,6 +12,7 @@ This repository manages:
 
 - macOS
 - Fedora
+- Ubuntu (Debian)
 - Arch Linux
 
 ## Prerequisites
