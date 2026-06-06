@@ -15,7 +15,6 @@ if is_dryrun || has dnf; then
     install alacritty
     install clang
     install fzf
-    install golang
     install ibus-mozc
     install jq
     install make
