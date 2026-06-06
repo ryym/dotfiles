@@ -41,13 +41,13 @@ if is_dryrun || has apt-get; then
     #     install docker-compose-plugin
     # fi
 
-    # # Required to build Ruby
-    # install build-essential
-    # install perl
-    # install zlib1g-dev
-    # install libffi-dev
-    # install libyaml-dev
-    # install libssl-dev
+    # Required to build Ruby
+    install build-essential
+    install perl
+    install zlib1g-dev
+    install libffi-dev
+    install libyaml-dev
+    install libssl-dev
 else
     log_error 'apt-get not found'
     exit 1
