@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -eu
+trap 'echo SYNC STOPPED: $0' ERR INT
+source "$DOTPATH/sync/lib/vitalize.sh"
+
+log_start 'apt'
+
+install() {
+    run sudo apt-get install -y "$@"
+}
+
+if is_dryrun || has apt-get; then
+    run sudo apt-get update
+
+    # Basic development tools
+    install clang
+    install fzf
+    install ibus-mozc
+    install jq
+    install make
+    install neovim
+    install tmux
+    install zsh
+
+    # Required to build Ruby
+    install build-essential
+    install perl
+    install zlib1g-dev
+    install libffi-dev
+    install libyaml-dev
+    install libssl-dev
+else
+    log_error 'apt-get not found'
+    exit 1
+fi
+
+log_finish 'apt'
