@@ -20,7 +20,6 @@ This repository manages:
 Necessary command line tools:
 
 - `bash`
-- `curl`
 - `git`
 - `make`
 - `sudo`
