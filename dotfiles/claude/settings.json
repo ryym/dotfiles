@@ -51,7 +51,8 @@
       "Edit(//)",
       "Edit(~/)",
       "Write(//)",
-      "Write(~/)"
+      "Write(~/)",
+      "Bash(git push)"
     ],
     "defaultMode": "acceptEdits"
   },
