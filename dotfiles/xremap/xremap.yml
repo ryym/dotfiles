@@ -37,6 +37,7 @@ keymap:
       Super-K: Ctrl-K
       Super-L: Ctrl-L
       Super-N: Ctrl-N
+      Super-Shift-O: Ctrl-Shift-O
       Super-P: Ctrl-P
       Super-R: Ctrl-R
       Super-S: Ctrl-S
