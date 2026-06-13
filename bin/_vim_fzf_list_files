@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # A script called from Vim's fzf utility. See: ./dotfiles/vim/autoload/my/plug/fzf.vim
 
