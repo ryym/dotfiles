@@ -41,8 +41,48 @@ bindkey "^N" history-beginning-search-forward-end
 # vcs_info
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
-zstyle ':vcs_info:*' formats '%F{green}%b%f'
-zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f'
+zstyle ':vcs_info:*' formats '%F{green}%b%f %m'
+zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f %m'
+
+# Show ahead/behind against the upstream branch in the prompt.
+# The remote-tracking refs are refreshed asynchronously by _maybe_fetch_upstream,
+# so this hook only reads local refs and never touches the network.
+zstyle ':vcs_info:git*+set-message:*' hooks git-status
+function +vi-git-status() {
+    local ahead behind out
+    ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null) || return
+    behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null)
+    (( ahead ))  && out+="%F{yellow}↑${ahead}%f"
+    (( behind )) && out+="%F{red}↓${behind}%f"
+    # In sync with upstream (we got here, so an upstream exists).
+    [[ -z $out ]] && out="%F{246}=%f"
+    hook_com[misc]="${out}"
+}
+
+# Asynchronously refresh the current repo's remote-tracking refs, throttled by a
+# stamp file inside .git. This lets the prompt show ahead/behind without ever
+# blocking on the network, and adapts to whichever repo we are currently in.
+_GIT_FETCH_INTERVAL=300 # seconds
+function _maybe_fetch_upstream() {
+    git rev-parse --is-inside-work-tree &>/dev/null || return
+    # Skip when the current branch has no upstream to compare against.
+    git rev-parse --abbrev-ref @{upstream} &>/dev/null || return
+
+    local git_dir stamp
+    git_dir=$(git rev-parse --git-dir) || return
+    stamp="$git_dir/.zsh_fetch_stamp"
+
+    # Bail out while the stamp is still fresh (mtime within the interval).
+    # extended_glob is needed for the (#q...) form; localoptions keeps it scoped.
+    setopt localoptions extended_glob
+    local -a fresh=( $stamp(#qNms-$_GIT_FETCH_INTERVAL) )
+    (( $#fresh )) && return
+    touch "$stamp"
+
+    # Detach fully so the prompt is never blocked by the fetch.
+    ( git fetch --quiet --no-tags &>/dev/null & ) &>/dev/null
+}
+add-zsh-hook precmd _maybe_fetch_upstream
 
 # A prompt inspired by https://github.com/sindresorhus/pure
 _is_first_prompt=1
