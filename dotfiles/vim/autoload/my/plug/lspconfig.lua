@@ -136,6 +136,7 @@ local function configure()
                     vim.keymap.set('n', '<Space>vD', vim.diagnostic.setqflist, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vf', vim.lsp.buf.format, { buffer = event.buf })
                     vim.keymap.set('n', '<Space>vv', vim.lsp.buf.definition, { buffer = event.buf })
+                    vim.keymap.set('n', '<Space>vz', '<Cmd>LspRestart<CR>', { buffer = event.buf })
 
                     local filetype = vim.bo[event.buf].filetype
                     if filetype == 'ruby' then
