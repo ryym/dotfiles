@@ -4,4 +4,4 @@
 --style='header,numbers,grid,changes'
 --map-syntax "*tmux.*conf:Bourne Again Shell (bash)"
 
---pager 'toss -F --heading "───────┬─" --heading-lines 3'
+--pager 'toss -F --heading "─┬─" --heading-lines 3'
