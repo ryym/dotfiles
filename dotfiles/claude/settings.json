@@ -63,18 +63,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "_claude_hook"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "_claude_hook"
+            "command": "_claude_hook.js"
           }
         ]
       }
@@ -84,7 +73,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "_claude_hook"
+            "command": "_claude_hook.js"
           }
         ]
       }
