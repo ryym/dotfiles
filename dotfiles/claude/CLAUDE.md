@@ -11,40 +11,6 @@
 Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local` directory.
 The `.local` directory is excluded from Git so you don't need to commit it.
 
-## Documentation
-
-When you write documents, store them in the `.local/claude` directory.
-For example, you create a markdown document when instructed to investigate something and summarize results.
-A file name should be English in kebab-case like `.local/claude/research-result-of-something.md`.
-
-### Markdown Styles
-
-Always insert a blank line before and after a table so that Prettier can format it correctly.
-
-Good:
-
-```markdown
-columns:
-
-| Column | Type       |
-| ------ | ---------- |
-| id     | integer PK |
-| foo_id | integer FK |
-
-Using this columns, we can ...
-```
-
-Bad:
-
-```markdown
-columns:
-| Column | Type |
-| ------ | ---------- |
-| id | integer PK |
-| foo_id | integer FK |
-Using this columns, we can ...
-```
-
 ## Git Usage
 
 ### Commit Granularity
