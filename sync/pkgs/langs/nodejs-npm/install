@@ -7,10 +7,10 @@ install() {
 }
 
 if is_dryrun || has npm; then
-   install typescript
-   install typescript-language-server
-   install vscode-langservers-extracted
-   install yarn
+    install typescript
+    install typescript-language-server
+    install vscode-langservers-extracted
+    install yarn
 else
     log_error 'npm is not available'
     exit 1
