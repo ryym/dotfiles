@@ -79,6 +79,9 @@
       }
     ]
   },
+  "worktree": {
+    "baseRef": "head"
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.dotfiles/dotfiles/claude/statusline.sh"
