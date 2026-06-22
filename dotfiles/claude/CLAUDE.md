@@ -40,7 +40,7 @@ But prioritize the format and rules in the repository you are working on.
 
 ### Fixing up Commits
 
-If you create a commit that should have been done in any previous commits, commit it with `--fixup` or `--fixup=ammend`.
+If you create a commit that should have been done in any previous commits, commit it with `--fixup` or `--fixup=amend`.
 Human will clean up commits before push.
 
 ### Bash Usage
@@ -74,4 +74,4 @@ Regardless of the language used in a session, use English for development like b
 Exceptions:
 
 - If the language is explicitly specified, use it.
-- If existing code base or commits doesn't use English, use the same language with them.
+- If existing codebase or commits don't use English, use the same language with them.
