@@ -103,5 +103,6 @@
       "Working"
     ]
   },
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "tui": "default"
 }
