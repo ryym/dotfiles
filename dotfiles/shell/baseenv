@@ -75,5 +75,5 @@ chomp() {
 }
 
 workroot() {
-    cd /home/ryu/ghq/src/github.com/ryym/work
+    cd "$HOME/ghq/src/github.com/ryym/work"
 }
