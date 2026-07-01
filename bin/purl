@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+// Decode a percent-encoded URL and pretty-print query parameters.
+// Usage: purl <url>
+
+const raw = process.argv[2];
+if (!raw) {
+  console.error("Usage: purl <url>");
+  process.exit(1);
+}
+
+let url;
+try {
+  url = new URL(raw);
+} catch {
+  // Not a full URL — try decoding as a plain string.
+  console.log(decodeURIComponent(raw));
+  process.exit(0);
+}
+
+const base = `${url.origin}${decodeURIComponent(url.pathname)}`;
+const params = [...url.searchParams];
+
+if (params.length === 0) {
+  console.log(base);
+} else {
+  console.log(`${base}?`);
+  const width = Math.max(...params.map(([key]) => key.length));
+  for (const [key, value] of params) {
+    console.log(`  ${key.padEnd(width)} = ${value}`);
+  }
+}
+
+if (url.hash) {
+  console.log(`#${decodeURIComponent(url.hash.slice(1))}`);
+}
