@@ -22,7 +22,7 @@ function! my#init#mappings#setup() abort
 
   " Mark and jump.
   Map n mm m
-  Map n _  `
+  Map nxo _  `
 
   " Easy helping.
   Map n <C-h>     :us:help
