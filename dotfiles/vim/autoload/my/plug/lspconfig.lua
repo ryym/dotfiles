@@ -90,6 +90,7 @@ local function configure()
             -- https://docs.rubocop.org/rubocop/usage/lsp.html
             vim.lsp.config('rubocop', {
                 capabilities = capabilities,
+                root_dir = enable_in_root({ '.rubocop.yml' }),
             })
             vim.lsp.enable('rubocop')
 
