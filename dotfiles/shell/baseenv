@@ -57,6 +57,28 @@ fi
 #     fi
 export AGENT_NO_NOTIF_PATH='/tmp/agent-no-notif'
 
+# Git wrapper.
+g() {
+case "$1" in
+  wti)
+    # Go to the specified worktree directory.
+    # It cannot be defined as a Git command alias because it cannot change the Git process' cwd.
+    local list main dir
+    list=$(git worktree list)
+    main=$(echo "$list" | head -1)
+    main="${main%% *}" # Get the path of the main working tree.
+    dir=$(echo "$list" | while IFS= read -r line; do
+        local abs="${line%% *}"
+        echo "${line/$abs/$(realpath --relative-to="$main" "$abs")}"
+    done | fzf --with-nth='{2..} {1}' | awk '{print $1}')
+    [ -n "$dir" ] && cd "$main/$dir"
+    ;;
+  *)
+    git "$@"
+    ;;
+esac
+}
+
 # Open a man page in Neovim.
 # Tips: you can view the outline of the page by gO.
 manv() {

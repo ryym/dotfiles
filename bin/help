@@ -19,6 +19,10 @@ fi
 
 cmd="$1"
 
+if [ "$cmd" = 'g' ]; then
+    cmd='git'
+fi
+
 # Resolve alias.
 cmd_type=$(command -v "$cmd" 2>/dev/null)
 case "$cmd_type" in
