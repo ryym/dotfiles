@@ -104,6 +104,7 @@
     dbase  = diff --merge-base
     dnames = diff --name-only
     sbm    = submodule
+    wti    = !git worktree list | fzf | awk '{print $1}'
 
     si = !git_interactive_status popup
     hi = !git_interactive_history popup
