@@ -102,15 +102,19 @@ async function handleNotificationEvent(input) {
 }
 
 async function sendNotification(message, event) {
-  // The existence of the file means the user don't want to send a notification.
-  const noNotifPath = process.env.AGENT_NO_NOTIF_PATH;
-  if (noNotifPath && fs.existsSync(noNotifPath)) return;
+  try {
+    // The existence of the file means the user don't want to send a notification.
+    const noNotifPath = process.env.AGENT_NO_NOTIF_PATH;
+    if (noNotifPath && fs.existsSync(noNotifPath)) return;
 
-  await run("notifm", [message], { stdio: "ignore" });
+    await run("notifm", [message], { stdio: "ignore" });
 
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL_CLAUDE;
-  if (webhookUrl && fs.existsSync("/tmp/claude-notif-web")) {
-    await sendNotificationWeb(webhookUrl, event, message);
+    const webhookUrl = process.env.DISCORD_WEBHOOK_URL_CLAUDE;
+    if (webhookUrl && fs.existsSync("/tmp/claude-notif-web")) {
+      await sendNotificationWeb(webhookUrl, event, message);
+    }
+  } catch (err) {
+    log(`notification error: ${err.stack || err}`);
   }
 }
 
@@ -135,12 +139,8 @@ async function sendNotificationWeb(webhookUrl, event, description) {
  */
 async function handleStopEvent(input) {
   await Promise.all([
-    sendNotification("Claude finished task", "stop").catch((err) => {
-      log(`notification error: ${err.stack || err}`);
-    }),
-    autoSync(input.cwd || process.cwd()).catch((err) => {
-      log(`autoSync error: ${err.stack || err}`);
-    }),
+    sendNotification("Claude finished task", "stop"),
+    autoSync(input.cwd || process.cwd()),
   ]);
 }
 
@@ -156,7 +156,9 @@ async function autoSync(cwd) {
     commitAndPushGarage(cwd).catch((err) => {
       log(`garage error: ${err.stack || err}`);
     }),
-  ]);
+  ]).catch((err) => {
+    log(`autoSync error: ${err.stack || err}`);
+  });
 }
 
 /** Run a git command (output auto-logged). Returns { code, stdout, stderr }. */
