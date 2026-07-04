@@ -36,6 +36,9 @@ async function main(json) {
     case "Stop":
       await handleStopEvent(input);
       break;
+    case "SubagentStop":
+      await handleSubagentStopEvent(input);
+      break;
     default:
       throw new Error(`unsupported Claude hook: ${eventName}`);
   }
@@ -135,13 +138,21 @@ async function sendNotificationWeb(webhookUrl, event, description) {
 
 /**
  * Handle "Stop" Event.
- * https://code.claude.com/docs/en/hooks#stop-and-subagentstop-input
+ * https://code.claude.com/docs/en/hooks#stop
  */
 async function handleStopEvent(input) {
   await Promise.all([
     sendNotification("Claude finished task", "stop"),
     autoSync(input.cwd || process.cwd()),
   ]);
+}
+
+/**
+ * Handle "SubagentStop" Event.
+ * https://code.claude.com/docs/en/hooks#subagentstop
+ */
+async function handleSubagentStopEvent(input) {
+  await autoSync(input.cwd || process.cwd());
 }
 
 /**

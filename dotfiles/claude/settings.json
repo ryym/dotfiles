@@ -80,6 +80,16 @@
           }
         ]
       }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook.js"
+          }
+        ]
+      }
     ]
   },
   "worktree": {
