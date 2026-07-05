@@ -107,6 +107,7 @@
     "ruby-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true
   },
+  "language": "簡潔なタメ口",
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
