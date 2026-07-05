@@ -23,6 +23,9 @@ else
     compinit -C
 fi
 
+# Tell Zsh to use gits' completion for the `g` wrapper function.
+compdef g=git
+
 # Use completion with case-insensitivity.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
