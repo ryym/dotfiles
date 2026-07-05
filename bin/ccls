@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# A script to interactively search and operate Claude Code background sessions with fzf.
+# It lists background sessions from `claude agents --json`, showing their state,
+# start time and name. Pressing Enter attaches to the selected session via `claude agents <id>`.
+
+# `--raw` is an internal-only flag that prints the formatted list without fzf.
+# Any other arguments are forwarded as-is to `claude agents`.
+main() {
+    if [ "$1" = '--raw' ]; then
+        shift
+        _list "$@"
+    else
+        run "$@"
+    fi
+}
+
+fzf_options=(
+    --ansi
+    --no-sort
+    --delimiter='\t'
+    # --with-nth='2..'
+    --header='enter: attach / ctrl-r: reload'
+    --bind='enter:execute(claude -r {1})'
+    --bind='?:execute(bat $(command -v ccls))'
+)
+
+run() {
+    # Forward the same claude-agents args to the reload command so ctrl-r keeps the filter.
+    local raw_cmd='ccls --raw'
+    local arg
+    for arg in "$@"; do
+        raw_cmd+=" $(printf '%q' "$arg")"
+    done
+    fzf_options+=(--bind="ctrl-r:reload-sync($raw_cmd)")
+
+    _list "$@" | fzf "${fzf_options[@]}"
+}
+
+# Emits a tab-separated row per background session: id, colored state, start time, name.
+# The id (field 1) is hidden from the list and used to attach on Enter.
+_list() {
+    claude agents --json --all --cwd . "$@" </dev/null | jq -r '
+        def color(s):
+            if s == "running" then "[33m"      # yellow
+            elif s == "done"  then "[32m"       # green
+            elif s == "failed" then "[31m"      # red
+            else "[90m" end + (s | . + "       " | .[0:7]) + "[0m";
+        [.[]]
+        | sort_by(.startedAt) | reverse | .[]
+        | [
+            .sessionId,
+            .kind,
+            color(.state // .status // "?"),
+            (.startedAt / 1000 | strflocaltime("%Y-%m-%d %H:%M")),
+            (.name // "(no name)")
+          ]
+        | @tsv
+    '
+}
+
+main "$@"
