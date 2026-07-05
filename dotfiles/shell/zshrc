@@ -26,6 +26,14 @@ fi
 # Tell Zsh to use gits' completion for the `g` wrapper function.
 compdef g=git
 
+# Give completion to git aliases that shell out to external commands (see `git alias`).
+# Zsh's _git dispatches to a `_git-<subcommand>` function if one exists.
+_git-si() { _git-status "$@" }
+_git-hi() { _git-log "$@" }
+_git-di() { _git-diff "$@" }
+_git-shi() { _git-show "$@" }
+_git-bi() { _git-branch "$@" }
+
 # Use completion with case-insensitivity.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
