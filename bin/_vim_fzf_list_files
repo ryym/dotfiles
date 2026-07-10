@@ -31,11 +31,11 @@ buffers_and_files() {
         format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
         excludes+=("-e" "$(format 0 '=' "$(basename "$filepath")" "$(dirname "$filepath")")")
     done
-    fd --hidden -tf -tl -E .git --format "$(format 0 '=' '{/}' '{//}')" | grep -v -F -x "${excludes[@]}"
+    fd --hidden -tf -tl -E .git -E .claude/worktrees --format "$(format 0 '=' '{/}' '{//}')" | grep -v -F -x "${excludes[@]}"
 }
 
 fd_formatted() {
-    fd --hidden -tf -tl -E .git --format "$(format 0 '=' '{/}' '{//}')" "$@"
+    fd --hidden -tf -tl -E .git -E .claude/worktrees --format "$(format 0 '=' '{/}' '{//}')" "$@"
 }
 
 format() {
