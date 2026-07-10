@@ -13,6 +13,12 @@ bindkey "^t" backward-kill-word
 autoload -Uz colors
 colors
 
+# (Only for macOS)
+# Homebrew's git formula ships its own limited zsh `_git` completion, which
+# shadows zsh's fuller one that the git alias completions below rely on.
+# ref: https://github.com/Homebrew/homebrew-core/issues/13700, https://github.com/orgs/Homebrew/discussions/2797
+[[ -L /opt/homebrew/share/zsh/site-functions/_git ]] && rm -f /opt/homebrew/share/zsh/site-functions/_git
+
 autoload -Uz compinit
 # Enable auto completion.
 # The compinit function refreshes the cache in ~/.zcompdump if it is stale but
