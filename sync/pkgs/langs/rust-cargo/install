@@ -13,6 +13,7 @@ if is_dryrun || has cargo; then
     install hgrep
     install git-delta
     install genact
+    install tree-sitter-cli # For Neovim
 
     case $(ostype) in
         arch)
