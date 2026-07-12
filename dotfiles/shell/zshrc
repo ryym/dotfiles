@@ -168,11 +168,13 @@ function _custom_accept_line() {
     ### Empty Enter
     # Show `ls` and `git status` on empty line.
     if [[ -z "$BUFFER" ]]; then
-        echo
-        ls
         if git rev-parse --is-inside-work-tree &>/dev/null; then
             echo
             git -c color.status=always status --short --branch
+            echo
+            git re
+        else
+            ls
         fi
         zle reset-prompt
         return
