@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+log_start 'Claude Code'
+
+if ! has claude; then
+    # https://code.claude.com/docs/en/overview
+    run "curl -fsSL https://claude.ai/install.sh | bash"
+fi
+
+log_finish 'Claude Code'

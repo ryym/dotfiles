@@ -11,11 +11,9 @@ log_start "Install for Fedora"
 mkdir -p "$HOME/.local/bin"
 
 load pkgs/dnf/install
-
 load lib/rustup
-
+load lib/claude
 load langs/install
-
 load pkgs/langs/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then

@@ -16,11 +16,9 @@ if ! is_dryrun && ! has brew; then
 fi
 
 load pkgs/brew/install
-
 load lib/rustup
-
+load lib/claude
 load langs/install
-
 load pkgs/langs/install
 
 if [ ${SHELL##*/} != 'zsh' ]; then
