@@ -10,8 +10,9 @@ log_start "Install for macOS"
 
 mkdir -p "$HOME/.local/bin"
 
-if ! has brew; then
-    load os/macos/install-brew
+if ! is_dryrun && ! has brew; then
+    log_error "Install Homebrew from: https://brew.sh"
+    exit 1
 fi
 
 load pkgs/brew/install
