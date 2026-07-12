@@ -9,7 +9,7 @@ macos-option-as-alt = true
 # # My default font config.
 # font-family = "IntoneMono NF"
 # font-family = "HackGen"
-# font-size = 14
+# font-size = 15
 # # Disable ligatures.
 # font-feature = -calt
 # font-feature = -dlig
