@@ -294,6 +294,33 @@
           ]
         }
       ]
+    },
+    {
+      "description": "Dual Kana/Alt key",
+      "manipulators": [
+        {
+          "description": "f20->Kana (for Dygma)",
+          "from": { "key_code": "f20" },
+          "to": [{ "key_code": "japanese_kana" }],
+          "type": "basic"
+        },
+        {
+          "description": "kana => kana / alt (Mac)",
+          "from": {
+            "key_code": "japanese_kana",
+            "modifiers": { "optional": ["any"] }
+          },
+          "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
+          "to": [
+            {
+              "key_code": "right_option",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [{ "key_code": "japanese_kana" }],
+          "type": "basic"
+        }
+      ]
     }
   ]
 }
