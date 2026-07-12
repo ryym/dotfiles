@@ -1,88 +1,88 @@
-# Mac manual setups
+# Mac Manual Setups
 
-Though there are some customizations and installations that can be automated, it is okey to do it manually since once you do them, it's done.
+## Trackpad
 
-## System Settings
+- Enable to click by tap
+  1. Go to `System Settings > Trackpad`
+  1. Check `Tap to click`
+- Enable to drag by double tap
+  1. Go to `System Settings > Accessibility > Pointer Control > Trackpad Options`
+  1. Set `Dragging style` to `Without Drag Lock`
+     - (about drag lock: <https://apple.stackexchange.com/a/7195>)
 
-- Change system language to English
-- Trackpad
-  - Check `Tap to click`
-  - Drag by Double tap
-    - Accessibility > Pointer Control > Trackpad Options
-    - Check `Enable dragging` and select `without drag lock`
-      - about drag lock: <https://apple.stackexchange.com/a/7195>
-- Finder
-  - Show home directory in sidebar
-  - Show file extensions
-  - Show hidden files (dotfiles)
-- Display
-  - Uncheck `Automatically adjust brightness`
-- Menu Bar
-  - Show Bluetooth
-- Dock
-  - Make it hide automatically
-  - Make it small
-  - Remove unused apps
-- Switch windows in same app by `Cmd+Shift+9`
-  - Change `Move focus to next window` shortcut
-- Navigate controls using Tab and Space
-  - Check `Use keyboard navigation to move focus between controls`
-- Disable `Ctrl+Space` shortcut for input sources switching (JIS keyboard only)
-  - Keyboard > Shortcuts > Input Source
-- Use function keys as function keys
+## Keyboard
+
+1. Install [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
+2. Grant necessary permissions
+   - Confirm the status in the `Setup` tab in Karabiner-Elements
+3. If your Macbook's keyboard is the JIS layout
+   1. Go to `Virtual Keyboard`
+   2. Select `ANSI` to use the keyboard as ANSI
+      (See [dotfiles/karabiner/README.md][karabiner-readme] for context)
+4. Link Karabiner config to `~/.config/karabiner` by running `make link`
+
+[karabiner-readme]: https://github.com/ryym/dotfiles/blob/main/dotfiles/karabiner/README.md
+
+## Japanese Input
+
+1. Install `Google 日本語入力` from <https://www.google.co.jp/ime/>
+2. Restart the PC
+3. In `System Settings > Keyboard > Input Sources`, add the `Hiragana (Google)` source
+
+## Fonts
+
+- Install `IntoneMono Nerd Font` from <https://www.nerdfonts.com/font-downloads>
+  - which is [Intel One Mono](https://github.com/intel/intel-one-mono) + Nerd Font
+- Install Japanese font `HackGen` from <https://github.com/yuru7/HackGen>
+
+## Window Management
+
+- Install [Magnet](https://magnet.crowdcafe.com/) from App Store and configure it
+
+## Finder
+
+- To display hidden files (dotfiles)
+  - Run `defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder` in shell
+  - Or press `Command-Shift-.` in Finder (but its effect will be reset on PC restart)
+- To display full paths
+  - Press `Option-Command-p` (its effect will be persisted)
+
+## Other System Settings
+
+- `Desktop & Dock`
+  - Check `Automatically hide and show the Dock` to widen the screen space
+- `Keyboard`
+  - Check `Keyboard navigation` to navigate controls by keys (e.g. tab to move focus)
+  - Change `Key repeat rate` and `Delay until repeat` to repeat keys faster
+    - `Key Repeat` : `Fast`
+    - `Delay Until Repeat ` : `Short` - 1
+- `Keyboard > Keyboard Shortcuts > Keyboard`
+  - Set `Cmd-Shift-9` to `Move focus to next window` to switch windows of the same app
+- `Keyboard > Keyboard Shortcuts > Input Sources`
+  - Disable the `Ctrl-Space` shortcut to avoid accidental input sources switching in JIS keyboard
+- `Keyboard > Keyboard Shortcuts > Function Keys`
   - Check `Use F1, F2, etc. keys as standard function keys`
-- Make key repeat faster
-  - `Key Repeat` : `Fast`
-  - `Delay Until Repeat ` : one before `Short`
+- `General > Sharing`
+  - Change `Local hostname` to a shorter name if you want
+
+### App Switcher
+
 - Show app switcher ( `Cmd+Tab` ) in all displays
-  - [https://superuser.com/a/1625752](https://superuser.com/a/1625752)
-  ```
+  (ref: [https://superuser.com/a/1625752](https://superuser.com/a/1625752))
+  ```bash
   defaults write com.apple.Dock appswitcher-all-displays -bool true
   killall Dock
   ```
 
-## Apps
+## Git Credentials
 
-Install them:
+- Follow [dotfiles/git/README.md](https://github.com/ryym/dotfiles/blob/main/dotfiles/git/README.md)
 
-- Alfred
-- Discord
-- Docker for Mac
-- Firefox
-- Google 日本語入力
-  - `¥` -> `\`
-- Google Chrome
-- Google Chrome Canary
-- Karabiner
-- LINE
-- MacVim
-- Magnet
-  - [Key bindings](https://www.dropbox.com/s/htasvrp75bc9kbg/magnet-keys.png?dl=0)
-- Skitch
-- Slack
-- Visual Studio Code
+## Appendix: Apps
 
-## Keyboard
-
-- Let macOS recognize your JIS keyboard as ANSI (JIS keyboard only)
-- Customize some key bindings using Karabiner
-  - After installation, put configuration files in `./Karabiner/` into Karabiner's config directory:
-    `$HOME/.config/karabiner/assets/complex_modifications`
-  - About my favorite keyboard configuration: <https://ryym.tokyo/posts/ideal-keyboard/>
-
-## Credentials
-
-- Recreate SSH keys or copy from old PC
-- Import GPG key
-  - How to import: <https://makandracards.com/makandra-orga/37763-gpg-extract-private-key-and-import-on-different-machine>
-    - `gpg --list-secret-keys user@example.com`
-    - `gpg --export-secret-keys ID > private.key`
-    - `gpg --import private.key`
-  - Trust my key ultimately: <https://unix.stackexchange.com/a/407070>
-    - `gpg --edit-key user@example.com`
-    - `> trust`
-
-## Others
-
-- Rename PC hostname
-- Change user full name
+- [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
+- [Google 日本語入力](https://www.google.co.jp/ime/)
+- [Google Chrome](https://www.google.com/intl/ja/chrome/)
+- [Magnet](https://magnet.crowdcafe.com/)
+- [Raycast](https://www.raycast.com/)
+- [Ghostty](https://ghostty.org/)
