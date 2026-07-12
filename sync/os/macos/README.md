@@ -4,7 +4,7 @@
 
 - Enable to click by tap
   1. Go to `System Settings > Trackpad`
-  1. Check `Tap to click`
+  1. Enable `Tap to click`
 - Enable to drag by double tap
   1. Go to `System Settings > Accessibility > Pointer Control > Trackpad Options`
   1. Set `Dragging style` to `Without Drag Lock`
@@ -50,9 +50,9 @@
 ## Other System Settings
 
 - `Desktop & Dock`
-  - Check `Automatically hide and show the Dock` to widen the screen space
+  - Enable `Automatically hide and show the Dock` to widen the screen space
 - `Keyboard`
-  - Check `Keyboard navigation` to navigate controls by keys (e.g. tab to move focus)
+  - Enable `Keyboard navigation` to navigate controls by keys (e.g. tab to move focus)
   - Change `Key repeat rate` and `Delay until repeat` to repeat keys faster
     - `Key Repeat` : `Fast`
     - `Delay Until Repeat ` : `Short` - 1
@@ -61,9 +61,11 @@
 - `Keyboard > Keyboard Shortcuts > Input Sources`
   - Disable the `Ctrl-Space` shortcut to avoid accidental input sources switching in JIS keyboard
 - `Keyboard > Keyboard Shortcuts > Function Keys`
-  - Check `Use F1, F2, etc. keys as standard function keys`
+  - Enable `Use F1, F2, etc. keys as standard function keys`
 - `General > Sharing`
   - Change `Local hostname` to a shorter name if you want
+- `Sound`
+  - Disable `Play sound on startup`
 
 ### App Switcher
 
