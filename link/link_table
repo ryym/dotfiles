@@ -37,6 +37,11 @@ LINKS=(
 )
 
 case $(ostype) in
+    macos)
+        LINKS+=(
+            'karabiner/complex_modifications:.config/karabiner/assets/complex_modifications'
+        )
+        ;;
     arch)
         LINKS+=(
             'arch/sway-config:.config/sway/config'
