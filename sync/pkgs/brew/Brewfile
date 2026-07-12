@@ -1,4 +1,3 @@
-tap 'homebrew/bundle'
 tap 'heroku/brew'
 
 brew 'autoconf'
@@ -18,17 +17,6 @@ brew 'tree'
 brew 'vim'
 brew 'yarn'
 brew 'zsh'
-
-# cask 'alfred'
-# cask 'dropbox'
-# cask 'firefox'
-# cask 'google-chrome'
-# cask 'google-japanese-ime'
-# cask 'skitch'
-# cask 'skim'
-# cask 'slack'
-
-tap 'homebrew/cask-fonts'
 
 cask 'font-ricty-diminished'
 # https://github.com/tonsky/FiraCode
