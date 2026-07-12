@@ -116,5 +116,6 @@
   "effortLevel": "medium",
   "tui": "default",
   "autoMemoryEnabled": false,
+  "theme": "dark",
   "agentPushNotifEnabled": true
 }
