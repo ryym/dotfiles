@@ -10,6 +10,10 @@ export PATH="$GOPATH/bin:$PATH"
 
 export PATH="/usr/sbin:/sbin:$PATH"
 
+if test -f /opt/homebrew/bin/brew; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Homebrew
 export PATH="/usr/local/bin:$PATH"
 
