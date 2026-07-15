@@ -17,6 +17,7 @@ LINKS=(
     'tridactylrc.js:.tridactylrc.js'
     'tmux/tmux.conf:.tmux.conf'
     'tmux:.tmux'
+    'herdr/config.toml:.config/herdr/config.toml'
     'ctags:.ctags'
     'prettierrc.json:.prettierrc'
     'alacritty/alacritty.toml:.config/alacritty/alacritty.toml'
