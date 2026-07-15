@@ -129,13 +129,7 @@
 [delta]
     syntax-theme = TwoDark
     line-numbers = true
-
-    # Currently we use everforest colorscheme so the non-bright colors are fine.
-    # # Adjust for iTerm2 where the colors are not as bright as in other terminals.
-    # # (https://gitlab.com/gnachman/iterm2/-/issues/9652)
-    # plus-style = syntax "#103d11"
-    # plus-emph-style = syntax "#0d6e10"
-
+    plus-emph-style = syntax "#124003"
     minus-style = syntax auto
 [rerere]
 	enabled = true
