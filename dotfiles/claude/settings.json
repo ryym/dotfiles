@@ -2,10 +2,8 @@
   "permissions": {
     "allow": [
       "Read(.local/claude/**)",
-      "Write(.local/claude/**)",
       "Edit(.local/claude/**)",
       "Read(.local/garage/**)",
-      "Write(.local/garage/**)",
       "Edit(.local/garage/**)",
       "Bash(echo:*)",
       "Bash(ls:*)",
@@ -53,8 +51,6 @@
       "Read(~/)",
       "Edit(//)",
       "Edit(~/)",
-      "Write(//)",
-      "Write(~/)",
       "Bash(git push)"
     ],
     "defaultMode": "acceptEdits"
@@ -117,5 +113,6 @@
   "tui": "default",
   "autoMemoryEnabled": false,
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "model": "sonnet"
 }
