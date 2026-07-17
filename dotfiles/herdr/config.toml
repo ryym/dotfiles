@@ -23,3 +23,15 @@ previous_workspace      = "prefix+("
 next_workspace          = "prefix+)"
 navigate_workspace_up   = "k"
 navigate_workspace_down = "j"
+
+[[keys.command]]
+key = "prefix+v"
+type = "shell"
+command = "herdr pane split $HERDR_ACTIVE_PANE_ID --direction down --ratio 0.7 --focus"
+description = "split horizontal 7:3"
+
+[[keys.command]]
+key = "prefix+V"
+type = "shell"
+command = "herdr pane split $HERDR_ACTIVE_PANE_ID --direction right --ratio 0.7 --focus"
+description = "split vertical 7:3"
