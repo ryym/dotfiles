@@ -1,0 +1,114 @@
+#!/usr/bin/env node
+
+// A Node.js script with personal tmux helper subcommands.
+// Usage: tmuxx <subcommand> [args...]
+
+"use strict";
+
+const { spawnSync, execFileSync } = require("child_process");
+
+const FIELDS = [
+  "session_name",
+  "window_index",
+  "window_name",
+  "window_active",
+  "pane_index",
+  "pane_id",
+  "pane_active",
+  "pane_title",
+  "pane_current_path",
+];
+
+const FORMAT = FIELDS.map((f) => `${f}=#{${f}}`).join("\t");
+
+function listPanes() {
+  const output = execFileSync("tmux", ["list-panes", "-a", "-F", FORMAT], { encoding: "utf8" });
+  return output
+    .split("\n")
+    .filter((line) => line.length > 0)
+    .map((line) => {
+      const pane = {};
+      for (const kv of line.split("\t")) {
+        const idx = kv.indexOf("=");
+        pane[kv.slice(0, idx)] = kv.slice(idx + 1);
+      }
+      return pane;
+    });
+}
+
+function shortenPath(path) {
+  const home = process.env.HOME;
+  return home && path.startsWith(home) ? path.replace(home, "~") : path;
+}
+
+function buildRows(panes) {
+  return panes.map((p) => {
+    const window = `${p.window_index}:${p.window_name}${p.window_active === "1" ? "*" : ""}`;
+    const pane = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
+    const active = p.pane_active === "1" ? "*" : "";
+    return [p.session_name, window, pane, active, shortenPath(p.pane_current_path)];
+  });
+}
+
+function printTable(rows) {
+  const header = ["SESSION", "WINDOW", "PANE", "ACTIVE", "CWD"];
+  const table = [header, ...rows];
+  const widths = header.map((_, col) => Math.max(...table.map((row) => row[col].length)));
+
+  for (const row of table) {
+    const line = row.map((cell, i) => cell.padEnd(widths[i])).join("  ");
+    console.log(line.trimEnd());
+  }
+}
+
+function jumpToPane(paneId) {
+  spawnSync("tmux", ["select-pane", "-t", paneId], { stdio: "inherit" });
+  if (process.env.TMUX) {
+    spawnSync("tmux", ["switch-client", "-t", paneId], { stdio: "inherit" });
+  } else {
+    execFileSync("tmux", ["attach-session", "-t", paneId], { stdio: "inherit" });
+  }
+}
+
+// printTableWithFzf shows the pane list in fzf and jumps to the pane selected with enter.
+function printTableWithFzf(panes, rows) {
+  // pane_id is a hidden first column so it survives in fzf's output even though --with-nth hides it from view.
+  const lines = panes.map((p, i) => [p.pane_id, ...rows[i]].join("\t")).join("\n");
+
+  const result = spawnSync("fzf", ["--delimiter", "\t", "--with-nth", "2.."], {
+    input: lines,
+    encoding: "utf8",
+    stdio: ["pipe", "pipe", "inherit"],
+  });
+
+  const selected = result.stdout;
+  if (!selected || !selected.trim()) return;
+
+  const paneId = selected.split("\t")[0];
+  jumpToPane(paneId);
+}
+
+function runLs(args) {
+  const panes = listPanes();
+  const rows = buildRows(panes);
+
+  if (args.includes("--fzf")) {
+    printTableWithFzf(panes, rows);
+  } else {
+    printTable(rows);
+  }
+}
+
+const SUBCOMMANDS = {
+  ls: runLs,
+};
+
+const [subcommand, ...args] = process.argv.slice(2);
+const run = SUBCOMMANDS[subcommand];
+if (!run) {
+  console.log("Usage: tmuxx <subcommand>");
+  console.log(`Subcommands: ${Object.keys(SUBCOMMANDS).join(", ")}`);
+  process.exit(1);
+}
+
+run(args);
