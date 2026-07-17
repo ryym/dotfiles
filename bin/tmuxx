@@ -41,23 +41,96 @@ function shortenPath(path) {
   return home && path.startsWith(home) ? path.replace(home, "~") : path;
 }
 
+const COLUMNS = [
+  { header: "SESSION", maxWidth: 15 },
+  { header: "WINDOW", maxWidth: 20 },
+  { header: "PANE", maxWidth: 25 },
+  { header: "ACTIVE", maxWidth: 6 },
+  { header: "CWD", maxWidth: 40, truncateFromStart: true },
+];
+
+// Wide ranges per East Asian Width (Unicode UAX #11): CJK, Hangul, fullwidth forms, emoji, etc.
+const WIDE_RANGES = [
+  [0x1100, 0x115f],
+  [0x2e80, 0x303e],
+  [0x3041, 0x33ff],
+  [0x3400, 0x4dbf],
+  [0x4e00, 0x9fff],
+  [0xa000, 0xa4cf],
+  [0xac00, 0xd7a3],
+  [0xf900, 0xfaff],
+  [0xff00, 0xff60],
+  [0xffe0, 0xffe6],
+  [0x1f300, 0x1f64f],
+  [0x1f900, 0x1f9ff],
+  [0x20000, 0x2fffd],
+  [0x30000, 0x3fffd],
+];
+
+function charWidth(codePoint) {
+  return WIDE_RANGES.some(([from, to]) => codePoint >= from && codePoint <= to) ? 2 : 1;
+}
+
+// str.length counts UTF-16 units, not terminal columns, so wide chars (e.g. Japanese) misalign padding.
+// Array.from splits by code point, which also avoids miscounting surrogate-pair chars (e.g. emoji) as 2.
+function strWidth(str) {
+  return Array.from(str).reduce((w, ch) => w + charWidth(ch.codePointAt(0)), 0);
+}
+
+function padEndDisplay(str, targetWidth) {
+  return str + " ".repeat(Math.max(0, targetWidth - strWidth(str)));
+}
+
+function truncate(str, maxWidth, fromStart) {
+  if (strWidth(str) <= maxWidth) return str;
+
+  const chars = Array.from(str);
+  const budget = maxWidth - 3; // reserve width for "..."
+  let picked = [];
+  let w = 0;
+  if (fromStart) {
+    for (let i = chars.length - 1; i >= 0 && w < budget; i--) {
+      w += charWidth(chars[i].codePointAt(0));
+      picked.unshift(chars[i]);
+    }
+    return `...${picked.join("")}`;
+  }
+
+  for (let i = 0; i < chars.length && w < budget; i++) {
+    w += charWidth(chars[i].codePointAt(0));
+    picked.push(chars[i]);
+  }
+  return `${picked.join("")}...`;
+}
+
 function buildRows(panes) {
   return panes.map((p) => {
     const window = `${p.window_index}:${p.window_name}${p.window_active === "1" ? "*" : ""}`;
     const pane = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
     const active = p.pane_active === "1" ? "*" : "";
-    return [p.session_name, window, pane, active, shortenPath(p.pane_current_path)];
+    const cells = [p.session_name, window, pane, active, shortenPath(p.pane_current_path)];
+    return cells.map((cell, i) => truncate(cell, COLUMNS[i].maxWidth, COLUMNS[i].truncateFromStart));
   });
 }
 
+function columnWidths(table) {
+  return COLUMNS.map((_, col) => Math.max(...table.map((row) => strWidth(row[col]))));
+}
+
+function formatRow(row, widths) {
+  return row
+    .map((cell, i) => padEndDisplay(cell, widths[i]))
+    .join("  ")
+    .trimEnd();
+}
+
 function printTable(rows) {
-  const header = ["SESSION", "WINDOW", "PANE", "ACTIVE", "CWD"];
+  const header = COLUMNS.map((c) => c.header);
   const table = [header, ...rows];
-  const widths = header.map((_, col) => Math.max(...table.map((row) => row[col].length)));
+  const widths = columnWidths(table);
 
   for (const row of table) {
-    const line = row.map((cell, i) => cell.padEnd(widths[i])).join("  ");
-    console.log(line.trimEnd());
+    console.log(formatRow(row, widths));
   }
 }
 
@@ -72,8 +145,9 @@ function jumpToPane(paneId) {
 
 // printTableWithFzf shows the pane list in fzf and jumps to the pane selected with enter.
 function printTableWithFzf(panes, rows) {
+  const widths = columnWidths(rows);
   // pane_id is a hidden first column so it survives in fzf's output even though --with-nth hides it from view.
-  const lines = panes.map((p, i) => [p.pane_id, ...rows[i]].join("\t")).join("\n");
+  const lines = panes.map((p, i) => `${p.pane_id}\t${formatRow(rows[i], widths)}`).join("\n");
 
   const result = spawnSync("fzf", ["--delimiter", "\t", "--with-nth", "2.."], {
     input: lines,
