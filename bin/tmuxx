@@ -7,6 +7,12 @@
 
 const { spawnSync, execFileSync } = require("child_process");
 
+// Pane-scoped user option holding that pane's job state (e.g. a running Claude Code turn).
+// Written here by `job-status`, read by tmux.conf to render the status line.
+const JOB_STATUS_OPTION = "@job_status";
+
+const JOB_STATUSES = ["running", "waiting"];
+
 const FIELDS = [
   "session_name",
   "window_index",
@@ -16,6 +22,7 @@ const FIELDS = [
   "pane_id",
   "pane_active",
   "pane_title",
+  JOB_STATUS_OPTION,
   "pane_current_path",
 ];
 
@@ -46,6 +53,7 @@ const COLUMNS = [
   { header: "WINDOW", maxWidth: 20 },
   { header: "PANE", maxWidth: 25 },
   { header: "ACTIVE", maxWidth: 6 },
+  { header: "JOB", maxWidth: 7 },
   { header: "CWD", maxWidth: 40, truncateFromStart: true },
 ];
 
@@ -108,8 +116,17 @@ function buildRows(panes) {
     const window = `${p.window_index}:${p.window_name}${p.window_active === "1" ? "*" : ""}`;
     const pane = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
     const active = p.pane_active === "1" ? "*" : "";
-    const cells = [p.session_name, window, pane, active, shortenPath(p.pane_current_path)];
-    return cells.map((cell, i) => truncate(cell, COLUMNS[i].maxWidth, COLUMNS[i].truncateFromStart));
+    const cells = [
+      p.session_name,
+      window,
+      pane,
+      active,
+      p[JOB_STATUS_OPTION],
+      shortenPath(p.pane_current_path),
+    ];
+    return cells.map((cell, i) =>
+      truncate(cell, COLUMNS[i].maxWidth, COLUMNS[i].truncateFromStart)
+    );
   });
 }
 
@@ -173,8 +190,39 @@ function runLs(args) {
   }
 }
 
+// runJobStatus records the calling pane's own job state for tmux.conf to render.
+// Each pane only ever writes its own @job_status, so there is no shared state to
+// lock. Window/session rollups are not stored here: tmux.conf derives them at
+// render time from the live panes.
+function runJobStatus(args) {
+  const [action, status] = args;
+  if (action !== "set" && action !== "clear") {
+    console.error("Usage: tmuxx job-status <set STATUS|clear>");
+    process.exit(1);
+  }
+
+  if (action === "set" && !JOB_STATUSES.includes(status)) {
+    console.error(`Unknown status: ${status || "(none)"}. Expected: ${JOB_STATUSES.join(", ")}`);
+    process.exit(1);
+  }
+
+  // Not inside tmux (e.g. Claude Code run from a plain terminal), so there is no pane to mark.
+  const pane = process.env.TMUX_PANE;
+  if (!pane) return;
+
+  if (action === "set") {
+    execFileSync("tmux", ["set-option", "-p", "-t", pane, JOB_STATUS_OPTION, status]);
+  } else {
+    execFileSync("tmux", ["set-option", "-p", "-u", "-t", pane, JOB_STATUS_OPTION]);
+  }
+
+  // Redraw now instead of waiting up to status-interval for the next tick.
+  execFileSync("tmux", ["refresh-client", "-S"]);
+}
+
 const SUBCOMMANDS = {
   ls: runLs,
+  "job-status": runJobStatus,
 };
 
 const [subcommand, ...args] = process.argv.slice(2);
