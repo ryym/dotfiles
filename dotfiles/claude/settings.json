@@ -55,6 +55,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
+  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -113,6 +114,5 @@
   "tui": "default",
   "autoMemoryEnabled": false,
   "theme": "dark",
-  "agentPushNotifEnabled": true,
-  "model": "sonnet"
+  "agentPushNotifEnabled": true
 }
