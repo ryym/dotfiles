@@ -9,9 +9,14 @@ shopt -s expand_aliases
 source "$DOTPATH/dotfiles/shell/aliases"
 test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
+# Register job status if tmux is running.
+tmuxx job-status set 'running'
+
 printf -v escaped '%q ' "$@"
 eval "$escaped"
 exit_code=$?
+
+tmuxx job-status set 'done'
 
 prefix=$(test $exit_code -eq 0 && echo 'ok:' || echo 'ERR:')
 cmds=($@)
@@ -29,5 +34,13 @@ case $(ostype) in
         echo "OS not supported" && exit 1
         ;;
 esac
+
+# Wait for the user's confirmation.
+exit_mark=$(test $exit_code -eq 0 && echo "\x1b[32m✓\x1b[0m" || echo "\x1b[31m!\x1b[0m")
+printf "$exit_mark exited with $exit_code. Press any key to quit:"
+read -n 1 -s -r
+echo
+
+tmuxx job-status clear
 
 exit $exit_code
