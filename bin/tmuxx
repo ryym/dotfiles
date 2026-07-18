@@ -196,7 +196,7 @@ function printTableWithFzf(panes, rows) {
   jumpToPane(paneId);
 }
 
-function runLs(args) {
+function runPanes(args) {
   const panes = listPanes();
   const rows = buildRows(panes);
 
@@ -256,7 +256,7 @@ function runJobStatus(args) {
 }
 
 const SUBCOMMANDS = {
-  ls: runLs,
+  panes: runPanes,
   "job-status": runJobStatus,
 };
 
