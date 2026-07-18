@@ -166,11 +166,14 @@ function printTable(rows) {
 }
 
 function jumpToPane(paneId) {
-  spawnSync("tmux", ["select-pane", "-t", paneId], { stdio: "inherit" });
   if (process.env.TMUX) {
-    spawnSync("tmux", ["switch-client", "-t", paneId], { stdio: "inherit" });
+    spawnSync("tmux", ["select-pane", "-t", paneId, ";", "switch-client", "-t", paneId], {
+      stdio: "inherit",
+    });
   } else {
-    execFileSync("tmux", ["attach-session", "-t", paneId], { stdio: "inherit" });
+    execFileSync("tmux", ["select-pane", "-t", paneId, ";", "attach-session", "-t", paneId], {
+      stdio: "inherit",
+    });
   }
 }
 
@@ -224,14 +227,32 @@ function runJobStatus(args) {
   const pane = process.env.TMUX_PANE;
   if (!pane) return;
 
-  if (action === "set") {
-    execFileSync("tmux", ["set-option", "-p", "-t", pane, JOB_STATUS_OPTION, status]);
-  } else {
-    execFileSync("tmux", ["set-option", "-p", "-u", "-t", pane, JOB_STATUS_OPTION]);
-  }
-
   // Redraw now instead of waiting up to status-interval for the next tick.
-  execFileSync("tmux", ["refresh-client", "-S"]);
+  if (action === "set") {
+    execFileSync("tmux", [
+      "set-option",
+      "-p",
+      "-t",
+      pane,
+      JOB_STATUS_OPTION,
+      status,
+      ";",
+      "refresh-client",
+      "-S",
+    ]);
+  } else {
+    execFileSync("tmux", [
+      "set-option",
+      "-p",
+      "-u",
+      "-t",
+      pane,
+      JOB_STATUS_OPTION,
+      ";",
+      "refresh-client",
+      "-S",
+    ]);
+  }
 }
 
 const SUBCOMMANDS = {
