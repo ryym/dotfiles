@@ -6,6 +6,7 @@
 "use strict";
 
 const { spawnSync, execFileSync } = require("child_process");
+const { stripVTControlCharacters } = require("node:util");
 
 // Pane-scoped user option holding that pane's job state (e.g. a running Claude Code turn).
 // Written here by `job-status`, read by tmux.conf to render the status line.
@@ -64,8 +65,6 @@ const JOB_MARKS = {
   done: "\x1b[32m✓\x1b[0m",
 };
 
-const ANSI_ESCAPE = /\x1b\[[0-9;]*m/g;
-
 // Mark shown for the currently active window/pane.
 const ACTIVE_MARK = "\x1b[33m▸\x1b[0m";
 
@@ -96,7 +95,7 @@ function charWidth(codePoint) {
 // ANSI color codes are stripped first since they're zero-width on screen but would otherwise be
 // counted as (narrow) characters and throw off padding.
 function strWidth(str) {
-  return Array.from(str.replace(ANSI_ESCAPE, "")).reduce(
+  return Array.from(stripVTControlCharacters(str)).reduce(
     (w, ch) => w + charWidth(ch.codePointAt(0)),
     0
   );
