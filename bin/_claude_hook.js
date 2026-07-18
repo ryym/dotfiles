@@ -125,15 +125,15 @@ async function clearPaneJobStatus() {
  * https://code.claude.com/docs/en/hooks#notification-input
  */
 async function handleNotificationEvent(input) {
-  // A notification means Claude is blocked on the user (permission/input), so mark
-  // the pane blocked even for idle_prompt, whose desktop notification is suppressed below.
-  await setPaneJobStatus("blocked");
-
   // Ignore "Claude is waiting for your input".
   if (input.notification_type === "idle_prompt") {
     return;
   }
-  await sendNotification(input.message, "notification");
+  await Promise.all([
+    // A notification means Claude is blocked on the user (permission/input).
+    setPaneJobStatus("blocked"),
+    sendNotification(input.message, "notification"),
+  ]);
 }
 
 async function sendNotification(message, event) {
