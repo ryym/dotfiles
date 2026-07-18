@@ -44,7 +44,7 @@ async function main(json) {
   }
 }
 
-const LOG_PATH = process.env.CLAUDE_HOOK_LOG_PATH || path.join(os.tmpdir(), "claude_hook.log");
+const LOG_PATH = process.env.CLAUDE_HOOK_LOG_PATH || "/tmp/claude_hook.log";
 
 // Use the Sweden locale to print a timestamp with ISO8601-like format.
 const dtFormat = new Intl.DateTimeFormat("sv-SE", {
