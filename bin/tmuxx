@@ -53,7 +53,7 @@ const COLUMNS = [
   { header: "SESSION", maxWidth: 15 },
   { header: "WINDOW", maxWidth: 20 },
   { header: "PANE", maxWidth: 60 },
-  { header: "JOB", maxWidth: 1 },
+  { header: "JOB", fixed: true },
   { header: "CWD", maxWidth: 40, truncateFromStart: true },
 ];
 
@@ -139,7 +139,7 @@ function buildRows(panes) {
       shortenPath(p.pane_current_path),
     ];
     return cells.map((cell, i) =>
-      truncate(cell, COLUMNS[i].maxWidth, COLUMNS[i].truncateFromStart)
+      COLUMNS[i].fixed ? cell : truncate(cell, COLUMNS[i].maxWidth, COLUMNS[i].truncateFromStart)
     );
   });
 }
