@@ -109,8 +109,8 @@ async function handleSessionEndEvent() {
 }
 
 /**
- * Report this pane's job status (running/waiting) to the tmux status line via
- * `tmuxx job-status`. Failures are only logged by `run`, never propagated.
+ * Report this pane's job status (running/blocked/done) to the tmux status line
+ * via `tmuxx job-status`. Failures are only logged by `run`, never propagated.
  */
 async function setPaneJobStatus(status) {
   await run("tmuxx", ["job-status", "set", status]);
@@ -125,9 +125,9 @@ async function clearPaneJobStatus() {
  * https://code.claude.com/docs/en/hooks#notification-input
  */
 async function handleNotificationEvent(input) {
-  // A notification means the turn is paused on the user, so mark the pane waiting
-  // even for idle_prompt, whose desktop notification is intentionally suppressed below.
-  await setPaneJobStatus("waiting");
+  // A notification means Claude is blocked on the user (permission/input), so mark
+  // the pane blocked even for idle_prompt, whose desktop notification is suppressed below.
+  await setPaneJobStatus("blocked");
 
   // Ignore "Claude is waiting for your input".
   if (input.notification_type === "idle_prompt") {
@@ -174,7 +174,7 @@ async function sendNotificationWeb(webhookUrl, event, description) {
  */
 async function handleStopEvent(input) {
   await Promise.all([
-    setPaneJobStatus("waiting"),
+    setPaneJobStatus("done"),
     sendNotification("Claude finished task", "stop"),
     autoSync(input.cwd || process.cwd()),
   ]);

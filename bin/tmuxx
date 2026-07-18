@@ -11,7 +11,7 @@ const { spawnSync, execFileSync } = require("child_process");
 // Written here by `job-status`, read by tmux.conf to render the status line.
 const JOB_STATUS_OPTION = "@job_status";
 
-const JOB_STATUSES = ["running", "waiting"];
+const JOB_STATUSES = ["running", "blocked", "done"];
 
 const FIELDS = [
   "session_name",
