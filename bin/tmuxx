@@ -51,7 +51,7 @@ function shortenPath(path) {
 const COLUMNS = [
   { header: "SESSION", maxWidth: 15 },
   { header: "WINDOW", maxWidth: 20 },
-  { header: "PANE", maxWidth: 26 },
+  { header: "PANE", maxWidth: 60 },
   { header: "JOB", maxWidth: 1 },
   { header: "CWD", maxWidth: 40, truncateFromStart: true },
 ];
