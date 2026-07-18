@@ -57,6 +57,16 @@
   },
   "model": "sonnet",
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook.js"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "hooks": [
@@ -78,6 +88,16 @@
       }
     ],
     "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook.js"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
       {
         "hooks": [
           {

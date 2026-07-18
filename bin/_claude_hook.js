@@ -3,15 +3,9 @@
 // A script to handle Claude Code hooks.
 // https://docs.anthropic.com/en/docs/claude-code/hooks
 //
-// To use this script, specify in the .claude/settings.json like below:
-//   "hooks": {
-//     "Notification": [
-//       { "hooks": [{ "type": "command", "command": "_claude_hook.js" }] }
-//     ],
-//     "Stop": [
-//       { "hooks": [{ "type": "command", "command": "_claude_hook.js" }] }
-//     ]
-//   }
+// To use this script, register it for each handled event in .claude/settings.json,
+// e.g. "Stop": [{ "hooks": [{ "type": "command", "command": "_claude_hook.js" }] }].
+// Handled events: UserPromptSubmit, Notification, Stop, SubagentStop, SessionEnd.
 
 const fs = require("node:fs");
 const os = require("node:os");
@@ -30,6 +24,9 @@ async function main(json) {
   log(`============ hook start: ${eventName} ${json}`);
 
   switch (eventName) {
+    case "UserPromptSubmit":
+      await handleUserPromptSubmitEvent(input);
+      break;
     case "Notification":
       await handleNotificationEvent(input);
       break;
@@ -38,6 +35,9 @@ async function main(json) {
       break;
     case "SubagentStop":
       await handleSubagentStopEvent(input);
+      break;
+    case "SessionEnd":
+      await handleSessionEndEvent(input);
       break;
     default:
       throw new Error(`unsupported Claude hook: ${eventName}`);
@@ -93,10 +93,42 @@ async function run(file, args, options = {}) {
 }
 
 /**
+ * Handle "UserPromptSubmit" Event.
+ * https://code.claude.com/docs/en/hooks#userpromptsubmit
+ */
+async function handleUserPromptSubmitEvent() {
+  await setPaneJobStatus("running");
+}
+
+/**
+ * Handle "SessionEnd" Event.
+ * https://code.claude.com/docs/en/hooks#sessionend
+ */
+async function handleSessionEndEvent() {
+  await clearPaneJobStatus();
+}
+
+/**
+ * Report this pane's job status (running/waiting) to the tmux status line via
+ * `tmuxx job-status`. Failures are only logged by `run`, never propagated.
+ */
+async function setPaneJobStatus(status) {
+  await run("tmuxx", ["job-status", "set", status]);
+}
+
+async function clearPaneJobStatus() {
+  await run("tmuxx", ["job-status", "clear"]);
+}
+
+/**
  * Handle "Notification" Event.
  * https://code.claude.com/docs/en/hooks#notification-input
  */
 async function handleNotificationEvent(input) {
+  // A notification means the turn is paused on the user, so mark the pane waiting
+  // even for idle_prompt, whose desktop notification is intentionally suppressed below.
+  await setPaneJobStatus("waiting");
+
   // Ignore "Claude is waiting for your input".
   if (input.notification_type === "idle_prompt") {
     return;
@@ -142,6 +174,7 @@ async function sendNotificationWeb(webhookUrl, event, description) {
  */
 async function handleStopEvent(input) {
   await Promise.all([
+    setPaneJobStatus("waiting"),
     sendNotification("Claude finished task", "stop"),
     autoSync(input.cwd || process.cwd()),
   ]);
