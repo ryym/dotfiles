@@ -1,0 +1,64 @@
+#!/bin/bash
+
+main() {
+    local src_lang="$1"
+    shift
+
+    if [ $# -eq 0 ]; then
+        echo "specify text to translate" >&2
+        exit 1
+    fi
+
+    case "$src_lang" in
+        jp)
+            translate_jp "$@"
+            ;;
+        en)
+            translate_en "$@"
+            ;;
+        *)
+            echo "unknown language: $src_lang" >&2
+            exit 1
+    esac
+}
+
+translate_jp() {
+    run_llm "
+    次の日本語を自然な英語に翻訳し、翻訳結果のみを出力して。
+    $*
+    "
+}
+
+translate_en() {
+    # run_llm "
+    # 次の英語を自然な日本語に翻訳し、翻訳結果のみを出力して。
+    # $*
+    # "
+    run_llm "
+    英語の先生として、次の英作文に誤字や文法ミス、明らかに不自然な表現があれば指摘し、改善案を最大2つ提示して。
+    あくまで文法面を添削し、文の内容に関する指摘はなし。
+
+    出力フォーマット:
+    ## 翻訳結果
+    ...
+
+    ##  指摘事項
+    - ...
+    - ...
+
+    ##  改善案
+    - ...
+    - ...
+
+    翻訳対象:
+    $*
+    "
+}
+
+run_llm() {
+    # XXX: haiku でもやはり遅い。 local LLM だと早いが、翻訳精度が微妙。 gemma3 1b,4b しか試してないが。
+    claude -p --model haiku "$1"
+    # ollama run gemma3:4b "$1"
+}
+
+main "$@"
