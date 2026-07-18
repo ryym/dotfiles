@@ -108,10 +108,19 @@ async function handleUserPromptSubmitEvent() {
  * https://code.claude.com/docs/en/hooks#posttooluse
  */
 async function handlePostToolUseEvent() {
-  // A tool just ran, so Claude is working. This is also what recovers the pane from
-  // a lingering `blocked` once the user grants a permission and Claude resumes:
-  // the resumed tool's PreToolUse already fired before the block, so its PostToolUse
-  // is the first event after approval that can flip the status back to running.
+  // A tool just ran, so Claude is working. This also recovers the pane from a lingering
+  // `blocked` after the user grants a permission and Claude resumes: the resumed tool's
+  // PreToolUse already fired before the block, so its PostToolUse is the first event
+  // after approval that can flip the status back to running.
+  //
+  // Race note (parallel subagents): @job_status is a single per-pane value, last-write-
+  // wins with no priority, so this running write can stomp a still-pending `blocked`. A
+  // subagent's own tools can't cause it -- they don't fire main-session PostToolUse (see
+  // claude-code issue #34692) -- but the main agent running tools while a *background*
+  // subagent waits on a permission will. Accepted as-is: it's transient (the next
+  // Notification/Stop re-derives the state), the permission still raises a desktop
+  // notification so nothing is silently lost, and distinguishing "approved-and-resumed"
+  // from "another actor still blocked" would need per-actor tracking that isn't worth it.
   await setPaneJobStatus("running");
 }
 
