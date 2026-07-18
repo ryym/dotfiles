@@ -269,11 +269,24 @@ function jumpToPane(paneId) {
   }
 }
 
-// printTableWithFzf shows the pane list in fzf and jumps to the pane selected with enter.
-function printTableWithFzf(panes, rows) {
-  const widths = columnWidths(rows, PANE_COLUMNS);
-  // pane_id is a hidden first column so it survives in fzf's output even though --with-nth hides it from view.
-  const lines = panes.map((p, i) => `${p.pane_id}\t${formatRow(rows[i], widths)}`).join("\n");
+function jumpToSession(sessionName) {
+  // Append ':' to make tmux recognize the session name correctly. If it contains a dot ('.'),
+  // tmux interprets it as a pane identifier. Appending ':' prevents it by explicitly saying that
+  // this string until ':' is a session name.
+  sessionName = `${sessionName}:`;
+  if (process.env.TMUX) {
+    spawnSync("tmux", ["switch-client", "-t", sessionName], { stdio: "inherit" });
+  } else {
+    execFileSync("tmux", ["attach-session", "-t", sessionName], { stdio: "inherit" });
+  }
+}
+
+// selectWithFzf shows a table in fzf and returns the id (via getId) of the row selected with
+// enter, or undefined if the user aborted. The id is a hidden first column so it survives in
+// fzf's output even though --with-nth hides it from view.
+function selectWithFzf(items, rows, columns, getId) {
+  const widths = columnWidths(rows, columns);
+  const lines = items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`).join("\n");
 
   const result = spawnSync("fzf", ["--ansi", "--delimiter", "\t", "--with-nth", "2.."], {
     input: lines,
@@ -282,10 +295,9 @@ function printTableWithFzf(panes, rows) {
   });
 
   const selected = result.stdout;
-  if (!selected || !selected.trim()) return;
+  if (!selected || !selected.trim()) return undefined;
 
-  const paneId = selected.split("\t")[0];
-  jumpToPane(paneId);
+  return selected.split("\t")[0];
 }
 
 function runPanes(args) {
@@ -293,16 +305,24 @@ function runPanes(args) {
   const rows = buildPaneRows(panes);
 
   if (args.includes("--fzf")) {
-    printTableWithFzf(panes, rows);
+    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id);
+    if (paneId) jumpToPane(paneId);
   } else {
     printTable(rows, PANE_COLUMNS);
   }
 }
 
-function runSessions() {
+function runSessions(args) {
   const sessions = listSessions();
   const panes = listPanes();
-  printTable(buildSessionRows(sessions, panes), SESSION_COLUMNS);
+  const rows = buildSessionRows(sessions, panes);
+
+  if (args.includes("--fzf")) {
+    const sessionName = selectWithFzf(sessions, rows, SESSION_COLUMNS, (s) => s.session_name);
+    if (sessionName) jumpToSession(sessionName);
+  } else {
+    printTable(rows, SESSION_COLUMNS);
+  }
 }
 
 // runJobStatus records the calling pane's own job state for tmux.conf to render.
