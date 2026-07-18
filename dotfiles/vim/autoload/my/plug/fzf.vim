@@ -16,6 +16,7 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
   Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
   Map n \[fzf]w ::call my#plug#fzf#_local_files()
+  Map n \[fzf]C ::call my#plug#fzf#_xdg_configs()
   Map n \[fzf]D ::call my#plug#fzf#_downloads()
   Map n \[fzf]m ::call my#plug#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
@@ -175,6 +176,16 @@ function! my#plug#fzf#_downloads() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': '_vim_fzf_list_files fd_formatted',
     \   'dir': '~/Downloads',
+    \   'up': '45%',
+    \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
+    \ })
+endfunction
+
+function! my#plug#fzf#_xdg_configs() abort
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_open_file'),
+    \   'source': '_vim_fzf_list_files fd_formatted',
+    \   'dir': '~/.config',
     \   'up': '45%',
     \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
     \ })
