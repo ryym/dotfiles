@@ -51,11 +51,23 @@ function shortenPath(path) {
 const COLUMNS = [
   { header: "SESSION", maxWidth: 15 },
   { header: "WINDOW", maxWidth: 20 },
-  { header: "PANE", maxWidth: 25 },
-  { header: "ACTIVE", maxWidth: 6 },
-  { header: "JOB", maxWidth: 7 },
+  { header: "PANE", maxWidth: 26 },
+  { header: "JOB", maxWidth: 1 },
   { header: "CWD", maxWidth: 40, truncateFromStart: true },
 ];
+
+// Marks rendered in the JOB column. Colored via ANSI so status is readable at a glance
+// without spending column width on the status word itself.
+const JOB_MARKS = {
+  running: "\x1b[33m▶\x1b[0m",
+  blocked: "\x1b[31m⏸\x1b[0m",
+  done: "\x1b[32m✓\x1b[0m",
+};
+
+const ANSI_ESCAPE = /\x1b\[[0-9;]*m/g;
+
+// Mark shown for the currently active window/pane.
+const ACTIVE_MARK = "\x1b[33m▸\x1b[0m";
 
 // Wide ranges per East Asian Width (Unicode UAX #11): CJK, Hangul, fullwidth forms, emoji, etc.
 const WIDE_RANGES = [
@@ -81,8 +93,13 @@ function charWidth(codePoint) {
 
 // str.length counts UTF-16 units, not terminal columns, so wide chars (e.g. Japanese) misalign padding.
 // Array.from splits by code point, which also avoids miscounting surrogate-pair chars (e.g. emoji) as 2.
+// ANSI color codes are stripped first since they're zero-width on screen but would otherwise be
+// counted as (narrow) characters and throw off padding.
 function strWidth(str) {
-  return Array.from(str).reduce((w, ch) => w + charWidth(ch.codePointAt(0)), 0);
+  return Array.from(str.replace(ANSI_ESCAPE, "")).reduce(
+    (w, ch) => w + charWidth(ch.codePointAt(0)),
+    0
+  );
 }
 
 function padEndDisplay(str, targetWidth) {
@@ -113,15 +130,13 @@ function truncate(str, maxWidth, fromStart) {
 
 function buildRows(panes) {
   return panes.map((p) => {
-    const window = `${p.window_index}:${p.window_name}${p.window_active === "1" ? "*" : ""}`;
-    const pane = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
-    const active = p.pane_active === "1" ? "*" : "";
+    const window = `${p.window_active === "1" ? ACTIVE_MARK : " "}${p.window_index}:${p.window_name}`;
+    const pane = `${p.pane_active === "1" ? ACTIVE_MARK : " "}${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
     const cells = [
       p.session_name,
       window,
       pane,
-      active,
-      p[JOB_STATUS_OPTION],
+      JOB_MARKS[p[JOB_STATUS_OPTION]] || "",
       shortenPath(p.pane_current_path),
     ];
     return cells.map((cell, i) =>
@@ -166,7 +181,7 @@ function printTableWithFzf(panes, rows) {
   // pane_id is a hidden first column so it survives in fzf's output even though --with-nth hides it from view.
   const lines = panes.map((p, i) => `${p.pane_id}\t${formatRow(rows[i], widths)}`).join("\n");
 
-  const result = spawnSync("fzf", ["--delimiter", "\t", "--with-nth", "2.."], {
+  const result = spawnSync("fzf", ["--ansi", "--delimiter", "\t", "--with-nth", "2.."], {
     input: lines,
     encoding: "utf8",
     stdio: ["pipe", "pipe", "inherit"],
