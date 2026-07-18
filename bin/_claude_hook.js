@@ -5,7 +5,7 @@
 //
 // To use this script, register it for each handled event in .claude/settings.json,
 // e.g. "Stop": [{ "hooks": [{ "type": "command", "command": "_claude_hook.js" }] }].
-// Handled events: UserPromptSubmit, Notification, Stop, SubagentStop, SessionEnd.
+// Handled events: UserPromptSubmit, PostToolUse, Notification, Stop, SubagentStop, SessionEnd.
 
 const fs = require("node:fs");
 const os = require("node:os");
@@ -26,6 +26,9 @@ async function main(json) {
   switch (eventName) {
     case "UserPromptSubmit":
       await handleUserPromptSubmitEvent(input);
+      break;
+    case "PostToolUse":
+      await handlePostToolUseEvent(input);
       break;
     case "Notification":
       await handleNotificationEvent(input);
@@ -97,6 +100,18 @@ async function run(file, args, options = {}) {
  * https://code.claude.com/docs/en/hooks#userpromptsubmit
  */
 async function handleUserPromptSubmitEvent() {
+  await setPaneJobStatus("running");
+}
+
+/**
+ * Handle "PostToolUse" Event.
+ * https://code.claude.com/docs/en/hooks#posttooluse
+ */
+async function handlePostToolUseEvent() {
+  // A tool just ran, so Claude is working. This is also what recovers the pane from
+  // a lingering `blocked` once the user grants a permission and Claude resumes:
+  // the resumed tool's PreToolUse already fired before the block, so its PostToolUse
+  // is the first event after approval that can flip the status back to running.
   await setPaneJobStatus("running");
 }
 

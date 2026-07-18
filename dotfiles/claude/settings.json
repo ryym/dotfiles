@@ -67,6 +67,16 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_claude_hook.js"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "hooks": [
