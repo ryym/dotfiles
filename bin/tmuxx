@@ -78,6 +78,7 @@ const SESSION_COLUMNS = [
   { header: "WINDOWS", fixed: true },
   { header: "JOB", fixed: true },
   { header: "ACTIVITY", fixed: true },
+  { header: "CWD", maxWidth: 40, truncateFromStart: true },
 ];
 
 // Marks rendered in the JOB column. Colored via ANSI so status is readable at a glance
@@ -177,6 +178,18 @@ function jobStatusBySession(panes) {
   return rollup;
 }
 
+// activeCwdBySession maps each session name to the cwd of its active pane (the pane in its
+// active window), i.e. the pane you'd land in if you switched to that session right now.
+function activeCwdBySession(panes) {
+  const cwdBySession = new Map();
+  for (const p of panes) {
+    if (p.window_active === "1" && p.pane_active === "1") {
+      cwdBySession.set(p.session_name, p.pane_current_path);
+    }
+  }
+  return cwdBySession;
+}
+
 // formatRelativeTime renders a unix timestamp (seconds) as a short "how long ago" string.
 function formatRelativeTime(unixSeconds) {
   const diff = Math.max(0, Math.floor(Date.now() / 1000) - Number(unixSeconds));
@@ -209,6 +222,7 @@ function buildPaneRows(panes) {
 
 function buildSessionRows(sessions, panes) {
   const jobBySession = jobStatusBySession(panes);
+  const cwdBySession = activeCwdBySession(panes);
   return sessions.map((s) => {
     const name = `${s.session_attached !== "0" ? ACTIVE_MARK : " "}${s.session_name}`;
     const cells = [
@@ -216,6 +230,7 @@ function buildSessionRows(sessions, panes) {
       s.session_windows,
       JOB_MARKS[jobBySession.get(s.session_name)] || "",
       formatRelativeTime(s.session_activity),
+      shortenPath(cwdBySession.get(s.session_name) || ""),
     ];
     return buildRow(cells, SESSION_COLUMNS);
   });
