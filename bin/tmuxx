@@ -76,7 +76,6 @@ const PANE_COLUMNS = [
 const SESSION_COLUMNS = [
   { header: "SESSION", maxWidth: 20 },
   { header: "WINDOWS", fixed: true },
-  { header: "ATTACHED", fixed: true },
   { header: "JOB", fixed: true },
   { header: "ACTIVITY", fixed: true },
 ];
@@ -211,10 +210,10 @@ function buildPaneRows(panes) {
 function buildSessionRows(sessions, panes) {
   const jobBySession = jobStatusBySession(panes);
   return sessions.map((s) => {
+    const name = `${s.session_attached !== "0" ? ACTIVE_MARK : " "}${s.session_name}`;
     const cells = [
-      s.session_name,
+      name,
       s.session_windows,
-      s.session_attached !== "0" ? ACTIVE_MARK : " ",
       JOB_MARKS[jobBySession.get(s.session_name)] || "",
       formatRelativeTime(s.session_activity),
     ];
