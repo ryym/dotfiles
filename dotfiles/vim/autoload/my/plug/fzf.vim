@@ -13,10 +13,8 @@ function! my#plug#fzf#after_load()
   MapNamedKey <Space>u fzf
 
   Map n \[fzf]f ::call my#plug#fzf#_without_ignored_files()
-  Map n \[fzf]_f ::call my#plug#fzf#_without_ignored_files_normal_path()
   Map n \[fzf]F ::call my#plug#fzf#_all_files()
   Map n \[fzf]b ::call my#plug#fzf#_tab_buffers()
-  Map n \[fzf]_b ::call my#plug#fzf#_tab_buffers_normal_path()
   Map n \[fzf]w ::call my#plug#fzf#_local_files()
   Map n \[fzf]D ::call my#plug#fzf#_downloads()
   Map n \[fzf]m ::call my#plug#fzf#_most_recently_used()
@@ -33,8 +31,8 @@ endfunction
 
 let s:fd_available = executable('fd')
 
-let s:bat_preview_opt = "--preview='bat --plain --color=always --line-range :10000 {}'"
-let s:bat_preview_opt_new_fmt = "--preview='bat --plain --color=always --line-range :10000 {3}'"
+let s:bat_preview_opt_normal    = "--preview='bat --plain --color=always --line-range :10000 {}'"
+let s:bat_preview_opt_formatted = "--preview='bat --plain --color=always --line-range :10000 {3}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
   let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
@@ -43,7 +41,7 @@ function! my#plug#fzf#_without_ignored_files() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': src,
     \   'up': '45%',
-    \   'options': '--header [files] ' . s:bat_preview_opt_new_fmt,
+    \   'options': '--header [files] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -54,17 +52,6 @@ endfunction
 function! s:fmt_to_filepath(line) abort
   let parts = split(a:line, '\s')
   return fnameescape(parts[2])
-endfunction
-
-function! my#plug#fzf#_without_ignored_files_normal_path() abort
-  " List file paths normally.
-  let src = s:fd_available ? 'fd --hidden -tf -tl --exclude .git' : 'git ls-files'
-  call fzf#run({
-    \   'sink': 'edit',
-    \   'source': src,
-    \   'up': '45%',
-    \   'options': '--header [files] ' . s:bat_preview_opt,
-    \ })
 endfunction
 
 function! my#plug#fzf#_all_files()
@@ -93,7 +80,7 @@ function! my#plug#fzf#_tab_buffers() abort
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
     \   'source': src,
     \   'up': '45%',
-    \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt_new_fmt
+    \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt_formatted
     \ })
 endfunction
 
@@ -108,15 +95,6 @@ function! my#plug#fzf#_tab_buffers_on_select(names) abort
   else
     execute 'edit' s:fmt_to_filepath(a:names[1])
   endif
-endfunction
-
-function! my#plug#fzf#_tab_buffers_normal_path() abort
-  call fzf#run({
-    \   'sink*': function('my#plug#fzf#_tab_buffers_normal_path_on_select'),
-    \   'source': my#plug#fzf#tab_buffers#list(tabpagenr()),
-    \   'up': '45%',
-    \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt
-    \ })
 endfunction
 
 function! my#plug#fzf#_tab_buffers_normal_path_on_select(names) abort
@@ -188,7 +166,7 @@ function! my#plug#fzf#_local_files() abort
     \   'source': '_vim_fzf_list_files fd_formatted',
     \   'dir': '.local',
     \   'up': '45%',
-    \   'options': '--header [.local] ' . s:bat_preview_opt_new_fmt,
+    \   'options': '--header [.local] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -198,7 +176,7 @@ function! my#plug#fzf#_downloads() abort
     \   'source': '_vim_fzf_list_files fd_formatted',
     \   'dir': '~/Downloads',
     \   'up': '45%',
-    \   'options': '--header [Downloads] ' . s:bat_preview_opt_new_fmt,
+    \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -216,7 +194,7 @@ function! my#plug#fzf#_dotfiles() abort
     \   'source': '_vim_fzf_list_files fd_formatted',
     \   'dir': '~/.dotfiles',
     \   'up': '45%',
-    \   'options': '--header [dotfiles] ' . s:bat_preview_opt_new_fmt,
+    \   'options': '--header [dotfiles] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -227,7 +205,7 @@ function! my#plug#fzf#_plugin_confs() abort
     \   'source': src,
     \   'dir': $MYVIMDIR . '/autoload/my/plug',
     \   'up': '45%',
-    \   'options': s:bat_preview_opt,
+    \   'options': s:bat_preview_opt_normal,
     \ })
 endfunction
 
