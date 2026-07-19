@@ -65,6 +65,17 @@ function shortenPath(path) {
   return home && path.startsWith(home) ? path.replace(home, "~") : path;
 }
 
+// lastSessionName returns the session the current client was in before switching to the
+// current one, or undefined when not run from inside tmux (no client to ask). This is a
+// client attribute, not a session one, so it can't be folded into listSessions()'s format.
+function lastSessionName() {
+  if (!process.env.TMUX) return undefined;
+  const output = execFileSync("tmux", ["display-message", "-p", "#{client_last_session}"], {
+    encoding: "utf8",
+  }).trim();
+  return output || undefined;
+}
+
 const PANE_COLUMNS = [
   { header: "SESSION", maxWidth: 15 },
   { header: "WINDOW", maxWidth: 20 },
@@ -95,6 +106,10 @@ const JOB_PRIORITY = ["blocked", "running", "done"];
 
 // Mark shown for the currently active window/pane.
 const ACTIVE_MARK = "\x1b[33m▸\x1b[0m";
+
+// Mark shown for the session the current client was in before switching to the current one
+// (i.e. what `prefix + L` / switch-last-session would jump back to).
+const LAST_SESSION_MARK = "\x1b[36m↩\x1b[0m";
 
 // Wide ranges per East Asian Width (Unicode UAX #11): CJK, Hangul, fullwidth forms, emoji, etc.
 const WIDE_RANGES = [
@@ -223,8 +238,16 @@ function buildPaneRows(panes) {
 function buildSessionRows(sessions, panes) {
   const jobBySession = jobStatusBySession(panes);
   const cwdBySession = activeCwdBySession(panes);
+  const lastSession = lastSessionName();
   return sessions.map((s) => {
-    const name = `${s.session_attached !== "0" ? ACTIVE_MARK : " "}${s.session_name}`;
+    // Never both: the currently attached session can't also be the previous one.
+    const mark =
+      s.session_attached !== "0"
+        ? ACTIVE_MARK
+        : s.session_name === lastSession
+          ? LAST_SESSION_MARK
+          : " ";
+    const name = `${mark}${s.session_name}`;
     const cells = [
       name,
       s.session_windows,
