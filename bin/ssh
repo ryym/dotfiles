@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# ssh wrapper that records the invocation on the current tmux pane so that
+# splitting the pane can auto-reconnect to the same host (see tmux.conf).
+
+set -u
+
+# The real ssh binary. Hardcoded to avoid recursing into this wrapper.
+real_ssh="${REAL_SSH:-/usr/bin/ssh}"
+
+if [[ -n "${SSH_WRAP_SKIP:-}" ]]; then
+    exec "$real_ssh" "$@"
+    exit 127  # only reached if exec fails
+fi
+
+# Whether the args denote a plain interactive session with a destination and no
+# remote command. Returns 0 if the invocation should be recorded.
+# e.g. `ssh host update` or `ssh -V` returns 1.
+is_interactive_session() {
+    # Option letters that consume the following argument as their value.
+    local takes_arg="bcDEeFIiJLlmOopQRSWw"
+    local expect_value=0 seen_dest=0 a last
+    for a in "$@"; do
+        if (( expect_value )); then
+            expect_value=0
+            continue
+        fi
+        if (( seen_dest )); then
+            # A token after the destination is a remote command.
+            # It means the session is non-interactive.
+            return 1
+        fi
+        if [[ "$a" == "--" ]]; then
+            continue
+        fi
+        if [[ "$a" == -* ]]; then
+            last="${a: -1}"
+            [[ "$takes_arg" == *"$last"* ]] && expect_value=1
+            continue
+        fi
+        seen_dest=1
+    done
+    (( seen_dest )) && return 0 || return 1
+}
+
+record=0
+if [[ -n "${TMUX:-}" ]] && is_interactive_session "$@"; then
+    record=1
+    # the recorded command re-invokes this wrapper, not real ssh,
+    # so the option propagates to panes split from an already-split pane.
+    printf -v quoted 'ssh %s' "$(printf '%q ' "$@")"
+    tmux set -p @ssh_cmd "$quoted"
+fi
+
+"$real_ssh" "$@"
+ret=$?
+
+if (( record )); then
+    tmux set -pu @ssh_cmd
+fi
+
+exit $ret
