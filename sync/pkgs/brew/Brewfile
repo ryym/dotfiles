@@ -17,7 +17,6 @@ brew 'tmux'
 brew 'tree'
 brew 'universal-ctags'
 brew 'vim'
-brew 'yarn'
 brew 'zsh'
 
 cask 'font-ricty-diminished'
