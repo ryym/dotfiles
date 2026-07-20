@@ -105,6 +105,9 @@
     dnames = diff --name-only
     sbm    = submodule
     wt     = worktree
+    hd     = !hunk diff
+    hdc    = !hunk diff --staged
+    hsh    = !hunk show
 
     si = !git_interactive_status popup
     hi = !git_interactive_history popup

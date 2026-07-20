@@ -27,6 +27,7 @@ LINKS=(
     'bat/config:.config/bat/config'
     'ghostty/config:.config/ghostty/config'
     'lazygit/config.yml':'.config/lazygit/config.yml'
+    'hunk/config.toml':'.config/hunk/config.toml'
     'lesskey':'.config/lesskey'
     'claude/CLAUDE.md':'.claude/CLAUDE.md'
     'claude/settings.json':'.claude/settings.json'

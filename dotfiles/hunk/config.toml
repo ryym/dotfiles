@@ -1,0 +1,6 @@
+# https://github.com/modem-dev/hunk
+
+mode = "stack"
+watch = true
+wrap_lines = true
+menu_bar = false
