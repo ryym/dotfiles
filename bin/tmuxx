@@ -16,6 +16,7 @@ const JOB_STATUSES = ["running", "blocked", "done"];
 
 const FIELDS = [
   "session_name",
+  "window_id",
   "window_index",
   "window_name",
   "window_active",
@@ -82,6 +83,14 @@ const PANE_COLUMNS = [
   { header: "PANE", maxWidth: 60 },
   { header: "JOB", fixed: true },
   { header: "CWD", maxWidth: 40, truncateFromStart: true },
+];
+
+const WINDOW_COLUMNS = [
+  { header: "SESSION", maxWidth: 15 },
+  { header: "WINDOW", maxWidth: 20 },
+  { header: "PANES", fixed: true },
+  { header: "CWD", maxWidth: 40, truncateFromStart: true },
+  { header: "ACTIVE PANE", maxWidth: 30 },
 ];
 
 const SESSION_COLUMNS = [
@@ -235,6 +244,48 @@ function buildPaneRows(panes) {
   });
 }
 
+// windowsFromPanes collapses panes down to one entry per window, preserving the order windows
+// first appear in (which matches session/window order from `tmux list-panes -a`).
+function windowsFromPanes(panes) {
+  const windows = new Map();
+  for (const p of panes) {
+    const key = `${p.session_name} ${p.window_index}`;
+    if (!windows.has(key)) {
+      windows.set(key, {
+        session_name: p.session_name,
+        window_id: p.window_id,
+        window_index: p.window_index,
+        window_name: p.window_name,
+        window_active: p.window_active,
+        paneCount: 0,
+        activePaneTitle: "",
+        activePaneCwd: "",
+      });
+    }
+    const w = windows.get(key);
+    w.paneCount++;
+    if (p.pane_active === "1") {
+      w.activePaneTitle = p.pane_title;
+      w.activePaneCwd = p.pane_current_path;
+    }
+  }
+  return Array.from(windows.values());
+}
+
+function buildWindowRows(windows) {
+  return windows.map((w) => {
+    const window = `${w.window_active === "1" ? ACTIVE_MARK : " "}${w.window_index}:${w.window_name}`;
+    const cells = [
+      w.session_name,
+      window,
+      String(w.paneCount),
+      shortenPath(w.activePaneCwd),
+      w.activePaneTitle,
+    ];
+    return buildRow(cells, WINDOW_COLUMNS);
+  });
+}
+
 function buildSessionRows(sessions, panes) {
   const jobBySession = jobStatusBySession(panes);
   const cwdBySession = activeCwdBySession(panes);
@@ -292,6 +343,18 @@ function jumpToPane(paneId) {
   }
 }
 
+function jumpToWindow(windowId) {
+  if (process.env.TMUX) {
+    spawnSync("tmux", ["select-window", "-t", windowId, ";", "switch-client", "-t", windowId], {
+      stdio: "inherit",
+    });
+  } else {
+    execFileSync("tmux", ["select-window", "-t", windowId, ";", "attach-session", "-t", windowId], {
+      stdio: "inherit",
+    });
+  }
+}
+
 function jumpToSession(sessionName) {
   // Append ':' to make tmux recognize the session name correctly. If it contains a dot ('.'),
   // tmux interprets it as a pane identifier. Appending ':' prevents it by explicitly saying that
@@ -332,6 +395,19 @@ function runPanes(args) {
     if (paneId) jumpToPane(paneId);
   } else {
     printTable(rows, PANE_COLUMNS);
+  }
+}
+
+function runWindows(args) {
+  const panes = listPanes();
+  const windows = windowsFromPanes(panes);
+  const rows = buildWindowRows(windows);
+
+  if (args.includes("--fzf")) {
+    const windowId = selectWithFzf(windows, rows, WINDOW_COLUMNS, (w) => w.window_id);
+    if (windowId) jumpToWindow(windowId);
+  } else {
+    printTable(rows, WINDOW_COLUMNS);
   }
 }
 
@@ -398,6 +474,7 @@ function runJobStatus(args) {
 
 const SUBCOMMANDS = {
   panes: runPanes,
+  windows: runWindows,
   sessions: runSessions,
   "job-status": runJobStatus,
 };
