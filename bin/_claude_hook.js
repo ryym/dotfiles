@@ -36,6 +36,8 @@ async function main(json) {
     case "Stop":
       await handleStopEvent(input);
       break;
+    case "StopFailure":
+      await handleStopFailureEvent(input);
     case "SubagentStop":
       await handleSubagentStopEvent(input);
       break;
@@ -201,6 +203,21 @@ async function handleStopEvent(input) {
     setPaneJobStatus("done"),
     sendNotification("Claude finished task", "stop"),
     autoSync(input.cwd || process.cwd()),
+  ]);
+}
+
+/**
+ * Handle "StopFailure" Event.
+ * https://code.claude.com/docs/en/hooks#stopfailure
+ */
+async function handleStopFailureEvent(input) {
+  let errorInfo = input.error;
+  if (input.error_details) {
+    errorInfo += ` (${input.error_details})`;
+  }
+  await Promise.all([
+    setPaneJobStatus("blocked"),
+    sendNotification(`Claude stopped due to an ERROR: ${errorInfo}`, "notification"),
   ]);
 }
 
