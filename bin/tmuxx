@@ -49,8 +49,9 @@ function parseTmuxTable(output) {
     });
 }
 
-function listPanes() {
-  const output = execFileSync("tmux", ["list-panes", "-a", "-F", FORMAT], { encoding: "utf8" });
+function listPanes(options) {
+  const tmuxOptions = ["list-panes", options.allSessions ? "-a" : "-s", "-F", FORMAT];
+  const output = execFileSync("tmux", tmuxOptions, { encoding: "utf8" });
   return parseTmuxTable(output);
 }
 
@@ -399,7 +400,7 @@ function selectWithFzf(items, rows, columns, getId, previewCmd) {
 }
 
 function runPanes(args) {
-  const panes = listPanes();
+  const panes = listPanes({ allSessions: args.includes("--all") });
   const rows = buildPaneRows(panes);
 
   if (args.includes("--fzf")) {
@@ -411,7 +412,7 @@ function runPanes(args) {
 }
 
 function runWindows(args) {
-  const panes = listPanes();
+  const panes = listPanes({ allSessions: true });
   const windows = windowsFromPanes(panes);
   const rows = buildWindowRows(windows);
 
@@ -425,7 +426,7 @@ function runWindows(args) {
 
 function runSessions(args) {
   const sessions = listSessions();
-  const panes = listPanes();
+  const panes = listPanes({ allSessions: true });
   const rows = buildSessionRows(sessions, panes);
 
   if (args.includes("--fzf")) {
