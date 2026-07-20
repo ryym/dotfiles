@@ -370,11 +370,19 @@ function jumpToSession(sessionName) {
 // selectWithFzf shows a table in fzf and returns the id (via getId) of the row selected with
 // enter, or undefined if the user aborted. The id is a hidden first column so it survives in
 // fzf's output even though --with-nth hides it from view.
-function selectWithFzf(items, rows, columns, getId) {
+// previewCmd, if given, is a shell command shown in fzf's preview pane; {1} in it refers to
+// the hidden id column (fzf substitutes it regardless of --with-nth hiding it from display).
+function selectWithFzf(items, rows, columns, getId, previewCmd) {
   const widths = columnWidths(rows, columns);
   const lines = items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`).join("\n");
 
-  const result = spawnSync("fzf", ["--ansi", "--delimiter", "\t", "--with-nth", "2.."], {
+  const fzfArgs = ["--ansi", "--delimiter", "\t", "--with-nth", "2.."];
+  if (previewCmd) {
+    fzfArgs.push("--preview-window", "bottom:nowrap");
+    fzfArgs.push("--preview", previewCmd);
+  }
+
+  const result = spawnSync("fzf", fzfArgs, {
     input: lines,
     encoding: "utf8",
     stdio: ["pipe", "pipe", "inherit"],
@@ -417,7 +425,15 @@ function runSessions(args) {
   const rows = buildSessionRows(sessions, panes);
 
   if (args.includes("--fzf")) {
-    const sessionName = selectWithFzf(sessions, rows, SESSION_COLUMNS, (s) => s.session_name);
+    // {1}: appends ':' to disambiguate the session name from a pane identifier, same as
+    // jumpToSession does for its own tmux calls.
+    const sessionName = selectWithFzf(
+      sessions,
+      rows,
+      SESSION_COLUMNS,
+      (s) => s.session_name,
+      "tmux capture-pane -e -p -t {1}:"
+    );
     if (sessionName) jumpToSession(sessionName);
   } else {
     printTable(rows, SESSION_COLUMNS);
