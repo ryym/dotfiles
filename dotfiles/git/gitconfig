@@ -89,6 +89,7 @@
     rsh    = reset --hard
     rsrmt  = !git reset --hard `git_remote_branch_name`
     st     = stash
+    stkp   = stash --keep-index
     stl    = stash list
     sts    = stash save
     stp    = stash pop
