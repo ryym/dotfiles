@@ -136,6 +136,8 @@ function! my#init#mappings#setup() abort
   Map n \[tab]n ::tabnew
   Map n \[tab]h gT
   Map n \[tab]l gt
+  Map n \[tab]H ::tabmove -1
+  Map n \[tab]L ::tabmove +1
 
   if has('nvim')
     Map t <C-w> <C-\\><C-n><C-w>
