@@ -18,7 +18,8 @@ main() {
                 local abs="${line%% *}"
                 echo "${line/$abs/$($realpath_cmd --relative-to="$main" "$abs")}"
             done | \
-            fzf --with-nth='{2..} {1}' | \
+            fzf --multi --with-nth='{2..} {1}' \
+                --bind 'ctrl-y:execute-silent(echo -n {+1} | ccopy)' | \
             awk '{print $1}'
         )
         [ -n "$dir" ] && cd "$main/$dir"
