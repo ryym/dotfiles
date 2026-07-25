@@ -10,9 +10,6 @@ bindkey -e # Like Emacs.
 # Remap <C-w> to <C-t> to use <C-w> for window switching in Vim terminal.
 bindkey "^t" backward-kill-word
 
-autoload -Uz colors
-colors
-
 # (Only for macOS)
 # Homebrew's git formula ships its own limited zsh `_git` completion, which
 # shadows zsh's fuller one that the git alias completions below rely on.
