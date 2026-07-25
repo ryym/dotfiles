@@ -15,6 +15,7 @@ if is_dryrun || has apt-get; then
 
     # Basic development tools
     install clang
+    install curl
     install fzf
     install ibus-mozc
     install jq

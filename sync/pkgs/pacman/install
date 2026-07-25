@@ -22,6 +22,7 @@ if is_dryrun || has pacman; then
     # Basic development tools
     install alacritty
     install clang
+    install curl
     install docker
     install docker-buildx
     install docker-compose
