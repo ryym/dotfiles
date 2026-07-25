@@ -1,5 +1,8 @@
+# Zshenv
+# Zsh configuration for non-interactive executions
+
 # Ensure Zsh doesn't load global rc files like '/etc/zprofile'.
-setopt no_global_rcs
+unsetopt global_rcs
 
 export DOTPATH=$HOME/.dotfiles
 

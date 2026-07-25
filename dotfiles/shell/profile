@@ -1,4 +1,5 @@
 # vim:set filetype=bash:
+# Minimal config for sh/bash (run once at login)
 
 export DOTPATH=$HOME/.dotfiles
 
