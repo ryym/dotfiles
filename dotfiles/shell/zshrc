@@ -1,14 +1,45 @@
-# ZSHRC
-# man zsh
+# Zshrc
+# Zsh configuration for interactive shells
 
+# Related man pages
+# - zshmodules : modules
+# - zshparam   : parameters like HISTFILE
+# - zshoptions : options
+# - zshbuiltins: builtin commands like autoload
+# - zshcompsys : completion system
+# - zshcontrib : non-core autoloadable functions
+# - zshzle     : zsh line editor (zle) and bindkey
+# - zshexpn    : expansion and substitution
+
+### Basic Configs
+
+# Collect a profile to make it possible to investigate the startup speed of zshrc.
 zmodload zsh/zprof
 
 export LANG=en_US.UTF-8
 
-bindkey -e # Like Emacs.
+bindkey -e # Like Emacs
 
 # Remap <C-w> to <C-t> to use <C-w> for window switching in Vim terminal.
 bindkey "^t" backward-kill-word
+
+# Shorten long and frequently used paths.
+hash -d github=$HOME/ghq/src/github.com
+
+setopt hist_ignore_all_dups
+setopt share_history
+setopt auto_cd
+setopt auto_pushd
+setopt list_packed
+setopt interactive_comments
+unsetopt list_beep
+unsetopt correct
+unsetopt nomatch
+
+### Completions
+
+# Use completion with case-insensitivity.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # (Only for macOS)
 # Homebrew's git formula ships its own limited zsh `_git` completion, which
@@ -16,47 +47,71 @@ bindkey "^t" backward-kill-word
 # ref: https://github.com/Homebrew/homebrew-core/issues/13700, https://github.com/orgs/Homebrew/discussions/2797
 [[ -L /opt/homebrew/share/zsh/site-functions/_git ]] && rm -f /opt/homebrew/share/zsh/site-functions/_git
 
-autoload -Uz compinit
+# Docker
+[[ -L $HOME/.docker/completions ]] && fpath=($HOME/.docker/completions $fpath)
+
 # Enable auto completion.
-# The compinit function refreshes the cache in ~/.zcompdump if it is stale but
-# the refresh takes a few seconds on my mac so instead let it refresh every 24 hours.
+# Refresh the cache in ~/.zcompdump only once in a day (every 24 hours) because
+# `compinit` can sometimes take a few seconds in Mac used for many years.
+autoload -Uz compinit
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
     compinit
 else
-    compinit -C
+    compinit -C # Skip refresh
 fi
 
-# Tell Zsh to use gits' completion for the `g` wrapper function.
+# Tell Zsh to use gits' completion for the `bin/g` wrapper function.
 compdef g=git
 
 # Give completion to git aliases that shell out to external commands (see `git alias`).
 # Zsh's _git dispatches to a `_git-<subcommand>` function if one exists.
-_git-si() { _git-status "$@" }
-_git-hi() { _git-log "$@" }
-_git-di() { _git-diff "$@" }
+_git-si()  { _git-status "$@" }
+_git-hi()  { _git-log "$@" }
+_git-di()  { _git-diff "$@" }
 _git-shi() { _git-show "$@" }
-_git-bi() { _git-branch "$@" }
+_git-bi()  { _git-branch "$@" }
 
-# Use completion with case-insensitivity.
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+### History
 
-# Histories
 HISTFILE=~/.zsh_history
-HISTSIZE=500000 # メモリにロードされる件数(検索できる)
-SAVEHIST=500000 # $HISTFILEに保存される件数
+HISTSIZE=500000 # The max number of history events on memory
+SAVEHIST=500000 # The max number of history events saved in $HISTFILE
 
-# History searching
-autoload history-search-end
+autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
-# vcs_info
+### Prompt
+
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 zstyle ':vcs_info:*' formats '%F{green}%b%f %m'
 zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f %m'
+
+# A prompt like:
+#     ~/.dotfiles main =
+#     ❯
+# inspired by https://github.com/sindresorhus/pure
+_is_first_prompt=1
+function _update_prompt() {
+    local symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
+    if [[ $_is_first_prompt == 1 ]]; then
+        _is_first_prompt=0
+    else
+        print ''
+    fi
+    LANG=en_US.UTF-8 vcs_info
+    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo ' %F{yellow}(SSH)%f')
+    # Use as a jump marker in tmux's copy-mode.
+    local prompt_sequence=$'\033]133;A\033\\'
+    PROMPT="$prompt_sequence%F{246}%~%f ${vcs_info_msg_0_}${ssh_info}
+%F{$symbol_color}❯%f "
+}
+add-zsh-hook precmd _update_prompt
+
+# VCS (Git) info display
 
 # Show ahead/behind against the upstream branch in the prompt.
 # The remote-tracking refs are refreshed asynchronously by _maybe_fetch_upstream,
@@ -87,8 +142,8 @@ function _maybe_fetch_upstream() {
     stamp="$git_dir/.zsh_fetch_stamp"
 
     # Bail out while the stamp is still fresh (mtime within the interval).
-    # extended_glob is needed for the (#q...) form; localoptions keeps it scoped.
-    setopt localoptions extended_glob
+    # extended_glob is needed for the (#q...) form; local_options keeps it scoped.
+    setopt local_options extended_glob
     local -a fresh=( $stamp(#qNms-$_GIT_FETCH_INTERVAL) )
     (( $#fresh )) && return
     touch "$stamp"
@@ -98,65 +153,11 @@ function _maybe_fetch_upstream() {
 }
 add-zsh-hook precmd _maybe_fetch_upstream
 
-# A prompt inspired by https://github.com/sindresorhus/pure
-_is_first_prompt=1
-function _update_prompt() {
-    local symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
-    if [[ $_is_first_prompt == 1 ]]; then
-        _is_first_prompt=0
-    else
-        print ''
-    fi
-    LANG=en_US.UTF-8 vcs_info
-    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo ' %F{yellow}(SSH)%f')
-    # Use as a jump marker in tmux's copy-mode.
-    local prompt_sequence=$'\033]133;A\033\\'
-    PROMPT="$prompt_sequence%F{246}%~%f ${vcs_info_msg_0_}${ssh_info}
-%F{$symbol_color}❯%f "
-}
-add-zsh-hook precmd _update_prompt
-
-# Shorten long and frequently used paths.
-hash -d github=$HOME/ghq/src/github.com
-
-setopt hist_ignore_all_dups
-setopt share_history
-
-# Options
-
-setopt auto_cd
-setopt auto_pushd
-
-setopt nocorrect
-setopt list_packed
-setopt nolistbeep
-setopt interactivecomments
-
-unsetopt nomatch
-
-source "$DOTPATH/dotfiles/shell/aliases"
-
-source "$DOTPATH/dotfiles/fzf/config.sh"
-
-zkbd_file="$HOME/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
-if [ -f $zkbd_file ]; then
-    # Load a dictionary of special keys for the current terminal.
-    # You can build a directory interactively by running `autoload zkbd; zkbd`.
-    source $zkbd_file
-
-    # Remap navigation keys to ensure consistent behavior across applications.
-    # See ryym/dotfiles/sync/os/arch/README.md#key-binding-strategy for details.
-    # While these bindings are rarely used since they are remapped at the terminal emulator level,
-    # they are still useful in terminals that doesn't remap keys like tty1.
-    bindkey "${key[Home]}" beginning-of-line
-    bindkey "${key[End]}" end-of-line
-    bindkey "${key[Up]}" history-beginning-search-backward-end
-    bindkey "${key[Down]}" history-beginning-search-forward-end
-fi
+### Command Rewriting
 
 # Custom accept-line widget for command rewriting.
 function _custom_accept_line() {
-    # Ignore complex lines (pipes, semicolons, &&, ||).
+    # Ignore complex lines for safety (pipes, semicolons, &&, ||).
     if [[ "$BUFFER" == *'|'* || "$BUFFER" == *';'* || "$BUFFER" == *'&&'* ]]; then
         zle .accept-line
         return
@@ -198,6 +199,27 @@ function _custom_accept_line() {
 }
 zle -N accept-line _custom_accept_line
 
+### Other setups
+
+# Key remapping for non-terminal-emulator environment.
+zkbd_file="$HOME/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+if [ -f $zkbd_file ]; then
+    # Load a dictionary of special keys for the current terminal.
+    # You can build a directory interactively by running `autoload zkbd; zkbd`.
+    source $zkbd_file
+    # Remap navigation keys to ensure consistent behavior across applications (see dotfiles/xremap/README.md).
+    # While these bindings are rarely used since they are remapped at the terminal emulator level,
+    # they are still useful in terminals that doesn't remap keys like tty1.
+    bindkey "${key[Home]}" beginning-of-line
+    bindkey "${key[End]}" end-of-line
+    bindkey "${key[Up]}" history-beginning-search-backward-end
+    bindkey "${key[Down]}" history-beginning-search-forward-end
+fi
+
+source "$DOTPATH/dotfiles/shell/aliases"
+
+source "$DOTPATH/dotfiles/fzf/config.sh"
+
 # https://github.com/rhysd/hgrep
 function hgrep() {
     command hgrep --term-width "$COLUMNS" "$@"
@@ -208,15 +230,7 @@ if has direnv; then
     eval "$(direnv hook zsh)"
 fi
 
-# AWS-CLI
-# which aws_zsh_completer >/dev/null 2>&1 && $(which aws_zsh_completer.sh)
-
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 zprof > /tmp/zprof.txt
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/ryu/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
