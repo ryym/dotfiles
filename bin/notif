@@ -3,8 +3,6 @@
 # Display a desktop notification when the execution of the specified command is complete.
 # Usage: notif sleep 3
 
-source "$DOTPATH/lib/vitalize.sh"
-
 shopt -s expand_aliases
 source "$DOTPATH/dotfiles/shell/aliases"
 test -f "$HOME/aliases.local" && source "$HOME/aliases.local"

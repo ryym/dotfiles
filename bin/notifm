@@ -12,8 +12,6 @@
 #   fg %1; notifm docker pull finish
 #   # Now I can see the notification when the command complete!
 
-source "$DOTPATH/lib/vitalize.sh"
-
 case $(ostype) in
     macos )
         osascript -e "display notification \"${*}\" with title \"message\""
