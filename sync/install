@@ -9,7 +9,7 @@ trap 'echo SYNC STOPPED: $0:$LINENO' ERR INT
 
 DOTPATH="$(cd "$(dirname "$0")/.."; pwd)"
 
-source "$DOTPATH/sync/lib/vitalize.sh"
+source "$DOTPATH/sync/lib/utils.sh"
 
 osname=${OS:-$(ostype)}
 installer="$DOTPATH/sync/os/$osname/install"

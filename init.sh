@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if ! $(which __dot_bin_enabled >/dev/null 2>&1); then
+    PATH="$DOTPATH/bin:$PATH"
+fi
+
 export DOTPATH=${DOTPATH:-$HOME/.dotfiles}
 
 export GOPATH=$HOME/ghq

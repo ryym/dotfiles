@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Load basic utilities.
-source "$DOTPATH/lib/vitalize.sh"
+source "$DOTPATH/init.sh"
 
 DOTFILES_LOGO='
 ==============================================

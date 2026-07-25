@@ -1,7 +1,7 @@
 # vim:set filetype=bash:
 # Shell configurations for non-interactive executions shared by sh/bash/zsh
 
-source "$DOTPATH/lib/vitalize.sh"
+source "$DOTPATH/init.sh"
 
 # Disallow duplicate paths in the '$PATH'.
 typeset -U PATH
@@ -59,6 +59,22 @@ fi
 #         trap "rm -f $AGENT_NO_NOTIF_PATH" EXIT
 #     fi
 export AGENT_NO_NOTIF_PATH='/tmp/agent-no-notif'
+
+# mkdir & cd
+mkcd() {
+    mkdir -p "$1"
+    cd "$1"
+}
+
+# Go to dotfiles quickly
+dot() {
+    cd ~/.dotfiles
+}
+
+# Go to .config quickly
+dotc() {
+    cd ~/.config
+}
 
 # Open a man page in Neovim.
 # Tips: you can view the outline of the page by gO.

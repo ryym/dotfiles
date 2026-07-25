@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$DOTPATH/lib/vitalize.sh"
+source "$DOTPATH/init.sh"
 
 # The files to be linked.
 LINKS=(
