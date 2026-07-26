@@ -412,7 +412,7 @@ function runPanes(args) {
 }
 
 function runWindows(args) {
-  const panes = listPanes({ allSessions: true });
+  const panes = listPanes({ allSessions: args.includes("--all") });
   const windows = windowsFromPanes(panes);
   const rows = buildWindowRows(windows);
 
