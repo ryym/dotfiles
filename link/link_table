@@ -36,6 +36,7 @@ LINKS=(
     'claude/statusline.sh':'.claude/statusline.sh'
     'claude/skills/tmux':'.claude/skills/tmux'
     'claude/skills/my.garage':'.claude/skills/my.garage'
+    'claude/skills/my.pr-create':'.claude/skills/my.pr-create'
     'npmrc':'.npmrc'
 )
 
