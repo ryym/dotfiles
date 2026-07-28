@@ -21,6 +21,7 @@ alias y='yarn'
 alias k='kubectl'
 alias h='help'
 alias popup='tmux popup -E -d `pwd` -w 90% -h 90%'
+alias tll='translate'
 
 # For Linux
 alias sysu='systemctl --user'
