@@ -62,6 +62,10 @@ Follow these rules as much as possible when using Bash to avoid requiring additi
   Otherwise, just run each command separately.
 - Avoid running `echo "---"` which triggers human approval as a false positive of quoted flag name.
 
+## Subagents Usage
+
+When you run only one subagent, run it in foreground, not in background.
+
 ## Misc
 
 ### English by default
