@@ -47,6 +47,7 @@
     "deny": [
       "Read(.local/human/**)",
       "Read(.env*)",
+      "Read(.zshrc.local)",
       "Read(//)",
       "Read(~/)",
       "Edit(//)",
