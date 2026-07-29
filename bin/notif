@@ -9,6 +9,7 @@ test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
 # Register job status if tmux is running.
 tmuxx job-status set 'running'
+trap 'tmuxx job-status clear' EXIT
 
 printf -v escaped '%q ' "$@"
 eval "$escaped"
@@ -38,7 +39,5 @@ exit_mark=$(test $exit_code -eq 0 && echo "\x1b[32m✓\x1b[0m" || echo "\x1b[31m
 printf "$exit_mark exited with $exit_code. Press any key to quit:"
 read -n 1 -s -r
 echo
-
-tmuxx job-status clear
 
 exit $exit_code
