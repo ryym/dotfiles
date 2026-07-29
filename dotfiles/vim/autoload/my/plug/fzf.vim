@@ -184,7 +184,7 @@ endfunction
 function! my#plug#fzf#_xdg_configs() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
-    \   'source': '_vim_fzf_list_files fd_formatted',
+    \   'source': "_vim_fzf_list_files fd_formatted -E '.android/*'",
     \   'dir': '~/.config',
     \   'up': '45%',
     \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
