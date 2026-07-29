@@ -38,6 +38,9 @@ unsetopt nomatch
 
 ### Completions
 
+# Disallow duplicate fpaths.
+typeset -U fpath
+
 # Use completion with case-insensitivity.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
