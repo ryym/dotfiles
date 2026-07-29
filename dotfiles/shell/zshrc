@@ -50,15 +50,20 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # Docker
 [[ -L $HOME/.docker/completions ]] && fpath=($HOME/.docker/completions $fpath)
 
-# Enable auto completion.
-# Refresh the cache in ~/.zcompdump only once in a day (every 24 hours) because
-# `compinit` can sometimes take a few seconds in Mac used for many years.
 autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C # Skip refresh
-fi
+# Enable auto completion while refreshing the cache in .zcompdump only once in a day
+# to keep the average startup time of Zsh faster.
+() {
+    # Get .zcompdump only if its last refhresh was more than 24 hours ago by glob qualifiers.
+    # The `old` array becomes empty otherwise.
+    local old=( ~/.zcompdump(mh+23N) )
+    if (( $#old )); then
+        echo 'compinit with refresh'
+        compinit
+    else
+        compinit -C # Skip refresh
+    fi
+}
 
 # Tell Zsh to use gits' completion for the `bin/g` wrapper function.
 compdef g=git
