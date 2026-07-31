@@ -25,6 +25,10 @@ case "$1" in
         forced_mode="en"
         shift
         ;;
+    --ask)
+        forced_mode="ask"
+        shift
+        ;;
 esac
 
 if [ $# -gt 0 ]; then
@@ -84,25 +88,28 @@ case "$mode" in
         session_id="$TRANSLATE2_EN_SESSION_ID"
         prompt="$text"
         ;;
+    ask)
+        prompt="英語について質問。 $text"
+        ;;
 esac
 
-if [ -z "$session_id" ]; then
-    echo "Error: session ID for mode '$mode' is not set (TRANSLATE2_${mode^^}_SESSION_ID)" >&2
-    exit 1
+work_dir="$HOME/ai-translate"
+mkdir -p "$work_dir"
+
+if [ -n "$session_id" ]; then
+    response=$(cd "$work_dir" && claude --model haiku -p --resume "$session_id" "$prompt")
+else
+    session_id=$(uuidgen | tr 'A-Z' 'a-z')
+    response=$(cd "$work_dir" && claude --model haiku -p --session-id "$session_id" "$prompt")
 fi
-
-log_dir="$HOME/ai-translate"
-log_file="$log_dir/log.jsonl"
-mkdir -p "$log_dir"
-
-response=$(cd "$log_dir" && claude --model haiku -p --resume "$session_id" "$prompt")
 
 jq -nc \
     --arg timestamp "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+    --arg session_id "$session_id" \
     --arg mode "$mode" \
     --arg text "$text" \
     --arg response "$response" \
-    '{timestamp: $timestamp, mode: $mode, text: $text, response: $response}' \
-    >> "$log_file"
+    '{timestamp: $timestamp, session_id: $session_id, mode: $mode, text: $text, response: $response}' \
+    >> "$work_dir/log.jsonl"
 
 echo "$response"
