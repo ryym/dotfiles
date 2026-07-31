@@ -1,12 +1,18 @@
 ---
 name: my.pr-create
 description: Create a GitHub pull request via `gh pr create` using the repository's PR template.
-allowed-tools: Bash(gh pr create --draft --assignee @me *) Bash(gh pr view --web *)
+allowed-tools: Bash(gh pr create --draft --assignee @me --body-file .local/pr.md --title *), Bash(gh pr view --web *)
 ---
 
 # my.pr-create
 
 Create a pull request for the current branch using the `gh` CLI.
+
+## Local Rules
+
+Before starting any steps, always check if `.local/rules/pull-requests.md` exists first.
+If it exists, read it and follow the instructions there too. Local rules always take precedence over rules in this skill.
+If local rules conflict with instructions in this skill file, follow the local rules.
 
 ## Steps
 
@@ -23,22 +29,21 @@ Create a pull request for the current branch using the `gh` CLI.
 5. Draft the PR title and body:
    - **Title:** short (under ~70 chars), present tense, English.
    - **Body:** follow the `How to write good PR Body` section below.
+   - Do not forget to prioritize `.local/rules/pull-requests.md` if it exists.
 6. For each sentence in the body, ask yourself: "Could a reviewer know this just by seeing the diff?"
    If yes, cut that sentence.
-7. Show the drafted title and body to the user as rendered markdown directly in the response (not inside a code block)
-   and wait for their approval before proceeding. If they ask for changes, revise and show it again until approved.
-8. Create the PR with `gh pr create`, passing the body via a quoted HEREDOC so formatting is preserved.
-   - Use this command:
-     ```bash
-     gh pr create --draft --assignee @me --title "<title>" --body "$(cat <<'EOF'
-     <body following the template>
-     EOF
-     )"
-     ```
-   - The HEREDOC is quoted (`<<'EOF'`), so `$` and `` ` `` are **not** expanded — do not escape them with backslashes.
-     Writing `` \` `` will leave a literal backslash in the rendered Markdown.
+7. Ask the user for review by:
+   1. Save the drafted body in `.local/pr.md`.
+   2. Print the drafted title.
+   3. Print the content of `.local/pr.md` as rendered markdown directly (not inside a code block).
+   4. Wait for their approval before proceeding. If they ask for changes, revise and show it again until approved.
+8. Create the PR with `gh pr create`. Use the following command:
+   ```bash
+   gh pr create --draft --assignee @me --body-file .local/pr.md --title "<title>"
+   ```
 9. Open the created PR in a browser by `gh pr view --web <url>`.
-10. Return the PR URL to the user.
+10. Remove `.local/pr.md`.
+11. Return the PR URL to the user.
 
 ## How to write good PR Body
 
@@ -55,9 +60,3 @@ Create a pull request for the current branch using the `gh` CLI.
 
 - Avoid long run-on sentences that cram multiple points together. Instead,
   use bullets effectively to break down similar changes in a structured and human-friendly format.
-
-## Local Rules
-
-Before starting any steps above, always check if `.local/pr-create-rules.md` exists first.
-If it exists, read it and follow the instructions there too. Local rules always take precedence over rules in this skill.
-If local rules conflict with instructions in this skill file, follow the local rules.
