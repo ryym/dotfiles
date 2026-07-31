@@ -12,3 +12,6 @@
 .claude/skills/my.*
 
 .claude/worktrees/
+
+# Auto-added by Claude Code.
+**/.claude/.cc-writes/
