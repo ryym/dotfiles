@@ -93,7 +93,7 @@ case "$mode" in
         ;;
 esac
 
-work_dir="$HOME/ai-translate"
+work_dir="$HOME/.translate"
 mkdir -p "$work_dir"
 
 if [ -n "$session_id" ]; then
