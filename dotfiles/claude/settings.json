@@ -130,7 +130,8 @@
     ]
   },
   "worktree": {
-    "baseRef": "head"
+    "baseRef": "head",
+    "symlinkDirectories": [".local"]
   },
   "statusLine": {
     "type": "command",
