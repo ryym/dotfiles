@@ -91,8 +91,8 @@ const WINDOW_COLUMNS = [
   { header: "WINDOW", maxWidth: 20 },
   { header: "PANES", fixed: true },
   { header: "JOB", fixed: true },
-  { header: "CWD", maxWidth: 40, truncateFromStart: true },
-  { header: "ACTIVE PANE", maxWidth: 30 },
+  { header: "CWD", maxWidth: 60, truncateFromStart: true },
+  { header: "ACTIVE PANE", maxWidth: 60 },
 ];
 
 const SESSION_COLUMNS = [
