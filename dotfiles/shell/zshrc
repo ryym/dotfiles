@@ -63,6 +63,7 @@ autoload -Uz compinit
     if (( $#old )); then
         echo 'compinit with refresh'
         compinit
+        touch ~/.zcompdump
     else
         compinit -C # Skip refresh
     fi
