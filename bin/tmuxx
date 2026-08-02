@@ -377,7 +377,7 @@ function jumpToSession(sessionName) {
 // fzf's output even though --with-nth hides it from view.
 // previewCmd, if given, is a shell command shown in fzf's preview pane; {1} in it refers to
 // the hidden id column (fzf substitutes it regardless of --with-nth hiding it from display).
-function selectWithFzf(items, rows, columns, getId, previewCmd, initialIndex) {
+function selectWithFzf(items, rows, columns, getId, { previewCmd, initialIndex } = {}) {
   const widths = columnWidths(rows, columns);
   const lines = items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`).join("\n");
 
@@ -408,14 +408,9 @@ function runPanes(args) {
 
   if (args.includes("--fzf")) {
     const currentIndex = panes.findIndex((p) => p.pane_active === "1" && p.window_active === "1");
-    const paneId = selectWithFzf(
-      panes,
-      rows,
-      PANE_COLUMNS,
-      (p) => p.pane_id,
-      undefined,
-      currentIndex >= 0 ? currentIndex : undefined
-    );
+    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id, {
+      initialIndex: currentIndex >= 0 ? currentIndex : undefined,
+    });
     if (paneId) jumpToPane(paneId);
   } else {
     printTable(rows, PANE_COLUMNS);
@@ -429,14 +424,9 @@ function runWindows(args) {
 
   if (args.includes("--fzf")) {
     const currentIndex = windows.findIndex((w) => w.window_active === "1");
-    const windowId = selectWithFzf(
-      windows,
-      rows,
-      WINDOW_COLUMNS,
-      (w) => w.window_id,
-      undefined,
-      currentIndex >= 0 ? currentIndex : undefined
-    );
+    const windowId = selectWithFzf(windows, rows, WINDOW_COLUMNS, (w) => w.window_id, {
+      initialIndex: currentIndex >= 0 ? currentIndex : undefined,
+    });
     if (windowId) jumpToWindow(windowId);
   } else {
     printTable(rows, WINDOW_COLUMNS);
@@ -452,14 +442,10 @@ function runSessions(args) {
     const currentIndex = sessions.findIndex((s) => s.session_attached !== "0");
     // {1}: appends ':' to disambiguate the session name from a pane identifier, same as
     // jumpToSession does for its own tmux calls.
-    const sessionName = selectWithFzf(
-      sessions,
-      rows,
-      SESSION_COLUMNS,
-      (s) => s.session_name,
-      "tmux capture-pane -e -p -t {1}:",
-      currentIndex >= 0 ? currentIndex : undefined
-    );
+    const sessionName = selectWithFzf(sessions, rows, SESSION_COLUMNS, (s) => s.session_name, {
+      previewCmd: "tmux capture-pane -e -p -t {1}:",
+      initialIndex: currentIndex >= 0 ? currentIndex : undefined,
+    });
     if (sessionName) jumpToSession(sessionName);
   } else {
     printTable(rows, SESSION_COLUMNS);
