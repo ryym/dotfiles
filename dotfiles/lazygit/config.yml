@@ -1,14 +1,12 @@
 # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
 
 promptToReturnFromSubprocess: false
-
 # https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
 git:
   truncateCopiedCommitHashesTo: 8
-  paging:
-    colorArg: always
-    pager: delta --paging=never
-
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never
 gui:
   scrollPastBottom: false
   scrollHeight: 3
