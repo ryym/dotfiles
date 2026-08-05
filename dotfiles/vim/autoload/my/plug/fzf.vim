@@ -20,8 +20,8 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]D ::call my#plug#fzf#_downloads()
   Map n \[fzf]m ::call my#plug#fzf#_most_recently_used()
   Map n \[fzf]l ::call my#plug#fzf#_lines()
-  Map n \[fzf]g ::call my#plug#fzf#_ghq()
-  Map n \[fzf]G ::call my#plug#fzf#_gosrc()
+  Map n \[fzf]g ::call my#plug#fzf#_git_diff_files()
+  Map n \[fzf]G ::call my#plug#fzf#_ghq()
   Map n \[fzf]d ::call my#plug#fzf#_dotfiles()
   Map n \[fzf]i ::call my#plug#fzf#_init_scripts()
   Map n \[fzf]p ::call my#plug#fzf#_plugin_confs()
@@ -145,18 +145,20 @@ function! my#plug#fzf#_lines_on_select(width, lines) abort
   endif
 endfunction
 
+function! my#plug#fzf#_git_diff_files() abort
+  let base = get(g:, 'my_git_diff_base', 'HEAD')
+  call fzf#run({
+    \   'sink*': function('my#plug#fzf#_open_file'),
+    \   'source': '_vim_fzf_list_files git_diff_files ' . base,
+    \   'up': '45%',
+    \   'options': '--header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
+    \ })
+endfunction
+
 function! my#plug#fzf#_ghq() abort
   call fzf#run({
     \   'sink': 'cd',
     \   'source': 'ghq list -p',
-    \   'up': '45%',
-    \ })
-endfunction
-
-function! my#plug#fzf#_gosrc() abort
-  call fzf#run({
-    \   'sink': 'cd',
-    \   'source': 'gits -p $GOPATH/src',
     \   'up': '45%',
     \ })
 endfunction
