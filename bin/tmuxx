@@ -115,12 +115,12 @@ const JOB_MARKS = {
 // a blocked pane needs attention first, then a running one, then done is least urgent.
 const JOB_PRIORITY = ["blocked", "running", "done"];
 
-// Mark shown for the currently active window/pane.
-const ACTIVE_MARK = "\x1b[33m▸\x1b[0m";
+// Mark shown for the currently active window/pane; distinct from JOB_MARKS' colors.
+const ACTIVE_MARK = "\x1b[1;36m➤\x1b[0m";
 
 // Mark shown for the session the current client was in before switching to the current one
 // (i.e. what `prefix + L` / switch-last-session would jump back to).
-const LAST_SESSION_MARK = "\x1b[36m↩\x1b[0m";
+const LAST_SESSION_MARK = "\x1b[35m↩\x1b[0m";
 
 // Wide ranges per East Asian Width (Unicode UAX #11): CJK, Hangul, fullwidth forms, emoji, etc.
 const WIDE_RANGES = [
@@ -225,6 +225,10 @@ function formatRelativeTime(unixSeconds) {
   return `${Math.floor(diff / 86400)}d`;
 }
 
+function underline(str) {
+  return `\x1b[4m${str}\x1b[24m`;
+}
+
 function buildRow(cells, columns) {
   return cells.map((cell, i) =>
     columns[i].fixed ? cell : truncate(cell, columns[i].maxWidth, columns[i].truncateFromStart)
@@ -233,8 +237,10 @@ function buildRow(cells, columns) {
 
 function buildPaneRows(panes) {
   return panes.map((p) => {
-    const window = `${p.window_active === "1" ? ACTIVE_MARK : " "}${p.window_index}:${p.window_name}`;
-    const pane = `${p.pane_active === "1" ? ACTIVE_MARK : " "}${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
+    const windowName = `${p.window_index}:${p.window_name}`;
+    const window = `${p.window_active === "1" ? `${ACTIVE_MARK}${underline(windowName)}` : ` ${windowName}`}`;
+    const paneName = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
+    const pane = `${p.pane_active === "1" ? `${ACTIVE_MARK}${underline(paneName)}` : ` ${paneName}`}`;
     const cells = [
       p.session_name,
       window,
@@ -278,7 +284,8 @@ function windowsFromPanes(panes) {
 
 function buildWindowRows(windows) {
   return windows.map((w) => {
-    const window = `${w.window_active === "1" ? ACTIVE_MARK : " "}${w.window_index}:${w.window_name}`;
+    const windowName = `${w.window_index}:${w.window_name}`;
+    const window = `${w.window_active === "1" ? `${ACTIVE_MARK}${underline(windowName)}` : ` ${windowName}`}`;
     const cells = [
       w.session_name,
       window,
@@ -297,13 +304,9 @@ function buildSessionRows(sessions, panes) {
   const lastSession = lastSessionName();
   return sessions.map((s) => {
     // Never both: the currently attached session can't also be the previous one.
-    const mark =
-      s.session_attached !== "0"
-        ? ACTIVE_MARK
-        : s.session_name === lastSession
-          ? LAST_SESSION_MARK
-          : " ";
-    const name = `${mark}${s.session_name}`;
+    const isActive = s.session_attached !== "0";
+    const mark = isActive ? ACTIVE_MARK : s.session_name === lastSession ? LAST_SESSION_MARK : " ";
+    const name = `${mark}${isActive ? underline(s.session_name) : s.session_name}`;
     const cells = [
       name,
       s.session_windows,
@@ -377,7 +380,7 @@ function jumpToSession(sessionName) {
 // fzf's output even though --with-nth hides it from view.
 // previewCmd, if given, is a shell command shown in fzf's preview pane; {1} in it refers to
 // the hidden id column (fzf substitutes it regardless of --with-nth hiding it from display).
-function selectWithFzf(items, rows, columns, getId, { previewCmd, initialIndex } = {}) {
+function selectWithFzf(items, rows, columns, getId, { previewCmd } = {}) {
   const widths = columnWidths(rows, columns);
   const lines = items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`).join("\n");
 
@@ -385,9 +388,6 @@ function selectWithFzf(items, rows, columns, getId, { previewCmd, initialIndex }
   if (previewCmd) {
     fzfArgs.push("--preview-window", "bottom:nowrap");
     fzfArgs.push("--preview", previewCmd);
-  }
-  if (initialIndex !== undefined) {
-    fzfArgs.push("--bind", `load:pos(${initialIndex + 1})`);
   }
 
   const result = spawnSync("fzf", fzfArgs, {
@@ -407,10 +407,7 @@ function runPanes(args) {
   const rows = buildPaneRows(panes);
 
   if (args.includes("--fzf")) {
-    const currentIndex = panes.findIndex((p) => p.pane_active === "1" && p.window_active === "1");
-    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id, {
-      initialIndex: currentIndex >= 0 ? currentIndex : undefined,
-    });
+    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id);
     if (paneId) jumpToPane(paneId);
   } else {
     printTable(rows, PANE_COLUMNS);
@@ -423,10 +420,7 @@ function runWindows(args) {
   const rows = buildWindowRows(windows);
 
   if (args.includes("--fzf")) {
-    const currentIndex = windows.findIndex((w) => w.window_active === "1");
-    const windowId = selectWithFzf(windows, rows, WINDOW_COLUMNS, (w) => w.window_id, {
-      initialIndex: currentIndex >= 0 ? currentIndex : undefined,
-    });
+    const windowId = selectWithFzf(windows, rows, WINDOW_COLUMNS, (w) => w.window_id);
     if (windowId) jumpToWindow(windowId);
   } else {
     printTable(rows, WINDOW_COLUMNS);
@@ -439,12 +433,10 @@ function runSessions(args) {
   const rows = buildSessionRows(sessions, panes);
 
   if (args.includes("--fzf")) {
-    const currentIndex = sessions.findIndex((s) => s.session_attached !== "0");
     // {1}: appends ':' to disambiguate the session name from a pane identifier, same as
     // jumpToSession does for its own tmux calls.
     const sessionName = selectWithFzf(sessions, rows, SESSION_COLUMNS, (s) => s.session_name, {
       previewCmd: "tmux capture-pane -e -p -t {1}:",
-      initialIndex: currentIndex >= 0 ? currentIndex : undefined,
     });
     if (sessionName) jumpToSession(sessionName);
   } else {
