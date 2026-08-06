@@ -120,6 +120,19 @@ g() {
         )
         [ -n "$dir" ] && cd "$main/$dir"
         ;;
+      # List submodules and go to the selected submodule directory.
+      sbmi)
+        local root dir
+        root=$(git rev-parse --show-toplevel)
+        dir=$( \
+            git submodule status | \
+            awk '{print $2, $0}' | \
+            fzf --multi --with-nth='{3..}' \
+                --bind 'ctrl-y:execute-silent(echo -n {1} | ccopy)' | \
+            awk '{print $1}' \
+        )
+        [ -n "$dir" ] && cd "$root/$dir"
+        ;;
       *)
         git "$@"
         ;;
