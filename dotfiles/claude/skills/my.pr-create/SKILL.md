@@ -1,7 +1,7 @@
 ---
 name: my.pr-create
 description: Create a GitHub pull request via `gh pr create` using the repository's PR template.
-allowed-tools: Bash(gh pr create --draft --assignee @me --body-file .local/pr.md --title *), Bash(gh pr view --web *)
+allowed-tools: Bash(gh pr create --draft --assignee @me --body-file .local/pr.md --title *), Bash(gh pr view --web *), Write(.local/pr.md), Bash(rm .local/pr.md)
 ---
 
 # my.pr-create
@@ -36,13 +36,16 @@ If local rules conflict with instructions in this skill file, follow the local r
    1. Save the drafted body in `.local/pr.md`.
    2. Print the drafted title.
    3. Print the content of `.local/pr.md` as rendered markdown directly (not inside a code block).
-   4. Wait for their approval before proceeding. If they ask for changes, revise and show it again until approved.
+   4. Use the `AskUserQuestion` tool to ask whether to proceed with creating the PR as drafted,
+      with a single "Create PR" option.
+      If they pick the "Other" option and type revision instructions, follow those instructions
+      to update the draft, show it again, and repeat this step until approved.
 8. Create the PR with `gh pr create`. Use the following command:
    ```bash
    gh pr create --draft --assignee @me --body-file .local/pr.md --title "<title>"
    ```
 9. Open the created PR in a browser by `gh pr view --web <url>`.
-10. Remove `.local/pr.md`.
+10. Run `rm .local/pr.md`.
 11. Return the PR URL to the user.
 
 ## How to write good PR Body
