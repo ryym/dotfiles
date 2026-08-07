@@ -13,14 +13,14 @@ source "$DOTPATH/link/helper.sh"
 check_srcpath_exists() {
     if [ ! -e "$srcpath" ]; then
         echo "$srcpath doesn't exist." >&2
-        exit 1
+        return 1
     fi
 }
 
 check_destpath_is_linkable() {
     if [ -e "$destpath" ] && [ ! -L "$destpath" ]; then
         echo "$destpath exists but is not a symlnk." >&2
-        exit 1
+        return 1
     fi
 }
 
@@ -41,19 +41,30 @@ link_dotfile() {
     esac
 
     local prefix=$($sudo && echo 'sudo' || echo '')
-    $prefix mkdir -p $(dirname "$destpath")
-    $prefix $cmd
+    $prefix mkdir -p $(dirname "$destpath") || return 1
+    $prefix $cmd || return 1
     echo "-- $dotfile is linked. --"
 }
+
+failed=0
 
 for link in "${LINKS[@]}"; do
     prepare_variables "$link"
 
-    if [ ${DOTFILES_LINKTEST:-0} -eq 1 ]; then 
-        check_srcpath_exists
+    if [ ${DOTFILES_LINKTEST:-0} -eq 1 ]; then
+        check_srcpath_exists || failed=1
     elif [ ${DOTFILES_DRYRUN:-0} -ne 0 ]; then
-        check_srcpath_exists && check_destpath_is_linkable
+        if ! check_srcpath_exists || ! check_destpath_is_linkable; then
+            failed=1
+        fi
     else
-        check_srcpath_exists && check_destpath_is_linkable && link_dotfile
+        if ! check_srcpath_exists || ! check_destpath_is_linkable || ! link_dotfile; then
+            failed=1
+        fi
     fi
 done
+
+if [ $failed -eq 1 ]; then
+    echo "One or more links failed." >&2
+    exit 1
+fi
