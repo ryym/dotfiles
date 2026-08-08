@@ -42,6 +42,16 @@ function! my#init#commands#setup() abort
 
   command! ShowGreps echo 'Available greps: ' my#init#func#grep#available_greps()
   command! -nargs=1 ChangeGrep call my#init#func#grep#change_grep(<q-args>)
+
+  " Define key mappings for multiple modes at once.
+  " e.g. Map2 nxo <buffer> <silent> j gj
+  command! -nargs=+ Map2   call <SID>define_mapping('noremap', <f-args>)
+  command! -nargs=+ Remap2 call <SID>define_mapping('map', <f-args>)
+
+  " Map a key to a prefix string so that mappings starting with the
+  " prefix can be triggered through it.
+  " e.g. MapPrefix n co \[toggle]
+  command! -nargs=+ MapPrefix call <SID>define_prefix_mapping(<f-args>)
 endfunction
 
 function! s:set_indent(n_space, expand_tab)
@@ -101,4 +111,21 @@ function! s:toggle_win_diff(is_opened)
   else
     windo diffthis
   endif
+endfunction
+
+" Define a key mapping for each mode in `modes`.
+" `rest` is passed through as-is, so it can contain any normal
+" map-arguments (<buffer>, <expr>, <silent>, ...) and lhs/rhs.
+function! s:define_mapping(map_cmd, modes, ...) abort
+  let rest    = join(a:000)
+  for mode in split(a:modes, '\zs')
+    execute mode . a:map_cmd rest
+  endfor
+endfunction
+
+function! s:define_prefix_mapping(modes, key, prefix) abort
+  for mode in split(a:modes, '\zs')
+    execute mode . 'noremap' a:prefix '<Nop>'
+    execute mode . 'map' a:key a:prefix
+  endfor
 endfunction

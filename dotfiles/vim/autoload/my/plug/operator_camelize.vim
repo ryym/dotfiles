@@ -5,7 +5,7 @@ function! my#plug#operator_camelize#configure(conf) abort
 endfunction
 
 function! my#plug#operator_camelize#after_load()
-  Remap  nvo mp <Plug>(operator-to-camel)
-  Remap  nvo mP <Plug>(operator-to-pascal)
-  Remap  nvo mk <Plug>(operator-to-snake)
+  Remap2  nvo mp <Plug>(operator-to-camel)
+  Remap2  nvo mP <Plug>(operator-to-pascal)
+  Remap2  nvo mk <Plug>(operator-to-snake)
 endfunction

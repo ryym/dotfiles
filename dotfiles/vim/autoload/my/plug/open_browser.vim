@@ -4,6 +4,6 @@ function! my#plug#open_browser#configure(conf) abort
 endfunction
 
 function! my#plug#open_browser#before_load()
-  Remap nv <Leader>wo <Plug>(openbrowser-open)
-  Remap nv <Leader>ws <Plug>(openbrowser-search)
+  Remap2 nv <Leader>wo <Plug>(openbrowser-open)
+  Remap2 nv <Leader>ws <Plug>(openbrowser-search)
 endfunction

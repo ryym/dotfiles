@@ -16,11 +16,11 @@ function! my#plug#unimpaired#before_load()
 endfunction
 
 function! my#plug#unimpaired#after_load()
-  Remap no [d <Plug>unimpairedContextPrevious
-  Remap no ]d <Plug>unimpairedContextNext
+  Remap2 no [d <Plug>unimpairedContextPrevious
+  Remap2 no ]d <Plug>unimpairedContextNext
 
-  Remap no [s <Plug>unimpairedBlankUp
-  Remap no ]s <Plug>unimpairedBlankDown
+  Remap2 no [s <Plug>unimpairedBlankUp
+  Remap2 no ]s <Plug>unimpairedBlankDown
 
   call g:Unimpaired_toggle_option_by('t', 'expandtab')
   call g:Unimpaired_toggle_option_by('s', 'scrollbind')

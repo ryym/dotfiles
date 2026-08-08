@@ -4,10 +4,10 @@ function! my#plug#yankround#configure(conf) abort
 endfunction
 
 function! my#plug#yankround#after_load()
-  Remap nx p     <Plug>(yankround-p)
-  Remap n  P     <Plug>(yankround-P)
-  Remap nx gp    <Plug>(yankround-gp)
-  Remap n  gP    <Plug>(yankround-gP)
-  Remap n <C-p> <Plug>(yankround-prev)
-  Remap n <C-n> <Plug>(yankround-next)
+  Remap2 nx p     <Plug>(yankround-p)
+  Remap2 n  P     <Plug>(yankround-P)
+  Remap2 nx gp    <Plug>(yankround-gp)
+  Remap2 n  gP    <Plug>(yankround-gP)
+  Remap2 n <C-p> <Plug>(yankround-prev)
+  Remap2 n <C-n> <Plug>(yankround-next)
 endfunction
