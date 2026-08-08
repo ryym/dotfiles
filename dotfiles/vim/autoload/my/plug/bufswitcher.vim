@@ -15,5 +15,5 @@ function my#plug#bufswitcher#before_load()
     call submode#map('bufswitch', 'n', '', i, ':BufswitcherSwitchTo ' . i . '<CR>')
   endfor
 
-  Map2 n \[buffer]3 :<C-u>BufswitcherSwitchTo 3<CR>
+  Map n \[buffer]3 :<C-u>BufswitcherSwitchTo 3<CR>
 endfunction

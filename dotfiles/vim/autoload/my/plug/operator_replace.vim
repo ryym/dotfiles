@@ -5,6 +5,6 @@ function! my#plug#operator_replace#configure(conf) abort
 endfunction
 
 function! my#plug#operator_replace#after_load()
-  Remap2 nvo mr <Plug>(operator-replace)
+  Remap nvo mr <Plug>(operator-replace)
 endfunction
 

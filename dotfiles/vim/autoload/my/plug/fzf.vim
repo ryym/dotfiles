@@ -12,22 +12,22 @@ function! my#plug#fzf#after_load()
 
   MapPrefix n <Space>u \[fzf]
 
-  Map2 n \[fzf]f :<C-u>call my#plug#fzf#_without_ignored_files()<CR>
-  Map2 n \[fzf]F :<C-u>call my#plug#fzf#_all_files()<CR>
-  Map2 n \[fzf]b :<C-u>call my#plug#fzf#_tab_buffers()<CR>
-  Map2 n \[fzf]w :<C-u>call my#plug#fzf#_local_files()<CR>
-  Map2 n \[fzf]C :<C-u>call my#plug#fzf#_xdg_configs()<CR>
-  Map2 n \[fzf]D :<C-u>call my#plug#fzf#_downloads()<CR>
-  Map2 n \[fzf]m :<C-u>call my#plug#fzf#_most_recently_used()<CR>
-  Map2 n \[fzf]l :<C-u>call my#plug#fzf#_lines()<CR>
-  Map2 n \[fzf]g :<C-u>call my#plug#fzf#_git_diff_files()<CR>
-  Map2 n \[fzf]G :<C-u>call my#plug#fzf#_ghq()<CR>
-  Map2 n \[fzf]d :<C-u>call my#plug#fzf#_dotfiles()<CR>
-  Map2 n \[fzf]i :<C-u>call my#plug#fzf#_init_scripts()<CR>
-  Map2 n \[fzf]p :<C-u>call my#plug#fzf#_plugin_confs()<CR>
-  Map2 n \[fzf]P :<C-u>call my#plug#fzf#_plugin_dirs()<CR>
-  Map2 n \[fzf]_r :<C-u>call my#plug#fzf#_runtimepaths()<CR>
-  Map2 n \[fzf]o :<C-u>FZFoutput<Space>
+  Map n \[fzf]f :<C-u>call my#plug#fzf#_without_ignored_files()<CR>
+  Map n \[fzf]F :<C-u>call my#plug#fzf#_all_files()<CR>
+  Map n \[fzf]b :<C-u>call my#plug#fzf#_tab_buffers()<CR>
+  Map n \[fzf]w :<C-u>call my#plug#fzf#_local_files()<CR>
+  Map n \[fzf]C :<C-u>call my#plug#fzf#_xdg_configs()<CR>
+  Map n \[fzf]D :<C-u>call my#plug#fzf#_downloads()<CR>
+  Map n \[fzf]m :<C-u>call my#plug#fzf#_most_recently_used()<CR>
+  Map n \[fzf]l :<C-u>call my#plug#fzf#_lines()<CR>
+  Map n \[fzf]g :<C-u>call my#plug#fzf#_git_diff_files()<CR>
+  Map n \[fzf]G :<C-u>call my#plug#fzf#_ghq()<CR>
+  Map n \[fzf]d :<C-u>call my#plug#fzf#_dotfiles()<CR>
+  Map n \[fzf]i :<C-u>call my#plug#fzf#_init_scripts()<CR>
+  Map n \[fzf]p :<C-u>call my#plug#fzf#_plugin_confs()<CR>
+  Map n \[fzf]P :<C-u>call my#plug#fzf#_plugin_dirs()<CR>
+  Map n \[fzf]_r :<C-u>call my#plug#fzf#_runtimepaths()<CR>
+  Map n \[fzf]o :<C-u>FZFoutput<Space>
 endfunction
 
 let s:fd_available = executable('fd')

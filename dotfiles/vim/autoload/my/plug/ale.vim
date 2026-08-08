@@ -27,5 +27,5 @@ function my#plug#ale#before_load()
   let g:ale_rust_rustfmt_options = '--edition 2024'
 
   MapPrefix n <Leader>a \[ale]
-  Map2 n \[ale]f :<C-u>ALEFix<CR>
+  Map n \[ale]f :<C-u>ALEFix<CR>
 endfunction

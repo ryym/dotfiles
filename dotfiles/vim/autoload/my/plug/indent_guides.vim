@@ -5,7 +5,7 @@ function! my#plug#indent_guides#configure(conf) abort
 endfunction
 
 function! my#plug#indent_guides#before_load()
-  Remap2 n \[toggle]g <Plug>IndentGuidesToggle
+  Remap n \[toggle]g <Plug>IndentGuidesToggle
 
   let g:indent_guides_start_level = 2
   let g:indent_guides_guide_size  = 1

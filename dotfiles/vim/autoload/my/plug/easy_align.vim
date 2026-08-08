@@ -4,5 +4,5 @@ function! my#plug#easy_align#configure(conf) abort
 endfunction
 
 function! my#plug#easy_align#after_load() abort
-  Remap2 nx ga <Plug>(EasyAlign)
+  Remap nx ga <Plug>(EasyAlign)
 endfunction

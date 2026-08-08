@@ -13,18 +13,18 @@ function! my#plug#lsp#after_load()
   let g:lsp_fold_enabled = 0
 
   MapPrefix n <Space>v \[lsp]
-  Map2 n \[lsp]d :<C-u>LspDocumentDiagnostics<CR>
-  Map2 n \[lsp]s :<C-u>LspDocumentSymbol<CR>
-  Map2 n \[lsp]j :<C-u>LspNextError<CR>
-  Map2 n \[lsp]k :<C-u>LspPreviousError<CR>
-  Map2 n \[lsp]r :<C-u>LspRename<CR>
-  Map2 n \[lsp]R :<C-u>LspReferences<CR>
-  Map2 n \[lsp]? :<C-u>LspStatus<CR>
-  Map2 n \[lsp]v :<C-u>LspImplementation<CR>
-  Map2 n \[lsp]V :<C-u>LspPeekImplementation<CR>
-  Map2 n \[lsp]t :<C-u>LspTypeDefinition<CR>
-  Map2 n \[lsp]T :<C-u>LspPeekTypeDefinition<CR>
-  Map2 n <silent> \[lsp]h :<C-u>LspHover<CR>
+  Map n \[lsp]d :<C-u>LspDocumentDiagnostics<CR>
+  Map n \[lsp]s :<C-u>LspDocumentSymbol<CR>
+  Map n \[lsp]j :<C-u>LspNextError<CR>
+  Map n \[lsp]k :<C-u>LspPreviousError<CR>
+  Map n \[lsp]r :<C-u>LspRename<CR>
+  Map n \[lsp]R :<C-u>LspReferences<CR>
+  Map n \[lsp]? :<C-u>LspStatus<CR>
+  Map n \[lsp]v :<C-u>LspImplementation<CR>
+  Map n \[lsp]V :<C-u>LspPeekImplementation<CR>
+  Map n \[lsp]t :<C-u>LspTypeDefinition<CR>
+  Map n \[lsp]T :<C-u>LspPeekTypeDefinition<CR>
+  Map n <silent> \[lsp]h :<C-u>LspHover<CR>
 
   " TypeScript (https://github.com/prabirshrestha/vim-lsp/wiki/Servers-TypeScript)
   if executable('typescript-language-server')
@@ -101,11 +101,11 @@ function s:configure_lsp()
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
 
-  Map2 n <buffer> <C-]> :<C-u>LspDefinition<CR>
-  Map2 n <buffer> gd :<C-u>LspDefinition<CR>
-  Map2 n <buffer> gD :<C-u>LspReferences<CR>
-  Map2 n <buffer> gD :<C-u>LspReferences<CR>
-  Map2 n <buffer> K :<C-u>LspHover<CR>
+  Map n <buffer> <C-]> :<C-u>LspDefinition<CR>
+  Map n <buffer> gd :<C-u>LspDefinition<CR>
+  Map n <buffer> gD :<C-u>LspReferences<CR>
+  Map n <buffer> gD :<C-u>LspReferences<CR>
+  Map n <buffer> K :<C-u>LspHover<CR>
 
   hi LspErrorText ctermfg=167 guifg=#e67e80 guibg=#543a48 gui=italic
   hi LspHintText ctermfg=245 guifg=fg guibg=#4f585e gui=italic

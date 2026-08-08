@@ -4,15 +4,15 @@ function! my#plug#comfortable_motion#configure(conf) abort
 endfunction
 
 function! my#plug#comfortable_motion#before_load()
-  Map2 n <silent> <C-d> :call comfortable_motion#flick(170)<CR>
-  Map2 n <silent> <C-u> :call comfortable_motion#flick(-170)<CR>
-  Map2 n <silent> <C-f> :call comfortable_motion#flick(200)<CR>
-  Map2 n <silent> <C-b> :call comfortable_motion#flick(-200)<CR>
+  Map n <silent> <C-d> :call comfortable_motion#flick(170)<CR>
+  Map n <silent> <C-u> :call comfortable_motion#flick(-170)<CR>
+  Map n <silent> <C-f> :call comfortable_motion#flick(200)<CR>
+  Map n <silent> <C-b> :call comfortable_motion#flick(-200)<CR>
 
   " Remap some keys to ensure consistent behavior across applications.
   " See ryym/dotfiles/sync/os/arch/README.md#key-binding-strategy for details.
-  Map2 n <silent> <Right> :call comfortable_motion#flick(200)<CR>
-  Map2 n <silent> <Left> :call comfortable_motion#flick(-200)<CR>
+  Map n <silent> <Right> :call comfortable_motion#flick(200)<CR>
+  Map n <silent> <Left> :call comfortable_motion#flick(-200)<CR>
 
   let g:comfortable_motion_no_default_key_mappings = 1
   let g:comfortable_motion_friction = 800

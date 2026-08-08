@@ -44,9 +44,9 @@ function! my#init#commands#setup() abort
   command! -nargs=1 ChangeGrep call my#init#func#grep#change_grep(<q-args>)
 
   " Define key mappings for multiple modes at once.
-  " e.g. Map2 nxo <buffer> <silent> j gj
-  command! -nargs=+ Map2   call <SID>define_mapping('noremap', <f-args>)
-  command! -nargs=+ Remap2 call <SID>define_mapping('map', <f-args>)
+  " e.g. Map nxo <buffer> <silent> j gj
+  command! -nargs=+ Map   call <SID>define_mapping('noremap', <f-args>)
+  command! -nargs=+ Remap call <SID>define_mapping('map', <f-args>)
 
   " Map a key to a prefix string so that mappings starting with the
   " prefix can be triggered through it.
