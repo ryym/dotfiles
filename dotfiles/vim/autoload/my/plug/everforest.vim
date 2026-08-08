@@ -32,4 +32,6 @@ function! s:tweak_highlight()
   highlight Normal ctermfg=NONE guifg=NONE
   highlight NormalNC ctermfg=NONE guifg=NONE
   highlight Fg ctermfg=NONE guifg=NONE
+
+  highlight DiffText guifg=NONE guibg=#4e6d80
 endfunction

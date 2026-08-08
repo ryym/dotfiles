@@ -98,6 +98,7 @@ function! my#init#options#setup() abort
   set signcolumn  =yes
   set grepformat  =%f:%l:%c:%m,%f:%l:%m
   set diffopt     +=filler,algorithm:histogram,indent-heuristic,inline:char
+  set fillchars   +=diff:╱
 
   if $COLORTERM == 'truecolor'
     set termguicolors
