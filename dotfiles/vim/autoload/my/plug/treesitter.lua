@@ -4,6 +4,12 @@ local function configure()
     local branch = vim.fn.has('nvim-0.12') == 1 and 'main' or 'master'
 
     return {
+        async = {
+            -- Load synchronously when Vim is launched in diff mode (`vim -d`).
+            -- If treesitter is enabled asynchronously, it breaks the diff for some reason.
+            enabled = not vim.opt.diff:get(),
+        },
+
         repo = 'nvim-treesitter/nvim-treesitter',
         branch = vim.fn.has('nvim-0.12') == 1 and 'main' or 'master',
         after_load = function()
