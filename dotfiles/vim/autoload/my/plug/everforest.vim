@@ -14,10 +14,9 @@ endfunction
 function! my#plug#everforest#after_load()
   let g:everforest_transparent_background = 1
 
-  " Make text colors transparent so that it is inherited from the terminal settings.
-  autocmd ColorScheme everforest highlight Normal ctermfg=NONE guifg=NONE
-  autocmd ColorScheme everforest highlight NormalNC ctermfg=NONE guifg=NONE
-  autocmd ColorScheme everforest highlight Fg ctermfg=NONE guifg=NONE
+  augroup vimrc!
+    autocmd! ColorScheme everforest call s:tweak_highlight()
+  augroup END
 
   colorscheme everforest
 
@@ -26,4 +25,11 @@ function! my#plug#everforest#after_load()
     let g:lightline.enable = { 'statusline': 1, 'tabline': 0 }
     call lightline#init()
   endif
+endfunction
+
+function! s:tweak_highlight()
+  " Make text colors transparent so that it is inherited from the terminal settings.
+  highlight Normal ctermfg=NONE guifg=NONE
+  highlight NormalNC ctermfg=NONE guifg=NONE
+  highlight Fg ctermfg=NONE guifg=NONE
 endfunction
