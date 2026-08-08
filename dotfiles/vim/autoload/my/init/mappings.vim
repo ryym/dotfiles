@@ -1,10 +1,4 @@
 function! my#init#mappings#setup() abort
-  " https://github.com/ryym/mapping.vim
-  call my#init#func#iniplug#load('mapping.vim')
-
-  " Configure mapping.vim.
-  let g:mapping_named_key_format = '\[%s]'
-
   " Define 'mapleader' before all mappings using <Leader>.
   let g:mapleader = "-"
   Map2 nx - <Nop>
