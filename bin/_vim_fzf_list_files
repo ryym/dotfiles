@@ -42,14 +42,15 @@ fd_formatted() {
 # List files with a diff against the given rev (defaults to HEAD), marking
 # each file with its diff status (added/modified/deleted/renamed) in its own color.
 # Untracked files (not yet `git add`ed) are included too, treated as added.
+# Files currently open in Vim (passed as arguments after the rev) are highlighted
+# and listed first.
 git_diff_files() {
     rev="${1:-HEAD}"
-    {
-        git diff --name-status "$rev"
-        git ls-files --others --exclude-standard | while IFS= read -r f; do
-            printf 'A\t%s\n' "$f"
-        done
-    } | while IFS=$'\t' read -r status f1 f2; do
+    shift || true
+
+    buf_lines=()
+    other_lines=()
+    while IFS=$'\t' read -r status f1 f2; do
         filepath="${f2:-$f1}"
         case "$status" in
             A*) mark='+'; mark_color=32 ;; # green: added
@@ -59,8 +60,34 @@ git_diff_files() {
             C*) mark='c'; mark_color=36 ;; # cyan: copied
             *)  mark='?'; mark_color='38;5;245' ;;
         esac
-        format 0 "$mark" "$(basename "$filepath")" "$(dirname "$filepath")" "$mark_color"
-    done
+
+        # Keep the order of the buffer arguments (most recently accessed first)
+        # by placing each matched line at its buffer index.
+        buf_idx=-1
+        i=0
+        for buffile in "$@"; do
+            if [[ "$buffile" == "$filepath" || "$buffile" == "$PWD/$filepath" ]]; then
+                buf_idx="$i"
+                break
+            fi
+            i=$((i + 1))
+        done
+
+        if [[ "$buf_idx" -ge 0 ]]; then
+            buf_lines[buf_idx]="$(format 33 "$mark" "$(basename "$filepath")" "$(dirname "$filepath")" "$mark_color")"
+        else
+            other_lines+=("$(format 0 "$mark" "$(basename "$filepath")" "$(dirname "$filepath")" "$mark_color")")
+        fi
+    done < <(
+        git diff --name-status "$rev"
+        git ls-files --others --exclude-standard | while IFS= read -r f; do
+            printf 'A\t%s\n' "$f"
+        done
+    )
+
+    [[ ${#buf_lines[@]} -gt 0 ]] && printf '%s\n' "${buf_lines[@]}"
+    [[ ${#other_lines[@]} -gt 0 ]] && printf '%s\n' "${other_lines[@]}"
+    return 0
 }
 
 format() {

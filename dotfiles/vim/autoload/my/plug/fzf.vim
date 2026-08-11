@@ -147,11 +147,13 @@ endfunction
 
 function! my#plug#fzf#_git_diff_files() abort
   let base = get(g:, 'my_git_diff_base', 'HEAD')
+  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
+  let src = '_vim_fzf_list_files git_diff_files ' . base . ' ' . join(buffiles, ' ')
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
-    \   'source': '_vim_fzf_list_files git_diff_files ' . base,
+    \   'source': src,
     \   'up': '45%',
-    \   'options': '--header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
+    \   'options': '--no-sort --header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
