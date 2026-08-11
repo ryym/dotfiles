@@ -1,3 +1,11 @@
+local function diffview_open()
+    if vim.g.my_git_diff_base == nil then
+        vim.cmd.DiffviewOpen()
+    else
+        vim.cmd.DiffviewOpen({ args = {vim.g.my_git_diff_base} })
+    end
+end
+
 local function diffview_open_for_branch()
     vim.fn['fzf#run']({
         source = "git branch --format='%(refname:short)'",
@@ -9,7 +17,6 @@ local function diffview_open_for_branch()
     })
 end
 
-
 local function configure()
   return {
     repo = 'sindrets/diffview.nvim',
@@ -17,9 +24,9 @@ local function configure()
         require("diffview").setup({
             enhanced_diff_hl = true,
         })
-        vim.keymap.set('n', '\\[git]gd', ':<C-u>DiffviewOpen<CR>')
-        vim.keymap.set('n', '\\[git]gc', ':<C-u>DiffviewClose<CR>')
+        vim.keymap.set('n', '\\[git]gd', diffview_open)
         vim.keymap.set('n', '\\[git]gb', diffview_open_for_branch)
+        vim.keymap.set('n', '\\[git]gc', ':<C-u>DiffviewClose<CR>')
     end,
   }
 end

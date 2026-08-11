@@ -1,13 +1,15 @@
 function! my#plug#fugitive#configure(conf) abort
   let a:conf.repo = 'tpope/vim-fugitive'
   let a:conf.after_load = function('my#plug#fugitive#after_load')
-  let a:conf.skip_load = has('nvim') " Use gitsigns.nvim in Neovim
   let g:fugitive_no_maps = 1
 endfunction
 
 function! my#plug#fugitive#after_load()
-  Map nv \[git]g :Git<Space>
-  Map nv \[git]b :<C-u>Git blame -w<CR>
+  " Use gitsigns.nvim for keybindings.
+  if !has('nvim')
+    Map nv \[git]g :Git<Space>
+    Map nv \[git]b :<C-u>Git blame -w<CR>
+  endif
 
   autocmd FileType fugitiveblame call s:configure_blame_buf()
 endfunction
