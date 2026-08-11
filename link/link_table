@@ -37,6 +37,8 @@ LINKS=(
     'claude/skills/tmux':'.claude/skills/tmux'
     'claude/skills/my.garage':'.claude/skills/my.garage'
     'claude/skills/my.pr-create':'.claude/skills/my.pr-create'
+    'codex/main.config.toml':'.codex/main.config.toml'
+    'codex/hooks.json':'.codex/hooks.json'
     'npmrc':'.npmrc'
 )
 

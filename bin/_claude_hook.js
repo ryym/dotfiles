@@ -5,7 +5,8 @@
 //
 // To use this script, register it for each handled event in .claude/settings.json,
 // e.g. "Stop": [{ "hooks": [{ "type": "command", "command": "_claude_hook.js" }] }].
-// Handled events: UserPromptSubmit, PostToolUse, Notification, Stop, SubagentStop, SessionEnd.
+
+"use strict";
 
 const fs = require("node:fs");
 const os = require("node:os");

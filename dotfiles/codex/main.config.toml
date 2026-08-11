@@ -1,0 +1,21 @@
+# https://learn.chatgpt.com/docs/configuration
+# My main config for Codex. Since ~/.codex/config.toml has many auto-written stateful values,
+# we cannot directly manage it. To use this config, explicitly specify the profile as `codex --profile main`.
+
+# Specify this in ~/.codex/config.toml before logging in.
+# https://learn.chatgpt.com/docs/auth#app-credential-storage
+cli_auth_credentials_store = "auto"
+
+default_permissions = "workspace-only"
+
+# https://learn.chatgpt.com/docs/permissions
+[permissions.workspace-only]
+extends = ":workspace"
+
+[permissions.workspace-only.filesystem]
+"~/.ssh" = "deny"
+"~/.zshrc.local" = "deny"
+
+[permissions.workspace-only.filesystem.":workspace_roots"]
+"." = "write"
+"**/*.env*" = "deny"

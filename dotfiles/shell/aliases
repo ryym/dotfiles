@@ -23,6 +23,8 @@ alias h='help'
 alias popup='tmux popup -E -d `pwd` -w 90% -h 90%'
 alias gg='git -C .local/garage'
 alias tll='translate'
+alias codex='codex --profile main'
+alias codex-plain='command codex'
 
 # For Linux
 alias sysu='systemctl --user'

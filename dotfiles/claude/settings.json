@@ -48,6 +48,7 @@
       "Read(.local/human/**)",
       "Read(.env*)",
       "Read(.zshrc.local)",
+      "Read(~/.ssh)",
       "Read(//)",
       "Read(~/)",
       "Edit(//)",
