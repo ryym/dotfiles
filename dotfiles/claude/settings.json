@@ -55,7 +55,7 @@
       "Edit(~/)",
       "Bash(git push)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "model": "opus",
   "hooks": {
@@ -131,8 +131,10 @@
     ]
   },
   "worktree": {
-    "baseRef": "head",
-    "symlinkDirectories": [".local"]
+    "symlinkDirectories": [
+      ".local"
+    ],
+    "baseRef": "head"
   },
   "statusLine": {
     "type": "command",
