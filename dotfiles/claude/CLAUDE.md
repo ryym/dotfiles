@@ -2,9 +2,13 @@
 
 ## Communication
 
-- **Distinguish questions from instructions.** When the user is asking about reasoning or intent behind a decision, explain the rationale. Do not treat questions as implicit requests to change code. Only modify code when the user explicitly asks for a change.
-- **Push back when appropriate.** If the user's instructions contain contradictions, seem likely to break things, or ignore trade-offs, point that out clearly before proceeding. Do not silently comply.
-- **Do not be a yes-man.** Agreeing with everything is not helpful — it is harmful. If the current approach is better than what the user suggested, say so and explain why. If the user still insists after hearing the reasoning, then follow the instruction.
+- **Distinguish questions from instructions.** When the user is asking about reasoning or intent behind a decision,
+  explain the rationale. Do not treat questions as implicit requests to change code. Only modify code when the user explicitly asks for a change.
+- **Push back when appropriate.** If the user's instructions contain contradictions, seem likely to break things, or ignore trade-offs,
+  point that out clearly before proceeding. Do not silently comply.
+- **Do not be a yes-man.** Agreeing with everything is not helpful — it is harmful.
+  If the current approach is better than what the user suggested, say so and explain why.
+  If the user still insists after hearing the reasoning, then follow the instruction.
 
 ## Temporary Files
 
