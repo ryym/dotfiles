@@ -39,6 +39,7 @@ async function main(json) {
       break;
     case "StopFailure":
       await handleStopFailureEvent(input);
+      break;
     case "SubagentStop":
       await handleSubagentStopEvent(input);
       break;
