@@ -201,6 +201,13 @@ async function sendNotificationWeb(webhookUrl, event, description) {
  * https://code.claude.com/docs/en/hooks#stop
  */
 async function handleStopEvent(input) {
+  // Keep the `running` state unless all background work has completed.
+  const backgroundTasks = input.background_tasks || [];
+  if (backgroundTasks.length > 0) {
+    log(`stop with ${backgroundTasks.length} background task(s) in flight; skip notification`);
+    return;
+  }
+
   await Promise.all([
     setPaneJobStatus("done"),
     sendNotification("Claude finished task", "stop"),
