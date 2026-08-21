@@ -13,6 +13,15 @@
   If the current approach is better than what the user suggested, say so and explain why.
   If the user still insists after hearing the reasoning, then follow the instruction.
 
+## Documentation
+
+- **Prefer clean rewrites over cumulative updates or postscripts.**
+  When updating an existing document, never leave stale information and editing/discussion history.
+  Always leave only the most up-to-date information as if it were written from scratch.
+- **Never rely on ephameral context**.
+  A document must consist solely of information that future readers can understand.
+  Avoid injecting context that only exists in the current session.
+
 ## Temporary Files
 
 Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local` directory.
