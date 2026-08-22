@@ -1,11 +1,25 @@
-local function change_base(base)
-    if base ~= nil and base ~= '' then
-        require('gitsigns').change_base(base, true, function(err)
-            if not err then
-                vim.g.my_git_diff_base = base
-            end
-        end)
+local function get_merge_base(base)
+    local result = vim.fn.system({'git', 'merge-base', base, 'HEAD'})
+    if vim.v.shell_error ~= 0 then
+        vim.notify('Failed to get merge-base of ' .. base .. ' and HEAD', vim.log.levels.ERROR)
+        return nil
     end
+    return vim.trim(result)
+end
+
+local function change_base(base)
+    if base == nil or base == '' then
+        return
+    end
+    local merge_base = get_merge_base(base)
+    if merge_base == nil then
+        return
+    end
+    require('gitsigns').change_base(merge_base, true, function(err)
+        if not err then
+            vim.g.my_git_diff_base = merge_base
+        end
+    end)
 end
 
 local function change_base_to_selected_branch()

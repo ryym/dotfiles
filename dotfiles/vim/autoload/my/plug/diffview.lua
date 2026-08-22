@@ -6,11 +6,24 @@ local function diffview_open()
     end
 end
 
+local function get_merge_base(branch)
+    local result = vim.fn.system({'git', 'merge-base', branch, 'HEAD'})
+    if vim.v.shell_error ~= 0 then
+        vim.notify('Failed to get merge-base of ' .. branch .. ' and HEAD', vim.log.levels.ERROR)
+        return nil
+    end
+    return vim.trim(result)
+end
+
 local function diffview_open_for_branch()
     vim.fn['fzf#run']({
         source = "git branch --format='%(refname:short)'",
         sink = function(branch)
-            vim.cmd('DiffviewOpen ' .. branch)
+            local merge_base = get_merge_base(branch)
+            if merge_base == nil then
+                return
+            end
+            vim.cmd('DiffviewOpen ' .. merge_base)
         end,
         up = '45%',
         options = '--header "[base branch for diff]"',
