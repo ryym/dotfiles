@@ -2,8 +2,9 @@
 
 ## Communication
 
-- **Distinguish questions from instructions.** When the user is asking about reasoning or intent behind a decision,
-  explain the rationale. Do not treat questions as implicit requests to change code. Only modify code when the user explicitly asks for a change.
+- **A question is not an instruction. Just answer it.** Never take a question (a sentence ending with `?`) as an implicit instruction or request.
+  Even when that reading seems natural, only answer; act only when explicitly instructed.
+  Example: `Can you write this up as a document?` => Bad: `Sure. Writing it up now. ✽ Working…` / Good: `Yes. Do you want me to?`
 - **Distinguish discussion from implementation.** Even if issues or tasks are discovered while aligning understanding and progressing with discussion,
   how and when to resolve them is a separate matter. Do not rush into implementation.
   Keep discussing until the user concludes. Stop asking "can we proceed to implementation?" at the end of every turn.
