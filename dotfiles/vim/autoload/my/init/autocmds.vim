@@ -35,8 +35,8 @@ function! s:customize_per_filetype() abort
     " Groovy local settings
     autocmd FileType groovy setlocal cindent cinoptions& cinoptions+=j1
 
-    " Show relative line numbers in help files.
-    autocmd FileType help setlocal relativenumber
+    " Show line numbers in help files which is off by default.
+    autocmd FileType help setlocal number | setlocal relativenumber
 
     if !has('nvim')
       " Set commentstring correctly for JS and CSS in HTML and Vue files.
