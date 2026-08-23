@@ -23,6 +23,15 @@
   A document must consist solely of information that future readers can understand.
   Avoid injecting context that only exists in the current session.
 
+### Style (Markdown)
+
+- **Divide large explanations into multiple sections.**
+  A run of long paragraphs makes the overall structure hard to grasp. Make active use of h3 and deeper headings,
+  and split the content into sections as appropriate. In particular, separate the core parts everyone should read (e.g. the conclusion)
+  from the parts only those who want them should read (e.g. technical details and background).
+- **Use bullet lists when enumerating things.** Avoid lining items up side by side in prose.
+- **Keep text short inside a table.** Keep it to roughly 50 characters in table cells. If it exceeds that, use a nested bullet list instead.
+
 ## Temporary Files
 
 Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local` directory.
