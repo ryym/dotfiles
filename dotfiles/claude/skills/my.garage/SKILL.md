@@ -26,6 +26,8 @@ For example, understand an instruction like "/my.garage Research X" as
 
 ## Rules
 
+- Do NOT read existing files in `.local/garage/` unless the user explicitly asked.
+  The directory may contain many stale documents that pollute your context.
 - Always save under `.local/garage/` (relative to the current working directory).
 - Derive a concise English kebab-case file name from the content
   (e.g. `auth-flow-research.md`, `cleanup-old-logs.sh`).
