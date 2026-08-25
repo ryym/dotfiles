@@ -37,8 +37,8 @@ If local rules conflict with instructions in this skill file, follow the local r
    2. Print the drafted title.
    3. Print the content of `.local/pr.md` as rendered markdown directly (not inside a code block).
    4. Use the `AskUserQuestion` tool to ask whether to proceed with creating the PR as drafted,
-      with a single "Create PR" option.
-      If they pick the "Other" option and type revision instructions, follow those instructions
+      with two options: "Create PR" or "Revise".
+      If they pick "Revise" or "Other" with revision instructions, follow those instructions
       to update the draft, show it again, and repeat this step until approved.
 8. Create the PR with `gh pr create`. Use the following command:
    ```bash
