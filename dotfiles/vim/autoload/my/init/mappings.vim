@@ -44,6 +44,7 @@ function! my#init#mappings#setup() abort
   " Misc
   Map n <silent> <Leader>c :<C-u>RmTrailingSpaces<CR>
   Map n <Leader>d :<C-u>pwd<CR>
+  Map n <Space>dd :<C-u>Windiff<CR>
   Map n zp zMzv
 
   " Fix the direction of ';', ',', 'n', 'N'.
