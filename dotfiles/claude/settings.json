@@ -57,6 +57,14 @@
     ],
     "defaultMode": "auto"
   },
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Never run external processes by 'brew services', 'systemctl', etc",
+      "Never run DB migration",
+      "Never read or modify files outside of the current directory except for /tmp."
+    ]
+  },
   "model": "opus",
   "hooks": {
     "UserPromptSubmit": [
