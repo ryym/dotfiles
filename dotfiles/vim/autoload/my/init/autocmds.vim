@@ -50,6 +50,9 @@ function! s:customize_per_filetype() abort
     " The textwidth is set as 78 by default.
     autocmd FileType vim setlocal textwidth=0
 
+    " Disable colorcolumn for the quickfix list.
+    autocmd FileType qf setlocal colorcolumn=
+
     " Configure filetypes which have to be assigned manually.
     call s:delegate_filetypes({
       \ '*.gradle'     : 'groovy',
