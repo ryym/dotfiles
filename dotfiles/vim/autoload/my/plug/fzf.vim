@@ -153,7 +153,7 @@ function! my#plug#fzf#_git_diff_files() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': src,
     \   'up': '45%',
-    \   'options': '--no-sort --header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
+    \   'options': '--header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
