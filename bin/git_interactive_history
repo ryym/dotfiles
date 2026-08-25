@@ -24,7 +24,7 @@ preview_cmd="
         '󰍟'*)
             ;;
         *)
-            git -c color.ui=always show --stat=30 --patch -m {2} | delta
+            git -c color.ui=always show --stat --stat-graph-width=30 --patch -m {2} | delta
             ;;
     esac
 "
@@ -74,7 +74,7 @@ _copy() {
 
 _diff() {
     if [[ $# -eq 1 ]]; then
-        git -c color.ui=always show --stat=30 --patch -m $1 | delta --pager 'less -+F'
+        git -c color.ui=always show --stat --stat-graph-width=30 --patch -m $1 | delta --pager 'less -+F'
     else
         local latest=$1
         local oldest=${@: -1}
