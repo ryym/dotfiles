@@ -213,7 +213,7 @@ function! my#init#mappings#setup() abort
   Map v <M-k> :'<,'>m '<-2<CR>gv
 
   " Used in several Git plugins.
-  MapPrefix n <Space>g \[git]
+  MapPrefix nx <Space>g \[git]
 
   " Disable default key mappings for man pages since it maps `q` to close Vim
   " but I use `q` as a prefix of quickfix list shortcuts.
