@@ -70,6 +70,12 @@ local function configure()
                 gitsigns.toggle_deleted()
             end)
 
+            vim.keymap.set('n', '\\[git]S', gitsigns.stage_buffer)
+            vim.keymap.set('n', '\\[git]s', gitsigns.stage_hunk)
+            vim.keymap.set('x', '\\[git]s', function()
+                gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+            end)
+
             vim.keymap.set('n', '\\[git].b', change_base_to_selected_branch)
             vim.keymap.set('n', '\\[git].c', function()
                 vim.ui.input({ prompt = 'Change base to: ' }, change_base)
