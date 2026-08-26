@@ -56,7 +56,7 @@ function listPanes(options) {
 }
 
 function listSessions() {
-  const output = execFileSync("tmux", ["list-sessions", "-F", SESSION_FORMAT], {
+  const output = execFileSync("tmux", ["list-sessions", "-O", "creation", "-F", SESSION_FORMAT], {
     encoding: "utf8",
   });
   return parseTmuxTable(output);
