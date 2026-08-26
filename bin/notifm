@@ -2,6 +2,7 @@
 
 # Display a desktop notification with the given message.
 # Usage: notifm hello world
+#        notifm -t "title" hello world
 #
 # I usually use `bin/notif` but notifm is useful when I forgot to use notif.
 # Example:
@@ -12,13 +13,19 @@
 #   fg %1; notifm docker pull finish
 #   # Now I can see the notification when the command complete!
 
+title="notification"
+if [ "$1" = "-t" ]; then
+    title="$2"
+    shift 2
+fi
+
 case $(ostype) in
     macos )
-        osascript -e "display notification \"${*}\" with title \"message\""
+        osascript -e "display notification \"${*}\" with title \"${title}\""
         ;;
 
     arch | fedora )
-        notify-send "${*}"
+        notify-send "$title" "${*}"
         ;;
 
     * )
