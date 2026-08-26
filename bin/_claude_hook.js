@@ -170,15 +170,40 @@ async function sendNotification(message, event) {
     const noNotifPath = process.env.AGENT_NO_NOTIF_PATH;
     if (noNotifPath && fs.existsSync(noNotifPath)) return;
 
-    await run("notifm", [message], { stdio: "ignore" });
+    const paneTitle = await getClaudeTmuxPaneTitle();
+    const fullMessage = paneTitle ? `[${paneTitle}] ${message}` : message;
+
+    await run("notifm", [fullMessage], { stdio: "ignore" });
 
     const webhookUrl = process.env.DISCORD_WEBHOOK_URL_CLAUDE;
     if (webhookUrl && fs.existsSync("/tmp/claude-notif-web")) {
-      await sendNotificationWeb(webhookUrl, event, message);
+      await sendNotificationWeb(webhookUrl, event, fullMessage);
     }
   } catch (err) {
     log(`notification error: ${err.stack || err}`);
   }
+}
+
+/**
+ * Return the current tmux pane's title, but only when it looks like one Claude Code
+ * set automatically (it always starts with "✳"). Returns null outside tmux, or when
+ * the title was set by something else (e.g. the user, or a shell default).
+ */
+async function getClaudeTmuxPaneTitle() {
+  const tmuxPane = process.env.TMUX_PANE;
+  if (!process.env.TMUX || !tmuxPane) return null;
+
+  const { code, stdout } = await run("tmux", [
+    "display-message",
+    "-p",
+    "-t",
+    tmuxPane,
+    "#{pane_title}",
+  ]);
+  if (code !== 0) return null;
+
+  const title = stdout.trim();
+  return title.startsWith("✳") ? title : null;
 }
 
 async function sendNotificationWeb(webhookUrl, event, description) {
