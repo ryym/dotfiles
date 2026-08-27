@@ -160,11 +160,11 @@ async function handleNotificationEvent(input) {
   await Promise.all([
     // A notification means Claude is blocked on the user (permission/input).
     setPaneJobStatus("blocked"),
-    sendNotification({ message: input.message, event: "notification" }),
+    sendNotification({ message: input.message }),
   ]);
 }
 
-async function sendNotification({ message, event }) {
+async function sendNotification({ message }) {
   try {
     // The existence of the file means the user don't want to send a notification.
     const noNotifPath = process.env.AGENT_NO_NOTIF_PATH;
@@ -172,12 +172,12 @@ async function sendNotification({ message, event }) {
 
     const paneTitle = await getClaudeTmuxPaneTitle();
 
-    const notifmArgs = paneTitle ? ["-t", paneTitle, message] : [message];
+    const notifmArgs = paneTitle ? ["-t", message, paneTitle] : [message];
     await run("notifm", notifmArgs, { stdio: "ignore" });
 
     const webhookUrl = process.env.DISCORD_WEBHOOK_URL_CLAUDE;
     if (webhookUrl && fs.existsSync("/tmp/claude-notif-web")) {
-      await sendNotificationWeb({ webhookUrl, event, paneTitle, message });
+      await sendNotificationWeb({ webhookUrl, paneTitle, message });
     }
   } catch (err) {
     log(`notification error: ${err.stack || err}`);
@@ -206,15 +206,14 @@ async function getClaudeTmuxPaneTitle() {
   return title.startsWith("✳") ? title : null;
 }
 
-async function sendNotificationWeb({ webhookUrl, event, paneTitle, message }) {
-  const eventLabel = event === "stop" ? "Complete" : "Need help";
-  const title = paneTitle ? `${eventLabel}: ${paneTitle}` : eventLabel;
+async function sendNotificationWeb({ webhookUrl, paneTitle, message }) {
+  const description = paneTitle || undefined;
   const body = {
     username: "Claude Code",
-    embeds: [{ title, description: message, color: 14711343 }],
+    embeds: [{ title: message, description, color: 14711343 }],
   };
 
-  log(`send web notification: "${title}"`);
+  log(`send web notification: ${message}: "${description}"`);
   await fetch(webhookUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -236,7 +235,7 @@ async function handleStopEvent(input) {
 
   await Promise.all([
     setPaneJobStatus("done"),
-    sendNotification({ message: "Claude finished task", event: "stop" }),
+    sendNotification({ message: "Claude finished task" }),
     autoSync(input.cwd || process.cwd()),
   ]);
 }
@@ -252,10 +251,7 @@ async function handleStopFailureEvent(input) {
   }
   await Promise.all([
     setPaneJobStatus("blocked"),
-    sendNotification({
-      message: `Claude stopped due to an ERROR: ${errorInfo}`,
-      event: "notification",
-    }),
+    sendNotification({ message: `Claude stopped due to an ERROR: ${errorInfo}` }),
   ]);
 }
 
