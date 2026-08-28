@@ -90,6 +90,11 @@ Follow these rules as much as possible when using Bash to avoid requiring additi
 
 ## Misc
 
+### `.local/garage` may be messy
+
+Do NOT read existing files in `.local/garage/` unless the user explicitly asked.
+The directory may contain many stale information that pollute your context.
+
 ### English by default
 
 Regardless of the language used in a session, use English for development like below:

@@ -44,6 +44,9 @@
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
     ],
+    "ask": [
+      "Read(.local/garage/*)"
+    ],
     "deny": [
       "Read(.local/human/**)",
       "Read(.env*)",
