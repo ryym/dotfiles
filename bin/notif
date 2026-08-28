@@ -7,25 +7,36 @@ shopt -s expand_aliases
 source "$DOTPATH/dotfiles/shell/aliases"
 test -f "$HOME/aliases.local" && source "$HOME/aliases.local"
 
-# Register job status if tmux is running.
-tmuxx job-status set 'running'
-trap 'tmuxx job-status clear' EXIT
+job_status=0
+if [ "$1" = '--job' ]; then
+  job_status=1
+  shift
+fi
+
+# Register job status if requested.
+if [ $job_status -eq 1 ]; then
+  tmuxx job-status set 'running'
+  trap 'tmuxx job-status clear' EXIT
+fi
 
 printf -v escaped '%q ' "$@"
 eval "$escaped"
 exit_code=$?
-
-tmuxx job-status set 'done'
 
 prefix=$(test $exit_code -eq 0 && echo 'ok:' || echo 'ERR:')
 cmds=($@)
 
 notifm -t "$prefix ${cmds[0]}" "${cmds[*]}"
 
-# Wait for the user's confirmation.
-exit_mark=$(test $exit_code -eq 0 && echo "\x1b[32m✓\x1b[0m" || echo "\x1b[31m!\x1b[0m")
-printf "$exit_mark exited with $exit_code. Press any key to quit:"
-read -n 1 -s -r
+if [ $job_status -eq 1 ]; then
+  tmuxx job-status set 'done'
+
+    # Wait for the user's confirmation.
+    exit_mark=$(test $exit_code -eq 0 && echo "\x1b[32m✓\x1b[0m" || echo "\x1b[31m!\x1b[0m")
+    printf "$exit_mark exited with $exit_code. Press any key to quit:"
+    read -n 1 -s -r
 echo
+
+fi
 
 exit $exit_code
