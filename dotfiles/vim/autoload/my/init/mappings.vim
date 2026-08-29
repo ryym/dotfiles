@@ -157,6 +157,7 @@ function! my#init#mappings#setup() abort
   Map c <C-f> <Right>
   Map c <C-n> <Down>
   Map c <C-p> <Up>
+  Map c <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 
   " Paste current path by '%%'.
   Map c <expr> %% getcmdtype() == ':' ? fnameescape(expand('%:h')) : '%%'
