@@ -47,7 +47,15 @@ function! my#plug#fzf#_without_ignored_files() abort
 endfunction
 
 function! my#plug#fzf#_open_file(names) abort
-  execute 'edit' s:fmt_to_filepath(a:names[0])
+  " Open the file asynchronously to avoid unexpected symlink resolution.
+  " For a file under a symlinked directory, any :cd/:lcd turns the buffer name
+  " into an absolute path, even when the cwd does not actually change:
+  "     :edit symlinked/file | expand('%') -> symlinked/file
+  "     :lcd .               | expand('%') -> /abs/path/to/real/file
+  " fzf.vim runs :lcd before the picker and :cd right after the sink returns, so a
+  " file opened inside the sink always hits this. Deferring the :edit until after
+  " fzf.vim restored the cwd keeps the relative path buffer name.
+  call timer_start(0, {-> execute('edit ' . s:fmt_to_filepath(a:names[0]))})
 endfunction
 
 function! s:fmt_to_filepath(line) abort
