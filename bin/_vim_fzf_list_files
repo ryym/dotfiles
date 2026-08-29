@@ -32,7 +32,7 @@ buffers_and_files() {
         format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
         excludes+=("-e" "$(format 0 '=' "$(basename "$filepath")" "$(dirname "$filepath")")")
     done
-    fd --follow --hidden -tf -tl -E .git -E .claude/worktrees --format "$(format 0 '=' '{/}' '{//}')" | grep -v -F -x "${excludes[@]}"
+    fd_formatted | grep -v -F -x "${excludes[@]}"
 }
 
 fd_formatted() {
