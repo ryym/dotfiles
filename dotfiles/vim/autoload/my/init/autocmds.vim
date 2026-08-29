@@ -10,6 +10,8 @@ function! my#init#autocmds#setup() abort
     endif
   augroup END
 
+  call my#init#func#buf#setup_autocmds()
+
   call s:customize_per_filetype()
   call s:define_filetype_indents()
   call s:setup_enhanced_diff_highlighting()

@@ -1,5 +1,11 @@
 " https://github.com/junegunn/fzf/blob/master/README-VIM.md
 
+" Note: Don't use the `dir` option when running `fzf#run` for sub directories.
+" It temporarily changes `:cwd` and run the `synk` handler in `dir`,
+" which makes it difficult to get the correct relative path of the file from the
+" original cwd. See `dotfiles/vim/autoload/my/init/func/buf.vim` for details.
+" Instead, specify the directory to `fd`.
+
 function! my#plug#fzf#configure(conf) abort
   let a:conf.repo = 'junegunn/fzf'
   let a:conf.install_if = executable('fzf')
@@ -47,15 +53,7 @@ function! my#plug#fzf#_without_ignored_files() abort
 endfunction
 
 function! my#plug#fzf#_open_file(names) abort
-  " Open the file asynchronously to avoid unexpected symlink resolution.
-  " For a file under a symlinked directory, any :cd/:lcd turns the buffer name
-  " into an absolute path, even when the cwd does not actually change:
-  "     :edit symlinked/file | expand('%') -> symlinked/file
-  "     :lcd .               | expand('%') -> /abs/path/to/real/file
-  " fzf.vim runs :lcd before the picker and :cd right after the sink returns, so a
-  " file opened inside the sink always hits this. Deferring the :edit until after
-  " fzf.vim restored the cwd keeps the relative path buffer name.
-  call timer_start(0, {-> execute('edit ' . s:fmt_to_filepath(a:names[0]))})
+  execute('edit ' . s:fmt_to_filepath(a:names[0]))
 endfunction
 
 function! s:fmt_to_filepath(line) abort
@@ -176,8 +174,7 @@ endfunction
 function! my#plug#fzf#_local_files() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
-    \   'source': '_vim_fzf_list_files fd_formatted',
-    \   'dir': '.local',
+    \   'source': '_vim_fzf_list_files fd_formatted . .local/',
     \   'up': '45%',
     \   'options': '--header [.local] ' . s:bat_preview_opt_formatted,
     \ })
@@ -186,8 +183,7 @@ endfunction
 function! my#plug#fzf#_downloads() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
-    \   'source': '_vim_fzf_list_files fd_formatted',
-    \   'dir': '~/Downloads',
+    \   'source': '_vim_fzf_list_files fd_formatted . ~/Downloads',
     \   'up': '45%',
     \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
     \ })
@@ -196,8 +192,7 @@ endfunction
 function! my#plug#fzf#_xdg_configs() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
-    \   'source': "_vim_fzf_list_files fd_formatted -E '.android/*'",
-    \   'dir': '~/.config',
+    \   'source': "_vim_fzf_list_files fd_formatted -E '.android/*' . ~/.config",
     \   'up': '45%',
     \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
     \ })
@@ -214,8 +209,7 @@ endfunction
 function! my#plug#fzf#_dotfiles() abort
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
-    \   'source': '_vim_fzf_list_files fd_formatted',
-    \   'dir': '~/.dotfiles',
+    \   'source': '_vim_fzf_list_files fd_formatted . ~/.dotfiles',
     \   'up': '45%',
     \   'options': '--header [dotfiles] ' . s:bat_preview_opt_formatted,
     \ })

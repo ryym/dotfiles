@@ -278,7 +278,8 @@ function! my#init#mappings#map_repeat_keys_and_move_to_occurrence(direct_to_righ
 endfunction
 
 function! my#init#mappings#copy_current_file_path(absolute)
-  let path = a:absolute ? expand('%:p') : fnamemodify(expand('%:p'), ':.')
+  let abs_path = my#init#func#buf#abs_path('%')
+  let path = a:absolute ? abs_path : fnamemodify(abs_path, ':.')
   call setreg(v:register, path)
   echo "Copied: " . path
 endfunction

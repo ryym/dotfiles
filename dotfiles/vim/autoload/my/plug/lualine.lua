@@ -1,6 +1,11 @@
+local function buffer_relative_path()
+    local abs_path = vim.fn['my#init#func#buf#abs_path']('%')
+    return vim.fn.fnamemodify(abs_path, ':.')
+end
+
 local function configure()
-    filename_opt_relative_path = 1
     filename_opt_with_parent_dir = 4
+
     return {
         repo = 'nvim-lualine/lualine.nvim',
         async = { enabled = 0 },
@@ -67,7 +72,7 @@ local function configure()
                         'diagnostics',
                     },
                     lualine_c = {
-                        { 'filename', path = filename_opt_relative_path },
+                        buffer_relative_path,
                     },
                     lualine_x = {'encoding', 'fileformat', 'filetype'},
                     -- progress percentage and total line
