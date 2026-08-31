@@ -41,6 +41,12 @@ function! my#init#mappings#setup() abort
   Map nvo <C-j> }
   Map nvo <C-k> {
 
+  " Map J/K for scrolling.
+  Map nx J 2<C-e>2j
+  Map nx K 2<C-y>2k
+  Map nx <Leader>j J
+  Map nx <Leader>k K
+
   " Misc
   Map n <silent> <Leader>c :<C-u>RmTrailingSpaces<CR>
   Map n <Leader>d :<C-u>pwd<CR>
