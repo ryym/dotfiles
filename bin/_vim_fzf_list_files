@@ -89,9 +89,8 @@ git_diff_files() {
         fi
     done < <(
         git diff --name-status "$rev"
-        git ls-files --others --exclude-standard | while IFS= read -r f; do
-            printf 'A\t%s\n' "$f"
-        done
+        # Mark untracked files as added, matching the --name-status format.
+        git ls-files --others --exclude-standard | sed $'s/^/A\t/'
     )
 
     [[ ${#buf_lines[@]} -gt 0 ]] && printf '%s\n' "${buf_lines[@]}"
