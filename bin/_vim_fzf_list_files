@@ -19,7 +19,8 @@ main() {
 # Format buffers passed as arguments.
 buffers() {
     for filepath in "$@"; do
-        format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
+        split_path "$filepath"
+        format 33 ':' "$sp_base" "$sp_dir"
     done
 }
 
@@ -29,8 +30,9 @@ buffers() {
 buffers_and_files() {
     excludes=('-e' '_')
     for filepath in "$@"; do
-        format 33 ':' "$(basename "$filepath")" "$(dirname "$filepath")"
-        excludes+=("-e" "$(format 0 '=' "$(basename "$filepath")" "$(dirname "$filepath")")")
+        split_path "$filepath"
+        format 33 ':' "$sp_base" "$sp_dir"
+        excludes+=("-e" "$(format 0 '=' "$sp_base" "$sp_dir")")
     done
     fd_formatted | grep -v -F -x "${excludes[@]}"
 }
@@ -73,10 +75,11 @@ git_diff_files() {
             i=$((i + 1))
         done
 
+        split_path "$filepath"
         if [[ "$buf_idx" -ge 0 ]]; then
-            buf_lines[buf_idx]="$(format 33 "$mark" "$(basename "$filepath")" "$(dirname "$filepath")" "$mark_color")"
+            buf_lines[buf_idx]="$(format 33 "$mark" "$sp_base" "$sp_dir" "$mark_color")"
         else
-            other_lines+=("$(format 0 "$mark" "$(basename "$filepath")" "$(dirname "$filepath")" "$mark_color")")
+            other_lines+=("$(format 0 "$mark" "$sp_base" "$sp_dir" "$mark_color")")
         fi
     done < <(
         git diff --name-status "$rev"
@@ -87,6 +90,15 @@ git_diff_files() {
 
     [[ ${#buf_lines[@]} -gt 0 ]] && printf '%s\n' "${buf_lines[@]}"
     [[ ${#other_lines[@]} -gt 0 ]] && printf '%s\n' "${other_lines[@]}"
+    return 0
+}
+
+# Split a path into `sp_base` and `sp_dir`, equivalent to basename/dirname
+# for the paths handled here but without forking an external process.
+split_path() {
+    sp_base="${1##*/}"
+    sp_dir="${1%/*}"
+    [[ "$sp_dir" == "$1" ]] && sp_dir='.'
     return 0
 }
 
