@@ -14,6 +14,7 @@ local function configure()
         branch = vim.fn.has('nvim-0.12') == 1 and 'main' or 'master',
         after_load = function()
             local parsers = {
+                "bash",
                 "css",
                 "go",
                 "javascript",
