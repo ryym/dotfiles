@@ -87,11 +87,11 @@ fi
 case "$mode" in
     jp)
         session_id="$TRANSLATE_JP_SESSION_ID"
-        prompt="$text"
+        prompt="Next, translate this: $text"
         ;;
     en)
         session_id="$TRANSLATE_EN_SESSION_ID"
-        prompt="$text"
+        prompt="Next, translate this: $text"
         ;;
     ask)
         prompt="英語について質問。 $text"
