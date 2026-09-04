@@ -44,9 +44,6 @@
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
     ],
-    "ask": [
-      "Read(.local/garage/*)"
-    ],
     "deny": [
       "Read(.local/human/**)",
       "Read(.env*)",
@@ -58,15 +55,10 @@
       "Edit(~/)",
       "Bash(git push)"
     ],
+    "ask": [
+      "Read(.local/garage/*)"
+    ],
     "defaultMode": "auto"
-  },
-  "autoMode": {
-    "soft_deny": [
-      "$defaults",
-      "Never run external processes by 'brew services', 'systemctl', etc",
-      "Never run DB migration",
-      "Never read or modify files outside of the current directory except for /tmp."
-    ]
   },
   "model": "opus",
   "hooks": {
@@ -170,5 +162,13 @@
   "tui": "default",
   "autoMemoryEnabled": false,
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Never run external processes by 'brew services', 'systemctl', etc",
+      "Never run DB migration",
+      "Never read or modify files outside of the current directory except for /tmp."
+    ]
+  }
 }
