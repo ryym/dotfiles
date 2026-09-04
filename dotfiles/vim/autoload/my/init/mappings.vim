@@ -19,7 +19,6 @@ function! my#init#mappings#setup() abort
 
   " Easy helping.
   Map n <C-h>     :<C-u>help<Space>
-  Map n <Leader>h :<C-u>vert help<Space>
 
   " Easy saving and quitting.
   Map n <Space>w  :<C-u>update<CR>
@@ -44,8 +43,11 @@ function! my#init#mappings#setup() abort
   " Map J/K for scrolling.
   Map nx J 2<C-e>2j
   Map nx K 2<C-y>2k
-  Map nx <Leader>j J
+  Map nx H J
   Map nx <Leader>k K
+  Map nx <Leader>h H
+  Map nx <Leader>m M
+  Map nx <Leader>l L
 
   " Misc
   Map n <silent> <Leader>c :<C-u>RmTrailingSpaces<CR>
