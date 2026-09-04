@@ -64,7 +64,7 @@ function! my#init#options#setup() abort
   set noequalalways
 
   set cursorline
-  set colorcolumn=100
+  set colorcolumn=120
   set number
   set relativenumber
   set hidden
