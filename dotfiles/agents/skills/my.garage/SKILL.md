@@ -31,7 +31,9 @@ For example, understand an instruction like "/my.garage Research X" as
 - Always save under `.local/garage/` (relative to the current working directory).
 - Derive a concise English kebab-case file name from the content
   (e.g. `auth-flow-research.md`, `cleanup-old-logs.sh`).
-- Fro documents, follow the `Markdown Style Guide` below.
+- For documents,
+  - write in the language used in the session.
+  - follow the `Markdown Style Guide` below.
 - For scripts, no need to do `chmod +x`.
 - The substance must equal what the long-form instruction would have produced;
   `/my.garage` only shortens _how_ the request is phrased, not the quality of
