@@ -58,6 +58,8 @@ function! my#init#options#setup() abort
 
   " Folds settings.
   set foldmethod =marker
+  " Keep syntax highlight for a closed fold line.
+  set foldtext=
 
   " Do not align window sizes automatically.
   " This makes splitting be more Tmux-like.
