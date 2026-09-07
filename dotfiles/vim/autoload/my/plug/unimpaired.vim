@@ -9,7 +9,7 @@ function! my#plug#unimpaired#before_load()
   let g:unimpaired_mapping = {
     \ 'encodings' : 0,
     \ 'excludes'  : {
-    \     'nextprevs' : ['n'],
+    \     'nextprevs' : ['n', 't', 'T'],
     \     'toggles'   : ['c', 'h', 'i', 's']
     \   }
     \ }

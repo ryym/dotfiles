@@ -141,6 +141,12 @@ function! my#init#mappings#setup() abort
   Map n \[tab]H :<C-u>tabmove -1<CR>
   Map n \[tab]L :<C-u>tabmove +1<CR>
 
+  " Tag stack navigations
+  Map n [t :<C-u>call my#init#func#tagstack#prev(v:count1)<CR>
+  Map n ]t :<C-u>call my#init#func#tagstack#next(v:count1)<CR>
+  Map n [T :<C-u>call my#init#func#tagstack#first()<CR>
+  Map n ]T :<C-u>call my#init#func#tagstack#last()<CR>
+
   if has('nvim')
     Map t <C-w> <C-\\><C-n><C-w>
     Map n <C-w>tt :<C-u>terminal<CR>
