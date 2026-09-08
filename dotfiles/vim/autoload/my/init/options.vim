@@ -57,7 +57,9 @@ function! my#init#options#setup() abort
   set matchpairs& matchpairs+=<:>
 
   " Folds settings.
-  set foldmethod =marker
+  set foldmethod=marker
+  set foldlevel=99
+  set foldminlines=5
   " Keep syntax highlight for a closed fold line.
   set foldtext=
 
