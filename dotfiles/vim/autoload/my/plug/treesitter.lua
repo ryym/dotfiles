@@ -48,6 +48,8 @@ local function configure()
                     end
                     -- No-op when no parser is installed for the filetype.
                     pcall(vim.treesitter.start)
+                    vim.wo.foldmethod = 'expr'
+                    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
                 end,
             })
 
@@ -58,9 +60,6 @@ local function configure()
                 pattern = '*.rb',
                 command = 'set syntax=ruby',
             })
-
-            vim.opt.foldmethod = 'expr'
-            vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
         end,
     }
 end
