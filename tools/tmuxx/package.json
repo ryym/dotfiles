@@ -2,7 +2,5 @@
   "name": "tmuxx",
   "private": true,
   "type": "module",
-  "bin": {
-    "tmuxx": "src/cli.js"
-  }
+  "main": "src/cli.js"
 }

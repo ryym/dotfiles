@@ -1,1 +1,6 @@
-../tools/tmuxx/src/cli.js
+#!/usr/bin/env node
+
+// Entry point of tmuxx. The implementation lives in tools/tmuxx.
+import { main } from "../tools/tmuxx/src/cli.js";
+
+main(process.argv.slice(2));

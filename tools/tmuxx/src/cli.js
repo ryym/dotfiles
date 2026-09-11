@@ -1,6 +1,4 @@
-#!/usr/bin/env node
-
-// A Node.js script with personal tmux helper subcommands.
+// Personal tmux helper subcommands, run via bin/tmuxx.
 // Usage: tmuxx <subcommand> [args...]
 
 import {
@@ -259,12 +257,15 @@ const SUBCOMMANDS = {
   "job-status": runJobStatus,
 };
 
-const [subcommand, ...args] = process.argv.slice(2);
-const run = SUBCOMMANDS[subcommand];
-if (!run) {
-  console.log("Usage: tmuxx <subcommand>");
-  console.log(`Subcommands: ${Object.keys(SUBCOMMANDS).join(", ")}`);
-  process.exit(1);
-}
+// main runs the subcommand named by the first of args (the command line without node and script).
+export function main(args) {
+  const [subcommand, ...subcommandArgs] = args;
+  const run = SUBCOMMANDS[subcommand];
+  if (!run) {
+    console.log("Usage: tmuxx <subcommand>");
+    console.log(`Subcommands: ${Object.keys(SUBCOMMANDS).join(", ")}`);
+    process.exit(1);
+  }
 
-run(args);
+  run(subcommandArgs);
+}
