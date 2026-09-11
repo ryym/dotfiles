@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "bin": {
-    "tmuxx": "cli.js"
+    "tmuxx": "src/cli.js"
   }
 }
