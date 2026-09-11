@@ -343,7 +343,7 @@ async function commitAndPushGarage(cwd) {
   const garageDir = path.join(cwd, ".local/garage");
 
   if (!fs.existsSync(garageDir)) {
-    fs.mkdirSync(garageDir);
+    fs.mkdirSync(garageDir, { recursive: true });
   } else if (!fs.statSync(garageDir).isDirectory()) {
     log(`garage is not a directory: ${garageDir}`);
     return;
