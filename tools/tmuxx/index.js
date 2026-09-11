@@ -458,32 +458,9 @@ function runJobStatus(args) {
   const pane = process.env.TMUX_PANE;
   if (!pane) return;
 
+  const optionArgs = action === "set" ? [JOB_STATUS_OPTION, status] : ["-u", JOB_STATUS_OPTION];
   // Redraw now instead of waiting up to status-interval for the next tick.
-  if (action === "set") {
-    execFileSync("tmux", [
-      "set-option",
-      "-p",
-      "-t",
-      pane,
-      JOB_STATUS_OPTION,
-      status,
-      ";",
-      "refresh-client",
-      "-S",
-    ]);
-  } else {
-    execFileSync("tmux", [
-      "set-option",
-      "-p",
-      "-u",
-      "-t",
-      pane,
-      JOB_STATUS_OPTION,
-      ";",
-      "refresh-client",
-      "-S",
-    ]);
-  }
+  execFileSync("tmux", ["set-option", "-p", "-t", pane, ...optionArgs, ";", "refresh-client", "-S"]);
 }
 
 const SUBCOMMANDS = {
