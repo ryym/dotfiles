@@ -36,17 +36,11 @@ function log(value) {
   }
 }
 
-async function main(raw) {
-  if (!raw.trim()) return;
-  const input = JSON.parse(raw);
-  if (!input.hook_event_name) throw new Error("missing Codex hook_event_name");
-  return handleHook(input);
-}
-
-async function handleHook(input) {
+async function main(json) {
+  const input = JSON.parse(json);
   const event = input.hook_event_name;
   const cwd = input.cwd || process.cwd();
-  log(`============ hook start: ${event} ${JSON.stringify(input)}`);
+  log(`============ hook start: ${event} ${json}`);
 
   switch (event) {
     case "UserPromptSubmit":
@@ -77,7 +71,7 @@ async function handleHook(input) {
       await clearPaneJobStatus();
       break;
     default:
-      log(`unsupported Codex hook: ${event}`);
+      throw new Error(`unsupported Codex hook: ${event}`);
   }
 }
 
@@ -247,8 +241,7 @@ async function autoSync(cwd) {
   ]);
 }
 
-const input = fs.readFileSync(0, "utf8");
-main(input).catch((err) => {
+main(fs.readFileSync(0, "utf8")).catch((err) => {
   log(`fatal: ${err.stack || err.message}`);
   console.error(err.message);
   process.exit(1);
