@@ -10,7 +10,8 @@ const { stripVTControlCharacters } = require("node:util");
 // Written here by `job-status`, read by tmux.conf to render the status line.
 const JOB_STATUS_OPTION = "@job_status";
 
-const JOB_STATUSES = ["running", "blocked", "done"];
+// Valid job statuses, most urgent first. rollupJobStatus relies on this order.
+const JOB_STATUSES = ["blocked", "running", "done"];
 
 const FIELDS = [
   "session_name",
@@ -109,10 +110,6 @@ const JOB_MARKS = {
   done: "\x1b[32m✓\x1b[0m",
 };
 
-// Priority used to collapse a session's pane statuses down to a single rollup mark:
-// a blocked pane needs attention first, then a running one, then done is least urgent.
-const JOB_PRIORITY = ["blocked", "running", "done"];
-
 // Mark shown for the currently active window/pane; distinct from JOB_MARKS' colors.
 const ACTIVE_MARK = "\x1b[1;36m➤\x1b[0m";
 
@@ -178,7 +175,7 @@ function truncate(str, maxWidth, fromStart) {
 
 // rollupJobStatus collapses a session's pane statuses down to the single most urgent one.
 function rollupJobStatus(statuses) {
-  return JOB_PRIORITY.find((status) => statuses.includes(status));
+  return JOB_STATUSES.find((status) => statuses.includes(status));
 }
 
 // jobStatusBySession maps each session name to its rollup status, derived from live panes
