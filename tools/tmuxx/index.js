@@ -161,22 +161,19 @@ function truncate(str, maxWidth, fromStart) {
   if (strWidth(str) <= maxWidth) return str;
 
   const chars = Array.from(str);
+  if (fromStart) chars.reverse();
+
   const budget = maxWidth - 3; // reserve width for "..."
-  let picked = [];
+  const picked = [];
   let w = 0;
-  if (fromStart) {
-    for (let i = chars.length - 1; i >= 0 && w < budget; i--) {
-      w += charWidth(chars[i].codePointAt(0));
-      picked.unshift(chars[i]);
-    }
-    return `...${picked.join("")}`;
+  for (const ch of chars) {
+    const cw = charWidth(ch.codePointAt(0));
+    if (w + cw > budget) break;
+    w += cw;
+    picked.push(ch);
   }
 
-  for (let i = 0; i < chars.length && w < budget; i++) {
-    w += charWidth(chars[i].codePointAt(0));
-    picked.push(chars[i]);
-  }
-  return `${picked.join("")}...`;
+  return fromStart ? `...${picked.reverse().join("")}` : `${picked.join("")}...`;
 }
 
 // rollupJobStatus collapses a session's pane statuses down to the single most urgent one.
