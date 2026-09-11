@@ -273,9 +273,7 @@ async function autoSync(cwd) {
     commitAndPushGarage(cwd).catch((err) => {
       log(`garage error: ${err.stack || err}`);
     }),
-  ]).catch((err) => {
-    log(`autoSync error: ${err.stack || err}`);
-  });
+  ]);
 }
 
 /** Run a git command (output auto-logged). Returns { code, stdout, stderr }. */
