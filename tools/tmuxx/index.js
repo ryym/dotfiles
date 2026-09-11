@@ -224,23 +224,35 @@ function underline(str) {
   return `\x1b[4m${str}\x1b[24m`;
 }
 
+function activeCell(text, isActive) {
+  return { text, mark: isActive ? ACTIVE_MARK : " ", highlight: isActive };
+}
+
+// renderCell fits a cell into its column. A cell is either a plain string or a marked cell
+// `{ text, mark, highlight }`, where mark is one column wide (" " for none).
+function renderCell(cell, column) {
+  const fit = (text, maxWidth) =>
+    column.fixed ? text : truncate(text, maxWidth, column.truncateFromStart);
+  if (typeof cell === "string") return fit(cell, column.maxWidth);
+
+  // Truncate before decorating, since truncate would count ANSI escape sequences as columns.
+  const text = fit(cell.text, column.maxWidth - 1); // the mark takes one column
+  return `${cell.mark}${cell.highlight ? underline(text) : text}`;
+}
+
 function buildRow(cells, columns) {
-  return cells.map((cell, i) =>
-    columns[i].fixed ? cell : truncate(cell, columns[i].maxWidth, columns[i].truncateFromStart)
-  );
+  return cells.map((cell, i) => renderCell(cell, columns[i]));
 }
 
 function buildPaneRows(panes) {
   return panes.map((p) => {
     const windowName = `${p.window_index}:${p.window_name}`;
-    const window = `${p.window_active === "1" ? `${ACTIVE_MARK}${underline(windowName)}` : ` ${windowName}`}`;
     const paneName = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
-    const pane = `${p.pane_active === "1" ? `${ACTIVE_MARK}${underline(paneName)}` : ` ${paneName}`}`;
     const cells = [
       p.session_name,
-      window,
+      activeCell(windowName, p.window_active === "1"),
       JOB_MARKS[p[JOB_STATUS_OPTION]] || "",
-      pane,
+      activeCell(paneName, p.pane_active === "1"),
       shortenPath(p.pane_current_path),
     ];
     return buildRow(cells, PANE_COLUMNS);
@@ -280,10 +292,9 @@ function windowsFromPanes(panes) {
 function buildWindowRows(windows) {
   return windows.map((w) => {
     const windowName = `${w.window_index}:${w.window_name}`;
-    const window = `${w.window_active === "1" ? `${ACTIVE_MARK}${underline(windowName)}` : ` ${windowName}`}`;
     const cells = [
       w.session_name,
-      window,
+      activeCell(windowName, w.window_active === "1"),
       String(w.paneCount),
       JOB_MARKS[rollupJobStatus(w.jobStatuses)] || "",
       shortenPath(w.activePaneCwd),
@@ -301,9 +312,8 @@ function buildSessionRows(sessions, panes) {
     // Never both: the currently attached session can't also be the previous one.
     const isActive = s.session_attached !== "0";
     const mark = isActive ? ACTIVE_MARK : s.session_name === lastSession ? LAST_SESSION_MARK : " ";
-    const name = `${mark}${isActive ? underline(s.session_name) : s.session_name}`;
     const cells = [
-      name,
+      { text: s.session_name, mark, highlight: isActive },
       s.session_windows,
       JOB_MARKS[jobBySession.get(s.session_name)] || "",
       formatRelativeTime(s.session_activity),
