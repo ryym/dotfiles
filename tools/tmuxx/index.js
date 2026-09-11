@@ -67,10 +67,10 @@ function shortenPath(path) {
 }
 
 // lastSessionName returns the session the current client was in before switching to the
-// current one, or undefined when not run from inside tmux (no client to ask). This is a
-// client attribute, not a session one, so it can't be folded into listSessions()'s format.
+// current one, or undefined when not run from inside tmux (no client to ask).
 function lastSessionName() {
   if (!process.env.TMUX) return undefined;
+  // Query separately: this is a client attribute, so listSessions()'s format can't include it.
   const output = execFileSync("tmux", ["display-message", "-p", "#{client_last_session}"], {
     encoding: "utf8",
   }).trim();
@@ -139,10 +139,7 @@ function charWidth(codePoint) {
   return WIDE_RANGES.some(([from, to]) => codePoint >= from && codePoint <= to) ? 2 : 1;
 }
 
-// str.length counts UTF-16 units, not terminal columns, so wide chars (e.g. Japanese) misalign padding.
-// Array.from splits by code point, which also avoids miscounting surrogate-pair chars (e.g. emoji) as 2.
-// ANSI color codes are stripped first since they're zero-width on screen but would otherwise be
-// counted as (narrow) characters and throw off padding.
+// strWidth returns the display width of str in terminal columns, ignoring ANSI escape sequences.
 function strWidth(str) {
   return Array.from(stripVTControlCharacters(str)).reduce(
     (w, ch) => w + charWidth(ch.codePointAt(0)),
@@ -178,8 +175,7 @@ function rollupJobStatus(statuses) {
   return JOB_STATUSES.find((status) => statuses.includes(status));
 }
 
-// jobStatusBySession maps each session name to its rollup status, derived from live panes
-// rather than stored anywhere, same as the window/session rollups tmux.conf computes.
+// jobStatusBySession maps each session name to the rollup of its panes' job statuses.
 function jobStatusBySession(panes) {
   const statusesBySession = new Map();
   for (const p of panes) {
@@ -360,19 +356,15 @@ function jumpToWindow(windowId) {
 }
 
 function jumpToSession(sessionName) {
-  // Append ':' to make tmux recognize the session name correctly. If it contains a dot ('.'),
-  // tmux interprets it as a pane identifier. Appending ':' prevents it by explicitly saying that
-  // this string until ':' is a session name.
+  // Append ':' so tmux doesn't parse a session name containing '.' as a pane target.
   jumpTo(`${sessionName}:`);
 }
 
-// selectWithFzf shows a table in fzf and returns the id (via getId) of the row selected with
-// enter, or undefined if the user aborted. The id is a hidden first column so it survives in
-// fzf's output even though --with-nth hides it from view.
-// previewCmd, if given, is a shell command shown in fzf's preview pane; {1} in it refers to
-// the hidden id column (fzf substitutes it regardless of --with-nth hiding it from display).
+// selectWithFzf lets the user pick a row in fzf and returns the id (via getId) of its item,
+// or undefined if aborted. previewCmd is a shell command where {1} expands to the item's id.
 function selectWithFzf(items, rows, columns, getId, { previewCmd } = {}) {
   const widths = columnWidths(rows, columns);
+  // Prepend the id as a column hidden by --with-nth, so it survives in fzf's output.
   const lines = items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`).join("\n");
 
   const fzfArgs = ["--ansi", "--delimiter", "\t", "--with-nth", "2.."];
@@ -424,8 +416,7 @@ function runSessions(args) {
   const rows = buildSessionRows(sessions, panes);
 
   if (args.includes("--fzf")) {
-    // {1}: appends ':' to disambiguate the session name from a pane identifier, same as
-    // jumpToSession does for its own tmux calls.
+    // Append ':' to {1} for the same reason as jumpToSession.
     const sessionName = selectWithFzf(sessions, rows, SESSION_COLUMNS, (s) => s.session_name, {
       previewCmd: "tmux capture-pane -e -p -t {1}:",
     });
@@ -435,10 +426,9 @@ function runSessions(args) {
   }
 }
 
-// runJobStatus records the calling pane's own job state for tmux.conf to render.
-// Each pane only ever writes its own @job_status, so there is no shared state to
-// lock. Window/session rollups are not stored here: tmux.conf derives them at
-// render time from the live panes.
+// runJobStatus sets or clears the calling pane's own job status for tmux.conf to render.
+// Each pane only writes its own option, so no locking is needed. Window/session rollups are
+// never stored: they are derived from live panes on read (here and in tmux.conf).
 function runJobStatus(args) {
   const [action, status] = args;
   if (action !== "set" && action !== "clear") {
