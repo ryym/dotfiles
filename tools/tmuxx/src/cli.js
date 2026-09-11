@@ -187,8 +187,8 @@ function buildSessionRows(sessions, panes) {
   });
 }
 
-function runPanes(args) {
-  const panes = listPanes({ allSessions: args.includes("--all") });
+// showPanes prints panes as a table, or lets the user pick one in fzf and jumps to it.
+function showPanes(panes, args) {
   const rows = buildPaneRows(panes);
 
   if (args.includes("--fzf")) {
@@ -197,6 +197,16 @@ function runPanes(args) {
   } else {
     printTable(rows, PANE_COLUMNS);
   }
+}
+
+function runPanes(args) {
+  showPanes(listPanes({ allSessions: args.includes("--all") }), args);
+}
+
+// runJobs is runPanes narrowed down to the panes that have a job status.
+function runJobs(args) {
+  const panes = listPanes({ allSessions: args.includes("--all") });
+  showPanes(panes.filter((p) => p[JOB_STATUS_OPTION]), args);
 }
 
 function runWindows(args) {
@@ -252,6 +262,7 @@ function runJobStatus(args) {
 
 const SUBCOMMANDS = {
   panes: runPanes,
+  jobs: runJobs,
   windows: runWindows,
   sessions: runSessions,
   "job-status": runJobStatus,
