@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // A Node.js script with personal tmux helper subcommands.
 // Usage: tmuxx <subcommand> [args...]
 
