@@ -65,13 +65,11 @@ const dtFormat = new Intl.DateTimeFormat("sv-SE", {
 });
 
 /** Append a line of text to the log file. Never throws (logging must not break the hook). */
-function log(text) {
-  text = text.trim();
-  if (text === "") {
-    return;
-  }
+function log(value) {
+  const text = String(value || "").trim();
+  if (!text) return;
   try {
-    fs.appendFileSync(LOG_PATH, `[${dtFormat.format(new Date())}] ${text.trim()}\n`);
+    fs.appendFileSync(LOG_PATH, `[${dtFormat.format(new Date())}] ${text}\n`);
   } catch {
     // ignore
   }
