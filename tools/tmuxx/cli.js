@@ -1,10 +1,10 @@
+#!/usr/bin/env node
+
 // A Node.js script with personal tmux helper subcommands.
 // Usage: tmuxx <subcommand> [args...]
 
-"use strict";
-
-const { spawnSync, execFileSync } = require("child_process");
-const { stripVTControlCharacters } = require("node:util");
+import { execFileSync, spawnSync } from "node:child_process";
+import { stripVTControlCharacters } from "node:util";
 
 // Pane-scoped user option holding that pane's job state (e.g. a running Claude Code turn).
 // Written here by `job-status`, read by tmux.conf to render the status line.

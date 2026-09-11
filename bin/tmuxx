@@ -1,4 +1,1 @@
-#!/usr/bin/env node
-
-// Entry point of tmuxx. The implementation lives in tools/tmuxx.
-require("../tools/tmuxx");
+../tools/tmuxx/cli.js

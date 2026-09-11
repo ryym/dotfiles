@@ -1,6 +1,8 @@
 {
   "name": "tmuxx",
   "private": true,
-  "type": "commonjs",
-  "main": "index.js"
+  "type": "module",
+  "bin": {
+    "tmuxx": "cli.js"
+  }
 }
