@@ -344,40 +344,29 @@ function printTable(rows, columns) {
   }
 }
 
+// jumpTo switches the current client to target, or attaches to it when run outside tmux.
+// selectArgs, if given, is a tmux command (e.g. select-pane) run just before switching.
+function jumpTo(target, selectArgs = []) {
+  const clientArgs = [process.env.TMUX ? "switch-client" : "attach-session", "-t", target];
+  const args = selectArgs.length > 0 ? [...selectArgs, ";", ...clientArgs] : clientArgs;
+  const result = spawnSync("tmux", args, { stdio: "inherit" });
+  // Only set the exit code on failure: tmux already reports the error on the inherited stderr.
+  if (result.status !== 0) process.exitCode = result.status ?? 1;
+}
+
 function jumpToPane(paneId) {
-  if (process.env.TMUX) {
-    spawnSync("tmux", ["select-pane", "-t", paneId, ";", "switch-client", "-t", paneId], {
-      stdio: "inherit",
-    });
-  } else {
-    execFileSync("tmux", ["select-pane", "-t", paneId, ";", "attach-session", "-t", paneId], {
-      stdio: "inherit",
-    });
-  }
+  jumpTo(paneId, ["select-pane", "-t", paneId]);
 }
 
 function jumpToWindow(windowId) {
-  if (process.env.TMUX) {
-    spawnSync("tmux", ["select-window", "-t", windowId, ";", "switch-client", "-t", windowId], {
-      stdio: "inherit",
-    });
-  } else {
-    execFileSync("tmux", ["select-window", "-t", windowId, ";", "attach-session", "-t", windowId], {
-      stdio: "inherit",
-    });
-  }
+  jumpTo(windowId, ["select-window", "-t", windowId]);
 }
 
 function jumpToSession(sessionName) {
   // Append ':' to make tmux recognize the session name correctly. If it contains a dot ('.'),
   // tmux interprets it as a pane identifier. Appending ':' prevents it by explicitly saying that
   // this string until ':' is a session name.
-  sessionName = `${sessionName}:`;
-  if (process.env.TMUX) {
-    spawnSync("tmux", ["switch-client", "-t", sessionName], { stdio: "inherit" });
-  } else {
-    execFileSync("tmux", ["attach-session", "-t", sessionName], { stdio: "inherit" });
-  }
+  jumpTo(`${sessionName}:`);
 }
 
 // selectWithFzf shows a table in fzf and returns the id (via getId) of the row selected with
