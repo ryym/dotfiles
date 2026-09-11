@@ -148,25 +148,42 @@ async function isInsideWorkTree(cwd) {
   return (await gitOut(cwd, ["rev-parse", "--is-inside-work-tree"])) === "true";
 }
 
+async function hasWorksyncRemote(cwd) {
+  const out = await gitOut(cwd, ["remote"]);
+  return out != null && out.split("\n").includes("worksync");
+}
+
+/** Return the SHA of a branch on the remote, or null if it does not exist. */
+async function remoteBranchSha(cwd, remote, branch) {
+  const out = await gitOut(cwd, ["ls-remote", remote, `refs/heads/${branch}`]);
+  if (!out) return null;
+  return out.split("\n")[0].split("\t")[0] || null;
+}
+
+/** Auto-push new commits to the "worksync" remote. */
 async function pushCurrentBranchToWorksync(cwd) {
   if (!(await isInsideWorkTree(cwd))) return;
-  const remotes = await gitOut(cwd, ["remote"]);
-  if (!remotes || !remotes.split("\n").includes("worksync")) return;
+  if (!(await hasWorksyncRemote(cwd))) return;
 
   const branch = await gitOut(cwd, ["symbolic-ref", "--short", "HEAD"]);
-  const localSha = await gitOut(cwd, ["rev-parse", "HEAD"]);
-  if (!branch || !localSha) return;
+  if (!branch) return; // detached HEAD
 
-  const remote = await gitOut(cwd, ["ls-remote", "worksync", `refs/heads/${branch}`]);
-  if (remote) {
-    const remoteSha = remote.split("\n")[0].split("\t")[0];
-    if (localSha === remoteSha) return;
+  const localSha = await gitOut(cwd, ["rev-parse", "HEAD"]);
+  if (!localSha) return;
+
+  // If a same-named branch already exists on worksync, only push when the local
+  // branch is strictly ahead of it (contains the remote commit, not diverged).
+  // Otherwise the branch is new on worksync, so push it to create it.
+  const remoteSha = await remoteBranchSha(cwd, "worksync", branch);
+  if (remoteSha) {
+    if (localSha === remoteSha) return; // already up to date
+    // A non-zero exit here is the normal "not an ancestor" case, so don't flag it.
     if (!(await gitRun(cwd, ["merge-base", "--is-ancestor", remoteSha, "HEAD"]))) return;
   }
 
   log("push new commits to worksync");
   const { code } = await git(cwd, ["push", "worksync", branch]);
-  if (code !== 0) log(`worksync push of ${branch} failed (exit ${code})`);
+  if (code !== 0) log(`worksync push of "${branch}" failed (exit ${code})`);
 }
 
 const GARAGE_PRE_COMMIT_HOOK = `#!/usr/bin/env bash
