@@ -46,7 +46,7 @@ let s:bat_preview_opt_formatted = "--preview='bat --plain --color=always --line-
 let s:fmt_delim = "--delimiter '\t' --with-nth '{1} {2} {3}'"
 
 function! my#plug#fzf#_without_ignored_files() abort
-  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
+  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('shellescape(v:val)')
   let src = '_vim_fzf_list_files buffers_and_files ' . join(buffiles, ' ')
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
@@ -85,7 +85,7 @@ function! my#plug#fzf#_open_file_or_dir(...)
 endfunction
 
 function! my#plug#fzf#_tab_buffers() abort
-  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
+  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('shellescape(v:val)')
   let src = '_vim_fzf_list_files buffers ' . join(buffiles, ' ')
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
@@ -157,7 +157,7 @@ endfunction
 
 function! my#plug#fzf#_git_diff_files() abort
   let base = get(g:, 'my_git_diff_base', 'HEAD')
-  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
+  let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('shellescape(v:val)')
   let src = '_vim_fzf_list_files git_diff_files ' . base . ' ' . join(buffiles, ' ')
   call fzf#run({
     \   'sink*': function('my#plug#fzf#_open_file'),
