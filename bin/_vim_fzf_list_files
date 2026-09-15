@@ -115,8 +115,8 @@ format() {
     base="$3"
     dir="$4"
     mark_color="${5:-38;5;245}"
-    # e.g. format 33 ':' 'index.js' 'src/auth' => ": index.js src.auth/index.js" with nice coloring
-    printf -v fmt_out "[%sm%s[0m [%sm%s[0m [38;5;245m%s/[38;5;240m%s[0m" "$mark_color" "$mark" "$color" "$base" "$dir" "$base"
+    # e.g. format 33 ':' 'index.js' 'src/auth' => ":\tindex.js\tsrc.auth/index.js"
+    printf -v fmt_out "[%sm%s[0m	[%sm%s[0m	[38;5;245m%s/[38;5;240m%s[0m" "$mark_color" "$mark" "$color" "$base" "$dir" "$base"
 }
 
 main "$@"

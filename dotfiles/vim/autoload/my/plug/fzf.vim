@@ -41,6 +41,10 @@ let s:fd_available = executable('fd')
 let s:bat_preview_opt_normal    = "--preview='bat --plain --color=always --line-range :10000 {}'"
 let s:bat_preview_opt_formatted = "--preview='bat --plain --color=always --line-range :10000 {3}'"
 
+" Use tabs as a delimiter while displaying rows as space-separated by `--with-nth`.
+" _vim_fzf_list_files outputs tab-separated fields to handle spaces in paths correctly.
+let s:fmt_delim = "--delimiter '\t' --with-nth '{1} {2} {3}'"
+
 function! my#plug#fzf#_without_ignored_files() abort
   let buffiles = my#plug#fzf#tab_buffers#list(tabpagenr())->map('fnameescape(v:val)')
   let src = '_vim_fzf_list_files buffers_and_files ' . join(buffiles, ' ')
@@ -48,7 +52,7 @@ function! my#plug#fzf#_without_ignored_files() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': src,
     \   'up': '45%',
-    \   'options': '--header [files] ' . s:bat_preview_opt_formatted,
+    \   'options': s:fmt_delim . ' --header [files] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -57,7 +61,7 @@ function! my#plug#fzf#_open_file(names) abort
 endfunction
 
 function! s:fmt_to_filepath(line) abort
-  let parts = split(a:line, '\s')
+  let parts = split(a:line, "\t")
   return fnameescape(parts[2])
 endfunction
 
@@ -87,7 +91,7 @@ function! my#plug#fzf#_tab_buffers() abort
     \   'sink*': function('my#plug#fzf#_tab_buffers_on_select'),
     \   'source': src,
     \   'up': '45%',
-    \   'options': '--multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt_formatted
+    \   'options': s:fmt_delim . ' --multi --expect=ctrl-d --header [buffers] ' . s:bat_preview_opt_formatted
     \ })
 endfunction
 
@@ -159,7 +163,7 @@ function! my#plug#fzf#_git_diff_files() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': src,
     \   'up': '45%',
-    \   'options': '--header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
+    \   'options': s:fmt_delim . ' --header "[git diff ' . base . ']" ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -176,7 +180,7 @@ function! my#plug#fzf#_local_files() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': '_vim_fzf_list_files fd_formatted . .local/',
     \   'up': '45%',
-    \   'options': '--header [.local] ' . s:bat_preview_opt_formatted,
+    \   'options': s:fmt_delim . ' --header [.local] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -185,7 +189,7 @@ function! my#plug#fzf#_downloads() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': '_vim_fzf_list_files fd_formatted . ~/Downloads',
     \   'up': '45%',
-    \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
+    \   'options': s:fmt_delim . ' --header [Downloads] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -194,7 +198,7 @@ function! my#plug#fzf#_xdg_configs() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': "_vim_fzf_list_files fd_formatted -E '.android/*' . ~/.config",
     \   'up': '45%',
-    \   'options': '--header [Downloads] ' . s:bat_preview_opt_formatted,
+    \   'options': s:fmt_delim . ' --header [Downloads] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
@@ -211,7 +215,7 @@ function! my#plug#fzf#_dotfiles() abort
     \   'sink*': function('my#plug#fzf#_open_file'),
     \   'source': '_vim_fzf_list_files fd_formatted . ~/.dotfiles',
     \   'up': '45%',
-    \   'options': '--header [dotfiles] ' . s:bat_preview_opt_formatted,
+    \   'options': s:fmt_delim . ' --header [dotfiles] ' . s:bat_preview_opt_formatted,
     \ })
 endfunction
 
