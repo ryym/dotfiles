@@ -103,6 +103,11 @@ zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f'
 #     ~/.dotfiles main
 #     ❯
 # inspired by https://github.com/sindresorhus/pure
+#
+# Set ZSH_PROMPT_MINIMUM to drop the information line and leave just the symbol.
+# The same information is on the tmux pane border, which never goes stale, so the
+# line is redundant inside tmux. It is read on every prompt, so exporting or
+# unsetting it takes effect in a running shell.
 _is_first_prompt=1
 function _update_prompt() {
     local symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
@@ -111,12 +116,23 @@ function _update_prompt() {
     else
         print ''
     fi
-    LANG=en_US.UTF-8 vcs_info
-    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo ' %F{yellow}(SSH)%f')
+
     # Use as a jump marker in tmux's copy-mode.
     local prompt_sequence=$'\033]133;A\033\\'
+    local symbol="%F{$symbol_color}❯%f "
+
+    if [[ -n $ZSH_PROMPT_MINIMUM ]]; then
+        # Keep the SSH marker: without the information line there is nothing else
+        # to tell a remote shell apart from a local one.
+        local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '%F{yellow}(SSH)%f ')
+        PROMPT="$prompt_sequence${ssh_info}${symbol}"
+        return
+    fi
+
+    LANG=en_US.UTF-8 vcs_info
+    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo ' %F{yellow}(SSH)%f')
     PROMPT="$prompt_sequence%F{246}%~%f ${vcs_info_msg_0_}${ssh_info}
-%F{$symbol_color}❯%f "
+$symbol"
 }
 add-zsh-hook precmd _update_prompt
 
