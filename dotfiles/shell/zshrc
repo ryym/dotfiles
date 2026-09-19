@@ -99,10 +99,11 @@ autoload -Uz add-zsh-hook
 zstyle ':vcs_info:*' formats '%F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f'
 
-# A prompt like:
-#     ~/.dotfiles main
-#     ❯
-# inspired by https://github.com/sindresorhus/pure
+# Generate a prompt inspired by https://github.com/sindresorhus/pure
+#   ~/.dotfiles main <git-info>
+#   ❯
+# The first information line is dropped in tmux because the same information is
+# on the tmux pane border.
 _is_first_prompt=1
 function _update_prompt() {
     local symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
@@ -111,12 +112,23 @@ function _update_prompt() {
     else
         print ''
     fi
-    LANG=en_US.UTF-8 vcs_info
-    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo ' %F{yellow}(SSH)%f')
+
     # Use as a jump marker in tmux's copy-mode.
     local prompt_sequence=$'\033]133;A\033\\'
+    local symbol="%F{$symbol_color}❯%f "
+
+    if [[ -n $TMUX ]]; then
+        local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '%F{yellow}(SSH)%f ')
+        # FIXME: Cannot use $prompt_sequence which breaks how a line is wrapped for some reason.
+        # PROMPT="${prompt_sequence}${ssh_info}${symbol}"
+        PROMPT="${ssh_info}${symbol}"
+        return
+    fi
+
+    LANG=en_US.UTF-8 vcs_info
+    local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo ' %F{yellow}(SSH)%f')
     PROMPT="$prompt_sequence%F{246}%~%f ${vcs_info_msg_0_}${ssh_info}
-%F{$symbol_color}❯%f "
+$symbol"
 }
 add-zsh-hook precmd _update_prompt
 
