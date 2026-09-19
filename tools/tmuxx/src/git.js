@@ -15,8 +15,7 @@ const SYNC_TTL_MS = 5000;
 // Minimum interval between background fetches of a repository's remote-tracking refs.
 const FETCH_INTERVAL_MS = 300_000;
 
-// Throttle stamp for the background fetch. Shared with zshrc's _maybe_fetch_upstream, which
-// refreshes the same refs, so the two never fetch twice within one interval.
+// Throttle stamp for the background fetch, kept inside the Git directory it belongs to.
 const FETCH_STAMP = ".fetch_stamp";
 
 // Drop cache entries for repositories no pane has visited for this long.
