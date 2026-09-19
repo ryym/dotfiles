@@ -22,7 +22,8 @@ For example, understand an instruction like "/my.garage Research X" as
    - "Write a script", "generate a config", "make a data file", etc.
      → the file type that fits the artifact (script, JSON, etc.).
 3. **Write the result into `.local/garage/`.** Create the directory if it does not exist.
-4. **Report the created file path(s).**
+4. Print a short summary.
+5. Print the created file path(s).
 
 ## Rules
 
@@ -67,7 +68,7 @@ Using this columns, we can ...
 
 Bad:
 
-```markdown
+```
 columns:
 | Column | Type |
 | ------ | ---------- |
