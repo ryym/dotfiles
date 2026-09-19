@@ -140,6 +140,8 @@ function +vi-git-status() {
 # Asynchronously refresh the current repo's remote-tracking refs, throttled by a
 # stamp file inside .git. This lets the prompt show ahead/behind without ever
 # blocking on the network, and adapts to whichever repo we are currently in.
+# The stamp is shared with tmuxx's prompt-info, which refreshes the same refs for
+# the tmux pane border, so the two never fetch twice within one interval.
 _GIT_FETCH_INTERVAL=300 # seconds
 function _maybe_fetch_upstream() {
     git rev-parse --is-inside-work-tree &>/dev/null || return
@@ -148,7 +150,7 @@ function _maybe_fetch_upstream() {
 
     local git_dir stamp
     git_dir=$(git rev-parse --git-dir) || return
-    stamp="$git_dir/.zsh_fetch_stamp"
+    stamp="$git_dir/.fetch_stamp"
 
     # Bail out while the stamp is still fresh (mtime within the interval).
     # extended_glob is needed for the (#q...) form; local_options keeps it scoped.
