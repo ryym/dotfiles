@@ -11,15 +11,12 @@ import {
   listSessions,
   setJobStatus,
 } from "./tmux.js";
+import { shortenPath } from "./paths.js";
+import { runPromptInfo } from "./prompt-info.js";
 import { buildRow, printTable, selectWithFzf } from "./table.js";
 
 // Valid job statuses, most urgent first. rollupJobStatus relies on this order.
 const JOB_STATUSES = ["blocked", "running", "done"];
-
-function shortenPath(path) {
-  const home = process.env.HOME;
-  return home && path.startsWith(home) ? path.replace(home, "~") : path;
-}
 
 const PANE_COLUMNS = [
   { header: "SESSION", maxWidth: 15 },
@@ -266,6 +263,7 @@ const SUBCOMMANDS = {
   windows: runWindows,
   sessions: runSessions,
   "job-status": runJobStatus,
+  "prompt-info": runPromptInfo,
 };
 
 // main runs the subcommand named by the first of args (the command line without node and script).

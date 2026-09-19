@@ -6,6 +6,26 @@ import { execFileSync, spawnSync } from "node:child_process";
 // Written here by `job-status`, read by tmux.conf to render the status line.
 export const JOB_STATUS_OPTION = "@job_status";
 
+// Pane-scoped user options holding the prompt info of that pane's directory. Written here by
+// `prompt-info`, composed and colored by tmux.conf. They carry plain data (no styling) so the
+// color palette stays in tmux.conf alone.
+export const PROMPT_OPTIONS = [
+  "@prompt_path",
+  "@prompt_branch",
+  "@prompt_action",
+  "@prompt_ahead",
+  "@prompt_behind",
+  "@prompt_sync",
+];
+
+// Global user option naming the process that currently writes PROMPT_OPTIONS. tmux restarts the
+// watcher whenever it dies, so a second one can appear; the newest claims this and the rest quit.
+const PROMPT_OWNER_OPTION = "@prompt_info_owner";
+
+const PROMPT_FIELDS = ["pane_id", "pane_current_path", ...PROMPT_OPTIONS];
+
+const PROMPT_FORMAT = PROMPT_FIELDS.map((f) => `${f}=#{${f}}`).join("\t");
+
 const FIELDS = [
   "session_name",
   "window_id",
@@ -86,6 +106,36 @@ export function jumpToWindow(windowId) {
 export function jumpToSession(sessionName) {
   // Append ':' so tmux doesn't parse a session name containing '.' as a pane target.
   jumpTo(`${sessionName}:`);
+}
+
+// claimPromptInfo marks this process as the single writer of the prompt options.
+export function claimPromptInfo() {
+  execFileSync("tmux", ["set-option", "-g", PROMPT_OWNER_OPTION, String(process.pid)]);
+}
+
+// readPromptPanes returns the current owner pid alongside every pane's path and prompt options.
+// Both are asked for in one tmux invocation to keep the update loop down to a single fork.
+export function readPromptPanes() {
+  const args = ["show-options", "-gqv", PROMPT_OWNER_OPTION, ";", "list-panes", "-a", "-F", PROMPT_FORMAT];
+  const output = execFileSync("tmux", args, { encoding: "utf8" });
+  const [owner, ...paneLines] = output.split("\n");
+  return { owner: owner.trim(), panes: parseTmuxTable(paneLines.join("\n")) };
+}
+
+// writePromptInfo applies the given { paneId, option, value } updates. Panes can disappear
+// between being listed and being written, which aborts the rest of the invocation; the caller
+// is expected to ignore that and let the next pass set whatever was skipped.
+export function writePromptInfo(updates) {
+  if (updates.length === 0) return;
+
+  const args = [];
+  for (const { paneId, option, value } of updates) {
+    if (args.length > 0) args.push(";");
+    args.push("set-option", "-p", "-t", paneId, option, value);
+  }
+  // Redraw now instead of waiting up to status-interval for the next tick.
+  args.push(";", "refresh-client", "-S");
+  execFileSync("tmux", args, { stdio: "ignore" });
 }
 
 // setJobStatus sets the job status of the given pane, or clears it when status is undefined.
