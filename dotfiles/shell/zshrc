@@ -116,7 +116,7 @@ function _update_prompt() {
     fi
 
     # Use as a jump marker in tmux's copy-mode.
-    local prompt_sequence=$'\033]133;A\033\\'
+    local prompt_sequence=$'%{\033]133;A\033\\%}'
     local symbol="%F{$symbol_color}❯%f "
 
     if [[ -n $TMUX ]]; then
@@ -125,9 +125,7 @@ function _update_prompt() {
         [[ $PWD != $_last_prompt_pwd ]] && path_line="%F{246}%~%f
 "
         _last_prompt_pwd=$PWD
-        # FIXME: Cannot use $prompt_sequence which breaks how a line is wrapped for some reason.
-        # PROMPT="${prompt_sequence}${path_line}${ssh_info}${symbol}"
-        PROMPT="${path_line}${ssh_info}${symbol}"
+        PROMPT="${prompt_sequence}${path_line}${ssh_info}${symbol}"
         return
     fi
 
