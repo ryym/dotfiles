@@ -209,6 +209,11 @@ if has direnv; then
     eval "$(direnv hook zsh)"
 fi
 
+# Refresh the tmux prompt info so the new pane immediately displays it.
+if [[ -n $TMUX ]]; then
+    (tmuxx prompt-info &>/dev/null &) &>/dev/null
+fi
+
 # Load local settings.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
