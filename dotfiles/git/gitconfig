@@ -79,7 +79,7 @@
     rbi    = rebase -i
     rcon   = rebase --continue
     rab    = rebase --abort
-    ras    = "!f() { git rebase --autosquash ${1:-@~20} ${@:2}; }; f"
+    ras    = rebase --autosquash
     m      = merge
     mnf    = merge --no-ff
     mab    = merge --abort
