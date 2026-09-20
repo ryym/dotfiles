@@ -103,8 +103,10 @@ zstyle ':vcs_info:*' actionformats '%F{green}%b%f %F{red}%a%f'
 #   ~/.dotfiles main <git-info>
 #   ❯
 # The first information line is dropped in tmux because the same information is
-# on the tmux pane border.
+# on the tmux pane border. The path alone is still printed on the first prompt
+# after it changes.
 _is_first_prompt=1
+_last_prompt_pwd=''
 function _update_prompt() {
     local symbol_color=$([[ $? == 0 ]] && echo 'cyan' || echo 'magenta')
     if [[ $_is_first_prompt == 1 ]]; then
@@ -119,9 +121,13 @@ function _update_prompt() {
 
     if [[ -n $TMUX ]]; then
         local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '%F{yellow}(SSH)%f ')
+        local path_line=''
+        [[ $PWD != $_last_prompt_pwd ]] && path_line="%F{246}%~%f
+"
+        _last_prompt_pwd=$PWD
         # FIXME: Cannot use $prompt_sequence which breaks how a line is wrapped for some reason.
-        # PROMPT="${prompt_sequence}${ssh_info}${symbol}"
-        PROMPT="${ssh_info}${symbol}"
+        # PROMPT="${prompt_sequence}${path_line}${ssh_info}${symbol}"
+        PROMPT="${path_line}${ssh_info}${symbol}"
         return
     fi
 
