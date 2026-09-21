@@ -15,7 +15,7 @@ function! my#plug#fzf#tab_buffers#list(tabnr) abort
   let bufnrs = values(bufs)
     \ ->sort({a, b -> a.displayed < b.displayed ? 1 : -1})
     \ ->map('v:val.nr')
-  return bufnrs->filter('buflisted(v:val)')->map('bufname(v:val)')
+  return bufnrs->filter('buflisted(v:val)')->map('bufname(v:val)')->filter('v:val !=# ""')
 endfunction
 
 function! s:append_initialBuffers() abort
