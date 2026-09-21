@@ -52,6 +52,7 @@ For example, understand an instruction like "/my.garage Research X" as
 ## Markdown Style Guide
 
 Always insert a blank line before and after a table so that Prettier can format it correctly.
+(No need to run Prettier. It will run automatically after you finish writing.)
 
 Good:
 
