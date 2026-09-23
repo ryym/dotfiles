@@ -29,6 +29,7 @@ local function configure()
                 "python",
                 "json",
                 "sql",
+                "yaml",
             }
             -- Install parsers. The `nvim-treesitter.configs` module exists only on
             -- the legacy `master` branch. The new `main` branch (Neovim 0.12+) dropped it.
