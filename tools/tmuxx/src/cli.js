@@ -189,7 +189,9 @@ function showPanes(panes, args) {
   const rows = buildPaneRows(panes);
 
   if (args.includes("--fzf")) {
-    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id);
+    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id, {
+      previewCmd: "tmux capture-pane -e -p -t {1}",
+    });
     if (paneId) jumpToPane(paneId);
   } else {
     printTable(rows, PANE_COLUMNS);
