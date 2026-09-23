@@ -6,11 +6,12 @@ endfunction
 function my#plug#ale#before_load()
   let g:ale_linters_explicit = 1
   let g:ale_fix_on_save = 1
-  let g:ale_fixers = {
-    \ 'rust': ['rustfmt'],
-    \ 'elm': ['elm-format'],
-    \ 'terraform': ['terraform'],
-    \ }
+  let g:ale_fixers = {}
+
+  let g:ale_fixers.rust = ['rustfmt']
+  let g:ale_fixers.elm = ['elm-format']
+  let g:ale_fixers.terraform = ['terraform']
+
   let g:ale_fixers.javascript = ['prettier']
   let g:ale_fixers.javascriptreact = ['prettier']
   let g:ale_fixers.typescript = ['prettier']
