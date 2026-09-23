@@ -29,7 +29,7 @@ function charWidth(codePoint) {
 function strWidth(str) {
   return Array.from(stripVTControlCharacters(str)).reduce(
     (w, ch) => w + charWidth(ch.codePointAt(0)),
-    0
+    0,
   );
 }
 

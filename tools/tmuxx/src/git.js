@@ -101,11 +101,15 @@ function rebaseBranch(gitDir) {
 // so this never touches the network; maybeFetch is what keeps the remote-tracking refs current.
 function countAgainstUpstream(cwd) {
   try {
-    const output = execFileSync("git", ["rev-list", "--left-right", "--count", "@{upstream}...HEAD"], {
-      cwd,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"],
-    });
+    const output = execFileSync(
+      "git",
+      ["rev-list", "--left-right", "--count", "@{upstream}...HEAD"],
+      {
+        cwd,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      },
+    );
     const [behind, ahead] = output.trim().split(/\s+/).map(Number);
     return { upstream: true, ahead, behind };
   } catch {

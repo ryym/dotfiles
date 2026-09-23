@@ -205,7 +205,10 @@ function runPanes(args) {
 // runJobs is runPanes narrowed down to the panes that have a job status.
 function runJobs(args) {
   const panes = listPanes({ allSessions: args.includes("--all") });
-  showPanes(panes.filter((p) => p[JOB_STATUS_OPTION]), args);
+  showPanes(
+    panes.filter((p) => p[JOB_STATUS_OPTION]),
+    args,
+  );
 }
 
 function runWindows(args) {

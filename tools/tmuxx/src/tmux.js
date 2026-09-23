@@ -116,7 +116,16 @@ export function claimPromptInfo() {
 // readPromptPanes returns the current owner pid alongside every pane's path and prompt options.
 // Both are asked for in one tmux invocation to keep the update loop down to a single fork.
 export function readPromptPanes() {
-  const args = ["show-options", "-gqv", PROMPT_OWNER_OPTION, ";", "list-panes", "-a", "-F", PROMPT_FORMAT];
+  const args = [
+    "show-options",
+    "-gqv",
+    PROMPT_OWNER_OPTION,
+    ";",
+    "list-panes",
+    "-a",
+    "-F",
+    PROMPT_FORMAT,
+  ];
   const output = execFileSync("tmux", args, { encoding: "utf8" });
   const [owner, ...paneLines] = output.split("\n");
   return { owner: owner.trim(), panes: parseTmuxTable(paneLines.join("\n")) };
@@ -142,5 +151,14 @@ export function writePromptInfo(updates) {
 export function setJobStatus(paneId, status) {
   const optionArgs = status === undefined ? ["-u", JOB_STATUS_OPTION] : [JOB_STATUS_OPTION, status];
   // Redraw now instead of waiting up to status-interval for the next tick.
-  execFileSync("tmux", ["set-option", "-p", "-t", paneId, ...optionArgs, ";", "refresh-client", "-S"]);
+  execFileSync("tmux", [
+    "set-option",
+    "-p",
+    "-t",
+    paneId,
+    ...optionArgs,
+    ";",
+    "refresh-client",
+    "-S",
+  ]);
 }
