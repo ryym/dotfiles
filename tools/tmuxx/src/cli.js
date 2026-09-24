@@ -3,6 +3,7 @@
 
 import {
   JOB_STATUS_OPTION,
+  JOB_UPDATED_AT_OPTION,
   jumpToPane,
   jumpToSession,
   jumpToWindow,
@@ -22,6 +23,16 @@ const PANE_COLUMNS = [
   { header: "SESSION", maxWidth: 15 },
   { header: "WINDOW", maxWidth: 20 },
   { header: "JOB", fixed: true },
+  { header: "PANE", maxWidth: 60 },
+  { header: "CWD", maxWidth: 40, truncateFromStart: true },
+];
+
+// PANE_COLUMNS plus when each job was last updated.
+const JOB_COLUMNS = [
+  { header: "SESSION", maxWidth: 15 },
+  { header: "WINDOW", maxWidth: 20 },
+  { header: "JOB", fixed: true },
+  { header: "UPDATED", fixed: true },
   { header: "PANE", maxWidth: 60 },
   { header: "CWD", maxWidth: 40, truncateFromStart: true },
 ];
@@ -105,18 +116,31 @@ function activeCell(text, isActive) {
   return { text, mark: isActive ? ACTIVE_MARK : " ", highlight: isActive };
 }
 
+function paneCells(p) {
+  const windowName = `${p.window_index}:${p.window_name}`;
+  const paneName = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
+  return {
+    session: p.session_name,
+    window: activeCell(windowName, p.window_active === "1"),
+    job: JOB_MARKS[p[JOB_STATUS_OPTION]] || "",
+    pane: activeCell(paneName, p.pane_active === "1"),
+    cwd: shortenPath(p.pane_current_path),
+  };
+}
+
 function buildPaneRows(panes) {
   return panes.map((p) => {
-    const windowName = `${p.window_index}:${p.window_name}`;
-    const paneName = `${p.pane_index}${p.pane_title ? `:${p.pane_title}` : ""}`;
-    const cells = [
-      p.session_name,
-      activeCell(windowName, p.window_active === "1"),
-      JOB_MARKS[p[JOB_STATUS_OPTION]] || "",
-      activeCell(paneName, p.pane_active === "1"),
-      shortenPath(p.pane_current_path),
-    ];
-    return buildRow(cells, PANE_COLUMNS);
+    const c = paneCells(p);
+    return buildRow([c.session, c.window, c.job, c.pane, c.cwd], PANE_COLUMNS);
+  });
+}
+
+function buildJobRows(panes) {
+  return panes.map((p) => {
+    const c = paneCells(p);
+    const updatedAt = p[JOB_UPDATED_AT_OPTION];
+    const updated = updatedAt ? formatRelativeTime(updatedAt) : "";
+    return buildRow([c.session, c.window, c.job, updated, c.pane, c.cwd], JOB_COLUMNS);
   });
 }
 
@@ -185,30 +209,30 @@ function buildSessionRows(sessions, panes) {
 }
 
 // showPanes prints panes as a table, or lets the user pick one in fzf and jumps to it.
-function showPanes(panes, args) {
-  const rows = buildPaneRows(panes);
-
+// rows and columns render panes one to one.
+function showPanes(panes, rows, columns, args) {
   if (args.includes("--fzf")) {
-    const paneId = selectWithFzf(panes, rows, PANE_COLUMNS, (p) => p.pane_id, {
+    const paneId = selectWithFzf(panes, rows, columns, (p) => p.pane_id, {
       previewCmd: "tmux capture-pane -e -p -t {1}",
     });
     if (paneId) jumpToPane(paneId);
   } else {
-    printTable(rows, PANE_COLUMNS);
+    printTable(rows, columns);
   }
 }
 
 function runPanes(args) {
-  showPanes(listPanes({ allSessions: args.includes("--all") }), args);
+  const panes = listPanes({ allSessions: args.includes("--all") });
+  showPanes(panes, buildPaneRows(panes), PANE_COLUMNS, args);
 }
 
-// runJobs is runPanes narrowed down to the panes that have a job status.
+// runJobs is runPanes narrowed down to the panes that have a job status, most recently
+// updated first.
 function runJobs(args) {
-  const panes = listPanes({ allSessions: args.includes("--all") });
-  showPanes(
-    panes.filter((p) => p[JOB_STATUS_OPTION]),
-    args,
-  );
+  const panes = listPanes({ allSessions: args.includes("--all") })
+    .filter((p) => p[JOB_STATUS_OPTION])
+    .sort((a, b) => Number(b[JOB_UPDATED_AT_OPTION] || 0) - Number(a[JOB_UPDATED_AT_OPTION] || 0));
+  showPanes(panes, buildJobRows(panes), JOB_COLUMNS, args);
 }
 
 function runWindows(args) {

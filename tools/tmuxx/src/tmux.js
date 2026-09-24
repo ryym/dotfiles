@@ -6,6 +6,10 @@ import { execFileSync, spawnSync } from "node:child_process";
 // Written here by `job-status`, read by tmux.conf to render the status line.
 export const JOB_STATUS_OPTION = "@job_status";
 
+// Pane-scoped user option holding when JOB_STATUS_OPTION was last set, as a unix timestamp in
+// seconds. Refreshed on every set, even with an unchanged status, so it tracks recent activity.
+export const JOB_UPDATED_AT_OPTION = "@job_updated_at";
+
 // Pane-scoped user options holding the prompt info of that pane's directory. Written here by
 // `prompt-info`, composed and colored by tmux.conf. They carry plain data (no styling) so the
 // color palette stays in tmux.conf alone.
@@ -37,6 +41,7 @@ const FIELDS = [
   "pane_active",
   "pane_title",
   JOB_STATUS_OPTION,
+  JOB_UPDATED_AT_OPTION,
   "pane_current_path",
 ];
 
@@ -147,18 +152,18 @@ export function writePromptInfo(updates) {
   execFileSync("tmux", args, { stdio: "ignore" });
 }
 
-// setJobStatus sets the job status of the given pane, or clears it when status is undefined.
+// setJobStatus sets the job status of the given pane along with its update time, or clears
+// both when status is undefined.
 export function setJobStatus(paneId, status) {
-  const optionArgs = status === undefined ? ["-u", JOB_STATUS_OPTION] : [JOB_STATUS_OPTION, status];
+  const setOption = (...optionArgs) => ["set-option", "-p", "-t", paneId, ...optionArgs];
+  const optionCommands =
+    status === undefined
+      ? [...setOption("-u", JOB_STATUS_OPTION), ";", ...setOption("-u", JOB_UPDATED_AT_OPTION)]
+      : [
+          ...setOption(JOB_STATUS_OPTION, status),
+          ";",
+          ...setOption(JOB_UPDATED_AT_OPTION, String(Math.floor(Date.now() / 1000))),
+        ];
   // Redraw now instead of waiting up to status-interval for the next tick.
-  execFileSync("tmux", [
-    "set-option",
-    "-p",
-    "-t",
-    paneId,
-    ...optionArgs,
-    ";",
-    "refresh-client",
-    "-S",
-  ]);
+  execFileSync("tmux", [...optionCommands, ";", "refresh-client", "-S"]);
 }
