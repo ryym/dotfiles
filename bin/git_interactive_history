@@ -24,7 +24,7 @@ preview_cmd="
         '󰍟'*)
             ;;
         *)
-            git -c color.ui=always show --stat --stat-graph-width=30 --patch -m {2} | delta
+            git -c color.ui=always show \$FZF_PREVIEW_LABEL --stat --stat-graph-width=30 --patch -m {2} | delta
             ;;
     esac
 "
@@ -41,6 +41,11 @@ fzf_options=(
     --bind='z:execute(zsh)+reload-sync(git_interactive_history _list)'
     --bind="m:execute(git_interactive_history _menu)"
     --bind='?:execute(bat $(command -v git_interactive_history))'
+    # Toggle whitespace ignorance.
+    --bind='w:transform([ -z "$FZF_PREVIEW_LABEL" ] &&
+        echo "change-preview-label(-w)" ||
+        echo "change-preview-label()"
+    )+refresh-preview'
 
     --bind="y:execute-silent(git_interactive_history _copy {+2})"
     --bind="D:execute(git_interactive_history _diff {+2})"
@@ -74,11 +79,11 @@ _copy() {
 
 _diff() {
     if [[ $# -eq 1 ]]; then
-        git -c color.ui=always show --stat --stat-graph-width=30 --patch -m $1 | delta --pager 'less -+F'
+        git -c color.ui=always show $FZF_PREVIEW_LABEL --stat --stat-graph-width=30 --patch -m $1 | delta --pager 'less -+F'
     else
         local latest=$1
         local oldest=${@: -1}
-        git diff $oldest..$latest | delta --pager 'less -+F'
+        git diff $FZF_PREVIEW_LABEL $oldest..$latest | delta --pager 'less -+F'
     fi
 }
 
