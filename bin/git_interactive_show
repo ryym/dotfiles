@@ -17,6 +17,11 @@ main() {
 
 fzf_options=(
     --bind='start:ignore'
+    # Toggle whitespace ignorance.
+    --bind='w:transform([ -z "$FZF_PREVIEW_LABEL" ] &&
+        echo "change-preview-label(-w)" ||
+        echo "change-preview-label()"
+    )+refresh-preview'
     --bind='?:execute(bat $(command -v git_interactive_show))'
 )
 
@@ -53,9 +58,9 @@ handle_single_parent_commit() {
     files=$(echo "$content" | awk 'NR>1 {print $1 " " $2}')
     fzf_options+=(
         --header="$commit_summary"
-        --preview="git show -m --pretty='' $1 -- {2} | delta"
-        --bind="A:execute(git show -m $1 | delta --pager 'less -+F')"
-        --bind="v:execute(git show -m --pretty='' $1 -- {2} | delta --pager 'less -+F')"
+        --preview="git show \$FZF_PREVIEW_LABEL -m --pretty='' $1 -- {2} | delta"
+        --bind="A:execute(git show \$FZF_PREVIEW_LABEL -m $1 | delta --pager 'less -+F')"
+        --bind="v:execute(git show \$FZF_PREVIEW_LABEL -m --pretty='' $1 -- {2} | delta --pager 'less -+F')"
         --bind="t:become(git_interactive_history popup $1)"
     )
     echo "$files" | fzf "${fzf_options[@]}"
@@ -73,9 +78,9 @@ handle_multi_parents_commit() {
         # Use the header label as a stateful variable. It is displayed only if `--header-border` is specified.
         --header-label=$parent_idx
         --bind="c:transform(git_interactive_show _fzf_parent_switch $commit $n_parents)"
-        --preview="git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta"
-        --bind="A:execute(git diff $commit^\$FZF_HEADER_LABEL $commit | delta --pager 'less -+F')"
-        --bind="v:execute(git diff $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta --pager 'less -+F')"
+        --preview="git diff \$FZF_PREVIEW_LABEL $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta"
+        --bind="A:execute(git diff \$FZF_PREVIEW_LABEL $commit^\$FZF_HEADER_LABEL $commit | delta --pager 'less -+F')"
+        --bind="v:execute(git diff \$FZF_PREVIEW_LABEL $commit^\$FZF_HEADER_LABEL $commit -- {2} | delta --pager 'less -+F')"
         --bind="t:become(git_interactive_history popup $commit)"
     )
     echo "$files" | fzf "${fzf_options[@]}"

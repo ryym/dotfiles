@@ -16,6 +16,11 @@ main() {
 
 fzf_options=(
     --bind='start:ignore'
+    # Toggle whitespace ignorance.
+    --bind='w:transform([ -z "$FZF_PREVIEW_LABEL" ] &&
+        echo "change-preview-label(-w)" ||
+        echo "change-preview-label()"
+    )+refresh-preview'
 )
 
 popup() {
@@ -26,9 +31,9 @@ popup() {
 run() {
     fzf_options+=(
          --header="$*"
-        --preview="git diff $* -- {2} | delta"
-        --bind="A:execute(git diff $* | delta --pager 'less -+F')"
-        --bind="v:execute(git diff $* -- {2} | delta --pager 'less -+F')"
+        --preview="git diff \$FZF_PREVIEW_LABEL $* -- {2} | delta"
+        --bind="A:execute(git diff \$FZF_PREVIEW_LABEL $* | delta --pager 'less -+F')"
+        --bind="v:execute(git diff \$FZF_PREVIEW_LABEL $* -- {2} | delta --pager 'less -+F')"
     )
     git diff --name-status "$@" | awk '{print $1 " " $2}' | fzf "${fzf_options[@]}"
 }
