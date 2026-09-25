@@ -100,11 +100,16 @@ export function printTable(rows, columns) {
 // selectWithFzf lets the user pick a row in fzf and returns the id (via getId) of its item,
 // or undefined if aborted. previewCmd is a shell command where {1} expands to the item's id.
 export function selectWithFzf(items, rows, columns, getId, { previewCmd } = {}) {
-  const widths = columnWidths(rows, columns);
+  const header = columns.map((c) => c.header);
+  const widths = columnWidths([header, ...rows], columns);
   // Prepend the id as a column hidden by --with-nth, so it survives in fzf's output.
-  const lines = items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`).join("\n");
+  // The header gets an empty id to keep the same shape; fzf never outputs it anyway.
+  const lines = [
+    `\t${formatRow(header, widths)}`,
+    ...items.map((item, i) => `${getId(item)}\t${formatRow(rows[i], widths)}`),
+  ].join("\n");
 
-  const fzfArgs = ["--ansi", "--delimiter", "\t", "--with-nth", "2.."];
+  const fzfArgs = ["--ansi", "--delimiter", "\t", "--with-nth", "2..", "--header-lines", "1"];
   if (previewCmd) {
     fzfArgs.push("--preview-window", "bottom:nowrap");
     fzfArgs.push("--preview", previewCmd);
