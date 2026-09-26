@@ -48,3 +48,33 @@ function! my#init#func#window#split_by_ratio(src_win, opt) abort
     execute prefix 'resize' string(desired_size)
   endif
 endfunction
+
+" Move to the window in the direction like `wincmd {dir}`, but prefer the previous
+" window if it is next to the current one in that direction. This imitates Tmux.
+function! my#init#func#window#move(dir) abort
+  let prev = winnr('#')
+  if prev > 0 && prev != winnr() && s:is_adjacent(winnr(), prev, a:dir)
+    execute prev . 'wincmd w'
+  else
+    execute 'wincmd' a:dir
+  endif
+endfunction
+
+function! s:is_adjacent(cur, other, dir) abort
+  let [cr, cc] = win_screenpos(a:cur)
+  let [ch, cw] = [winheight(a:cur), winwidth(a:cur)]
+  let [or, oc] = win_screenpos(a:other)
+  let [oh, ow] = [winheight(a:other), winwidth(a:other)]
+  let rows_overlap = or <= cr + ch - 1 && cr <= or + oh - 1
+  let cols_overlap = oc <= cc + cw - 1 && cc <= oc + ow - 1
+  if a:dir ==# 'h'
+    return rows_overlap && oc + ow + 1 == cc
+  elseif a:dir ==# 'l'
+    return rows_overlap && cc + cw + 1 == oc
+  elseif a:dir ==# 'k'
+    " The gap is the status line (and the winbar if any).
+    return cols_overlap && or + oh < cr && cr - (or + oh) <= 2
+  else
+    return cols_overlap && cr + ch < or && or - (cr + ch) <= 2
+  endif
+endfunction

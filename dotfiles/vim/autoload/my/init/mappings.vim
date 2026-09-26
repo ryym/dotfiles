@@ -250,6 +250,14 @@ endfunction
 " Note that currently we use <C-w> for 'termwinkey'. This makes difficult to use <C-w>
 " (deleting a word) in bash/zsh. Therefore I remapped the <C-t> to <C-w> in my zsh.
 function! s:map_unified_win_switches() abort
+  " Move between windows, preferring the previous window like Tmux.
+  for dir in ['h', 'j', 'k', 'l']
+    for key in [dir, '<C-' . dir . '>']
+      execute printf('Map n <silent> <C-w>%s :<C-u>call my#init#func#window#move("%s")<CR>', key, dir)
+      execute printf('Map t <silent> <C-w>%s <C-\><C-n>:call my#init#func#window#move("%s")<CR>', key, dir)
+    endfor
+  endfor
+
   " Split equally. This does not open a new buffer.
   Map n <C-w>- :<C-u>split<CR>
   Map n <C-w>\| :<C-u>vsplit<CR>
