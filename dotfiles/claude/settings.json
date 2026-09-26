@@ -55,9 +55,6 @@
       "Edit(~/)",
       "Bash(git push)"
     ],
-    "ask": [
-      "Read(.local/garage/*)"
-    ],
     "defaultMode": "auto"
   },
   "model": "opus",
