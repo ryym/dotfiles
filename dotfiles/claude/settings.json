@@ -44,15 +44,22 @@
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
     ],
+    "ask": [
+      "Read(~/Downloads)",
+    ],
     "deny": [
-      "Read(.local/human/**)",
-      "Read(.env*)",
-      "Read(.zshrc.local)",
+      "Read(//**/.env*)",
+      "Read(~/.bashrc.local)",
+      "Read(~/.bash_history)",
+      "Read(~/.zshrc.local)",
+      "Read(~/.zsh_history)",
+      "Read(~/.aws)",
+      "Read(~/.azure)",
+      "Read(~/.config)",
+      "Read(~/.docker)",
       "Read(~/.ssh)",
-      "Read(//)",
-      "Read(~/)",
-      "Edit(//)",
-      "Edit(~/)",
+      "Read(~/Library)",
+      "Read(.local/human/**)",
       "Bash(git push)"
     ],
     "defaultMode": "auto"
