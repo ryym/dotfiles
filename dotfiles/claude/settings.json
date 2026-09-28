@@ -44,9 +44,6 @@
       "Bash(tmux display-message:*)",
       "Bash(tmux capture-pane:*)"
     ],
-    "ask": [
-      "Read(~/Downloads)",
-    ],
     "deny": [
       "Read(//**/.env*)",
       "Read(~/.bashrc.local)",
@@ -61,6 +58,16 @@
       "Read(~/Library)",
       "Read(.local/human/**)",
       "Bash(git push)"
+    ],
+    "ask": [
+      "Read(~/Downloads)",
+      "Bash(*db:migrate*)",
+      "Bash(*db:rollback*)",
+      "Bash(systemctl *)",
+      "Bash(apt *)",
+      "Bash(brew *)",
+      "Bash(dnf *)",
+      "Bash(packman *)"
     ],
     "defaultMode": "auto"
   },
@@ -167,14 +174,6 @@
   "autoMemoryEnabled": false,
   "theme": "dark",
   "agentPushNotifEnabled": true,
-  "autoMode": {
-    "soft_deny": [
-      "$defaults",
-      "Never run external processes by 'brew services', 'systemctl', etc",
-      "Never run DB migration",
-      "Never read or modify files outside of the current directory except for /tmp."
-    ]
-  },
   "attribution": {
     "sessionUrl": false
   }
