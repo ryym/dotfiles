@@ -6,6 +6,9 @@
 # A directory I use to store any files I don't want to commit.
 .local
 
+# Local mise config (https://mise.jdx.dev/configuration.html).
+mise.local.toml
+
 # My personal settings and tools for Claude Code.
 .claude/settings.local.json
 .claude/commands/_local
