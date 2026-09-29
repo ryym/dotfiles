@@ -1,4 +1,7 @@
 {
+  "attribution": {
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "Read(.local/claude/**)",
@@ -174,7 +177,5 @@
   "autoMemoryEnabled": false,
   "theme": "dark",
   "agentPushNotifEnabled": true,
-  "attribution": {
-    "sessionUrl": false
-  }
+  "switchModelsOnFlag": false
 }
