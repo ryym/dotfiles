@@ -117,7 +117,7 @@ function _update_prompt() {
 
     # Use as a jump marker in tmux's copy-mode.
     local prompt_sequence=$'%{\033]133;A\033\\%}'
-    local symbol="%F{$symbol_color}❯%f "
+    local symbol="%F{$symbol_color}❯❯%f "
 
     if [[ -n $TMUX ]]; then
         local ssh_info=$(test -z "$SSH_CLIENT" && echo '' || echo '%F{yellow}(SSH)%f ')
