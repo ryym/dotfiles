@@ -137,4 +137,5 @@ g() {
         git "$@"
         ;;
     esac
+    (tmuxx prompt-info &>/dev/null &) &>/dev/null
 }
