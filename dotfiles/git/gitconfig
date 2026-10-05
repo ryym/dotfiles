@@ -138,3 +138,5 @@
     minus-style = syntax auto
 [rerere]
 	enabled = true
+[log]
+	date = iso
