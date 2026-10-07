@@ -55,6 +55,9 @@ function! s:customize_per_filetype() abort
     " Disable colorcolumn for the quickfix list.
     autocmd FileType qf setlocal colorcolumn=
 
+    " Make all multi line objects foldable.
+    autocmd FileType yaml setlocal foldminlines=2
+
     " Configure filetypes which have to be assigned manually.
     call s:delegate_filetypes({
       \ '*.gradle'     : 'groovy',
