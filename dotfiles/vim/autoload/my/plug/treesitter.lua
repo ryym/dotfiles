@@ -43,10 +43,6 @@ local function configure()
             vim.api.nvim_create_autocmd('FileType', {
                 group = 'vimrc',
                 callback = function(args)
-                    -- Disable them whose syntax highlight seems better than the treesitter's one.
-                    if args.match == 'yaml' then
-                        return
-                    end
                     -- No-op when no parser is installed for the filetype.
                     pcall(vim.treesitter.start)
                     vim.wo.foldmethod = 'expr'
