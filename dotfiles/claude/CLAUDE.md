@@ -34,8 +34,13 @@
 
 ## Temporary Files
 
-Unless otherwise specified, store temporary files like oneshot scripts, memo for yourself, etc, in the `.local` directory.
-The `.local` directory is excluded from Git so you don't need to commit it.
+Unless otherwise specified, store temporary files in `./.local/` instead of `/tmp`.
+The `.local` directory is excluded from Git by global `.gitignore`.
+
+- `.local/tmp/`: Put files that are OK to be removed soon later
+  (e.g. a one-off script to automate specific work)
+- `.local/`: Put files or directories that isn't committed but might be useful in the future
+  (e.g. a bug reproduction, a quick performance measure script)
 
 ## Git Usage
 
