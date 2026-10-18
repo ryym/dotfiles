@@ -153,17 +153,29 @@ export function writePromptInfo(updates) {
 }
 
 // setJobStatus sets the job status of the given pane along with its update time, or clears
-// both when status is undefined.
+// both when status is undefined. The update time is refreshed when the status actually changes.
 export function setJobStatus(paneId, status) {
   const setOption = (...optionArgs) => ["set-option", "-p", "-t", paneId, ...optionArgs];
-  const optionCommands =
-    status === undefined
-      ? [...setOption("-u", JOB_STATUS_OPTION), ";", ...setOption("-u", JOB_UPDATED_AT_OPTION)]
-      : [
-          ...setOption(JOB_STATUS_OPTION, status),
-          ";",
-          ...setOption(JOB_UPDATED_AT_OPTION, String(Math.floor(Date.now() / 1000))),
-        ];
+  let optionCommands;
+  if (status === undefined) {
+    optionCommands = [
+      ...setOption("-u", JOB_STATUS_OPTION),
+      ";",
+      ...setOption("-u", JOB_UPDATED_AT_OPTION),
+    ];
+  } else {
+    const stamp = String(Math.floor(Date.now() / 1000));
+    optionCommands = [
+      "if-shell",
+      "-F",
+      "-t",
+      paneId,
+      `#{!=:#{${JOB_STATUS_OPTION}},${status}}`,
+      `set-option -p -t ${paneId} ${JOB_UPDATED_AT_OPTION} ${stamp}`,
+      ";",
+      ...setOption(JOB_STATUS_OPTION, status),
+    ];
+  }
   // Redraw now instead of waiting up to status-interval for the next tick.
   execFileSync("tmux", [...optionCommands, ";", "refresh-client", "-S"]);
 }
