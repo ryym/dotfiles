@@ -264,7 +264,7 @@ function! my#plug#fzf#_runtimepaths() abort
 endfunction
 
 function! my#plug#fzf#_colorschemes() abort
-  let colorschemes = ['everforest', 'hybrid', 'smyck256']
+  let colorschemes = ['everforest', 'github_dark_dimmed', 'hybrid', 'smyck256']
   call fzf#run({
     \   'sink': 'colorscheme',
     \   'source': colorschemes,
