@@ -77,7 +77,6 @@ function! my#init#mappings#setup() abort
   Map n <silent> \[toggle]h :<C-u>let v:hlsearch = ! v:hlsearch<CR>
   Map n \[toggle]S :<C-u>windo setlocal scrollbind! scrollbind?<CR>
   Map n \[toggle]i :call my#init#mappings#toggle_indent_width()<CR>
-  Map n \[toggle]c :call my#init#mappings#toggle_colorschemes()<CR>
   Map n \[toggle]* :call my#init#mappings#toggle_comment_continuation()<CR>
 
   " Prevent one characer deletion from copying the chracter to the clipboard.
@@ -318,13 +317,6 @@ function! my#init#mappings#toggle_indent_width()
     execute 'IndentBy' 2 &expandtab
     echo 'Short indent (2)'
   endif
-endfunction
-
-let s:togglable_colors = ['smyck256', 'hybrid']
-function! my#init#mappings#toggle_colorschemes()
-  let current = index(s:togglable_colors, g:colors_name)
-  let next = (current + 1) % len(s:togglable_colors)
-  execute 'colorscheme' s:togglable_colors[next]
 endfunction
 
 function! my#init#mappings#toggle_comment_continuation()

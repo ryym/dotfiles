@@ -34,6 +34,7 @@ function! my#plug#fzf#after_load()
   Map n \[fzf]P :<C-u>call my#plug#fzf#_plugin_dirs()<CR>
   Map n \[fzf]_r :<C-u>call my#plug#fzf#_runtimepaths()<CR>
   Map n \[fzf]o :<C-u>FZFoutput<Space>
+  Map n \[fzf]S :<C-u>call my#plug#fzf#_colorschemes()<CR>
 endfunction
 
 let s:fd_available = executable('fd')
@@ -259,5 +260,15 @@ function! my#plug#fzf#_runtimepaths() abort
     \   'sink': 'cd',
     \   'source': paths,
     \   'up': '45%',
+    \ })
+endfunction
+
+function! my#plug#fzf#_colorschemes() abort
+  let colorschemes = ['everforest', 'hybrid', 'smyck256']
+  call fzf#run({
+    \   'sink': 'colorscheme',
+    \   'source': colorschemes,
+    \   'up': '45%',
+    \   'options': '--header [colorschemes]',
     \ })
 endfunction
