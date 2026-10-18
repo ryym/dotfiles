@@ -12,6 +12,7 @@ function! my#init#autocmds#setup() abort
 
   call my#init#func#buf#setup_autocmds()
   call my#init#func#diff#setup_enhanced_highlight()
+  call my#init#func#diff#setup_conflict_marker_highlight()
 
   call s:customize_per_filetype()
   call s:define_filetype_indents()

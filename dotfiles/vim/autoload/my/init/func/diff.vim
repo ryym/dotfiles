@@ -50,3 +50,46 @@ function! s:apply_enhanced_diff_hl() abort
   call setwinvar(left, '&winhighlight', 'DiffAdd:MyDiffAddAsDelete,DiffDelete:MyDiffDeleteDim')
   call setwinvar(right, '&winhighlight', 'DiffDelete:MyDiffDeleteDim')
 endfunction
+
+" Highlight Git conflict markers regardless of filetype.
+function! my#init#func#diff#setup_conflict_marker_highlight() abort
+  call s:define_conflict_marker_hl_groups()
+  augroup vimrc
+    autocmd ColorScheme * call s:define_conflict_marker_hl_groups()
+    autocmd VimEnter,WinEnter,BufWinEnter,FileType * call s:sync_conflict_marker_matches()
+  augroup END
+endfunction
+
+function! s:define_conflict_marker_hl_groups() abort
+  " Each marker kind gets its own background color with a white foreground.
+  highlight link MyConflictMarkerOurs DiffAdd
+  highlight link MyConflictMarkerTheirs DiffChange
+  highlight link MyConflictMarkerBase DiffDelete
+  highlight link MyConflictMarkerSeparator DiffDelete
+endfunction
+
+" Filetypes where the lines that look like conflict markers are legitimate content.
+let s:conflict_marker_ignored_filetypes = ['markdown']
+
+" Matches are window-local while the buffer (and its filetype) in a window can change,
+" so we sync the matches with the current buffer every time.
+function! s:sync_conflict_marker_matches() abort
+  let ignored = index(s:conflict_marker_ignored_filetypes, &filetype) >= 0
+  let registered = exists('w:my_conflict_marker_matches')
+
+  if ignored && registered
+    for id in w:my_conflict_marker_matches
+      silent! call matchdelete(id)
+    endfor
+    unlet w:my_conflict_marker_matches
+  elseif !ignored && !registered
+    " Use matchadd() instead of syntax rules so that it works even when the buffer is
+    " highlighted by Treesitter rather than the legacy syntax.
+    let w:my_conflict_marker_matches = [
+      \ matchadd('MyConflictMarkerOurs', '^<\{7}\%(\s.*\)\?$'),
+      \ matchadd('MyConflictMarkerBase', '^|\{7}\%(\s.*\)\?$'),
+      \ matchadd('MyConflictMarkerSeparator', '^=\{7}\%(\s.*\)\?$'),
+      \ matchadd('MyConflictMarkerTheirs', '^>\{7}\%(\s.*\)\?$'),
+      \ ]
+  endif
+endfunction
