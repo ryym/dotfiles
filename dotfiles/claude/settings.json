@@ -64,6 +64,7 @@
     ],
     "ask": [
       "Read(~/Downloads)",
+      "Bash(*db:prepare*)",
       "Bash(*db:migrate*)",
       "Bash(*db:rollback*)",
       "Bash(systemctl *)",
