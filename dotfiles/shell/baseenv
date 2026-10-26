@@ -137,5 +137,7 @@ g() {
         git "$@"
         ;;
     esac
+    local exit_code=$?
     (tmuxx prompt-info &>/dev/null &) &>/dev/null
+    return $exit_code
 }
