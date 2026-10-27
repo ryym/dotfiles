@@ -3,7 +3,7 @@
 log_start 'Rust cargo'
 
 install() {
-    run cargo install "$1"
+    run cargo install "$@"
 }
 
 if is_dryrun || has cargo; then
@@ -14,6 +14,7 @@ if is_dryrun || has cargo; then
     install git-delta
     install genact
     install tree-sitter-cli # For Neovim
+    install --git https://github.com/ryym/toss
 
     case $(ostype) in
         arch)

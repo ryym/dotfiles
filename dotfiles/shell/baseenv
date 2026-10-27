@@ -38,6 +38,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 export EDITOR=nvim
 
+if has toss; then
+    export PAGER=toss
+fi
+
 # Define the number of lines of shell prompt (details: "man less").
 export LESS_SHELL_LINES=3
 
