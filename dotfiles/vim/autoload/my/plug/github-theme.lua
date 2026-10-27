@@ -4,16 +4,16 @@ local function configure()
     after_load = function()
         require('github-theme').setup({
             options = {
+                modules = { diffchar = false },
                 styles = {
                     comments = 'italic',
                 },
             },
             groups = {
-                all = {
-                    Added = { fg = 'NONE' },
-                },
                 github_dark_dimmed = {
                     NormalFloat = { bg = '#313842' },
+
+                    DiffText = { bg = 'palette.attention.muted' },
 
                     -- Markdown heading styles
                     ['@markup.heading.1.markdown'] = { fg = 'palette.cyan.base',      style = 'bold' },
