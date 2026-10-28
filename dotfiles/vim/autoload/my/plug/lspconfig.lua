@@ -53,13 +53,44 @@ local function configure()
             })
             vim.lsp.enable('gopls')
 
+            -- Return true if the TypeScript installed in the root is the native port (7.0+).
+            local function uses_native_ts(root)
+                local ok, lines = pcall(vim.fn.readfile, root .. '/node_modules/typescript/package.json')
+                if not ok then
+                    return false
+                end
+                local version = vim.version.parse(vim.json.decode(table.concat(lines, '\n')).version)
+                return version ~= nil and version.major >= 7
+            end
+
+            local ts_markers = { 'package.json', 'tsconfig.json' }
+
             -- https://github.com/typescript-language-server/typescript-language-server
             -- npm i -g typescript-language-server
             vim.lsp.config('ts_ls', {
                 capabilities = capabilities,
-                root_dir = enable_in_root({ 'package.json', 'tsconfig.json' }),
+                root_dir = function(bufnr, on_dir)
+                    local root = vim.fs.root(bufnr, ts_markers)
+                    if root and not uses_native_ts(root) then
+                        on_dir(root)
+                    end
+                end,
             })
             vim.lsp.enable('ts_ls')
+
+            -- TypeScript 7+ has a built-in LSP server (`tsc --lsp`) instead of tsserver.js.
+            -- Wrap the default root_dir to avoid its warning in projects using older TypeScript.
+            local tsc_root_dir = vim.lsp.config.tsc.root_dir
+            vim.lsp.config('tsc', {
+                capabilities = capabilities,
+                root_dir = function(bufnr, on_dir)
+                    local root = vim.fs.root(bufnr, ts_markers)
+                    if root and uses_native_ts(root) then
+                        tsc_root_dir(bufnr, on_dir)
+                    end
+                end,
+            })
+            vim.lsp.enable('tsc')
 
             -- https://docs.deno.com/runtime/reference/cli/lsp/
             vim.lsp.config('denols', {
