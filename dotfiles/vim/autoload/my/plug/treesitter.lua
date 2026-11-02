@@ -17,6 +17,7 @@ local function configure()
                 "bash",
                 "css",
                 "go",
+                "graphql",
                 "html",
                 "javascript",
                 "json",
