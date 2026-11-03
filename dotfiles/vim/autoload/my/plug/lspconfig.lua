@@ -53,13 +53,27 @@ local function configure()
             })
             vim.lsp.enable('gopls')
 
-            -- Return true if the TypeScript installed in the root is the native port (7.0+).
-            local function uses_native_ts(root)
+            local function local_ts_version(root)
                 local ok, lines = pcall(vim.fn.readfile, root .. '/node_modules/typescript/package.json')
                 if not ok then
-                    return false
+                    return nil
                 end
-                local version = vim.version.parse(vim.json.decode(table.concat(lines, '\n')).version)
+                return vim.version.parse(vim.json.decode(table.concat(lines, '\n')).version)
+            end
+
+            local global_ts_version_cache = nil
+            local function global_ts_version()
+                if global_ts_version_cache == nil then
+                    local output = vim.fn.executable('tsc') == 1 and vim.fn.system({ 'tsc', '--version' }) or ''
+                    local version = vim.v.shell_error == 0 and output:match('%d+%.%d+%.%d+') or nil
+                    global_ts_version_cache = version and vim.version.parse(version) or false
+                end
+                return global_ts_version_cache or nil
+            end
+
+            -- Return true if the TypeScript the root resolves to is the native port (7.0+).
+            local function uses_native_ts(root)
+                local version = local_ts_version(root) or global_ts_version()
                 return version ~= nil and version.major >= 7
             end
 
