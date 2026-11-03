@@ -74,12 +74,6 @@ But prioritize the format and rules in the repository you are working on.
 If you create a commit that should have been done in any previous commits, commit it with `--fixup` or `--fixup=amend`.
 Human will clean up commits before push.
 
-### Bash Usage
-
-- Never use command substitutions like `$(cat <<'EOF'...)` or backticks on Git operation.
-  Specify commit messages with simple strings like `git commit -m "..."`.
-- Never specify the Git directory like `git -C /path/to/dir`. You are allowed to run Git only in your current directory.
-
 ## Misc
 
 ### `.local/garage` may be messy
