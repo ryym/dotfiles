@@ -76,6 +76,13 @@ Human will clean up commits before push.
 
 ## Misc
 
+### Paste URL without title
+
+Whenever you output a link, just print an URL, don't make it a titled link.
+
+- Many terminal emulators cannot handle links.
+- I want to see an URL before opening it for safety.
+
 ### `.local/garage` may be messy
 
 Do NOT read existing files in `.local/garage/` unless the user explicitly asked.
