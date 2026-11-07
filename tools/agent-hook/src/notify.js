@@ -4,10 +4,8 @@ import fs from "node:fs";
 import { log } from "./log.js";
 import { run } from "./run.js";
 
-/** The existence of the file means the user don't want to send a notification. */
 export function isNotificationDisabled() {
-  const noNotifPath = process.env.AGENT_NO_NOTIF_PATH;
-  return Boolean(noNotifPath && fs.existsSync(noNotifPath));
+  return process.env.AGENT_NO_NOTIF === "1";
 }
 
 /** Send a desktop notification via notifm, with an optional subtitle. */
