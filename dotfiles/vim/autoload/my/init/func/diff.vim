@@ -68,8 +68,9 @@ function! s:define_conflict_marker_hl_groups() abort
   highlight link MyConflictMarkerSeparator DiffDelete
 endfunction
 
-" Filetypes where the lines that look like conflict markers are legitimate content.
-let s:conflict_marker_ignored_filetypes = ['markdown']
+" - markdown: conflict markers may be legitimate content
+" - gitview-diff: Gitview highlight conflict markers on their own
+let s:conflict_marker_ignored_filetypes = ['markdown', 'gitview-diff']
 
 " Matches are window-local while the buffer (and its filetype) in a window can change,
 " so we sync the matches with the current buffer every time.

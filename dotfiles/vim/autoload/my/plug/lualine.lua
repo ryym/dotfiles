@@ -91,7 +91,15 @@ local function configure()
                     section_separators = { left = '', right = ''},
                     globalstatus = true,
                     disabled_filetypes = {
-                        winbar = {'terminal', 'qf', 'fzf', 'viler'},
+                        winbar = {
+                            'terminal',
+                            'qf',
+                            'fzf',
+                            'viler',
+                            'gitview-files',
+                            'gitview-commits',
+                            'gitview-diff',
+                        },
                     },
                 },
                 sections = {
