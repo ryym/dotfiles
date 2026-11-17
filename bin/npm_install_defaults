@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Install the default global npm packages.
+
+set -euo pipefail
+
+if [ -z "${DOTPATH:-}" ]; then
+    echo 'npm_install_defaults: $DOTPATH is not set' >&2
+    exit 1
+fi
+
+if ! has npm; then
+    echo 'npm_install_defaults: npm is not available' >&2
+    exit 1
+fi
+
+packages=()
+while IFS= read -r line; do
+    case "$line" in
+        ''|'#'*) continue ;;
+    esac
+    packages+=("$line")
+done < "$DOTPATH/sync/pkgs/langs/nodejs-npm/packages"
+
+if [ ${#packages[@]} -eq 0 ]; then
+    echo 'npm_install_defaults: no packages found' >&2
+    exit 1
+fi
+
+npm install -g "${packages[@]}"

@@ -1,0 +1,8 @@
+# Default global npm packages.
+# Shared between sync/pkgs/langs/nodejs-npm/install and bin/npm_install_defaults.
+
+prettier
+typescript
+typescript-language-server
+vscode-langservers-extracted
+pnpm
