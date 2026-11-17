@@ -13,24 +13,30 @@ install() {
 if is_dryrun || has apt-get; then
     run sudo apt-get update
 
-    # Basic development tools
-    install clang
-    install curl
-    install fzf
-    install ibus-mozc
-    install jq
-    install make
-    install neovim
-    install tmux
-    install zsh
+    basic_packages=(
+        # Basic development tools
+        clang
+        curl
+        fzf
+        ibus-mozc
+        jq
+        make
+        neovim
+        tmux
+        zsh
+    )
+    install "${basic_packages[@]}"
 
     # Required to build Ruby
-    install build-essential
-    install perl
-    install zlib1g-dev
-    install libffi-dev
-    install libyaml-dev
-    install libssl-dev
+    ruby_build_packages=(
+        build-essential
+        perl
+        zlib1g-dev
+        libffi-dev
+        libyaml-dev
+        libssl-dev
+    )
+    install "${ruby_build_packages[@]}"
 else
     log_error 'apt-get not found'
     exit 1

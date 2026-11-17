@@ -11,36 +11,44 @@ install() {
 }
 
 if is_dryrun || has dnf; then
-    # Basic development tools
-    install alacritty
-    install clang
-    install curl
-    install fzf
-    install ibus-mozc
-    install jq
-    install make
-    install neovim
-    install tmux
-    install zsh
-
-    # Fonts
-    install intel-one-mono-fonts
+    basic_packages=(
+        # Basic development tools
+        alacritty
+        clang
+        curl
+        fzf
+        ibus-mozc
+        jq
+        make
+        neovim
+        tmux
+        zsh
+        # Fonts
+        intel-one-mono-fonts
+    )
+    install "${basic_packages[@]}"
 
     if ! has docker; then
         # Docker: https://docs.docker.com/engine/install/linux-postinstall/
         run sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
-        install docker-ce
-        install docker-ce-cli
-        install containerd.io
-        install docker-buildx-plugin
-        install docker-compose-plugin
+        docker_packages=(
+            docker-ce
+            docker-ce-cli
+            containerd.io
+            docker-buildx-plugin
+            docker-compose-plugin
+        )
+        install "${docker_packages[@]}"
     fi
 
     # Required to build Ruby
-    install perl
-    install zlib-devel
-    install libffi-devel
-    install libyaml-devel
+    ruby_build_packages=(
+        perl
+        zlib-devel
+        libffi-devel
+        libyaml-devel
+    )
+    install "${ruby_build_packages[@]}"
 else
     log_error 'dnf not found'
     exit 1

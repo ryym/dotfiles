@@ -16,67 +16,67 @@ if is_dryrun || has pacman; then
     # Note that this needs interactive inputs.
     run sudo pacman -Syu
 
-    # For building AUR packages
-    install base-devel
-
-    # Basic development tools
-    install alacritty
-    install clang
-    install curl
-    install docker
-    install docker-buildx
-    install docker-compose
-    install foot
-    install fzf
-    install git
-    install go
-    install jq
-    install make
-    install man-db
-    install neovim
-    install sudo
-    install tailscale
-    install tmux
-    install tree
-    install which
-    install wl-clipboard
-    install zsh
-
-    # For building Ruby 3.2 or later
-    install libyaml
-
-    # Japanese input and Emoji
-    install ibus-anthy # ibus-mozc is in AUR
-    install noto-fonts-cjk
-    install noto-fonts-emoji
-
-    # Fcitx5 is often instable compared to ibus.
-    # install fcitx5-im
-    # install fcitx5-mozc
-
-    # Utilities
-    install iwd
-
-    # For running AppImage (https://github.com/AppImage/AppImageKit/wiki/FUSE)
-    install fuse2
+    packages=(
+        # For building AUR packages
+        base-devel
+        # Basic development tools
+        alacritty
+        clang
+        curl
+        docker
+        docker-buildx
+        docker-compose
+        foot
+        fzf
+        git
+        go
+        jq
+        make
+        man-db
+        neovim
+        sudo
+        tailscale
+        tmux
+        tree
+        which
+        wl-clipboard
+        zsh
+        # For building Ruby 3.2 or later
+        libyaml
+        # Japanese input and Emoji
+        ibus-anthy # ibus-mozc is in AUR
+        noto-fonts-cjk
+        noto-fonts-emoji
+        # Fcitx5 is often instable compared to ibus.
+        # fcitx5-im
+        # fcitx5-mozc
+        # Utilities
+        iwd
+        # For running AppImage (https://github.com/AppImage/AppImageKit/wiki/FUSE)
+        fuse2
+    )
+    install "${packages[@]}"
 
     # Sway
     if [ "$mode" = "with=sway" ]; then
-        install blueberry
-        install chromium
-        install firefox
-        install grim
-        install pamixer
-        install polkit-gnome
-        install pulseaudio-bluetooth
-        install rofi-wayland
-        install slurp
-        install sway
-        install swaybg
-        install swayimg
-        install wev
-        install wob
-        install xorg-xwayland
+        sway_packages=(
+            blueberry
+            chromium
+            firefox
+            grim
+            pamixer
+            polkit-gnome
+            pulseaudio-bluetooth
+            rofi-wayland
+            slurp
+            sway
+            swaybg
+            swayimg
+            wev
+            wob
+            xorg-xwayland
+        )
+        install "${sway_packages[@]}"
     fi
 
     # AUR
