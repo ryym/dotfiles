@@ -31,7 +31,7 @@ async function handleHook(input) {
       await Promise.all([
         setPaneJobStatus("blocked"),
         sendNotification({
-          message: input.tool_input?.description || "Codex needs your approval",
+          message: input.tool_input?.description || "⏸ Codex needs your approval",
           webTitle: "Need help",
         }),
       ]);
@@ -39,7 +39,7 @@ async function handleHook(input) {
     case "Stop":
       await Promise.all([
         setPaneJobStatus("done"),
-        sendNotification({ message: "Codex finished its turn", webTitle: "Complete" }),
+        sendNotification({ message: "✓ Codex finished its turn", webTitle: "Complete" }),
         autoSync(cwd),
       ]);
       break;

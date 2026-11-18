@@ -96,7 +96,7 @@ async function handleNotificationEvent(input) {
   await Promise.all([
     // A notification means Claude is blocked on the user (permission/input).
     setPaneJobStatus("blocked"),
-    sendNotification({ message: input.message }),
+    sendNotification({ message: `⏸ ${input.message}` }),
   ]);
 }
 
@@ -154,7 +154,7 @@ async function handleStopEvent(input) {
 
   await Promise.all([
     setPaneJobStatus("done"),
-    sendNotification({ message: "Claude finished task" }),
+    sendNotification({ message: "✓ Claude finished task" }),
     autoSync(input.cwd || process.cwd()),
   ]);
 }
@@ -170,7 +170,7 @@ async function handleStopFailureEvent(input) {
   }
   await Promise.all([
     setPaneJobStatus("blocked"),
-    sendNotification({ message: `Claude stopped due to an ERROR: ${errorInfo}` }),
+    sendNotification({ message: `❌ Claude stopped due to an ERROR: ${errorInfo}` }),
   ]);
 }
 
